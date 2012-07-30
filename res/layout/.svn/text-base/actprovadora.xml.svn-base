@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+     android:orientation="vertical"
+  
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content">
+
+
+<Button android:text="Iniciar Servei Tracking" android:id="@+id/btInitTrack" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+<Button android:text="Finalitzar Servei Tracking" android:id="@+id/btEndTrack" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+
+<Button android:text="Mostrar Tracks" android:id="@+id/btShowTracks" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+
+<TextView
+    android:id="@+id/tvTracks"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="" />
+    
+</LinearLayout>

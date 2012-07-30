@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+android:id="@+id/widget27"
+android:layout_height="fill_parent"
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical" android:layout_width="fill_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/widget32"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#ff333333"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/widget28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/repRemoteTitle"
+                android:textSize="22dp" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/repProjList"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" >
+        </ListView>
+    </LinearLayout>
+
+	<LinearLayout
+	    android:id="@+id/linearLayout2"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="0"
+	    android:orientation="vertical" >
+
+	    <LinearLayout
+	        android:id="@+id/widget32"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="10dp"
+	        android:background="#ff333333"
+	        android:padding="5dp" >
+
+	        <TextView
+	            android:id="@+id/widget28"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/repLocalTitle"
+	            android:textSize="22dp" />
+	    </LinearLayout>
+
+	    <ListView
+	        android:id="@+id/repProjListLocal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="fill_parent" >
+	    </ListView>
+	</LinearLayout>
+
+</LinearLayout>
+
+
+

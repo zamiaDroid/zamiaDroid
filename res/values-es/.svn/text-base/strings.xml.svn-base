@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ZamiaDroid</string>
+    <string name="noSdAlert">No hay targeta montada</string>
+    <string name="root">[Volver atrás]</string>
+</resources>

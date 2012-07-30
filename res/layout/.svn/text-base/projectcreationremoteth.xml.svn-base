@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  android:padding="5dp"
+  >
+	<TextView android:text="@string/projectName" android:id="@+id/TextView01" android:layout_width="fill_parent" android:layout_height="wrap_content"></TextView>
+	<EditText android:text="" android:id="@+id/etNameItem" android:layout_width="fill_parent" android:layout_height="wrap_content"></EditText>
+	<RadioGroup android:id="@+id/radioGroup1" android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<RadioButton android:layout_width="wrap_content" android:text="@string/cbThModeRemote" android:layout_height="wrap_content" android:id="@+id/rbRemoteTh" android:textSize="14dp"></RadioButton>
+		<RadioButton android:layout_width="wrap_content" android:text="@string/cbThModeLocal" android:layout_height="wrap_content" android:id="@+id/rbLocalTh" android:textSize="14dp"></RadioButton>
+	</RadioGroup>
+
+	<Spinner android:id="@+id/thList" android:layout_width="wrap_content" android:layout_height="wrap_content"></Spinner>
+	
+
+
+	<Button android:text="@string/bImportProject" android:id="@+id/bAddItem" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+
+
+</LinearLayout>

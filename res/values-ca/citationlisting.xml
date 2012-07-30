@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="tvNumCitations">Total citacions: </string>
+	<string name="bCitationExport">Exportar citacions a Fagus</string>
+	<string name="bFagusImport">Importa citacions de Fagus</string>
+	
+	<string name="bRemoveAll">Esborrar totes les mostres</string>
+	<string name="bShowMap">Veure les mostres en un mapa</string>
+	
+	<string name="bFagusFileExported">S\'han exportat correctament les citacions a la memòria externa amb el nom </string>
+    <string name="outDated">Hi ha mostres sense actualitzar</string>
+    
+    <string name="cLprojectName">Nom del projecte</string>
+    <string name="cLthName">Tesaure taxonòmic</string>
+    <string name="tvFilteredCitations">Citacions filtrades /</string>
+    
+    <string name="tvFilteredField"><b>Visualitzant citacions pel camp: </b></string>
+    <string name="insert_data">Introdueixi les dades</string>
+    <string name="removeAllCitationsQuestion">Estàs segur de voler esborrar les %1$d mostres?</string>
+    
+    <string name="chooseField">Escull un camp</string>
+    <string name="noCitations">No hi ha citacions</string>
+  	<string name="noLocationsCitations">No hi ha citacions amb localització</string>
+    
+        
+    <string name="citExportLoading">Exportant fitxer de citacions&#8230;</string>
+    <string name="citExportTxt">Si us plau, no tenqui aquesta finestra. Depenent del nombre de citacions la importació pot trigar alguns minuts.</string>
+    
+     <string name="citRemovalLoading">Esborrant citacions &#8230;</string>
+    <string name="citRemovalTxt">Si us plau, no tenqui aquesta finestra. Depenent del nombre de citacions el procés pot trigar alguns minuts.</string>
+    
+    
+    <!-- Citation List - Menu -->
+    
+    <string name="mShowProjectProperties">Veure propietats</string>
+    <string name="mShowCitationMap">Veure citacions al mapa</string>
+    <string name="mChooseFilteredField">Escollir Camp a Filtrar</string>
+    <string name="mCitationExport">Exportar Citacions</string>
+    <string name="mCitationImport">Importar Citacions</string>
+    <string name="mRemoveCitations">Esborrar Citacions</string>
+
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/background1"
+    android:orientation="vertical"
+    android:padding="8dp" >
+  
+    <TextView
+        android:id="@+id/tvZamiaDroidVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/tvAboutUsVersion"
+        android:textColor="@color/background_white" />
+    
+	<TextView
+	    android:id="@+id/tvAboutUsExtended"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textColor="@color/background_white" />
+
+	<ImageView
+	    android:id="@+id/imageView2"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center"
+	    android:layout_margin="6dp"
+	    android:src="@drawable/logoub" />
+
+	<ImageView
+	    android:id="@+id/imageView3"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center"
+	    android:layout_margin="4dp"
+	    android:src="@drawable/logodtes" />
+
+</LinearLayout>

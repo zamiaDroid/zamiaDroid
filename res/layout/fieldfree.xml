@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <EditText
+            android:id="@+id/etFieldName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/tvFieldName"
+            android:text="" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/etFieldDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/tvFieldDesc"
+            android:text="" >
+        </EditText>
+	
+	<!-- <CheckBox android:layout_height="wrap_content" android:id="@+id/cbNumField" android:layout_width="wrap_content" android:text="@string/cbNumField"></CheckBox>
+ -->
+	<RadioGroup
+	    android:id="@+id/rgFieldTypes"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:visibility="gone" >
+
+	    <RadioButton
+	        android:id="@+id/rbFieldText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:checked="true"
+	        android:text="@string/cbFieldText" />
+
+	    <RadioButton
+	        android:id="@+id/rbFieldNum"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/cbNumField" />
+
+	    <RadioButton
+	        android:id="@+id/rbFieldBoolean"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/cbFieldBoolean" />
+	</RadioGroup>
+	
+	<Button android:text="@string/bCreateField" android:id="@+id/bCreateField" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+
+</LinearLayout>
+</ScrollView>

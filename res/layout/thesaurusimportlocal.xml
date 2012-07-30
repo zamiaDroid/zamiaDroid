@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  android:layout_width="fill_parent">
+  	  
+  	  <LinearLayout
+	android:id="@+id/widget32"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	style="@style/ActionBar"
+	>    
+	  
+    	<TextView android:id="@+id/thPlainTitle" android:layout_width="wrap_content" android:textColor="@color/background1" android:layout_height="wrap_content" android:textSize="16sp" android:text="@string/bChooseTh"></TextView>
+
+	</LinearLayout>
+	
+  	     <LinearLayout
+        android:id="@+id/LlGlobal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/llLocalPlain"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.5"
+        android:orientation="vertical" >
+
+            <LinearLayout android:layout_width="fill_parent" android:background="#ff333333" android:padding="5dp" android:layout_height="wrap_content" android:id="@+id/widget34">
+                <TextView android:id="@+id/tvTitlePlain" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/thSourceLocalPlain"></TextView>
+            </LinearLayout>
+            <ListView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/thListPlain"></ListView>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/LlLocal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <LinearLayout android:layout_width="fill_parent" android:background="#ff333333" android:padding="5dp" android:layout_height="wrap_content" android:id="@+id/widget33">
+                <TextView android:id="@+id/tvTitleXML" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/thSourceLocalBVegana"></TextView>
+            </LinearLayout>
+            <ListView android:layout_width="wrap_content" android:id="@+id/thList" android:layout_height="wrap_content"></ListView>
+        </LinearLayout>
+ </LinearLayout>
+        
+</LinearLayout>

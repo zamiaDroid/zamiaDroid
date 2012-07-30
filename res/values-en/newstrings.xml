@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="chooseExportFormat">Choose export format</string>
+	<string name="chooseImportFormatCit">Choose citation import format</string>
+	<string name="chooseImportFormatProj">Choose project import format</string>
+	
+	<string name="projLoading">Loading project&#8230;</string>
+    <string name="projLoadingTxt">Please, don\'t close the window. Depending on the numbers of fields the import process can last minutes.</string>
+    
+   	<string name="projSuccesCreated">Project %1$s created successfully.</string>
+   	
+   	<string name="citFileExists">Citation file exists. Do you want to overwrite it?</string>
+    <string name="newCreatedField">Field created </string>
+    
+    <string name="projSuccesCreatedWithCitations">Project created with %1$d citations</string>
+    
+	<string name="errorCitationFile">Error found in citations file</string>
+	
+	<string name="thInfoName"><b>Thesaurus name: </b></string>
+	<string name="thInfoNumItems"><b>Items count: </b></string>
+	
+    <string name="mCreateDefProj">Create sample projects</string>
+    <string name="noProjectNeedCreate">There is no projects in the system. You have to create or import a new project.</string>
+    
+    <string name="GOOGLE_MAPS_API_KEY">0iepYHdiW7LP6Jd7SkVZ8sMML5RIGudGFe5rCGA</string>
+    
+    <string name="prefAutoFields">Auto fields</string>
+    <string name="prefAutoFieldsSum">Some fields can be filled in a automatic way.</string>
+    
+    <string name="prefAutoFieldLocality">Locality field</string>
+    <string name="prefAutoFieldLocalitySum">Locality field will be determined using your location.</string>
+    
+    <string name="cbNumField">Numeric field</string>
+    
+    <string name="citCoord"><b>Coord:</b></string>
+    <string name="citAltitude"><b>Altitude:</b></string>
+    
+    <string name="sampleProjectId">sample_project_en</string>
+    <string name="sampleProjectName">Sample project</string>
+    <string name="sampleProjectType">Sample</string>
+    <string name="sampleProjectDesc">Sample project for testing purposes</string>
+    
+    <string name="slShowElem">Show elements</string>
+    <string name="slAddElem">Add Element</string>
+    <string name="slLocation">Location</string>
+    <string name="slDate">Date</string>
+    <string name="mShowGallery">Show photo gallery</string>
+  	<string name="slSaveModif">Save modifications</string>
+  
+  
+    <string name="mapYouAreHere">You\'re here</string>
+    <string name="mapCreateCitation">Do you want to create a citation in %1$f | %2$f point?</string>
+    
+    <string name="repRemoteTitle">Remote projects\' repository</string>
+    <string name="repLocalTitle">Local projects\'s repository</string>
+     
+    <string name="projSettings">Options</string>
+    <string name="projAddAuthor">Add author field automatically</string>
+    <string name="projAddAltitude">Add altitude field automatically</string>
+  
+     <string name="projCreation">Create Project</string>
+     <string name="projCreationFree">Free project defining each fields</string>
+     <string name="projCreationRep">From repository</string>
+     <string name="projCreationCit">From citations file</string>
+     <string name="projCreationFagus">From Fagus project (B-VegAna)</string>
+  
+     <string name="aboutUs">About Us</string>
+    
+    <string name="noPhotoInProject">There is no citations with photo</string>
+    <string name="mainOptions">Main options</string>
+    
+    <string name="btExportFile">Export File to </string>
+    <string name="tvExportDialogFileName">Filename</string>
+    <string name="tvExportDialogTitle">Citations export</string>
+     
+    <string name="downloadingTh">Downloading thesaurus&#8230;</string>
+    <string name="remoteThDescription">It\'s possible to download a thesaurus file from Internet. If you have a limited date fare
+    we recommend you using Wi-fi connection (not 3G). Size of thesaurus can be important.</string>
+    <string name="noThConnection">Host unresearchable. Is your Internet connection active?</string>
+    
+    <string name="cbThModeRemote">Download on-line thesaurus</string>
+     <string name="cbThModeLocal">Choosing local thesaurus</string>
+     <string name="cbThModeNone">Without thesaurus</string>
+  
+      <string name="synonymQuestion">Taxon <b>%1$s</b> is a synonymous. Do you want to overwritte it with the accepted name?</string>
+    <string name="checkSynomymsTitle">Synonymous checking</string>
+    <string name="checkSynomyms">Taxon synonymous checking</string>
+    
+    <string name="backupProjectExists">Import Project exists. What do you want to do with the backup?</string>
+    <string name="rBbackupImportCitOnly">Import only citations</string>
+    <string name="rbCreateNewProject">Create a new Project</string>
+    <string name="btBackupImport">Load backup</string>
+    
+    <string name="tvProjType"><b>Project type: </b></string>
+    
+    <string name="backupLoading">Loading backup</string>
+    <string name="backupLoadingTxt">Please, don\'t close the window. Depending on the numbers of fields the import process can last minutes.</string>
+    <string name="titleBdbc">Biodiversity data bank of Catalonia</string>
+    
+    
+    <string name="mCreateBackup">Create Backup</string>
+    <string name="mLoadBackup">Restore Backup</string>
+    <string name="pdBackupCreating">Creating backup</string>
+    <string name="mRemoveProject">remove project</string>
+    <string name="rmFile">Do you want to delete the choosen file?</string>
+    
+    <string name="repeatedFieldTitle">Choose carry on value fields </string>
+    <string name="mRepeatedField">Carry on value fields</string>
+    
+        <string name="waitingForGPS">There is no location. What do you want to do?</string>
+    <string name="lastKnownLocation">User last known location</string>
+    <string name="waitForLocation">Wait for location</string>
+    
+    <string name="photoWithoutInfo">This photo is not linked to any photo</string>
+    
+        <string name="mShowTaxonInfo">Show taxon sheet</string>
+    
+ 	<string name="tvThType">Thesaurus type: </string>
+   
+     <string name="toastTaxonNotExists">Taxon is not included on the thesaurus</string>
+     <string name="toastNotThesarus">There is no working thesaurus</string>
+     <string name="toastGPSWorking">The GPS is still searching your location</string>
+     
+    <string name="toastWrongFile">Wrong file</string>
+        <string name="toastShowLocation">Show location</string>
+        
+        
+            <!-- New CitationManager -->
+    
+    <string name="filterDialogEmptyValue">Empty value</string>
+    <string name="appliedFilter">Filtered data by field <b>%1$s</b> with value %2$s <b>%3$s</b></string>
+        
+     <string name="countFiltered"><b>Filtered:</b> %1d | </string>
+     <string name="countTotal"><b>Total:</b> %1d </string>
+     <string name="countSelected"><b>Chosen:</b> %1d | </string>
+         
+     <string name="alertWrongCoordinates">Wrong coordinates</string>
+     <string name="noCitationsSelected">No citations chosen</string>
+     
+     <string name="actionExportCitation">Export</string>
+     <string name="actionShowMap">Show Map</string>
+     <string name="actionRemove">Remove</string>
+          
+     <string name="filterBy">Filter by:</string>
+     <string name="filterTypeField">field</string>
+     <string name="filterTypeLocation">location</string>
+     <string name="filterTypeDate">date</string>
+    
+     <string name="btApplyFilter">Apply filter</string>
+     
+         
+     <string name="aboutUsExtended">
+         <![CDATA[
+        <b>Director: </b> Xavier Font<br/>
+     	<b>Original idea: </b> David Martí Pino and Xavier Font<br/>
+    	<b>Programmer: </b> David Martí Pino<br/>
+    	<b>Thanks to the colaboration: </b> Josep Vilaplana, Javier Moreno, Carlos Gómez, Berta Mora and Gwendolyn Peyre<br/><br/>
+    	<b>Amb el suport:</b>
+		]]>
+     </string>
+  
+  
+  <!-- New Thesaurus manager -->   
+         
+         
+  <string name="rbRemoteTh">On-line Thesaurus</string>
+  <string name="rbLocalTh">Plain Thesarurus</string>
+  <string name="thTitleImportPlain">Import taxonomical plain thesaurus</string>
+  <string name="thFieldsSeparator">Field splitter:</string>
+    
+  <string name="etHintThGender">Genus</string>  
+  <string name="etHintThSpEp">Specific Epithet</string>  
+  <string name="etHintThSpEpAut">Specific Epithet Author</string>  
+  <string name="etHintThRange">Infraspecific Rank</string>  
+  <string name="etHintThSpInfraEp">Infraspecific Epithet</string>  
+  <string name="etHintThSpInfraEpAut">Infraspecific Epithet Author</string>  
+  <string name="etHintThPrimKey">PrimaryKey</string>  
+  <string name="etHintThSecKey">SecondaryKey</string>  
+
+  <string name="thInfoTitle">Taxonomical Thesaurus information</string>
+      
+  <string name="thInfoSearchField">Item search</string>
+
+  <string name="thSourceLocalBVegana">XML local B-Vegana</string>
+  <string name="thSourceRemote">Remote Thesaurus</string>  
+  <string name="thSourceLocalPlain">Plain file</string>  
+  
+  <string name="thInfoOriginFile">File</string>  
+  <string name="thInfoOriginDB">Database</string>
+  <string name="thInfoOriginType">Source type</string>  
+  <string name="thInfoImportTimestamp">Import date</string>  
+  
+  <string name="thInfoAuthors">Authors</string>  
+  <string name="thInfoKeys">Keys</string>  
+                  
+  <string name="thInfoFieldPrimaryKey">Primary</string>  
+  <string name="thInfoFieldSecondaryKey">Secondary</string>  
+  <string name="thInfoFieldAuthorEpEsp">Sp. Ep.:</string>
+  <string name="thInfoFieldAuthorInfraEpEsp">Sub. Esp.:</string> 
+            
+  <string name="thWrongFile">Wrong file format</string> 
+  
+  <string name="thImportPlainFirstColumnLabel">Labels on first row</string> 
+  <string name="thImportPlainRemoveCommas">Remove ""</string> 
+      
+   <string name="btThImport">Import thesaurus</string> 
+   <string name="tvThNameHit">thesaurus name ....</string> 
+       
+  <string name="mapMoveCitation">Do you want to move the citation to the point %1$f | %2$f ?</string>
+  <string name="mapShowTransitView">Show traffic view</string>
+  <string name="mapShowNormalView">Show standard view</string>
+       
+     <string name="btThAddLocal">Add Local</string>
+  <string name="btThAddRemote">Add remote Thesaurus</string>    
+	<string name="btFilterTaxon">taxon</string>
+  <string name="rbFilterCompleteTaxon">Complete taxon</string>
+  <string name="rbFilterTaxonGenus">By Genus</string>    
+  <string name="rbFilterWrongTaxon">Taxons not belonging to the thesaurus</string>    
+  <string name="cbMyTracksInfoDialog">Don\'t show again the message</string>    
+  <string name="btOk">Accept</string>    
+      
+      
+  <string name="tvMyTracksInstalled">MyTracks is already installed on the system.</string>    
+  <string name="tvMyTracksNotInstalled">MyTracks isn\'t installed on the system.</string>    
+  <string name="mapConfShowCompass">Compass mode</string>    
+  <string name="mapConfigUTMPrecTitle">UTM visualization precision</string>    
+      
+    <string name="mapConfigTitle">Map options</string>    
+      
+    <string name="mapConf10km">10x10 km</string>    
+      
+    <string name="mapConf1km">1x1 km</string>    
+      
+    <string name="mapConf1m">1x1 m</string>    
+      
+    <string name="mConfGeneralInfo">Main information</string>    
+    
+    <string name="appVersion">Version: <b>%1$s</b></string>
+    
+    <string name="citationCloneQuestion">Do you want to create an adjacent citation to the selected one in the same location?</string>
+       
+    <string name="allTracks">All</string>
+    
+    <string name="trackSaveQuestion">Do you want to save the track?</string>
+    <string name="trackWithoutLocations">Tracks has no point. It\'ll not be saved</string>
+    <string name="trackProjectDescription">ZamiaDroid Track from project: </string>
+    <string name="trackProjectNameDialog">default name:</string>
+    <string name="trackRemoveDialog">Do you want to remove the track</string>
+    <string name="waitingGPS">Waiting GPS&#8230;</string>
+    <string name="mMapsOptions">Map options</string>
+    <string name="mLoadTrack">Loading track</string>
+   	<string name="trackRegistering">Registering track</string>
+    
+    <string name="mCenterLocation">Center location</string>
+    <string name="mCleanTrackLoaded">Clean Map</string>      
+    <string name="mapConfShowMyTracks">MyTracks dialog</string>
+    
+    <string name="filterTaxonGenus">Taxon by genus</string>
+    <string name="filterNotInThesaurus">not existing in the thesaurus</string>
+    <string name="filterTaxonGenusMessage">Searching taxons with genus</string>
+    <string name="filterNotInThesaurusMessage">Discarding right taxons</string>
+    
+      <string name="utm10km">10x10</string>    
+      
+    <string name="utm1km">1x1</string>    
+      
+    <string name="utm1m">1x1</string>    
+    
+    <string name="removeCitationPhoto">Do you want to remove photograph with citation field linked?</string>
+	<string name="mRemovePhoto">Remove photo</string>
+	<string name="mConfigDB">Configure Databases</string>
+	<string name="projWithoutTh">There\'s no right thesaurus linked</string>
+		
+	<string name="mapConfShowConfig">Show elevation</string>
+	
+
+	<!-- ZamiaImport -->
+	<string name="zamiaImportTitle">Import citations\' file with the format</string>
+   	<string name="zamiaImportProgress">Importing new citations into project %1$s</string>
+   	<string name="zamiaImportWrongFormat">File is not Zamia formated or it\'s no citations.</string>
+    <string name="zamiaImportCitationsCount">There\'re %1d citations inside the file</string>
+	<string formatted="false" name="zamiaImportAddFields">There are &lt;b> %1d fields &lt;/b> &lt;b> not belonging to the project &lt;/b>. Do you want to add them to the project &lt;b> %2$s &lt;/b> ?</string>
+   	<string name="zamiaImportError">Wrong file</string>
+   	
+	<string name="citationExportDestination">Export destination</string>
+	<string name="citationWithoutLocation">No location registered</string>
+	
+	<string name="citationExportEmailSubject">Citations export ZamiaDroid: </string>
+	<string name="citationExportEmailText">Citations export ZamiaDroid: \n \tProject Name: %1$s \n\tExport date: %2$s \n\tFormat: %3$s</string>
+	
+	<string name="myTracksThirdPartyAccessDisabled">Allow MyTracks third party access</string>
+	<string name="myTracksInternalError">Mytracks internal error</string>	
+	
+	<string name="photoGallery">Photo gallery</string>
+	<string formatted="false" name="citationsAtDir">&lt;b>Citations files at: &lt;b></string>
+   	<string name="photoCantBeFound">Photo linked to location doesn\'t exist.</string>
+	
+	<string name="citationListLoading">Loading citations list</string>
+	<string name="actionPhoto">Photos</string>
+	<string name="photoNotLinked">Linked photo doesn\'t exist</string>
+	<string name="exportRemoteToTab">Export presences to TAB format</string>
+	
+	<string name="btExportPresences">Export presences</string>
+	<string name="tvPresenceInfo">Presences\' files will be exported to; &lt;b> %1$s &lt;/b></string>
+	<string name="presenceRemoteDB">remote</string>
+	<string name="presenceLocalDB">local</string>
+	<string name="presenceTotalDB">total</string>
+	<string name="presenceFileExists">Presences\' file exists. Do you want to overwrite it?</string>
+	
+	<string name="mUseExternalStorage">Use secondary (external) storage by default</string>
+	<string name="mUseExternalStorageDisabled">Use primary (external) storage by default</string>
+	
+	<string name="mChangeExternalStoragePrim">Show photos from external (primary) storage</string>
+	<string name="mChangeExternalStorageSec">Show photos from external (secondary) storage</string>	
+	
+	<string name="movePhotosInfo">Photos will be moved to the directory : &lt;b> %1$s &lt;/b></string>
+	<string name="mCreateReport">Reports</string>
+	<string name="btCreateReport">Create report</string>
+	<string name="etReport">Report</string>
+	<string name="tvCreateReportLabel">Field used as label: </string>
+	<string name="pdCreateReportTitle">Creating report</string>
+	<string name="mGalleryMovePhotos">Move photos</string>
+	<string name="mGalleryShowPrimaryStorage">Show external (primary) storage</string>
+	<string name="mGalleryShowSecondaryStorage">Show external (secondary) storage</string>
+	<string name="dialogGalleryMovingPhotos">Moving photos</string>
+	<string name="btCitationImport">Import citations</string>
+	<string name="tvAboutUsVersion">version</string>
+    <string name="etBackupNamev">project name &#8230;</string>
+    <string name="rbFilterByField">By field</string>
+    <string name="rbFilterByDate">By date</string>
+    <string name="rbFilterByUTM">by UTM</string>
+    <string name="rbFilterByLatLong">by lat/long</string>
+    <string name="etBackupProjectName">Backup\'s name</string>
+    <string name="cbBackupAddPhotos">Add photos</string>
+    <string name="btBackupCreate">Create backup</string>
+    <string name="tvGalleryCitationWithoutInfo">Without information</string>
+    <string name="cbGalleryCopyPhotos">Leave a copy at origin directory</string>
+    <string name="rbMovePhotoInternalToExternal">From primary external storage to secondary</string>
+    <string name="rbMovePhotoExternalToInternal">From secondary external storage to internal</string>
+    <string name="tvImportCitationsTitle">Import citations</string>
+    <string name="tvImportCitationsAchtung">Caution! Data related to fields not belonging to project or not added won\'t be imported.</string>
+    <string name="tvTrackList">"Track list: "</string>				
+    
+    <string name="tvNoThTaxonsInfo">List of project &lt;b> %1$s &lt;/b> not belonging to thesaurus</string>   
+    <string name="cbSendByMail">Send by e-mail</string>
+    
+    <string name="fieldTypeText">text</string>
+    <string name="fieldTypeNum">numerical</string>
+    <string name="fieldTypeBool">boolean</string>
+    <string name="fieldTypeTh">thesaurus</string>
+    <string name="fieldTypePhoto">photo</string>
+    <string name="fieldTypePredefined">predefined</string>
+    <string name="fieldTypeSubProject">sub-project</string>
+       
+    <string name="mCheckTaxonTh">Excluded from thesaurus</string>	
+</resources>

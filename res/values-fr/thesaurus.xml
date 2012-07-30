@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Intro text thesaurus -->
+
+	<string name="tvInfoListTh">Sélectionnez un thesaurus taxonomique à gérer. Vous pouvez voir ses propriétés ainsi que l\'éliminer. Vous pouvez également effectuer des recherches de taxons.</string>
+	<string name="thListTab">Liste de thesaurus taxonomiques</string>
+	
+    <!-- Thesaurus Actions -->
+
+        <!-- View -->
+        <string name="bChooseTh">Choisir un thesaurus taxonomique</string>
+        <string name="tvChoosenTh"><b>thesaurus taxonomique choisi:</b></string>
+        <string name="tvAccepted"><b>Nom accepté</b></string>
+        <string name="tvSynonymous"><b>Il s\'agit d\'un synonyme, le nom accepté est: </b></string>
+        <string name="tvIcodeMissing"><b>Aucun icode n\'y a été ajouté</b></string>
+        <string name="thChooseIntro"><b>Choisir un thesaurus taxonomique du système</b></string>
+        <string name="taxonHint">écrivez le nom du taxon&#8230;</string>
+        <string name="thHint">écrivez le nom du taxon&#8230;</string>
+        <string name="emptyThList">Il n\'y a aucun thesaurus taxonomique dans le système. Importez-en un avec l\'option Importer un thesaurus taxonomique</string>
+
+
+        <!-- Removal -->
+	
+        <string name="bRemoveTh">Éliminer le thesaurus taxonomique</string>
+        <string name="deleteThQuestion">Voulez-vous éliminer le thesaurus taxonomique?</string>
+		<string name="thUsedByOneProj">Taxonomic thesaurus in use by %1s project, it can not be deleted.</string>
+        <string name="thUsedBySeveralProj">Taxonomic thesaurus in use by %1d projects, it can not be deleted.</string>
+
+        <!-- Change Thesaurus -->
+        <string name="bChangeTh">Changer de thesaurus taxonomique</string>
+        <string name="thChangedText">Changed thesaurus</string>
+        <string name="thChangedShort">Changed thesaurus</string>
+        
+        <!-- Import Thesaurus -->
+            
+        <string name="thName">Indiquer le nom du thesaurus </string>
+       	<string name="thLoading">Chargement du thesaurus taxonomique&#8230;</string>
+        <string name="thLoadingTxt">S\'il vous plaît, ne fermez pas cette fenêtre. Selon la taille du thesaurus taxonomique à importer, le processus peut prendre quelques minutes.</string>
+        <string name="bImportTh">Importer le thesaurus taxonomique</string>
+        <string name="sameThName">Il existe déjà un thesaurus dans le système nommé</string>
+        <string formatted="false" name="thImportRepDesc">&lt;b>Thesaurus %1s: &lt;/b> %2s</string>
+        <string name="thRemoteUpdated">Existing thesaurus updated</string>
+        <string name="thRemoteNotUpdated">New thesaurus\' update: %1s</string>
+
+    <!-- Thesaurus relations with projects-->
+	<string name="tvDefaultTh">thesaurus taxonomique: </string>
+	<string name="cbNoTh">Sans thesaurus taxonomique</string>
+    <string name="noThQuestion">Aucun thesaurus selectionné. Choisissez-en un ou sélectionnez l\'option Ne pas utiliser de thesaurus taxonomique</string>
+
+       	<!-- Register adding -->
+
+		<string name="thAddNewItem">Add register to thesaurus</string>
+		<string name="thNewItemAdded">New register added to thesaurus</string>
+		<string name="thNewItemExists">Regists exists at the thesaurus</string>
+		<string name="thNewItemGenusEpMissing">missing genus and/or specific epitet</string>
+		<string name="thGenus">Genus</string>
+		<string name="thAuthor">Author</string>
+		<string name="thKeys">Keys</string>
+		<string name="btThInfraEpSpec">Infra-Epitet. Spec.</string>
+		<string name="btThEpSpecRed">Epitet Spec.</string>
+		<string name="tvThAddNewItem">Add new:</string>
+		<string name="tvThChooseTaxaGroup">Choose taxonomical group</string>
+		<string name="tvThImportRemote">Remote thesaurus import</string>
+    
+</resources>

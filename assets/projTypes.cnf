@@ -1,0 +1,15 @@
+{ "mainTypes":[
+
+	{"filum":"Flora", letter:"F", "types":["Fagus","Quercus","Flora"]},
+	{"filum":"Vertebrates",letter:"T", "type":["Vertebrates","Ornithological","Aves","Actinopterygii","Amphibia","Mammalia","Cephalaspidomorphi","Reptilia"]},
+	{"filum":"Lichens",letter:"L", "type":["Líquens","Lichens"]},
+	{"filum":"Bryophytes",letter:"B", "type":["Bryophytes"]},
+	{"filum":"Algae",letter:"G", "type":["Algae"]},
+	{"filum":"Fungi",letter:"M", "type":["Fungi"]},
+	{"filum":"Arthropods",letter:"A", "type":["Arthropods"]},
+	{"filum":"Vertebrates",letter:"T", "type":["Vertebrates"]},
+	{"filum":"Invertebrate",letter:"C", "type":["Invertebrate"]}
+	
+	]
+}
+

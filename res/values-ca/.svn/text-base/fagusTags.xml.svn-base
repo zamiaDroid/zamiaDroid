@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="LifeCycleStatus">Estadi del cicle vital</string>
+	<string name="Natureness">Natura</string>
+	<string name="Accepted">Acceptat</string>
+	<string name="Informatiser">Informatitzador</string>
+	<string name="ObservationAuthor">Autor</string>
+	<string name="biological_record_type">Botànica</string>
+	<string name="CitationNotes">Comentaris</string>
+	<string name="OriginalTaxonName">Nom Original</string>
+	<string name="CorrectedTaxonName">Nom Corregit</string>
+	<string name="sureness">Certesa Original</string>
+	<string name="correctedSureness">Certesa Corretgida</string>
+	<string name="origin">Plec</string>
+	<string name="InformatisationDate">Data d\'Informatització</string>
+	<string name="SecondaryCitationCoordinate">Codi de coordenades secundàries</string>
+
+</resources>

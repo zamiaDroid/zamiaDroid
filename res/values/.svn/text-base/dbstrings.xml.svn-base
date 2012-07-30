@@ -1,0 +1,56 @@
+<resources>
+    
+    <!--  Database Name\'s -->
+        <string name="dBNameOrca">Orca - Organització per a la Cartografia de les plantes vasculars als Països Catalans</string>
+        <string name="dbNameBiocat">Banc de dades de la Biodiversitat de Catalunya</string>
+        <string name="dbNameSivim">Sistema de Información de la Vegetación Ibérica y Macaronésica</string>
+        <string name="dbNameSifib">Sistema d\'Informació de la Flora de les Illes Balears</string>
+        <string name="dbNameGbif">Global Biodiversity Information Facility</string>
+        <string name="dbNameSioc">Servidor d\'informació ornitològica de Catalunya</string>
+        <string name="dbNameFloraCat">FloraCatalana.net</string>
+        <string name="dbNameHerbari">Herbari Virtual del Mediterrani Occidental</string>
+        <string name="dbNameNaturaDigital">Natura Digital</string>
+        <string name="dbNameEncVertebrados">Enciclopedia virtual de los invertebrados españoles</string>
+        
+	<!--  Database's territories -->
+        
+        <string name="dBCatalunya">Catalunya</string>
+        <string name="dbIllesBalears">Illes Balears</string>
+        <string name="dbAndorra">Andorra</string>
+        <string name="dbPPCC">Països Catalans</string>
+        <string name="dbIberia">Península Ibèrica</string>
+        <string name="dbGlobal">Global</string>
+        
+    <!-- Strings  -->    
+    
+        <string name="outOfDataBaseRange">No hi ha base de dades disponible per aquests territori</string>
+        <string name="noFilumDataBase">No hi ha base de dades de <b>%1$s</b>. No hi ha cap base de dades que es correspongui.</string>
+        
+        <string name="loadingUTM">Carregant graella UTM. Espereu uns segons per usar aquesta opció.</string>
+        <string name="wrongTaxon">Tàxon inexistent al tesaure</string>
+        <string name="noTaxonTab">No hi ha fitxes disponibles. Revisa connexió a Internet.</string>
+        
+        <string name="connectingDatabase">Acedint a la base dades ....</string>
+        <string name="determiningDatabase">Determinant la base dades ....</string>
+        
+        <string name="searchingTaxonsUTM"> per a l\'UTM </string>
+        <string name="searchingTaxonsOwnLocation"> per a localització de l\'usuari a l\'UTM </string>
+        
+   	<!-- Tab (fitxes) viewer -->    
+        <string name="loadingTab">Carregant fitxa biològica</string>
+                        
+    <!-- Tabs -->    
+        
+        <string name="tabLocalTaxons">Dades locals</string>
+        <string name="tabRemoteTaxons">Dades remotes</string>
+        <string name="tabTotalTaxons">Dades totals</string>
+        
+    <!--  Menu options -->    
+        
+        <string name="mTaxonFitxa">Fitxa biològica</string>
+        <string name="mTaxonCitations">Citacions del tàxon a l\'UTM</string>
+        <string name="confAvailableDBTitle">Configuració de les Bases de dades disponibles</string>
+        <string name="tvRemoteBiologicalTabs">Fitxes biològiques:</string>
+        <string name="cbRemoteTabByDefault">Per defecte</string>
+
+    </resources>

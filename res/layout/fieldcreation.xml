@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:minWidth="240dip"
+	android:minHeight="300dip"
+
+    >
+
+
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:padding="5dp"
+  android:orientation="vertical"
+
+  >
+  
+<!--<TextView android:text="@string/tvFieldName" android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView> -->
+<EditText android:text="" android:id="@+id/etFieldName" android:hint="@string/tvFieldName" android:layout_width="fill_parent" android:layout_height="wrap_content"></EditText>
+
+<!--<TextView android:text="@string/tvFieldLabel" android:id="@+id/etInfoItem" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView> -->
+
+<!--<TextView android:text="@string/tvFieldDesc" android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView> -->
+<EditText android:text="" android:id="@+id/etFieldDesc" android:layout_width="fill_parent" android:hint="@string/tvFieldDesc" android:layout_height="wrap_content"></EditText>
+
+<!-- <TextView android:text="@string/tvFieldPredValue" android:id="@+id/TextView03" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView> -->
+
+
+<TextView android:text="@string/tvPredValues" android:id="@+id/TextView04" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:orientation="horizontal"
+  >
+
+	<Button android:text="+" android:id="@+id/bAddPredField" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+	<EditText android:text="" android:id="@+id/etPredValue" android:layout_width="fill_parent" android:layout_height="wrap_content"></EditText>
+
+</LinearLayout>
+<LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_width="fill_parent">
+    <Spinner android:layout_height="wrap_content" android:id="@+id/sPrefFields" android:layout_width="wrap_content"></Spinner>
+    <Button android:id="@+id/bRemovePredField" android:text="-" android:layout_height="wrap_content" android:layout_width="wrap_content"></Button>
+</LinearLayout>
+
+<Button android:text="@string/bCreateField" android:id="@+id/bCreateField" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+
+
+</LinearLayout>
+</ScrollView>

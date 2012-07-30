@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  android:padding="5dp"
+  android:layout_width="fill_parent">
+
+    <LinearLayout
+        android:id="@+id/LlLocalPlain"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:orientation="vertical" >
+
+            <LinearLayout android:layout_width="fill_parent" android:background="#ff333333" android:padding="5dp" android:layout_height="wrap_content" android:id="@+id/widget32">
+                <TextView android:id="@+id/textView1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/thSourceLocalPlain"></TextView>
+            </LinearLayout>
+            <ListView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/thListPlain" android:layout_weight="0.5"></ListView>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/LlLocal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical" >
+
+            <LinearLayout android:layout_width="fill_parent" android:background="#ff333333" android:padding="5dp" android:layout_height="wrap_content" android:id="@+id/widget32">
+                <TextView android:id="@+id/textView1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/thSourceLocalBVegana"></TextView>
+            </LinearLayout>
+            <ListView android:layout_width="wrap_content" android:id="@+id/thList" android:layout_height="wrap_content" android:layout_weight="0.5"></ListView>
+        </LinearLayout>
+   
+
+	<!-- <EditText
+	android:id="@+id/etUrLimportDT"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text=""
+	
+	>
+	</EditText>
+
+<TextView android:text="" android:id="@+id/tvImportInfoDT" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+
+ -->
+
+</LinearLayout>

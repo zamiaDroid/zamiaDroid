@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    
+    <string-array name="sisCoord">
+        <item>UTM</item>
+        <item>Latitud / Longitud</item>
+       
+    </string-array>
+    
+    <string-array name="newFieldTypes">
+        <item>Camp lliure</item>
+        <item>Camp Predefinit</item>
+        <item>Fotografia</item>
+        <item>Sub-projecte</item>
+    </string-array>
+    
+   <string-array name="gpsCapture">
+        <item>Inici de la captura</item>
+        <item>Final de la captura</item>
+        <item>Inici i Final de la captura</item>
+    </string-array>
+    
+    <string-array name="gpsCaptureValues">
+        <item>start</item>
+        <item>end</item>
+        <item>both</item>
+    </string-array>
+    
+     <string-array name="sureness">
+        <item>OK</item>
+        <item>Gen. confer</item>
+        <item>Sp. confer</item>
+        <item>Sensulato</item>
+        <item>Group</item>
+    </string-array>
+    
+
+    
+    <string-array name="exportFormats">
+        <item>Fagus</item>
+        <item>TAB</item>
+        <item>JSON</item>
+        <item>Quercus</item>    
+        <item>Zamia</item>    
+        <item>KML</item>         
+    </string-array>
+    
+    <string-array name="mainExportFormats">
+       <item>Fagus</item>
+       <item>TAB</item>
+        <item>JSON</item>
+        <item>Zamia</item>    
+        <item>KML</item>         
+    </string-array>
+    
+    <string-array name="importCitFormats">
+        <item>Zamia</item>
+        <item>Fagus</item>
+    </string-array>
+    
+    <string-array name="importProjFormats">
+        <item>Fagus</item>
+    </string-array>
+     
+    <string-array name="languages">
+        <item>Català</item>
+        <item>Castellano</item>
+        <item>English</item>
+        <item>Français</item>
+    </string-array>
+    
+    <string-array name="languagesLocales">
+        <item>ca</item>
+        <item>es</item>
+        <item>en</item>
+        <item>fr</item>
+    </string-array>
+    
+    <string-array name="predValues">
+        <item>Taxon</item>
+        <item>Fotografia</item>
+        <item>Comentari</item>
+        <item>SecondLevel</item>
+    </string-array>
+   
+    <string-array name="subProjCreationOptions">
+        <item>Escollint camps d\'un projecte</item>
+    </string-array>
+    
+    <string-array name="thesaurusFilums">
+        <item>Flora</item>
+        <item>Briòfits</item>
+        <item>Algues</item>
+        <item>Fongs</item>
+        <item>Líquens</item>
+        <item>Vertebrats</item>
+                <item>+ Aus</item>
+                <item>+ Actinopterigis</item>
+                <item>+ Amfibis</item>
+                <item>+ Mamífers</item>
+                <item>+ Cefalaspidomorfs</item>
+                <item>+ Rèptils</item>              
+        <item>Moluscs</item>
+        <item>Artròpodes</item>
+    </string-array>
+    
+   <string-array name="thesaurusFilumsFlora">
+        <item>Flora</item>
+    </string-array>
+    
+     <string-array name="thesaurusFilumsLetters">
+        <item>F</item>
+        <item>B</item>
+        <item>G</item>
+        <item>M</item>
+        <item>L</item>
+        <item>T</item>
+                <item>T:CHVA</item>
+                <item>T:CHVC</item>
+                <item>T:CHVF</item>
+                <item>T:CHVM</item>
+                <item>T:CHVT</item>
+                <item>T:CHVR</item>    
+        <item>C</item>
+        <item>A</item>
+    </string-array>
+    
+    <string-array name="thesaurusFilumsEnglish">
+        <item>Flora</item>
+        <item>Bryophytes</item>
+        <item>Algae</item>
+        <item>Fungi</item>
+        <item>Lichens</item>
+        <item>Vertebrates</item>
+                <item>Aves</item>
+                <item>Actinopterygii</item>
+                <item>Amphibia</item>
+                <item>Mammalia</item>
+                <item>Cephalaspidomorphi</item>
+                <item>Reptilia</item>             
+        <item>Invertebrate</item>
+        <item>Arthropods</item>
+    </string-array>
+    
+    <string-array name="thesaurusFieldsIds">
+    	<item>Genus</item>
+    	<item>SpecificEpithet</item>
+    	<item>SpecificEpithetAuthor</item>
+	   	<item>InfraspecificRank</item>
+	   	<item>InfraspecificEpithet</item>
+	   	<item>InfraspecificEpithetAuthor</item>   
+	   	<item>PrimaryKey</item>   	
+	   	<item>SecondaryKey</item>   	
+	</string-array>
+   <string-array name="thesaurusFields">
+    	<item>Gènere</item>
+    	<item>Epítet específic</item>
+    	<item>Autor epítet específic</item>
+	   	<item>Rang infra-específic</item>
+	   	<item>Epítet infra-específic</item>
+	   	<item>Autor epítet infra-específic</item>
+	   	<item>Clau primària</item>   	
+	   	<item>Clau secundària</item>   	
+   </string-array>
+   
+   <string-array name="thesaurusFieldsSeparators">
+       	<item>\",\"</item>
+     	<item>,</item>
+     	<item> ; </item>
+    	<item> : </item>
+    	<item> Tabulador </item>
+   </string-array>
+   
+    <string-array name="thesaurusFieldsSeparatorsUniqueNames">
+       	<item>\",\"</item>
+      	<item>,</item>
+       	<item>;</item>
+    	<item>:</item>
+    	<item>\t</item>
+   </string-array>
+   
+    <string-array name="natureness">
+        <item>Subespontani</item>
+        <item>Accidental</item>
+        <item>Cultivat</item>
+        <item>Espontani</item>
+    </string-array>
+    
+     <string-array name="naturenessEnglish">
+        <item>Subspontaneous</item>
+        <item>Accidental</item>
+        <item>Cultivated</item>
+        <item>Spontaneous</item>
+    </string-array>
+    
+    
+    <string-array name="exportDestination">
+        <item>Desar a la targeta</item>
+        <item>Desar a la targeta i enviar per e-mail</item>
+    </string-array>
+    
+    <string-array name="reportCreationFormats">
+       <item>Document de text amb un camp com a etiqueta</item>      
+    </string-array>
+     <string-array name="reportCreationFormatsShortName">
+       <item>reportDocumentLabel</item>      
+    </string-array>
+    
+    <string-array name="thesaurusRank">
+        <item></item>
+        <item>subsp.</item>
+        <item>form.</item>
+        <item>var.</item>
+        <item>subvar.</item>
+    </string-array>   
+</resources>

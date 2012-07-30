@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+
+  android:orientation="vertical">
+   
+
+  
+  <uni.projecte.ui.CitationGallery xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:id="@+id/gallery"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    	android:layout_weight="1">
+      </uni.projecte.ui.CitationGallery>
+
+  
+  			  			
+  <LinearLayout  	xmlns:android="http://schemas.android.com/apk/res/android" 
+    			    android:layout_width="fill_parent" 
+        			android:layout_height="fill_parent"
+					android:orientation="horizontal"
+					android:gravity="top|right"
+					>
+						
+			 	<uni.projecte.ui.TransparentPanel
+			    android:id="@+id/photoInfo"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="5dp"
+			    android:paddingTop="5dp"
+			    android:paddingRight="5dp"
+			    android:paddingBottom="2dp"
+			    android:background="@color/grisAlpha"	
+			    >
+
+			 		<TextView
+			 		    android:id="@+id/tvGalImageCounter"
+			 		    android:layout_width="wrap_content"
+			 		    android:layout_height="wrap_content"
+			 		    android:textSize="16sp" />
+			 	   
+				  	</uni.projecte.ui.TransparentPanel>	
+				              
+				  	
+			 	    </LinearLayout>
+  
+			  			
+  <LinearLayout  	xmlns:android="http://schemas.android.com/apk/res/android" 
+    			    android:layout_width="fill_parent" 
+        			android:layout_height="fill_parent"
+					android:orientation="horizontal"
+					android:gravity="bottom|right"
+					>
+						
+			 	<uni.projecte.ui.TransparentPanel
+			    android:id="@+id/mapControlPanel"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="5dp"
+			    android:paddingTop="5dp"
+			    android:paddingRight="5dp"
+			    android:paddingBottom="2dp"
+			    android:background="@color/grisAlpha"	
+			    >
+			    
+			  			<LinearLayout
+			  			    android:id="@+id/llPhotoInfo"
+			  			    android:layout_width="wrap_content"
+			  			    android:layout_height="wrap_content"
+			  			    android:layout_gravity="center_vertical"
+			  			    android:visibility="gone" 
+			  			    android:layout_weight="1" >
+			  			 			
+			  			       	<ImageButton android:layout_marginRight="8sp"  android:background="@android:drawable/ic_menu_edit" android:id="@+id/btEditField" android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageButton>
+			  			    
+			  			 		<TextView
+			  			 		    android:id="@+id/imgValue"
+			  			 		    android:layout_width="wrap_content"
+			  			 		    android:layout_height="wrap_content"
+			  			 		    android:layout_gravity="center_vertical"
+			  			 		    android:text="@string/tvGalleryCitationWithoutInfo"
+			  			 		    android:textColor="#FFFFFF"
+			  			 		    android:textSize="12sp" 
+			  			 		    android:layout_marginRight="12sp"/>
+			  			 		
+			  			 		
+			  			 </LinearLayout>
+				          
+				
+			
+				        <LinearLayout android:layout_weight="0"  android:id="@+id/linearLayout1" android:layout_height="wrap_content"  android:layout_width="fill_parent" android:orientation="horizontal">
+				              <ImageButton  android:background="@android:drawable/ic_menu_info_details"  android:id="@+id/btShowInfo" android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageButton>
+				          </LinearLayout> 
+				
+				              			    	
+		
+				  	</uni.projecte.ui.TransparentPanel>	
+				              
+				  	
+			 	    </LinearLayout>
+
+</RelativeLayout>

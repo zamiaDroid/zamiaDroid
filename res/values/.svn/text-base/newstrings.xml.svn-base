@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="chooseExportFormat">Escull un format d\'exportació</string>
+	<string name="chooseImportFormatCit">Escull format d\'importació de citacions</string>
+	<string name="chooseImportFormatProj">Escull format d\'importació de projectes</string>
+	
+	<string name="projLoading">Carregant projecte&#8230;</string>
+    <string name="projLoadingTxt">Si us plau, no tenqui aquesta finestra. Depenent de la mida del conjunt de camps la importació pot trigar alguns minuts.</string>
+    
+   	<string name="projSuccesCreated">S\'ha creat el projecte %1$s correctament.</string>
+   	
+   	<string name="citFileExists">Ja existeix l\'arxiu de citacions. El vols substituir?</string>
+    <string name="newCreatedField">S\'ha creat el camp </string>
+    
+    <string name="projSuccesCreatedWithCitations">Projecte creat amb %1$d citacions</string>
+    
+	<string name="errorCitationFile">Hi ha un error al fitxer de citacions</string>
+	
+	<string name="thInfoName"><b>Nom del tesaure: </b></string>
+	<string name="thInfoNumItems"><b>Número d\'items: </b></string>
+	
+    <string name="mCreateDefProj">Crear projectes d\'exemple</string>
+    <string name="noProjectNeedCreate">No hi ha projectes al sistema. N\'has de crear un o importar-lo.</string>
+    
+    <string name="GOOGLE_MAPS_API_KEY">0iepYHdiW7LP6Jd7SkVZ8sMML5RIGudGFe5rCGA</string>
+    
+    <string name="prefAutoFields">Camps automàtics</string>
+    <string name="prefAutoFieldsSum">Hi ha camps que es poden completar de forma automàtica.</string>
+    
+    <string name="prefAutoFieldLocality">Camp localitat</string>
+    <string name="prefAutoFieldLocalitySum">El camp localitat es determinarà de forma automàtica.</string>
+    
+    <string name="cbNumField">Camp numèric</string>
+    
+    <string name="citCoord"><b>Coord:</b></string>
+    <string name="citAltitude"><b>Altura:</b></string>
+    
+    <string name="sampleProjectId">sample_project_ca</string>
+    <string name="sampleProjectName">Projecte d\'exemple</string>
+    <string name="sampleProjectType">Exemple</string>
+    <string name="sampleProjectDesc">Projecte d\'exemple</string>
+    
+     
+    <string name="slShowElem">Veure Elements</string>
+    <string name="slAddElem">Afegir Element</string>
+    <string name="slLocation">Localització</string>
+    <string name="slDate">Data</string>
+    <string name="mShowGallery">Veure galeria de fotos</string>
+  	<string name="slSaveModif">Desar modificacions</string>
+  
+  
+    <string name="mapYouAreHere">Estàs aquí</string>
+    <string name="mapCreateCitation">Vols crear una citació al punt %1$f | %2$f ?</string>
+    
+    <string name="repRemoteTitle">Projectes del repositori remot</string>
+    <string name="repLocalTitle">Projectes del repositori local</string>
+     
+    <string name="projSettings">Opcions</string>
+    <string name="projAddAuthor">Afegir camp autor automàticament</string>
+    <string name="projAddAltitude">Afegir camp alçada automàticament</string>
+  
+     <string name="projCreation">Crear Projecte</string>
+     <string name="projCreationFree">Lliure definint els camps</string>
+     <string name="projCreationRep">Des de repositori</string>
+     <string name="projCreationCit">Des de fitxer de citacions</string>
+     <string name="projCreationFagus">Des de projecte Fagus (B-VegAna)</string>
+  
+     <string name="aboutUs">Sobre nosaltres</string>
+    
+    <string name="noPhotoInProject">No hi ha citacions amb fotografia</string>
+    <string name="mainOptions">Opcions Principals</string>
+    
+    <string name="btExportFile">Exportar Fitxer a </string>
+    <string name="tvExportDialogFileName">Nom del fitxer</string>
+    <string name="tvExportDialogTitle">Exportació de citacions</string>
+     
+    <string name="downloadingTh">Descarregant tesaure&#8230;</string>
+    <string name="remoteThDescription">Pots descarregar des d\'Internet un tesaure taxonòmic. Si tens tarifa de dades amb límit de descàrrega
+    és recomanable usar una connexió Wi-fi i no 3G. La mida d\'alguns tesaures pot ser prou imporant.</string>
+    <string name="noThConnection">No es pot accedir al servidor. Hi ha connectivitat a Internet?</string>
+    
+     <string name="cbThModeRemote">Descarregar tesaure on-line</string>
+     <string name="cbThModeLocal">Escollir tesaure local</string>
+     <string name="cbThModeNone">Sense tesaure</string>
+     
+  
+    <string name="synonymQuestion">El taxon <b>%1$s</b> és un sinònim. Vols substituir-ho pel nom acceptat?</string>
+    <string name="checkSynomymsTitle">Comprovació sinònims</string>
+    <string name="checkSynomyms">Comprovació dels sinònims dels tàxons</string>
+    <string name="backupProjectExists">El projecte a importar ja existeix. Què vol fer amb el backup?</string>
+    <string name="rBbackupImportCitOnly">Importar només citacions</string>
+    <string name="rbCreateNewProject">Crear un nou Projecte</string>
+    <string name="btBackupImport">Carregar backup</string>
+    
+    <string name="tvProjType"><b>Tipus de projecte: </b></string>
+    
+    <string name="backupLoading">Carregant backup</string>
+    <string name="backupLoadingTxt">Si us plau, no tenqui aquesta finestra. Depenent de la mida del conjunt de camps la càrrega pot trigar alguns minuts.</string>
+    <string name="titleBdbc">Banc de dades de la Biodiversitat de Catalunya</string>
+    
+    
+    <string name="mCreateBackup">Crear còpia de seguretat</string>
+    <string name="mLoadBackup">Restaurar còpia de seguretat</string>
+    <string name="pdBackupCreating">Creant còpia de seguretat</string>
+    <string name="mRemoveProject">Esborrar Projecte</string>
+    <string name="rmFile">Vols esborrar el fitxer?</string>
+    
+    <string name="repeatedFieldTitle">Escull els camps a repetir el valor</string>
+    <string name="mRepeatedField">Camps a repetir el valor</string>
+    
+    
+    <string name="waitingForGPS">No hi ha localització. Què vols fer?</string>
+    <string name="lastKnownLocation">Usar darrera localització coneguda</string>
+    <string name="waitForLocation">Esperar localització</string>
+    
+    <string name="photoWithoutInfo">Aquesta foto no està vinculada a cap citació</string>
+    
+        <string name="mShowTaxonInfo">Veure fitxa del tàxon</string>
+    
+ 	<string name="tvThType">Tipus de tesaure: </string>
+   
+     <string name="toastTaxonNotExists">El tàxon no és present al tesaure</string>
+     <string name="toastNotThesarus">No hi ha tesaure assignat</string>
+     <string name="toastGPSWorking">El GPS encara està buscant la posició</string>
+     
+    <string name="toastWrongFile">Arxiu incorrecte</string>
+    <string name="toastShowLocation">Veure localització</string>
+    
+    
+    <!-- New CitationManager -->
+    
+    <string name="filterDialogEmptyValue">Valor buit</string>
+    <string name="appliedFilter">Dades filtrades pel camp <b>%1$s</b> amb valor %2$s <b>%3$s</b></string>
+        
+     <string name="countFiltered"><b>Filtrades:</b> %1d | </string>
+     <string name="countTotal"><b>Total:</b> %1d </string>
+     <string name="countSelected"><b>Seleccionades:</b> %1d | </string>
+         
+     <string name="alertWrongCoordinates">Coordenades incorrectes</string>
+     <string name="noCitationsSelected">No hi ha citacions seleccionades</string>
+     
+     <string name="actionExportCitation">Exportar</string>
+     <string name="actionShowMap">Mapa</string>
+     <string name="actionRemove">Esborrar</string>
+          
+     <string name="filterBy">Filtre:</string>
+     <string name="filterTypeField">camp</string>
+     <string name="filterTypeLocation">localització</string>
+     <string name="filterTypeDate">data</string>
+     
+     <string name="btApplyFilter">Aplicar filtre</string>
+     
+     
+
+
+     <string name="aboutUsExtended">
+         <![CDATA[
+        <b>Direcció: </b> Xavier Font<br/>
+     	<b>Idea original: </b> David Martí Pino i Xavier Font<br/>
+    	<b>Programació: </b> David Martí Pino<br/>
+    	<b>Agraïm la col·laboració de: </b> Josep Vilaplana, Javier Moreno, Carlos Gómez, Berta Mora i Gwendolyn Peyre<br/><br/>
+    	<b>Amb el suport:</b>
+		]]>
+     </string>
+  
+  
+  <!-- New Thesaurus manager -->   
+         
+         
+  <string name="rbRemoteTh">Thesaure On-line</string>
+  <string name="rbLocalTh">Thesaure Pla</string>
+  <string name="thTitleImportPlain">Importar tesaure taxonòmic pla</string>
+  <string name="thFieldsSeparator">Separador de camps:</string>
+    
+  <string name="etHintThGender">Gènere</string>  
+  <string name="etHintThSpEp">Epítet específic</string>  
+  <string name="etHintThSpEpAut">Autor epítet específic</string>  
+  <string name="etHintThRange">Rang infra-específic</string>  
+  <string name="etHintThSpInfraEp">Epítet infra-específic</string>  
+  <string name="etHintThSpInfraEpAut">Autor epítet infra-específic</string>  
+  <string name="etHintThPrimKey">Clau primària</string>  
+  <string name="etHintThSecKey">Clau secundària</string>  
+
+  <string name="thInfoTitle">Informació del Tesaure taxonòmic</string>
+      
+  <string name="thInfoSearchField">Cercador de registres</string>
+
+  <string name="thSourceLocalBVegana">XML local B-Vegana</string>
+  <string name="thSourceRemote">Tesaure remot</string>  
+  <string name="thSourceLocalPlain">Fitxer pla</string>  
+  
+  <string name="thInfoOriginFile">Fitxer</string>  
+  <string name="thInfoOriginDB">Base de dades</string>
+  <string name="thInfoOriginType">Tipus d\'origen</string>  
+  <string name="thInfoImportTimestamp">Data d\'importació</string>  
+  
+  <string name="thInfoAuthors">Autors</string>  
+  <string name="thInfoKeys">Claus</string>  
+                  
+  <string name="thInfoFieldPrimaryKey">Primària</string>  
+  <string name="thInfoFieldSecondaryKey">Secundària</string>  
+  <string name="thInfoFieldAuthorEpEsp">Ep. Esp.:</string>
+  <string name="thInfoFieldAuthorInfraEpEsp">Sub. Esp.:</string> 
+            
+  <string name="thWrongFile">Fitxer incorrecte</string> 
+  
+  <string name="thImportPlainFirstColumnLabel">Etiquetes a la 1a fila</string> 
+  <string name="thImportPlainRemoveCommas">Eliminar cometes ""</string> 
+      
+   <string name="btThImport">Importa tesaure</string> 
+   <string name="tvThNameHit">nom del tesaure ....</string> 
+       
+  <string name="mapMoveCitation">Vols moure la citació al punt %1$f | %2$f ?</string>
+  <string name="mapShowTransitView">Veure vista de carreteres</string>
+  <string name="mapShowNormalView">Veure vista de foto aèria</string>
+       
+  <string name="btThAddLocal">Afegir Local</string>
+  <string name="btThAddRemote">Afegir Tesaure Remot</string>
+  <string name="btFilterTaxon">taxon</string>
+  <string name="rbFilterCompleteTaxon">Per taxon complert</string>
+  <string name="rbFilterTaxonGenus">Per gènere</string>    
+  <string name="rbFilterWrongTaxon">No presents al tesaure</string>    
+  <string name="cbMyTracksInfoDialog">No tornar a veure el missatge</string>    
+  <string name="btOk">Acceptar</string>    
+      
+      
+  <string name="tvMyTracksInstalled">MyTracks ja està instal·lat al sistema.</string>    
+  <string name="tvMyTracksNotInstalled">MyTracks no està instal·lat al sistema.</string>    
+  <string name="mapConfShowCompass">Mode bruíxola</string>    
+  <string name="mapConfigUTMPrecTitle">Precissió de la visualització de l\'UTM</string>    
+      
+    <string name="mapConfigTitle">Opcions del Mapa</string>    
+      
+    <string name="mapConf10km">10x10 km</string>    
+      
+    <string name="mapConf1km">1x1 km</string>    
+      
+    <string name="mapConf1m">1x1 m</string>    
+   
+    <string name="appVersion">Versió: &lt;b> %1$s &lt;/b></string>
+    
+    <string name="citationCloneQuestion">Vols crear una nova citació consecutiva a la seleccionada a la mateix localització?</string>
+       
+    <string name="allTracks">Tots</string>
+    
+    <string name="trackSaveQuestion">Vols desar el Track?</string>
+    <string name="trackWithoutLocations">El Track té 0 punts i no es guardarà</string>
+    <string name="trackProjectDescription">Track del programa ZamiaDroid del projecte</string>
+    <string name="trackProjectNameDialog">nom per defecte:</string>
+    <string name="trackRemoveDialog">Vols esborrar el track</string>
+    <string name="waitingGPS">Esperant GPS &#8230;</string>
+    <string name="mMapsOptions">Opcions del mapa</string>
+    <string name="mLoadTrack">Carregar track</string>
+   	<string name="trackRegistering">Enregistrant track</string>
+    
+    <string name="mCenterLocation">Centrar localització</string>
+    <string name="mCleanTrackLoaded">Netejar Mapa</string>
+    <string name="mapConfShowMyTracks">Veure diàleg tracks</string>
+    
+    <string name="filterTaxonGenus">Taxon per gènere</string>
+    <string name="filterNotInThesaurus">no present al tesaure</string>
+    <string name="filterTaxonGenusMessage">Buscant taxons amb gènere</string>
+    <string name="filterNotInThesaurusMessage">Descartant tàxons correctes respecte al tesaure</string>
+   
+    <string name="utm10km">10x10</string>    
+    <string name="utm1km">1x1</string>    
+    <string name="utm1m">1x1</string>    
+    
+    <string name="removeCitationPhoto">Vols esborrar la fotografia amb el camp de la citació vinculada?</string>
+	<string name="mRemovePhoto">Esborrar fotografia</string>
+	<string name="mConfigDB">Configurar Base de Dades</string>
+	<string name="projWithoutTh">No hi ha tesaure correcte vinculat</string>
+		
+	<string name="mapConfShowConfig">Veure alçada</string>
+	
+
+	<!-- ZamiaImport -->
+	<string name="zamiaImportTitle">Importar fitxer de citacions en format</string>
+   	<string name="zamiaImportProgress">Important noves citations al projecte %1$s</string>
+   	<string name="zamiaImportWrongFormat">El fitxer no té format Zamia correcte o no hi ha citacions.</string>
+    <string name="zamiaImportCitationsCount">Hi ha %1d citacions al fitxer</string>
+	<string formatted="false" name="zamiaImportAddFields">Hi ha &lt;b> %1d camps &lt;b>que &lt;b> no presents al projecte &lt;/b>. Els vols afegir al projecte &lt;b> %2$s &lt;/b> ?</string>
+   	<string name="zamiaImportError">Fitxer incorrecte</string>
+   	
+	<string name="citationExportDestination">Destinació de l\'exportació</string>
+	<string name="citationWithoutLocation">No hi ha localització enregistrada</string>
+	
+	<string name="citationExportEmailSubject">Exportació citacions ZamiaDroid: </string>
+	<string name="citationExportEmailText">Exportació citacions ZamiaDroid: \n \tNom del projecte: %1$s \n\tData d\'exportació: %2$s \n\tFormat: %3$s</string>
+	
+	<string name="myTracksThirdPartyAccessDisabled">Activa l\'accés a tercers del MyTracks</string>
+	<string name="myTracksInternalError">Error intern de Mytracks</string>	
+	
+	<string name="photoGallery">Galeria de fotos</string>
+	<string formatted="false" name="citationsAtDir">&lt;b>Arxius de citacions a: &lt;/b></string>
+	
+	<string name="photoCantBeFound">No existeix la fotografia vinculada a la localització.</string>
+	<string name="citationListLoading">Carregant llista de citacions</string>
+		
+	<string name="actionPhoto">Fotografies</string>
+	<string name="photoNotLinked">No existeix la fotografia vinculada</string>
+	<string name="exportRemoteToTab">Exportar presències a format TAB</string>
+	
+	<string name="btExportPresences">Exportar presències</string>
+	<string name="tvPresenceInfo">Els arxius de presències s\'exportaran a: &lt;b> %1$s &lt;/b></string>
+	<string name="presenceRemoteDB">remot</string>
+	<string name="presenceLocalDB">local</string>
+	<string name="presenceTotalDB">total</string>
+	<string name="presenceFileExists">Ja existeix l\'arxiu de presències. El vols substituir?</string>
+	
+	<string name="mUseExternalStorage">Usar emmagatzematge secundari (extern) per defecte</string>
+	<string name="mUseExternalStorageDisabled">Usar emmagatzematge primari (extern) per defecte</string>
+	
+	<string name="mChangeExternalStoragePrim">Veure fotos emmagatzematge extern (primari)</string>
+	<string name="mChangeExternalStorageSec">Veure fotos emmagatzematge extern (secundari)</string>	
+	
+	<string name="movePhotosInfo">Les fotografies es mouran al directori : &lt;b> %1$s &lt;/b></string>
+	<string name="mCreateReport">Informes</string>
+	<string name="btCreateReport">Crear informe</string>
+	<string name="etReport">Informe</string>
+	<string name="tvCreateReportLabel">Camp que s\'usarà com a etiqueta: </string>
+	<string name="pdCreateReportTitle">Creant informe</string>
+	<string name="mGalleryMovePhotos">Moure fotos</string>
+	<string name="mGalleryShowPrimaryStorage">Veure emmagatzematge primari (extern)</string>
+	<string name="mGalleryShowSecondaryStorage">Veure emmagatzematge secundari (extern)</string>
+	<string name="dialogGalleryMovingPhotos">Movent fotografies</string>
+	<string name="btCitationImport">Importar citacions</string>
+	<string name="tvAboutUsVersion">versió</string>
+    <string name="etBackupNamev">nom projecte &#8230;</string>
+    <string name="rbFilterByField">Per camp</string>
+    <string name="rbFilterByDate">Per data</string>
+    <string name="rbFilterByUTM">per UTM</string>
+    <string name="rbFilterByLatLong">per lat/long</string>
+    <string name="etBackupProjectName">Nom del backup</string>
+    <string name="cbBackupAddPhotos">Afegir fotografies</string>
+    <string name="btBackupCreate">Crear Backup</string>
+    <string name="tvGalleryCitationWithoutInfo">Sense informació</string>
+    <string name="cbGalleryCopyPhotos">Deixar còpia al directori d&amp;apos;origen</string>
+    <string name="rbMovePhotoInternalToExternal">De la targeta interna a l\'externa</string>
+    <string name="rbMovePhotoExternalToInternal">De la targeta externa a la interna</string>
+    <string name="tvImportCitationsTitle">Importació de citacions</string>
+    <string name="tvImportCitationsAchtung">Atenció! No s&amp;apos;importaran les dades referents als camps que no hi són al projecte i que tampoc s\'afegeixin al projecte.</string>
+    <string name="tvTrackList">Llistat de tracks: </string>
+    <string name="tvNoThTaxonsInfo">Llistat de tàxons del projecte &lt;b> %1$s &lt;/b> no presents al tesaure</string>   
+    <string name="cbSendByMail">Enviar per e-mail</string>
+</resources>

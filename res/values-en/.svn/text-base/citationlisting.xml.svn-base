@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="tvNumCitations">Total observations: </string>
+	<string name="bCitationExport">Export observations to Fagus</string>
+	<string name="bFagusImport">Importobservations from Fagus</string>
+	
+	<string name="bRemoveAll">Delete all observations</string>
+	<string name="bShowMap">See observations on a map</string>
+	
+	<string name="bFagusFileExported">Observations were successfully exported to the external memory called </string>
+    <string name="outDated">Some observations are not actualized</string>
+    
+    <string name="cLprojectName">Project name</string>
+    <string name="cLthName">Name of the taxonomic thesaurus</string>
+    <string name="tvFilteredCitations">Filtered /</string>
+    
+    <string name="tvFilteredField"><b>Observations filtered by the field: </b></string>
+    <string name="insert_data">Insert data</string>
+    <string name="removeAllCitationsQuestion">Are you sure you want to delete these %1$d observations?</string>
+    
+    <string name="chooseField">Select one observation</string>
+    <string name="noCitations">No existing observations</string>
+    <string name="noLocationsCitations">There is no observations with location</string>
+    
+      
+        
+    <string name="citExportLoading">Exporting Citations file &#8230;</string>
+    <string name="citExportTxt">Please, don\'t close this windows. Depending on citations number the process can last minutes.</string>
+    
+     <string name="citRemovalLoading">Removing citations&#8230;</string>
+    <string name="citRemovalTxt">Please, don\'t close this windows. Depending on citations number the process can last minutes.</string>
+    
+        
+    
+    <!-- Citation List - Menu -->
+    
+    <string name="mShowProjectProperties">See project characteristics</string>
+    <string name="mShowCitationMap">See observations on a map</string>
+    <string name="mChooseFilteredField">Select filtering field</string>
+    <string name="mCitationExport">Export Observations</string>
+    <string name="mCitationImport">Import Observations</string>
+    <string name="mRemoveCitations">Delete Observations</string>
+
+</resources>

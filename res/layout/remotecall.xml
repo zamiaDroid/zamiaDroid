@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  >
+<TextView android:text="@+id/connectionMessage" android:id="@+id/tvConnectionMessage" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+<TextView android:text="@+id/connectionResponse" android:id="@+id/tvConnectionResponse" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+
+
+ <Button android:text="getResearches" android:id="@+id/bGR" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+<!-- <Button android:text="getRsInfo" android:id="@+id/bgRsInfo" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+<Button android:text="sampleSending" android:id="@+id/bSS" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>-->
+
+</LinearLayout>

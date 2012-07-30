@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
+<head>
+<title>My Tracks Welcome</title>
+</head>
+<body>
+<div>
+<p>
+<b>Enregistrament de tracks</b><br>
+En aquesta nova versió s'ha afegit l'opció d'enregistrar tracks. Per fer-ho es fa ús de les llibreries externes My Tracks que s'han d'instal·lar com a aplicació a banda.<br><br>
+
+<b>Instal·lació MyTracks</b><br>
+Podeu baixar-vos l'aplicació des del l'Android Market o des de la següent adreça: <a href="market://details?id=com.google.android.maps.mytracks">MyTracks</a><br> <br>
+
+<b>Permetre l'accés a aplicacions externes</b><br>
+Per a fer-lo funcionar també cal permetre l'accés a aplicacions externes a les opcions de MyTracks. Per modificar les opcions, des del menú de MyTracks, s'ha d'anar a Settings -> Sharing -> Allow access. (activant l'opció Allow Access)<br>
+</div>
+</body>
+</html>

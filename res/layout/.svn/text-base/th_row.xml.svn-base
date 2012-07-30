@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <ImageView android:src="@drawable/tick" android:layout_width="wrap_content" android:id="@+id/ticked" android:layout_height="wrap_content"></ImageView>
+
+<TextView android:id="@+id/nomA"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+     android:padding="5dp"
+     android:text="@string/no_fields_added"
+     android:layout_weight="2"
+     
+     />
+    
+     <TextView android:id="@+id/icode"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+     android:layout_weight="0"
+
+     />
+     
+     
+     </LinearLayout>
+
+    

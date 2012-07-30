@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2010 Google Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<resources>
+    <color name="title_background">#ffdddddd</color>
+    <color name="title_text">#ffffffff</color>
+    <color name="title_text_alt">#ff000000</color>
+    <color name="foreground1">#ff7081a3</color>
+    <color name="foreground2">#ff7081a3</color>
+    <color name="background1">#ffffffff</color>
+    <color name="background2">#ff89CC62</color>
+    <color name="background3">#ffe3e8f1</color>
+    <color name="background_white">#ff000000</color>
+    <color name="gris">#ff383838</color>  
+    <color name="grisAlpha">#88383838</color>  
+    <color name="grisAlphaFosc">#88383844</color>  
+    <color name="grisnegre">#ff282828</color>   
+    <color name="title_separator">#40ffffff</color>
+
+    <color name="mainGreen">#ff88aa00</color>
+    <color name="secondaryGreen">#ffd0dd9a</color>
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="mainGreenLight">#aa88aa00</color>
+    <color name="blueElectric">#ff0099CC</color>
+    
+    
+
+</resources>

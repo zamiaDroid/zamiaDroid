@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ZamiaDroid</string>
+    <string name="noSdAlert">There is no mounted card</string>
+    <string name="root">[Return]</string>
+</resources>

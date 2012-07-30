@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+   android:orientation="vertical" 
+  >
+  
+  <LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+   android:orientation="horizontal"
+    android:padding="5dp"
+   
+   android:background="#ff333333"
+    
+  >
+<TextView android:text="@string/projName" android:id="@+id/nomTipusEstudi" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+
+<EditText android:id="@+id/eTextEstudi" android:layout_width="fill_parent" android:layout_height="wrap_content"></EditText>
+
+
+</LinearLayout>
+
+  <LinearLayout
+ android:layout_width="fill_parent" 
+ android:layout_height="fill_parent"
+   android:orientation="horizontal" 
+   android:padding="5dp"
+   android:background="#ff333333"
+   
+  >
+<TextView android:text="@string/tvChooseTh" android:id="@+id/TextView03" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+<CheckBox android:text="" android:id="@+id/chNoTh" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true"></CheckBox>
+<Spinner android:id="@+id/thList" android:layout_width="wrap_content" android:layout_height="wrap_content"></Spinner>
+
+</LinearLayout>
+
+
+  <LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+   android:orientation="horizontal" 
+  >
+
+
+
+</LinearLayout>
+ 
+ 
+
+  <LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+   android:orientation="horizontal" 
+      android:background="#ff333333"
+   
+  >
+
+<Button android:text="@string/brsAddField" android:id="@+id/bAfegirAtribut" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+<!-- <Button android:text="@string/bAddPredAttribute" android:id="@+id/bAddPredAttribute" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button> -->
+<Button android:text="@string/bProjectCreate" android:id="@+id/bCrearEstudi" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/btn_default_normal"></Button>
+
+
+</LinearLayout>
+
+
+
+<TextView android:text="@string/projectFieldList" android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+<ListView android:id="@+id/llistaAtributs" android:layout_width="wrap_content" android:layout_height="wrap_content"></ListView>
+
+
+
+
+
+
+
+
+
+</LinearLayout>

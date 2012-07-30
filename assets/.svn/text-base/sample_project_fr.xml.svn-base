@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zamia_project name="Sample Project" language="fr">
+  <description>Sample project</description>
+  <project_type>Sample</project_type>
+  <field_list>
+    <field label="Species" name="thesaurus" description="" type="text">
+      <default_value/>
+    </field>
+    <field label="Comment" name="Comment" description="" type="text">
+      <default_value>Sample comment</default_value>
+    </field>
+    <field label="Locality" name="Locality" description="" type="text">
+        <default_value/>
+    </field>
+  </field_list>
+  <CitationCoordinate code="" precision="0.0" type="UTM alphanum" units="1m"/>
+</zamia_project>

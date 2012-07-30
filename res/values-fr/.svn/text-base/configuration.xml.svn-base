@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Configuration Name strings -->
+
+    <string name="confTitleUserName">Nom d\'utilisateur dans le sytème</string>
+    <string name="confTitleLanguage">Langue d\'interface</string>
+    <string name="confTitlePath">Dossier de travail de zamiaDroid</string>
+    <string name="confTitleCoord">Système de coordonnées</string>
+    <string name="confTitleAdvanced">Options avancées</string>
+    <string name="confTitleReset">Reinitialiser les valeurs par défaut</string>
+    <string name="confTitleResetSummary">Revenir aux données initiales</string>
+    <string name="confTitleGPS">Configuration du GPS</string>
+    <string name="confTitleGPSSummary">Options avancées du GPS</string>
+
+    <string name="confTitleGPSActive">Activer le GPS</string>
+    <string name="confTitleGPSActiveSummary">Aller à l\'écran d\'administration du GPS</string>
+    
+    <string name="reset_values">Les valeurs par défaut ont été reinitialisées</string>
+    
+     <string name="confGPSGeoid">Geoid correction (elevation)</string>
+    
+    <string name="updateGPSWhenTaxon">GPS when taxon added</string>
+	<string name="updateGPSWhenTaxonSummary">GPS will be updated when taxon field is filled if it exists</string>	
+    	
+    <string name="photoConfTitle">Photo management</string>
+	<string name="photoConfSummary">Configuration related to photos</string>
+	<string name="photoEnableSecStorage">Enable secondary external storage</string>
+	<string name="photoEnableSecStorageSummary">Enable secondary external photo-storage</string>
+	<string name="photoPathSecStorageTitle">External storage directory</string>
+	
+	<string name="photoPathWrong">Directory doesn\'t exist</string>
+
+</resources>

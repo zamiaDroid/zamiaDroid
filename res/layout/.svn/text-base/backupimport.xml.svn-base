@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" android:orientation="vertical">
+    <TextView android:layout_width="wrap_content" android:id="@+id/tvIntroImportBackup" android:text="@string/backupProjectExists" android:layout_height="wrap_content"></TextView>
+    <RadioGroup android:id="@+id/radioGroup1" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <RadioButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:checked="true" android:text="@string/rBbackupImportCitOnly" android:id="@+id/rbBackImportCit"></RadioButton>
+        <RadioButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/rbCreateNewProject" android:id="@+id/rbBackupNewProject"></RadioButton>
+    </RadioGroup>
+    <EditText android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="" android:hint="@string/etBackupNamev" android:id="@+id/etBackProjName"></EditText>
+    <Button android:layout_width="wrap_content" android:text="@string/btBackupImport" android:layout_height="wrap_content" android:id="@+id/btImportBackup"></Button>
+</LinearLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="gps_signal_not_found">Señal GPS no encontrada. Compruebe el estado del GPS</string>
+    <string name="gps_signal_found">Señal GPS encontrada correctamente</string>
+    <string name="search">Buscando&#8230;</string>
+    <string name="search_signal_gps">Buscando señal GPS</string>
+    <string name="gps_missing">No hay señal del GPS</string>
+    <string name="enableGPSQuestion">Gps desactivado. Quiere activar el GPS o trabajar sin GPS?</string>
+    <string name="enableGPS">Activar GPS</string>
+    <string name="noGPS">Trabajar sin GPS</string>
+    <string name="gps_disabled">Trabajar sin GPS</string>
+
+</resources>

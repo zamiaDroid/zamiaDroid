@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="hasCitations">No es pot esborrar el projecte perquè té citations</string>
+	<string name="citationDate"><b>Data de la citació: </b></string>
+	<string name="location"><b>Localització: </b></string>
+	<string name="tModifiedCitation">S\'ha modificat correctament la citació</string>
+	<string name="numCitationsImported">citacions importades correctament</string>
+	<string name="deleteCitationQuestion">Vols esborrar la citació?</string>
+	
+	<string name="mRemoveCitation">Esborrar citació</string>
+	<string name="mShowUniqueCitation">Veure citació al mapa</string>
+	
+	<string name="backFromCitationEditor">Vols sortir de l\'edició de citacions? Les dades no enregistrades es perdran.</string>
+	
+	
+	
+</resources>

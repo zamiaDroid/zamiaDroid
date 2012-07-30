@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent" 
+              android:layout_height="fill_parent"
+              android:orientation="horizontal" 
+              >
+
+
+
+    <LinearLayout android:id="@+id/LinearLayout05"
+	        android:layout_height="wrap_content" android:layout_width="fill_parent"
+              android:orientation="vertical" 
+			android:padding="5dp"
+			android:layout_weight="1"
+	        	        >
+    
+    
+<TextView android:id="@+id/tvFieldLabel"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+     android:padding="2dp"/>
+     
+     
+
+	
+	
+<TextView android:id="@+id/tvFieldName"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+     android:padding="2dp"/>
+
+    
+ <!--    <TextView android:id="@+id/tvFieldType"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+     android:padding="2px"/>
+     
+      
+      <TextView android:id="@+id/tvFieldCat"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+     />--> 
+
+</LinearLayout>
+
+    <LinearLayout android:id="@+id/LinearLayout05"
+	        android:layout_height="wrap_content" android:layout_width="fill_parent"
+	        	        android:gravity="right|center"
+	        	        android:layout_weight="1"
+
+	        	        >
+		    
+		    <CheckBox android:checked="true" android:text="" android:id="@+id/cBedit" android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
+
+
+	</LinearLayout>
+    
+
+
+</LinearLayout>
+    

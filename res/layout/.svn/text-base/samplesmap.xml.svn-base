@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+			android:id="@+id/home_container"  
+			android:layout_width="fill_parent" 
+			android:layout_height="fill_parent">
+<!-- 
+<Linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/buttonlayout" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:height="32dp" android:gravity="left|top" android:background="#2B60DE" android:paddingtop="2dp" android:paddingbottom="2dp">
+
+		    <Linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/buttonlayout2" android:orientation="horizontal" android:layout_height="wrap_content" android:gravity="left|center_vertical" android:layout_gravity="left" android:layout_width="wrap_content">
+	    		<Imagebutton android:id="@+id/imgbtn1" android:layout_width="32dp" android:layout_height="32dp" android:background="@drawable/icon"></Imagebutton>
+	    		<Textview android:id="@+id/txtTest" android:layout_width="fill_parent" android:layout_height="fill_parent" android:textstyle="bold" android:text="SimpleActionBar App" android:textcolor="#FFFFFF" android:textsize="15sp" android:gravity="center_vertical" android:paddingleft="5dp">
+
+	    	</Textview></Linearlayout>
+		    <Linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/buttonlayout2" android:orientation="horizontal" android:layout_height="wrap_content" android:gravity="right" android:layout_gravity="right" android:layout_width="fill_parent">
+	    		<Imagebutton android:id="@+id/imgbtn2" android:layout_width="32dp" android:layout_height="32dp" android:background="@drawable/icon"></Imagebutton>
+	    		<Imagebutton android:id="@+id/imgbtn3" android:layout_width="32dp" android:layout_height="32dp" android:background="@drawable/icon"></Imagebutton>
+	    	</Linearlayout>  -->
+
+
+   <!-- <uni.projecte.maps.mapabstraction.MapViewGM-->
+   <com.google.android.maps.MapView
+          android:id="@+id/mapview"
+       android:layout_width="fill_parent"
+       android:layout_height="fill_parent"
+        android:clickable="true"
+		android:apiKey="0iepYHdiW7LP6Jd7SkVZ8sMML5RIGudGFe5rCGA"
+		
+    />
+    
+    	<!-- Feina -->
+           <!--  android:apiKey="0iepYHdiW7LP6Jd7SkVZ8sMML5RIGudGFe5rCGA"--> 
+           <!-- 0iepYHdiW7LP6Jd7SkVZ8sMML5RIGudGFe5rCGA -->
+       <!-- portatil casa -->
+               <!--  android:apiKey="0iepYHdiW7LPuKkUru1YG_Mu4d3WN1q-A3lGLgg"--> 
+               <!-- 0iepYHdiW7LPJskUhI7eryrsQBiW_QrzDK6EcNA-->
+    	<!-- certificat androidMarket -->
+    	
+    	<!--        android:apiKey="0iepYHdiW7LMvYV-Y5Z8RXdD1iVnXmtL5XCU-Fg"-->
+    
+  		<LinearLayout  	xmlns:android="http://schemas.android.com/apk/res/android" 
+    			    android:layout_width="fill_parent" 
+        			android:layout_height="fill_parent"
+					android:orientation="vertical"
+					android:gravity="top|right"
+					>
+					
+			 	<uni.projecte.ui.TransparentPanel
+			    android:id="@+id/mapControlPanel"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="9dp"
+			    android:paddingTop="6dp"
+			    android:paddingRight="9dp"
+			    android:paddingBottom="1dp"
+			    android:background="@color/grisAlpha"	
+			    >
+			    
+			 	 
+			          <include
+			              android:id="@+id/include1"
+			              android:layout_width="wrap_content"
+			              android:layout_height="wrap_content"
+			              layout="@layout/citationmapdialog" />
+			 
+			    
+			    	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				    android:orientation="horizontal"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:gravity="right" android:padding="4dp">
+				    
+						<ImageButton 
+						android:id="@+id/myLocationButton"
+			  		android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:background="@drawable/position_icon" android:layout_margin="5dp"/>
+						
+							    
+						<ImageButton 
+						android:id="@+id/myTracksButton"
+			  		android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:background="@drawable/appwidget_button_disabled" android:layout_margin="5dp"/>
+			  			
+			  				<ImageButton 
+						android:id="@+id/myShowLabels"
+				android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+					android:background="@drawable/info_icon_off" android:layout_margin="5dp"/>
+			  			
+			  				<ImageButton 
+						android:id="@+id/myEditMode"
+					android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:background="@drawable/edit_icon_off"
+				    				   android:layout_margin="5dp"
+				    
+			  			
+			  			/>
+			  			
+			  				<ImageButton 
+						android:id="@+id/myShowGrid"
+				android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+					android:background="@drawable/grid_icon_off" 
+				    android:layout_margin="5dp"
+
+			  			
+			  			/>
+			  			
+			  			
+			  			</LinearLayout>
+			  			
+			  	</uni.projecte.ui.TransparentPanel>		
+			  	
+			  	
+			  		 	<uni.projecte.ui.TransparentPanel
+			    android:id="@+id/transparent_panel"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="9dp"
+			    android:paddingRight="9dp"
+			    android:paddingBottom="9dp"
+			    >
+			    
+			  			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				    android:orientation="horizontal"
+				    android:layout_width="wrap_content"
+				     android:layout_height="wrap_content"
+			  		android:layout_marginTop="2dp"
+			  		android:background="@color/gris"	
+			  		android:baselineAligned="false"
+			  		android:id="@+id/llCitationInfo"		    
+				    >
+			  				
+			  					<LinearLayout
+			  					    android:id="@+id/linearLayout2"
+			  					    android:layout_width="wrap_content"
+			  					    android:layout_height="wrap_content"
+			  					    android:layout_weight="1" >
+
+			  						<LinearLayout
+			  						    android:id="@+id/linearLayout1"
+			  						    android:layout_width="wrap_content"
+			  						    android:layout_height="wrap_content"
+			  						    android:layout_marginRight="2dp"
+			  						    android:orientation="vertical" >
+
+			  						    <ImageButton
+			  						        android:id="@+id/ibCitMapEditCit"
+			  						        android:layout_width="wrap_content"
+			  						        android:layout_height="wrap_content"
+			  						        android:background="@android:drawable/ic_menu_edit" />
+
+			  						    <ImageButton
+			  						        android:id="@+id/ibMoveCit"
+			  						        android:layout_width="wrap_content"
+			  						        android:layout_height="wrap_content"
+			  						        android:background="@drawable/move_cit" />
+			  						</LinearLayout>
+
+			  						<TextView
+			  						    android:id="@+id/tvCitMapInfoExtended"
+			  						    android:layout_width="wrap_content"
+			  						    android:layout_height="wrap_content"
+			  						    android:textColor="@color/white"
+			  						    android:textSize="10dp" />
+
+			  					</LinearLayout>
+			  					
+			  					<LinearLayout
+			  					    android:id="@+id/llCitationWithPhoto"
+			  					    android:layout_width="wrap_content"
+			  					    android:layout_height="wrap_content"
+			  					    android:layout_marginRight="2dp"
+			  					    android:layout_weight="0"
+			  					    android:gravity="right"
+			  					    android:orientation="vertical"
+			  					    android:visibility="gone" 
+			  					    >
+
+			  						<ImageButton
+			  						    android:id="@+id/ibCitMapPhoto"
+			  						    android:layout_width="wrap_content"
+			  						    android:layout_height="wrap_content"
+			  						    android:background="@android:drawable/ic_menu_camera" />
+
+
+			  					</LinearLayout>
+
+			  			    
+			  		</LinearLayout>	    	    
+			  		 	    
+			  		 	    
+			     	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				    android:orientation="horizontal"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:gravity="right"
+				    	android:paddingRight="4dp"
+				    
+				    >
+			   			  			
+						  				<ImageButton 
+									android:id="@+id/myCreateCitationCenter"
+							android:layout_width="wrap_content"
+							    android:layout_height="wrap_content"
+								android:background="@drawable/cross_green" 
+							    android:layout_margin="5dp"
+			
+						  			
+						  			/>
+						  			
+						  						<ImageButton 
+						android:id="@+id/myShowDBInfo"
+				android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+					android:background="@drawable/db_icon" 
+				    android:layout_margin="7dp"
+
+			  			
+			  			/>
+
+						  				<TextView
+						  				    android:id="@+id/textView1"
+						  				    android:layout_width="wrap_content"
+						  				    android:layout_height="wrap_content"
+						  				    android:text="" />
+			  			
+			  			</LinearLayout>
+			  			
+			  	</uni.projecte.ui.TransparentPanel>		
+  			
+  		</LinearLayout>
+  		
+  		 <ImageView android:id="@+id/drag"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/marker_up"
+    android:visibility="gone"
+  /> 
+  
+</RelativeLayout>

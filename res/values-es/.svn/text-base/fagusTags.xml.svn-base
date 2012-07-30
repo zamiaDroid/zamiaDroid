@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="LifeCycleStatus">Estadio del ciclo vital</string>
+	<string name="Natureness">Naturaleza</string>
+	<string name="Accepted">Aceptado</string>
+	<string name="Informatiser">Informatitzador</string>
+	<string name="ObservationAuthor">Autor</string>
+	<string name="biological_record_type">Botánica</string>
+	<string name="CitationNotes">Comentarios</string>
+	<string name="OriginalTaxonName">Nombre Original</string>
+	<string name="CorrectedTaxonName">Nombre Corregido</string>
+	<string name="sureness">Certeza Original</string>
+	<string name="correctedSureness">Certeza Corregida</string>
+	<string name="origin">Pliego</string>
+	<string name="InformatisationDate">Fecha de informatización</string>
+	<string name="SecondaryCitationCoordinate">Codigo de coordenadas secundarias</string>
+
+</resources>

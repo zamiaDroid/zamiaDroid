@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				    android:orientation="horizontal"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				     android:padding="2dp"
+				     android:background="@color/gris"
+				     android:layout_margin="1dp">
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent" 
+        
+        >
+
+       <!--  <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             >
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/mini_gps" />
+            
+               <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mode: GPS"
+            android:textColor="#FFFFFF"
+            android:padding="2dp"
+            android:textSize="10sp" 
+            
+            />
+
+        </TableRow> -->
+        
+
+
+        <TableRow
+            android:id="@+id/tableRowLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:padding="2dp"
+            >
+
+            <ImageView
+                android:id="@+id/ivLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/mini_location" />
+            
+                    <TextView
+            android:id="@+id/locationTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Waiting GPS"
+            android:textColor="#FFFFFF"
+            android:padding="2dp"
+            android:textSize="10sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRowAltitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+                    
+            
+                  <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/altitude" />
+            
+               <TextView
+            android:id="@+id/tvAltitudeInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 m"
+            android:textColor="#FFFFFF"
+            android:padding="2dp"
+            android:textSize="10sp" 
+            
+            />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRowTrack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+                    
+            
+                  <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/mini_track" />
+            
+               <TextView
+            android:id="@+id/tvInfoTrackName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Track"
+            android:textColor="#FFFFFF"
+            android:padding="2dp"
+            android:textSize="10sp" 
+            
+            />
+        </TableRow>
+
+    </TableLayout>
+
+<!--  
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/appwidget_button_disabled" />
+
+    </LinearLayout>-->
+			              
+</LinearLayout>

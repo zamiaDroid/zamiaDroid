@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+android:id="@+id/widget29"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical"
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:padding="5dp"
+xmlns:tools="http://schemas.android.com/tools">
+
+<LinearLayout
+android:id="@+id/widget32"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:padding="5dp"
+android:background="#ff222222"
+android:orientation="vertical"
+
+>    
+
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="2dp"
+    android:stretchColumns="0">
+    <TableRow>
+    
+	    <LinearLayout
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"  
+	  android:orientation="vertical" android:padding="2dp">
+	
+			<TextView
+			android:id="@+id/tvRschName"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			
+			>
+			</TextView>
+							
+	</LinearLayout>
+	
+<!-- 	<ImageButton android:text="@string/bShowMap" android:id="@+id/bShowMap" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/maps"></ImageButton>
+	 -->
+	</TableRow>
+    <TableRow android:id="@+id/tableRow1" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/linearLayout1" android:padding="2dp">
+            <TextView android:id="@+id/tvRschDesc" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+        </LinearLayout>
+    </TableRow>
+    <TableRow android:id="@+id/tableRow2" android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+      <LinearLayout
+          android:id="@+id/linearLayout1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:padding="2px"
+          tools:ignore="PxUsage" >
+
+                	<TextView android:text="@string/tvProjType" android:layout_height="wrap_content" android:id="@+id/tvProjTypeText" android:layout_width="wrap_content"></TextView>
+        	<TextView android:text="" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/tvProjType"></TextView>
+        </LinearLayout>
+        
+    </TableRow>
+	
+</TableLayout>
+
+
+
+
+</LinearLayout>
+
+
+<LinearLayout android:id="@+id/lyCount" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:background="#ff333333">
+
+
+<TextView
+android:id="@+id/tvFilteredSamples"
+android:text="@string/tvFilteredCitations"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:padding="5dp"
+
+>
+
+</TextView>
+
+<TextView
+    android:id="@+id/tvSamplesNoSyncro"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5px"
+    android:text="@string/tvNumCitations"
+    tools:ignore="PxUsage" >
+
+</TextView>
+
+
+<TextView
+android:id="@+id/tvNumFilteredSamples"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+
+>
+
+</TextView>
+
+<TextView
+android:id="@+id/tvNumSamplesNoSyncro"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+
+>
+
+</TextView>
+
+
+</LinearLayout>
+
+
+<LinearLayout
+android:id="@+id/widget28"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+
+>
+
+
+</LinearLayout>
+
+
+<LinearLayout android:id="@+id/lLatributs" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" android:orientation="vertical" android:layout_marginTop="10dp">
+
+<!-- <TextView android:text="@string/tvlsamples" android:id="@+id/lsamples" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView> -->
+
+<ListView android:id="@+id/lSamples" android:layout_width="wrap_content" android:layout_height="wrap_content"></ListView>
+
+
+</LinearLayout>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="#ff333333"
+    android:layout_weight="0"
+       
+    >
+    
+
+    <TextView
+android:id="@+id/widget30"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="@string/tvFilteredField"
+> </TextView>
+
+    <TextView
+android:id="@+id/tvFilteredFieldName"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+
+> </TextView>
+
+
+</LinearLayout>
+
+</LinearLayout>

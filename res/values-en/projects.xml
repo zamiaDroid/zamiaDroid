@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Tabs and activity names -->
+    <string name="projectListTabName">Project list</string>
+    <string name="newProjectTabName">Create a new project</string>
+
+    <!-- Project List -->
+
+    <string name="tvInfoListProj"><b>This is the project list. Project\'s properties and fields can be displayed by clicking on the project\'s name. </b></string>
+    <string name="projDescription">Project description</string>
+    <string name="deleteProjQuestion">"Do you want to delete the project?"</string>
+    <string name="projFieldList">"Project's field list"</string>
+    <string name="yes">"Yes"</string>
+    <string name="no">"No"</string>
+    <string name="tvProjectName">"Project name:"</string>
+   	<string name="removeFieldQuestion">There are %1$d observations with the %2$s field filled. Are you sure you want to lose these data?</string>
+   	<string name="removeFieldQuestionNoCit">There are no observations with the %1$s field filled. No data will be lost. Do you want to delete this field?</string>
+   	
+    
+
+    <!-- Project Chooser -->
+
+    <string name="noFiles">There is no project</string>
+    <string name="titulo_no_directorio">This is not a folder</string>
+    <string name="no_directorio">This is a file. Not a folder!</string>
+   
+    <string name="cancelar">Cancel</string>
+
+
+    <!-- Project Import -->
+
+    <string name="pImportIntroText">Choose a project from Fagus to import</string>
+    <string name="mImportFagus">Import Project from File</string>
+    <string name="mImportProjectFromCitations">Create a project from a quote file</string>
+    <string name="sameNameProject">There already is an existing project with this name </string>
+
+    <!-- Project Creation -->
+    <string name="bProjectCreate">Create New Project</string>
+    <string name="projName">Project name</string>
+    <string name="projectFieldList">Field list</string>
+    <string name="brsAddField">Add new field</string>
+    <string name="bAddPredField">Add predefined field</string>
+    <string name="tvChooseTh">Choose thesaurus</string>
+    <string name="projNameMissing">There is no Project name</string>
+    <string name="projFieldsMissing">There is no Project field</string>
+    <string name="fieldTypeMessage">Choose a type</string>
+    <string name="no_fields_added">No added field</string>
+    <string name="tvPredFields">Choose predefined field type</string>
+
+    <string name="fieldName">Name</string>
+    <string name="fieldLabel">Label</string>
+    
+    <string name="repeatedFieldName">Repeated field. Choose a different name.</string>
+    <string name="predFieldRepeated">Predefined field already exists </string>
+    
+    <string name="backFromProjectCreation">Do you want to leave projects creation? Unsaved data will be lost.</string>
+    
+     <string name="projCreationLoading">Creating project&#8230;</string>
+    <string name="projCreationTxt">Please, don\'t close the dialog. Process can take several minutes.</string>
+    
+    <!-- Research Import -->
+
+    <string name="tvRsImport">Import Projects</string>
+    <string name="btRsImport">Import Proyects in XML</string>
+    <string name="cBurl">Load from URL</string>
+    <string name="cBLocal">Load from local file</string>
+
+
+    <!-- Field Creator -->
+    <string name="tvFieldName">Field name</string>
+    <string name="tvFieldLabel">Label text</string>
+    <string name="tvFieldDesc">Advice text</string>
+    <string name="tvFieldPredValue">Default Value</string>
+    <string name="tvPredValues">Predefined values</string>
+    <string name="bCreateField">Add field</string>
+    <string name="tFieldValuesMissing">Field name or label missing</string>
+
+    <string name="bAddNewField">Add field</string>
+    <string name="noProjectChosen">No selected project. Click here to select</string>
+    <string name="altitudeLabel">Altitude</string>
+    
+   <!-- Choose project -->
+    <string name="createProject">Add new project</string>
+    <string name="bImportProject">Import project</string>
+	<string name="bCreateProject">Create new project</string>
+
+    <!-- Project Import -->
+
+	<string name="chooseProject"><b>Projects in system</b></string>
+	<string name="chooseFile"><b>Choose a predefines project in Fagus format</b></string>
+	
+	<!-- Citation Project Import -->
+	
+	<string name="citationLoading">Loading quotes for a new project&#8230;</string>
+   <string name="citationLoadingTxt">Please do not close this window. The process may take a few minutes, depending on the number of quotes to import.</string>
+
+    <!-- Project  list -->
+
+	<string name="projectName">Project name</string>
+	<string name="tvlFields">Field list</string>
+	<string name="tvVisible">Visible: </string>
+	<string name="projCreationTitle">Insert data</string>
+    <string name="bShowFields">View project fields</string>
+    <string name="mAddField">Add field to the project</string>
+    <string name="mChangeTh">Change thesaurus</string>
+
+
+    <!-- Change thesaurus -->
+
+    <string name="chooseTh">Choose a thesaurus of the system</string>
+
+    <!-- Backup Project -->
+    
+	<string name="backupEmptyName">Backup\'s name is missing</string>
+	<string name="backupInfo">File will be saved to the external memory inside the folder: /zamiaDroid/Backups/</string>
+	<string name="backupInfoPhotos">Dependign on the amount of photos the resulting file can be really big!</string>
+	<string name="backupCreateTitle">Backup: %1s</string>
+
+
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="hasCitations">Il est impossible d\'éliminer le projet car il contient des citations</string>
+	<string name="citationDate"><b>Date de la citation: </b></string>
+	<string name="location"><b>Localisation: </b></string>
+	<string name="tModifiedCitation">La citation a été correctement modifiée.</string>
+	<string name="numCitationsImported">Les citations ont été importées correctement</string>
+	<string name="deleteCitationQuestion">Voulez-vous éliminer la citation?</string>
+	
+	<string name="mRemoveCitation">Eliminer la citation</string>
+	<string name="mShowUniqueCitation">Voir la citation sur une carte</string>
+	
+	<string name="backFromCitationEditor">Voulez-vous quitter l\'édition de citations? Les données non sauvegardées seront perdues.</string>
+	
+	
+	
+</resources>

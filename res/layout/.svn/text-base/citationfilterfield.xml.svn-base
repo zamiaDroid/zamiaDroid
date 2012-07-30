@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="fill_parent" android:orientation="vertical" android:padding="5dp" android:id="@+id/llFieldSelection">
+        <Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/spFieldsList"></Spinner>
+        <EditText android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/etFilterFieldValue" android:layout_gravity="center_horizontal"></EditText>
+        <AutoCompleteTextView android:layout_width="250dp" android:layout_height="wrap_content" android:id="@+id/etFilterFieldValAuto"></AutoCompleteTextView>
+        <CheckBox android:id="@+id/cbFilterBool" android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
+        <Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/spComplexValues"></Spinner>
+    	<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/btApplyFilter" android:id="@+id/btApplyFilter"></Button>
+</LinearLayout>

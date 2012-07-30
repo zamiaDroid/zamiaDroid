@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Tabs and activity names -->
+    <string name="projectListTabName">Lista de Proyectos</string>
+    <string name="newProjectTabName">Crear un proyecto nuevo</string>
+
+    <!-- Project List -->
+
+    <string name="tvInfoListProj"><b>Esta es la lista de proyectos. Podeis ver sus propiedades y campos presionando sobre su nombre. </b></string>
+    <string name="projDescription">Descripción del Proyecto</string>
+    <string name="deleteProjQuestion">"Quiere borrar el proyecto?"</string>
+    <string name="projFieldList">"Llista de campos del proyecto"</string>
+    <string name="yes">"Si"</string>
+    <string name="no">"No"</string>
+    <string name="tvProjectName">"Nombre del proyecto:"</string>
+   	<string name="removeFieldQuestion">Hay %1$d citas con el campo %2$s lleno. Estás seguro/a de que quieres perder estos datos?</string>
+   	<string name="removeFieldQuestionNoCit">Hay citas con el campo %1$s lleno. No se perderan datos. Quieres borrar el campo?</string>
+   	
+    
+
+    <!-- Project Chooser -->
+
+    <string name="noFiles">No hay proyectos</string>
+    <string name="titulo_no_directorio">No es un directorio</string>
+    <string name="no_directorio">Eso es un archivo. ¡No un directorio!</string>
+    <string name="cancelar">Cancelar</string>
+
+
+    <!-- Project Import -->
+
+    <string name="pImportIntroText">Escoge un proyecto de Fagus a Importar</string>
+    <string name="mImportFagus">Importar Proyecto</string>
+    <string name="mImportProjectFromCitations">Crear proyecto desde un archivo de citas</string>
+    <string name="sameNameProject">Ya existe un proyecto con el nombre </string>
+
+    <!-- Project Creation -->
+    <string name="bProjectCreate">Crear Proyecto Nuevo</string>
+    <string name="projName">Nombre del Proyecto</string>
+    <string name="projectFieldList">Lista de Campos</string>
+    <string name="brsAddField">Añadir Campo Llibre</string>
+    <string name="bAddPredField">Añadir Campo Predefinido</string>
+    <string name="tvChooseTh">Escoge Tesauro</string>
+    <string name="projNameMissing">No hay nombre de proyecto</string>
+    <string name="projFieldsMissing">No hay campos de proyecto</string>
+    <string name="fieldTypeMessage">Escoge un tipo</string>
+    <string name="no_fields_added">No se han añadido campos</string>
+    <string name="tvPredFields">Escoger tipos de campo predefinidos</string>
+
+    <string name="fieldName">Nombre</string>
+    <string name="fieldLabel">Etiqueta</string>
+    
+    <string name="repeatedFieldName">El campo está repetido. Escoge otro nombre.</string>
+    <string name="predFieldRepeated">Ya hay el campo predefinido </string>
+    
+    <string name="backFromProjectCreation">Quieres salir de la creación de proyectos? Los datos sin guardar se perderán.</string>
+    
+      <string name="projCreationLoading">Creando proyecto&#8230;</string>
+    <string name="projCreationTxt">Por favor, no cierres la ventana. Según el número de campos el proceso puede tardar unos minutos.</string>
+    
+    <!-- Research Import -->
+
+    <string name="tvRsImport">Importar Proyectos</string>
+    <string name="btRsImport">Importar Proyectos en XML</string>
+    <string name="cBurl">Cargar desde URL</string>
+    <string name="cBLocal">Carga Local</string>
+
+
+    <!-- Field Creator -->
+    <string name="tvFieldName">Nobre del Campo</string>
+    <string name="tvFieldLabel">Texto de la etiqueta</string>
+    <string name="tvFieldDesc">Texto de consejo</string>
+    <string name="tvFieldPredValue">Valor por defecto</string>
+    <string name="tvPredValues">Valores pre-definidos</string>
+    <string name="bCreateField">Añadir Campo</string>
+    <string name="tFieldValuesMissing">Falta el nombre o la etiqueta del campo</string>
+
+    <string name="bAddNewField">Añadir Campo</string>
+    <string name="noProjectChosen">No se ha escogido proyecto. Haz click aquí para seleccionarlo</string>
+    <string name="altitudeLabel">Altitud</string>
+    
+   <!-- Choose project -->
+    <string name="createProject">Añadir proyecto nuevo</string>
+    <string name="bImportProject">Importar Proyecto</string>
+	<string name="bCreateProject">Crear Proyecto Nuevo</string>
+
+    <!-- Project Import -->
+
+	<string name="chooseProject"><b>Proyectos del sistema</b></string>
+	<string name="chooseFile"><b>Escoge un proyecto predefinido en formato Fagus</b></string>
+	
+	<!-- Citation Project Import -->
+	
+	<string name="citationLoading">Cargando citas para un proyecto nuevo&#8230;</string>
+   <string name="citationLoadingTxt">Por favos, no cierre la ventana. Según la candidad de citas la importació puede tardar algunos minutos.</string>
+
+    <!-- Project  list -->
+
+	<string name="projectName">Nombre del Proyecto</string>
+	<string name="tvlFields">Lista de campos</string>
+	<string name="tvVisible">Visible: </string>
+	<string name="projCreationTitle">Introducir datos</string>
+    <string name="bShowFields">Ver Campos del Proycto</string>
+    <string name="mAddField">Añadir Campo al proyecto</string>
+    <string name="mChangeTh">Cambiar Tesauro</string>
+
+
+    <!-- Change thesaurus -->
+
+    <string name="chooseTh">Escoge un tesauro del sistema</string>
+
+    <!-- Backup Project -->
+
+	<string name="backupEmptyName">Falta el nombre del backup</string>
+	<string name="backupInfo">El archivo se guardará en la memoria externa en la carpeta: /zamiaDroid/Backups/</string>
+	<string name="backupInfoPhotos">Según la cantidad de fotografías, el tamaño del backup que resulte puede ser muy grande!</string>
+	<string name="backupCreateTitle">Backup: %1s</string>
+
+
+</resources>

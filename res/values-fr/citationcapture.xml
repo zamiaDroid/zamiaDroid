@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Citation Creation -->
+	<string name="fieldMissing">Vous devez remplir le champ Taxon</string>
+	<string name="bCreateSample">Créer une citation</string>
+	<string name="bSuccessCitationCreation">Citation sauvegardée correctement</string>
+	<string name="bUpdateLocation">GPS</string>
+    <string name="backFromCitationMessage">Voulez-vous quitter la capture de citations ? Les données non sauvegardées seront perdues</string>
+    <string name="choosevalue">Choisir un élément</string>
+
+    <!-- Citation Editor -->
+    
+	<string name="bModifyCitation">Sauvegarder les changements</string>
+	<string name="chooseItem">Choisir un élément</string>
+	
+	
+    <!-- Menu items -->
+	<string name="mActivateGPS">Activer le GPS</string>
+	<string name="mDesactivateGPS">Désactiver le GPS</string>
+	
+	
+	<string name="photoMissing">Aucune photographie n\'a été ajoutée</string>
+	
+
+</resources>

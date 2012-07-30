@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  android:padding="3dp"
+  >
+
+	<TextView android:text="@string/tvExportDialogFileName" 
+	    android:id="@+id/TextView01" 
+	    android:layout_width="wrap_content" 
+	    android:layout_height="wrap_content"
+	    android:textColor="@color/secondaryGreen"/>
+
+	<EditText 
+	    android:text=""
+	    android:id="@+id/fileName" 
+	    android:layout_width="wrap_content" 
+	    android:layout_height="wrap_content"
+	    android:layout_marginBottom="3dp"
+	    />
+
+	
+		<TextView 
+	    android:text="@string/tvCreateReportLabel"
+	    android:id="@+id/tvCreateReportInfo" 
+	    android:layout_width="wrap_content" 
+	    android:layout_height="wrap_content"
+	    android:visibility="gone"
+	    android:textColor="@color/secondaryGreen"
+	    android:layout_marginBottom="2dp"/>
+
+		
+	<Spinner
+	    android:id="@+id/spFieldsListReport"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginBottom="3dp" />
+	
+
+		<CheckBox
+		    android:id="@+id/cbExportSendByMail"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/cbSendByMail"
+		    android:layout_marginBottom="2dp"
+		    android:visibility="gone" />
+	
+	<Button
+	    android:id="@+id/bExportFagus"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="right"
+	    android:background="@drawable/btn_new_button_normal"
+	    android:text="@string/btExportFile" />
+
+</LinearLayout>
