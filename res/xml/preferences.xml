@@ -75,6 +75,11 @@
                 android:defaultValue="49"
                 android:title="@string/confGPSGeoid"
                 android:key="geoidGPSCorrection" />
+              
+                      <Preference
+                android:title="@string/confTitleResetGeoid"
+                android:summary="@string/confTitleResetGeoidSummary"
+                android:key="customPrefGeoid" />
                    
                   <CheckBoxPreference android:title="@string/updateGPSWhenTaxon"
             android:key="updateGPSPref" android:summary="@string/updateGPSWhenTaxonSummary" 
@@ -82,11 +87,7 @@
             />
             
         </PreferenceScreen>
-        
- 
-        
-        
-        
+         
         <Preference
                 android:title="@string/confTitleReset"
                 android:summary="@string/confTitleResetSummary"

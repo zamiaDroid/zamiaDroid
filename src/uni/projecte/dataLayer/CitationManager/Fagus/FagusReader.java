@@ -16,6 +16,10 @@
 
 package uni.projecte.dataLayer.CitationManager.Fagus;
 
+import java.security.spec.MGF1ParameterSpec;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import edu.ub.bio.biogeolib.CoordConverter;
@@ -24,6 +28,8 @@ import edu.ub.bio.biogeolib.CoordinateUTM;
 import edu.ub.bio.biogeolib.LatLonCoordsBox;
 import android.content.Context;
 import android.util.Log;
+import uk.me.jstott.jcoord.LatLng;
+import uk.me.jstott.jcoord.MGRSRef;
 import uni.projecte.R;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.CitationControler;
@@ -45,7 +51,29 @@ public class FagusReader {
 	protected HashMap<String, Long> createdFields;
 	
 	
+	/* Data Structures */ 
+	private boolean dateInserted=false;
+	private String citationDate="";
+	private Calendar calAutoDate;
+	private SimpleDateFormat sdf;
+	private String lastDay="";
+	private boolean dateInform=false;
+	
+	
+	/* Fields added to the end */
+	private String acceptedLabel;
+	private String acceptedValue="";
+	private String acceptedFieldName;
+	
+	private String bioTypeLabel;
+	private String bioTypeValue="";
+	private String bioTypeFieldName;
+	
+	private String authorLabel;
+	private String authorValue="";
+	private String authorFieldName;
 
+	
 	public FagusReader(Context c, long projectId){
 		
 		this.c=c;
@@ -58,6 +86,7 @@ public class FagusReader {
 		
 		this.projectId=projectId;
 		
+		sdf=new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 		
 	}
 	
@@ -136,16 +165,11 @@ public class FagusReader {
 
 	public void createInformatisationDate(String day,String month, String year, String hours, String minutes,String seconds){
 		
+		// if la data de l'observació no s'ha afegit l'afegim al final	dateInserted=true;		
+
 		//Date format: yyyy-MM-dd hh:mm:ss
-		
-		String date=year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
-		
-		String label = c.getString(R.string.InformatisationDate);
-		
-		if(numSamples<2) projCnt.createField(projectId,"InformatisationDate",label,"ECO","simple",visible);
-		
-		citCnt.addCitationField(projectId,this.sampleId, this.projectId, "InformatisationDate",date);
-		
+		citationDate=prepareTimeStamp(day, month, year, hours, minutes, seconds);
+		dateInform=true;		
 		
 	}
 	
@@ -153,11 +177,51 @@ public class FagusReader {
 		
 		//Date format: yyyy-MM-dd hh:mm:ss
 		
-		String date=year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
-		
-		if(date.contains("null")) date=date.replace("null", "00");
-		
+		String date=prepareTimeStamp(day, month, year, hours, minutes, seconds);
+				
 		citCnt.updateCitationDate(this.sampleId,date);
+		
+		dateInserted=true;		
+
+		
+	}
+	
+	private String prepareTimeStamp(String day,String month, String year, String hours, String minutes,String seconds){
+		
+		if(seconds==null || minutes==null || hours==null){
+			
+			String shortTimeStamp=year+"-"+month+"-"+day;
+			
+			if(shortTimeStamp.equals(lastDay) && calAutoDate!=null){
+				
+				calAutoDate.add(Calendar.SECOND, 1);
+				
+			}
+			else{
+				
+				String lastTimeStamp=citCnt.getLastAvailableDate(this.projectId, shortTimeStamp);
+				calAutoDate = Calendar.getInstance();
+				lastDay=shortTimeStamp;
+				
+				try {
+					
+					calAutoDate.setTime(sdf.parse(lastTimeStamp));
+					
+				} catch (ParseException e) {
+
+					e.printStackTrace();
+					
+				}
+				
+				calAutoDate.add(Calendar.SECOND, 1);  // number of days to add
+				
+			}
+			
+			return sdf.format(calAutoDate.getTime()); 
+			
+		}
+		
+		else return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
 		
 	}
 
@@ -198,8 +262,14 @@ public class FagusReader {
 			//Not working at all.....shhhhhhhhhhhh!			
 			if(UTMUtils.isUTMCoordDigraph(location)){
 				
-				CoordinateLatLon latLong=CoordConverter.getInstance().toLatLon(new CoordinateUTM(true,31,location));
-	            citCnt.updateCitationLocation(this.sampleId,latLong.getLat(), latLong.getLon());
+				//CoordinateLatLon latLong=CoordConverter.getInstance().toLatLon(new CoordinateUTM(true,31,location));
+	            //citCnt.updateCitationLocation(this.sampleId,latLong.getLat(), latLong.getLon());
+				
+				MGRSRef utm= new MGRSRef(location);
+				LatLng latLong=utm.toLatLng();
+				
+	            citCnt.updateCitationLocation(this.sampleId,latLong.getLatitude(), latLong.getLongitude());
+
 				
 			}
 			//UTM: 31 429425 4635963
@@ -223,7 +293,53 @@ public class FagusReader {
 		
 	}
 	
+	public void closeCitation() {
+
+		//if ObservationDate doesn't exist we'll use the InformatisationDate
+		if(dateInform){
+			
+			if(!dateInserted) citCnt.updateCitationDate(this.sampleId,citationDate);
+			else {
+				
+				String label = c.getString(R.string.InformatisationDate);
+				
+				if(numSamples<2) projCnt.createField(projectId,"InformatisationDate",label,"ECO","simple",visible);
+				citCnt.addCitationField(projectId,this.sampleId, this.projectId, "InformatisationDate",citationDate);
+				
+				dateInform=false;
+				
+			}
+			
+		}
+			
+		dateInserted=false;
+		
+		//insert biological record type
+		if(!bioTypeValue.equals("")) {
+			
+			addCitationValue(bioTypeLabel,bioTypeFieldName,bioTypeValue);
+			bioTypeValue="";
+		}
+		
+		//insert Accepted
+		if(!acceptedValue.equals("")){
+			
+			addCitationValue(acceptedLabel,acceptedFieldName,acceptedValue);
+			acceptedValue="";
+		}
+		
+		//insert Author
+		if(!authorValue.equals("")){
+			
+			addCitationValue(authorLabel,authorFieldName,authorValue);
+			authorValue="";
+		}
+		
+	}
+	
 	public void createDefaultFields(String tagName,String value){
+		
+		boolean postInsert=false;
 		
 		String label="";
 		
@@ -239,7 +355,10 @@ public class FagusReader {
 		}
 		else if(tagName.equals("Accepted")){
 			
-			label=c.getString(R.string.Accepted);
+			acceptedLabel=c.getString(R.string.Accepted);
+			acceptedValue=value;
+			acceptedFieldName=tagName;
+			postInsert=true;
 			
 		}
 		else if(tagName.equals("Informatiser")){
@@ -249,12 +368,18 @@ public class FagusReader {
 		}
 		else if(tagName.equals("ObservationAuthor")){
 			
-			label=c.getString(R.string.ObservationAuthor);			
+			authorLabel=c.getString(R.string.ObservationAuthor);			
+			authorValue=value;
+			authorFieldName=tagName;
+			postInsert=true;
 			
 		}
 		else if(tagName.equals("biological_record_type")){
 			
-			label=c.getString(R.string.biological_record_type);
+			bioTypeLabel=c.getString(R.string.biological_record_type);
+			bioTypeValue=value;
+			bioTypeFieldName=tagName;
+			postInsert=true;
 			
 		}
 		else if(tagName.equals("CitationNotes")){
@@ -263,12 +388,20 @@ public class FagusReader {
 			
 		}
 
+		if(!postInsert) addCitationValue(label, tagName, value);
+		
+		
+	}
+	
+	private void addCitationValue(String label, String tagName, String value){
+		
 		//get Field and if it doesn't exists 
 		if(!label.equals("")){
 		
 			if(!value.equals("") && createdFields.get(tagName)==null){
 				
 				long fieldId=projCnt.createField(projectId,tagName,label,"ECO","simple",visible);
+				
 				if(fieldId>0) createdFields.put(tagName, fieldId);
 
 			}
@@ -317,6 +450,8 @@ public class FagusReader {
 		citCnt.EndTransaction();
 		
 	}
+
+
 
 
 	

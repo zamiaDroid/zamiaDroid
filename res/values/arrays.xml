@@ -15,18 +15,7 @@
         <item>Sub-projecte</item>
     </string-array>
     
-   <string-array name="gpsCapture">
-        <item>Inici de la captura</item>
-        <item>Final de la captura</item>
-        <item>Inici i Final de la captura</item>
-    </string-array>
-    
-    <string-array name="gpsCaptureValues">
-        <item>start</item>
-        <item>end</item>
-        <item>both</item>
-    </string-array>
-    
+
      <string-array name="sureness">
         <item>OK</item>
         <item>Gen. confer</item>

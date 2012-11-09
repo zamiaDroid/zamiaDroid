@@ -133,8 +133,6 @@ public class CitationManager extends Activity{
 	private TextView tvFilterMessage1;
 	private TextView tvFilterMessage2;
 
-
-	
 	private ProgressDialog pdRemove;
 	private ProgressDialog pdCheckingTh;
 	private ProgressDialog pdCitationExport;
@@ -160,7 +158,6 @@ public class CitationManager extends Activity{
 
 		        /* Getting references to UI elements  */
 		        mainCitListView= (ExpandableListView)findViewById(R.id.citationLV);
-		        
 		        
 		        /* Filter buttons */ 
 		        Button applyFilters=(Button) findViewById(R.id.btApplyFilter);
@@ -276,7 +273,7 @@ public class CitationManager extends Activity{
 		    
     	    mainCitListView.setIndicatorBounds(width-50, width-10);
     	    
-    	    if(android.os.Build.VERSION.SDK_INT < 11 || android.os.Build.VERSION.SDK_INT >= 14  ) mainCitListView.setFastScrollEnabled(true);
+    	    //if(android.os.Build.VERSION.SDK_INT < 11 || android.os.Build.VERSION.SDK_INT >= 16  ) mainCitListView.setFastScrollEnabled(true);
     	    
     	    mainCitListView.setOnGroupClickListener(new OnGroupClickListener() {
     	       
@@ -358,7 +355,6 @@ public class CitationManager extends Activity{
 						b.putBoolean("filtered",isFiltered());
 
 						msg.setData(b);
-
 						
 						//mainCitationList
 						 if(!isFiltered()){
@@ -367,7 +363,6 @@ public class CitationManager extends Activity{
 						     setCitationAdapter.sendMessage(msg);
 					
 						 }
-				
 						 //filters
 						 else{
 							 
@@ -377,11 +372,11 @@ public class CitationManager extends Activity{
 							    	 setCitationAdapter.sendMessage(msg);
 							    	 
 							    }
-							     else {
+							    else {
 							    	 
 							    	 setCitationAdapter.sendMessage(msg);
 							    	 
-							     }
+							    }
 						 }
 											
 					}
@@ -428,7 +423,8 @@ public class CitationManager extends Activity{
 		 
 
 		    @Override
-			public boolean onCreateOptionsMenu(Menu menu) {
+
+		    public boolean onCreateOptionsMenu(Menu menu) {
 		    	
 		    	menu.add(0, SHOW_GALLERY, 0,getBaseContext().getString(R.string.mShowGallery)).setIcon(android.R.drawable.ic_menu_gallery);
 		    	menu.add(0, IMPORT_CITATIONS, 0,getBaseContext().getString(R.string.mCitationImport)).setIcon(android.R.drawable.ic_menu_save);
@@ -439,9 +435,11 @@ public class CitationManager extends Activity{
 		        return super.onCreateOptionsMenu(menu);
 		    }
 
-		    
 		    @Override
-			public boolean onOptionsItemSelected(MenuItem item) {
+
+		    public boolean onOptionsItemSelected(MenuItem item) {
+		       
+		    	super.onOptionsItemSelected(item);
 		    	
 		    	
 				switch (item.getItemId()) {
@@ -480,7 +478,8 @@ public class CitationManager extends Activity{
 			
 				
 				}
-				return super.onOptionsItemSelected(item);
+				
+		        return true;
 			}
 		    
 			   
@@ -611,24 +610,42 @@ public class CitationManager extends Activity{
 		    
 		    private void showGallery() {
 
-		    	Intent intent = new Intent(this, GalleryGrid.class);
-		 	       
-	 			Bundle b = new Bundle();
-	 			b = new Bundle();
-	 			b.putLong("id", projId);
-	 			intent.putExtras(b);
-		    	
-	 			 			
-		    	if(citHand.getSelectionList().size()>0){
-		    		
-		    		b=new Bundle();
-			    	b.putString("idSelection",citHand.createIdString());
-		 			intent.putExtras(b);
 
-		    	}
-		
-	            startActivity(intent);
-		    	
+	 			
+	 			
+	        	if(citHand.getSelectionList().size()==0){
+	        		
+	        		Utilities.showToast(getString(R.string.noCitationsSelected), this);
+	        		
+	        		
+	        	}
+	        	else{
+	        		
+	        		   if(Utilities.isSdPresent()){
+	        			   
+		       		    	Intent intent = new Intent(this, GalleryGrid.class);
+		 		 	       
+		    	 			Bundle b = new Bundle();
+		    	 			b = new Bundle();
+		    	 			b.putLong("id", projId);
+		    	 			intent.putExtras(b);
+	        			   
+	        				b=new Bundle();
+	    			    	b.putString("idSelection",citHand.createIdString());
+	    		 			intent.putExtras(b);
+	    		 			 
+	    		 			startActivity(intent);
+	        		   } 
+
+					   else {
+				        	
+				        	Toast.makeText(getBaseContext(), 
+				                    R.string.noSdAlert, 
+				                    Toast.LENGTH_SHORT).show();
+				        	
+				        }
+	        	}
+
 			}
 		  
 		    
@@ -775,7 +792,7 @@ public class CitationManager extends Activity{
 					citHand.unCheckAllItems(false);
 					cbSelectAll.setChecked(false);
 					
-			  	    citListAdap= new CitationListAdapter(getBaseContext(),citHand,true,projId);
+			  	    citListAdap= new CitationListAdapter(getBaseContext(),citHand,projId);
 		    	       
 		    	    mainCitListView.setAdapter(citListAdap);
 
@@ -858,7 +875,7 @@ public class CitationManager extends Activity{
 				    	    		if(utmData) citHand.filterByUTM(locationValue);    		
 				    	    		else citHand.filterByLatLong(locationValue);
 				    	    							    					
-				    			    citListAdap= new CitationListAdapter(getBaseContext(),citHand,true,projId);
+				    			    citListAdap= new CitationListAdapter(getBaseContext(),citHand,projId);
 				    		    	       
 				    		        mainCitListView.setAdapter(citListAdap);
 			    	    				
@@ -1363,7 +1380,7 @@ public class CitationManager extends Activity{
 					public void handleMessage(Message msg) {
 	                 
 	                	
-	                	citListAdap= new CitationListAdapter(getBaseContext(),citHand,true,projId);		    	       
+	                	citListAdap= new CitationListAdapter(getBaseContext(),citHand,projId);		    	       
 		    		    mainCitListView.setAdapter(citListAdap);
 	    					
 		    		    if(chosenFieldType.equals("genus")) updateUIFilterBar(getString(R.string.filterTaxonGenus),"", filterValue);
@@ -1414,9 +1431,6 @@ public class CitationManager extends Activity{
 								pdRemove.incrementProgressBy(1);
 								
 							}
-							
-							
-
 
 						}
 					};
@@ -1434,7 +1448,7 @@ public class CitationManager extends Activity{
 					else citHand.unCheckAllItems(llFilter.getVisibility()==View.VISIBLE);
 					
 					
-			  	    citListAdap= new CitationListAdapter(getBaseContext(),citHand,llFilter.getVisibility()==View.VISIBLE,projId);
+			  	    citListAdap= new CitationListAdapter(getBaseContext(),citHand,projId);
 		    	       
 		    	    mainCitListView.setAdapter(citListAdap);
 		    	    
@@ -1504,13 +1518,19 @@ public class CitationManager extends Activity{
 		        	}
 		        	
 		        	//only chosen citations
-		        	else{
+		        	else if(citHand.getSelectionList().size()>0){
 		        		
 		            	Intent myIntent = new Intent(v.getContext(), CitationMap.class);
 			        	myIntent.putExtra("id", projId);
 			        	myIntent.putExtra("idSelection",citHand.createIdString());
 
 			            startActivityForResult(myIntent, 0);
+		        		
+		        	}
+		        	else{
+		        		
+		        		Utilities.showToast(getString(R.string.noCitationsSelected), v.getContext());
+
 		        		
 		        	}
 		        }
@@ -1528,7 +1548,7 @@ public class CitationManager extends Activity{
 		        public void onClick(View v)
 		        {                        
 		        	    	
-		        	if(!citHand.isAlphaOrder()) {
+		        	if(citHand.isChronoOrder()) {
 		        		
 		        		btOrderAlpha.getBackground().setColorFilter(new LightingColorFilter(0xFF000000, 0xFF89CC62));
     	    			btOrderCron.getBackground().invalidateSelf();
@@ -1538,7 +1558,27 @@ public class CitationManager extends Activity{
 		        
 		        		loadMainCitations(false);
 		        		
-		        	} 
+		        	}
+		        	else{
+		        		
+		        		if(citHand.isAlphaAsc()){
+		        			
+		        			btOrderAlpha.setBackgroundResource(R.drawable.order_alpha_des);
+			        		btOrderAlpha.getBackground().setColorFilter(new LightingColorFilter(0xFF000000, 0xFF89CC62));
+		        			citHand.setAlphaAsc(false);
+		        			
+		        		}
+		        		else{
+		        			
+		        			btOrderAlpha.setBackgroundResource(R.drawable.order_alpha);
+			        		btOrderAlpha.getBackground().setColorFilter(new LightingColorFilter(0xFF000000, 0xFF89CC62));
+		        			citHand.setAlphaAsc(true);
+
+		        		}
+		        		
+		        		loadMainCitations(true);
+		        				        		
+		        	}
 		        	
 		        }
 		    };
@@ -1567,6 +1607,28 @@ public class CitationManager extends Activity{
 		        		loadMainCitations(false);
 		        		
 		        	} 
+		        	else{
+		        		
+		        		if(citHand.isChronoAsc()){
+		        			
+		        			btOrderCron.setBackgroundResource(R.drawable.ordre_cron_asc);
+			        		btOrderCron.getBackground().setColorFilter(new LightingColorFilter(0xFF000000, 0xFF89CC62));
+		        			citHand.setChronoAsc(false);
+		        			
+		        		}
+		        		else{
+		        			
+		        			btOrderCron.setBackgroundResource(R.drawable.ordre_cron);
+			        		btOrderCron.getBackground().setColorFilter(new LightingColorFilter(0xFF000000, 0xFF89CC62));
+		        			citHand.setChronoAsc(true);
+		        			
+		        		}
+		        		
+		        		loadMainCitations(true);
+
+		        		
+		        		
+		        	}
 		        	
 		        }
 		    };
@@ -1962,6 +2024,8 @@ public class CitationManager extends Activity{
 		    		boolean filtered=b.getBoolean("filtered");		    		
 		    		
 				    citListAdap=citHand.getListAdapter(filtered);
+				    
+				    				    
 			    	mainCitListView.setAdapter(citListAdap);
 			    	
 		    		

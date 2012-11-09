@@ -24,6 +24,7 @@ import uni.projecte.Activities.Citations.CitationManager;
 import uni.projecte.Activities.Citations.Sampling;
 import uni.projecte.Activities.Maps.CitationMap;
 import uni.projecte.Activities.Miscelaneous.ConfigurationActivity;
+import uni.projecte.Activities.Miscelaneous.GalleryGrid;
 import uni.projecte.Activities.Projects.ProjectManagement;
 import uni.projecte.controler.BackupControler;
 import uni.projecte.controler.PreferencesControler;
@@ -106,6 +107,12 @@ public class Main extends Activity {
         
         Button btShowMap = (Button)findViewById(R.id.bShowMapMain);
         btShowMap.setOnClickListener(bShowMapListener);
+        
+        Button btShowGallery = (Button)findViewById(R.id.btShowGalleryMain);
+        btShowGallery.setOnClickListener(showGalleryListener);
+        
+        Button btShowConfig = (Button)findViewById(R.id.btConfigMain);
+        btShowConfig.setOnClickListener(showConfigListener);
                
 		configPrefs=PreferenceManager.getDefaultSharedPreferences(this);
    
@@ -278,6 +285,15 @@ public class Main extends Activity {
         }
     };
     
+    private OnClickListener showConfigListener = new OnClickListener() {
+		
+		public void onClick(View v) {
+
+		       Intent settingsActivity = new Intent(getBaseContext(),
+                       ConfigurationActivity.class);
+		       startActivityForResult(settingsActivity,3);			
+		}
+	};
     
     private OnClickListener bShowMapListener = new OnClickListener()
     {
@@ -301,6 +317,48 @@ public class Main extends Activity {
 	            startActivityForResult(myIntent, 0);
             
         	}
+        	
+        }
+    };
+    
+    
+    private OnClickListener showGalleryListener = new OnClickListener()
+    {
+        public void onClick(View v)
+        {                        
+        	
+        	if (predPrefId==-1){
+        		
+        		Intent projActivity = new Intent(getBaseContext(),ProjectManagement.class);
+        		projActivity.putExtra("tab", 1);
+            	startActivity(projActivity);
+        		
+        		
+        	}
+        	
+        	else{
+	        	
+
+     		   if(Utilities.isSdPresent()){
+     			   
+	       		    	Intent intent = new Intent(v.getContext(), GalleryGrid.class);
+	 		 	       
+	    	 			Bundle b = new Bundle();
+	    	 			b = new Bundle();
+	    	 			b.putLong("id", predPrefId);
+	    	 			intent.putExtras(b);
+    
+	    	 			startActivity(intent);
+     		   } 
+     		   else {
+			        	
+			        	Toast.makeText(getBaseContext(), 
+			                    R.string.noSdAlert, 
+			                    Toast.LENGTH_SHORT).show();
+			        	
+			   }
+        	}
+            
         	
         }
     };

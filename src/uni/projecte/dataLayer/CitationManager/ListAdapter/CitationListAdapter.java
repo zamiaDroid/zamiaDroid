@@ -61,7 +61,7 @@ public class CitationListAdapter extends BaseExpandableListAdapter implements Se
      * 
      */
 
-	public CitationListAdapter(Context context,CitationHandler citationsH,boolean filteredState,long projId) {
+	public CitationListAdapter(Context context,CitationHandler citationsH,long projId) {
 	 
 		 mInflater = LayoutInflater.from(context);
 	 
@@ -74,20 +74,11 @@ public class CitationListAdapter extends BaseExpandableListAdapter implements Se
 
 		 
 		 this.surenessField=citationsH.getSurenessField()>-1;
-		 
-		 
-		 if(filteredState) {
 			 
-			 this.citations=citationsH.getFilteredCitationList();
-			 childrenText=new String[citationsH.getFilteredCitationList().size()];
-		 
-		 }
-		 else {
 			 
-			 this.citations=citationsH.getMainCitationList();
-			 childrenText=new String[citationsH.getMainCitationList().size()];
-			 
-		 }
+		 this.citations=citationsH.getCurrentCitationList();
+		 childrenText=new String[citations.size()];
+	
 		 
 		 //when 
 		 if(citationsH.isAlphaOrder()){
@@ -98,7 +89,7 @@ public class CitationListAdapter extends BaseExpandableListAdapter implements Se
 	          for (int i = size - 1; i >= 0; i--) {
 	                  
 	        	  String element = citations.get(i).getTag();
-	              alphaIndexer.put(element.substring(0, 1), i);
+	        	  if(element!=null && !element.equals("")) alphaIndexer.put(element.substring(0, 1), i);
 
 	          } 
 	          

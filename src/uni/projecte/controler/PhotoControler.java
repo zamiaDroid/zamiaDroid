@@ -2,10 +2,12 @@ package uni.projecte.controler;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import uni.projecte.dataLayer.bd.CitacionDbAdapter;
 import uni.projecte.dataLayer.utils.FileUtils;
+import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.CitationPhoto;
 import android.content.Context;
 import android.database.Cursor;
@@ -68,14 +70,13 @@ public class PhotoControler {
 	
 	public boolean isSecondaryExternalStorageDefault(long projId){
 		
-		return projCnfCnt.getProjectConfig(projId, ProjectConfigControler.SEC_STORAGE_ENABLED).equals("true") &&
-			hasSecondaryStorage() ;
+		return projCnfCnt.getProjectConfig(projId, ProjectConfigControler.SEC_STORAGE_ENABLED).equals("true") && hasSecondaryStorage() ;
 		
 	}
 	
 	public String setSecondaryExternalStorageAsDefault(long projId,String secStorageDefault){
 		
-		return projCnfCnt.changeProjectConfig(projId,ProjectConfigControler.SEC_STORAGE_ENABLED,  secStorageDefault);	
+		return projCnfCnt.changeProjectConfig(projId,ProjectConfigControler.SEC_STORAGE_ENABLED, secStorageDefault);	
 		
 	}
 	
@@ -86,34 +87,65 @@ public class PhotoControler {
 	}
 
 	
-	public int movePhotosToSecondaryStorage(long projId,boolean secondaryStorage,boolean copyPhoto, Handler handlerMove){
+	/*
+	 * This method allows to movePhotos between paths and it also updates citation path
+	 * 
+	 * 	@projId
+	 * 	@secondaryStorage moving to secondaryStorage?
+	 * 	@copyPhoto leaves a photo copy at the original path
+	 * 	@selectedPhotos hashWith with the subset of selected photos
+	 * 	@handlerMove it handles the progress bar status
+	 * 
+	 */
+	public int movePhotosToSecondaryStorage(long projId,String storagePath, HashMap<String, Long> selectedPhotos, boolean secondaryStorage,boolean copyPhoto, ArrayList<String> citPhotoList, Handler handlerMove){
+		
+		/*
+		 * a) Selected photos -> hash
+		 * b) All photos -> cursor
+		 */
+		
+		String destStoragePath="";
+		
+		if(secondaryStorage) destStoragePath=getSecondayExternalStoragePath();
+		else destStoragePath=getMainPhotoPath();
+		
+		
+		/* Determining destination Path: primary -> secondary || secondary -> primary */		
+		File destination=new File(destStoragePath);
+		
+		/* When destination doesn't exist */
+		if(!destination.exists()) destination.mkdirs();
+		
 		
 		CitationControler citCnt=new CitationControler(baseContext);
 		
-		ArrayList<CitationPhoto> citPhotoList = getPhotoCitationPhotos(projId);
-		Iterator<CitationPhoto> itPhoto=citPhotoList.iterator();
+		/* ArrayList with all citationWithPhoto */
+		
+		if(selectedPhotos==null) selectedPhotos = getPhotoCitationList(projId,citPhotoList);
+		//ArrayList<CitationPhoto> citPhotoList = getPhotoCitationsGroup(projId,arrayList,selectedPhotos);
+		
+		long photoFieldId=getProjectPhotoFieldId(projId);
+		
+		Iterator<String> itPhoto=citPhotoList.iterator();
 		
 		int count=0;
 		
 		while(itPhoto.hasNext()){
 			
-			CitationPhoto citPhotoTmp=itPhoto.next();
-			
-			File origin=new File(citPhotoTmp.getPhotoPath());
-			File destination;			
-			
-			if(secondaryStorage) destination=new File(getSecondayExternalStoragePath());		
-			else destination=new File(getMainPhotoPath());	
-			
-				boolean success=movePhotoPysically(citCnt,citPhotoTmp,origin, destination,copyPhoto);
+			String photoPath=itPhoto.next();
+			File origin=new File(photoPath);
+
+			/* Method tries to move photos to destination Path */
+			boolean success=movePhotoPysically(citCnt,origin, destination,copyPhoto,selectedPhotos,photoFieldId);
 			
 			if (success) count++;
 			
-				Message msg=new Message();
-				Bundle b=new Bundle();
-				b.putString("fileName", origin.getName());
-				msg.setData(b);
-				handlerMove.sendMessage(msg);
+			/* Sending fileName to ProgressDialog */
+			Message msg=new Message();
+			Bundle b=new Bundle();
+			b.putString("fileName", origin.getName());
+			msg.setData(b);
+			handlerMove.sendMessage(msg);
 			
 		}
 		
@@ -122,34 +154,78 @@ public class PhotoControler {
 			b.putBoolean("secondaryStorage", secondaryStorage);
 			msg.setData(b);
 			handlerMove.sendMessage(msg);
-
 		
 		return count;
 		
 	}
 	
+
 	
-	private boolean movePhotoPysically(CitationControler citCnt, CitationPhoto citPhotoTmp, File origin, File destination, boolean copyPhoto){
+
+
+	private boolean movePhotoPysically(CitationControler citCnt, File origin, File destination, boolean copyPhoto, HashMap<String, Long> selectedPhotos, long photoFieldId){
 		
-		boolean success=false;
 		
-		if(copyPhoto) success=FileUtils.copyFile(origin, destination);
-		else success=FileUtils.moveFileToDir(origin, destination);
+		boolean success=FileUtils.copyFile(origin, destination);
+		if(success && !copyPhoto) origin.delete();
+			
+		Long citationId=selectedPhotos.get(origin.getName());
 		
-		String newPhotoPathValue=destination.getPath()+"/"+origin.getName();
-		
-		if(success) {
+		if(citationId!=null){
 			
 			citCnt.startTransaction();
 			
-				Log.i("Photos", citPhotoTmp.getCitationId()+" : "+newPhotoPathValue);
-				citCnt.updateCitationField(citPhotoTmp.getCitationId(), citPhotoTmp.getFieldType(), newPhotoPathValue,mainPhotoFieldName);
+				String newPhotoPathValue=destination.getPath()+"/"+origin.getName();
+				boolean updated=citCnt.updateCitationField(citationId, photoFieldId, newPhotoPathValue,mainPhotoFieldName);
 				
 			citCnt.EndTransaction();
-			
+
+			Log.i("Images", "Moving photo: Id->"+selectedPhotos.get(origin.getName())+" New Path value-> "+newPhotoPathValue+" Updated? -> "+updated);
+
 		}
 		
 		return success;
+		//return false;
+		
+	}
+	
+	
+	public HashMap<String, Long> getPhotoCitationList(long projId,ArrayList<String> citPhotoList){
+		
+		HashMap<String, Long> photoInfoList=new HashMap<String, Long>();
+		
+		long photoFielId=getProjectPhotoFieldId(projId);
+		
+		if(photoFielId>=0){
+			
+			Iterator<String> itPhoto=citPhotoList.iterator();
+			CitacionDbAdapter citDbHand=new CitacionDbAdapter(baseContext);
+			citDbHand.open();
+			
+			while(itPhoto.hasNext()){
+				
+				String physicalPath=itPhoto.next();
+			
+				Cursor citPhotoField=citDbHand.fetchCitationIdByPhotoName(PhotoUtils.getFileName(physicalPath));
+				citPhotoField.moveToNext();
+					
+				if(citPhotoField!=null & citPhotoField.getCount()>0){
+						
+					Log.i("Photo","CitatioId: "+citPhotoField.getLong(1)+" Value: "+citPhotoField.getString(3)+" FieldType: "+citPhotoField.getLong(2));
+					photoInfoList.put(physicalPath,citPhotoField.getLong(1));
+					
+				}
+					
+				citPhotoField.close();
+			
+			}
+			
+			
+			citDbHand.close();
+		
+		}
+				
+		return photoInfoList;
 		
 	}
 	
@@ -195,6 +271,9 @@ public class PhotoControler {
 				
 		return citPhotoList;
 	}
+	
+	
+
 	
 	/*
 	 * It removes the citationPhotoValue of @citationId and value= @photo

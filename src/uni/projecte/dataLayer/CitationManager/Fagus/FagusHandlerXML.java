@@ -41,6 +41,9 @@ public class FagusHandlerXML extends DefaultHandler{
 	 
 	 private String origin;
 	 
+	 private boolean insideCollectionData=false;
+	 
+	 
 	 public FagusHandlerXML(FagusReader fReader) {
 		super();
 		
@@ -69,10 +72,7 @@ public class FagusHandlerXML extends DefaultHandler{
           // Nothing to do
      }
 
-     /** Gets be called on opening tags like:
-      * <tag>
-      * Can provide attribute(s), when xml was like:
-      * <tag attribute="attributeValue">*/
+
      @Override
      public void startElement(String namespaceURI, String localName,
                String qName, Attributes atts) throws SAXException {
@@ -104,32 +104,23 @@ public class FagusHandlerXML extends DefaultHandler{
 
           }
           else if (localName.equals("CitationCoordinate")) {
-          	
               
         	  fReader.createCitationCoordinate(atts.getValue("code"));
-
         	  
           }
           else if (localName.equals("SecondaryCitationCoordinate")) {
           	
-              
         	  fReader.createSecondaryCitationCoordinate(atts.getValue("code"));
 
-
-        	  
           }
           else if (localName.equals("InformatisationDate")) {
           	
-              
         	  fReader.createInformatisationDate(atts.getValue("day"), atts.getValue("month"), atts.getValue("year"), atts.getValue("hours"), atts.getValue("mins"), atts.getValue("secs"));
 
-
-        	  
           }
           else if (localName.equals("ObservationDate")) {
           	
         	  fReader.createObservationDate(atts.getValue("day"), atts.getValue("month"), atts.getValue("year"), atts.getValue("hours"), atts.getValue("mins"), atts.getValue("secs"));
-
         	  
           }
           else if (localName.equals("CorrectedTaxonName")) {
@@ -145,6 +136,10 @@ public class FagusHandlerXML extends DefaultHandler{
         	  //ho agafem a l'end
           
           
+          }
+          else if (localName.equals("CollectionData")) {
+
+              insideCollectionData=true;
           }
           
           else{
@@ -167,31 +162,25 @@ public class FagusHandlerXML extends DefaultHandler{
 
           }else if (localName.equals("OrganismCitation")) {
         	  
-    		  
+    		  fReader.closeCitation();
+    		  tempVal="";
     		  
    			   
           }else if (localName.equals("Datum")) {
-        	  
-    		  
     		  
    			   
           }else if (localName.equals("SideData")) {
              
         	  
-        	  
-        	  
-        	  
           }else if (localName.equals("value")) {
                
-        	  fReader.createDatumFields(tempVal,name.replace("\"", ""),label.replace("\"", ""),category);
+        	  fReader.createDatumFields(tempVal.trim(),name.replace("\"", ""),label.replace("\"", ""),category);
         	  tempVal="";
 
           }
           else if (localName.equals("CitationCoordinate")) {
-          	
               
               // startElem does hard work
-
 
         	  
           }
@@ -199,17 +188,14 @@ public class FagusHandlerXML extends DefaultHandler{
           	
               // startElem does hard work
         	  
-        	  
           }
           else if (localName.equals("InformatisationDate")) {
           	
               // startElem does hard work
 
-
         	  
           }
           else if (localName.equals("ObservationDate")) {
-          	
               
               // startElem does hard work
 
@@ -217,30 +203,29 @@ public class FagusHandlerXML extends DefaultHandler{
           }
           else if (localName.equals("CorrectedTaxonName")) {
         	
-        
-        	  fReader.createCorrectedTaxonName(tempVal, sureness);
-
+        	  fReader.createCorrectedTaxonName(tempVal.trim(), sureness);
+        	  tempVal="";
         	  
-            }
-          
+          }
           else if (localName.equals("OriginalTaxonName")) {
 
-        	  fReader.createOriginalTaxonName(tempVal,sureness);
-          
-          
+        	  fReader.createOriginalTaxonName(tempVal.trim(),sureness);
+        	  tempVal="";
+                   
           }
-    	 
           else if (localName.equals("CollectionData")) {
 
-     
-          
+        	  insideCollectionData=false;
+        	  tempVal="";
           
           }
           else{
 
-        	  
-        	  fReader.createDefaultFields(localName, tempVal);
-        	  
+        	 if(!insideCollectionData) {
+        		 
+        		 fReader.createDefaultFields(localName, tempVal.trim());
+        		 tempVal="";
+        	 }
         	  
           }
      }
@@ -250,8 +235,20 @@ public class FagusHandlerXML extends DefaultHandler{
      @Override
     public void characters(char ch[], int start, int length) {
           
-  		 tempVal = new String(ch,start,length);
-  		 if(tempVal.contains("\t")) tempVal="";
+  		// tempVal = new String(ch,start,length);
+  		// if(tempVal.contains("\t")) tempVal="";
+    	 
+    	 if(tempVal==null || tempVal.equals("") || tempVal.equals("\t") || tempVal.equals("\n")){
+    		 
+      		 tempVal = new String(ch,start,length);
+
+    	 }
+    	 
+    	 else{
+    		 
+      		 tempVal = tempVal.concat(new String(ch,start,length));
+
+    	 }
 
     }
 }

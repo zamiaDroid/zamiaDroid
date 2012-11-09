@@ -312,6 +312,25 @@ public class CitacionDbAdapter {
 		
 		return mCursor.getCount()<1;
 	}
+	
+	public Cursor getLastTimeStamp(long projectId, String timeStamp) {
+		
+		 Cursor mCursor =
+
+	             mDb.query(true, DATABASE_TABLE_CITATION, new String[] {KEY_ROWID,
+	             		KEY_RS,
+	                     LATITUDE,LONGITUDE,DATE,SINCRONIZED}, KEY_RS + "=" + projectId +" AND "+ DATE +" like "+"\""+timeStamp+"%"+"\"", null,
+	                     null, null, "date DESC", null);
+	     
+			 if (mCursor != null) {
+				 
+				 mCursor.moveToFirst();
+	         
+			 }
+		
+		// TODO Auto-generated method stub
+		return mCursor;
+	}
     
     
     public Cursor fetchSampleBySampleId(long rowId) throws SQLException {
@@ -536,14 +555,15 @@ public class CitacionDbAdapter {
  
     }
    
-   public Cursor fetchSamplesByField(long projId, String field) throws SQLException {
+   public Cursor fetchSamplesByField(long projId, String field, boolean asc) throws SQLException {
 
+	
+   	String orderBy="DESC";
    	
-   	Cursor c;
-
+   	if(asc) orderBy="ASC";
    	
-   		c=mDb.rawQuery("SELECT CitationTable._id as _id,value,date,CitationFieldTable._id as idField,latitude,longitude FROM " + DATABASE_TABLE_FIELD+","+DATABASE_TABLE_CITATION
-				+ " WHERE idRs="+projId+" and CitationTable._id="+CitacionDbAdapter.KEY_SAMPLE_ID+ " and fieldName=\""+field+"\" GROUP BY CitationTable._id ORDER BY date DESC;",null);
+   	Cursor c=mDb.rawQuery("SELECT CitationTable._id as _id,value,date,CitationFieldTable._id as idField,latitude,longitude FROM " + DATABASE_TABLE_FIELD+","+DATABASE_TABLE_CITATION
+				+ " WHERE idRs="+projId+" and CitationTable._id="+CitacionDbAdapter.KEY_SAMPLE_ID+ " and fieldName=\""+field+"\" GROUP BY CitationTable._id ORDER BY date "+orderBy+";",null);
 
  
    	
@@ -805,6 +825,13 @@ public class CitacionDbAdapter {
                    VALUE}, VALUE + "=\""+photo+"\"", null, null, null, null);
     
     }
+    
+    public Cursor fetchCitationIdByPhotoName(String photoName) throws SQLException {
+    	
+ 	   return mDb.query(DATABASE_TABLE_FIELD, new String[] {KEY_ROWID,KEY_SAMPLE_ID, KEY_TIPUS_ATRIB,
+                VALUE}, VALUE + " like '%"+photoName+"'", null, null, null, null);
+ 
+ }
 
 	public boolean checkRepeated(long projId,long citationId, double latitude, double longitude, String date) {
 
@@ -816,6 +843,7 @@ public class CitacionDbAdapter {
                         null, null, null, null);
             mCursor.moveToFirst();
         
+            
          if(mCursor.getCount()>0){
         	 
         	 mDb.delete(DATABASE_TABLE_CITATION, KEY_ROWID + "=" + citationId, null);
@@ -865,6 +893,8 @@ public class CitacionDbAdapter {
                 VALUE}, KEY_TIPUS_ATRIB + " = " +fieldId+" and " + KEY_SAMPLE_ID + " = " +citationId, null, null, null, null);
 		
 	}
+
+
 
 
 

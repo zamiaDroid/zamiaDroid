@@ -148,14 +148,16 @@ public class CitationControler {
 
 	public boolean updateCitationDate(long citationId,String date){
 
-		citationExists = mDbAttributes.checkRepeated(projId,this.sampleId, latitude, longitude, date);				
+		//Citation is repeated? --> (date | latitude | longitude) makes unique a citationId
+		citationExists = mDbAttributes.checkRepeated(projId,this.sampleId, latitude, longitude, date);
+		
 		
 		if(!citationExists) {
 			
 			mDbAttributes.updateDate(citationId, date);
 		
 		}
-
+		
 		this.latitude=0;
 		this.longitude=0;
 		
@@ -183,7 +185,7 @@ public class CitationControler {
 	 * 
 	 */
 	
-	public void updateCitationField(long sampleId, long idAtt, String newValue, String fieldName) {
+	public boolean updateCitationField(long sampleId, long idAtt, String newValue, String fieldName) {
 		
 		boolean updated=mDbAttributes.updateSampleFieldValue(sampleId, idAtt, newValue);
 		
@@ -193,7 +195,8 @@ public class CitationControler {
 			
 		}
 		
-
+		return updated;
+		
 	}
 	
 	
@@ -274,7 +277,7 @@ public class CitationControler {
 		if(idField>0) {
 			
 			firstFieldLabel=rsC.getFieldLabelByName(projectId, "OriginalTaxonName");
-			cursor= mDbSample.fetchSamplesByField(projectId,"OriginalTaxonName");
+			cursor= mDbSample.fetchSamplesByField(projectId,"OriginalTaxonName",false);
 
 			
 		} 
@@ -294,7 +297,7 @@ public class CitationControler {
 				firstFieldLabel=rsC.getFieldLabelByName(projectId, firstFieldName);
 				
 				
-				cursor= mDbSample.fetchSamplesByField(projectId,firstFieldName);
+				cursor= mDbSample.fetchSamplesByField(projectId,firstFieldName,false);
 				
 			}
 			else{
@@ -548,7 +551,7 @@ public class CitationControler {
 		
 	}
 	
-	public Cursor getCitationsWithFirstFieldByProjectId(long projId, boolean alphaOrder){
+	public Cursor getCitationsWithFirstFieldByProjectId(long projId, boolean alphaOrder, boolean timestampAsc){
 		
 		CitacionDbAdapter mDbAttributes = new CitacionDbAdapter(baseContext);
 		
@@ -563,7 +566,7 @@ public class CitationControler {
 			
 			
 			if(alphaOrder) cursor= mDbAttributes.fetchSamplesByFieldOrdered(projId,firstFieldName);
-			else cursor= mDbAttributes.fetchSamplesByField(projId,firstFieldName);
+			else cursor= mDbAttributes.fetchSamplesByField(projId,firstFieldName,timestampAsc);
 			
 			
 		} 
@@ -577,7 +580,7 @@ public class CitationControler {
 			if(first.getCount()>0) {
 
 				String firstFieldName=first.getString(4);
-				cursor= mDbAttributes.fetchSamplesByField(projId,firstFieldName);
+				cursor= mDbAttributes.fetchSamplesByField(projId,firstFieldName,timestampAsc);
 				
 			}
 			else{
@@ -617,8 +620,7 @@ public class CitationControler {
 			
 			citationAdapter.open();
 			
-			cursor= citationAdapter.fetchSamplesByField(projId,fieldName);
-			
+			cursor= citationAdapter.fetchSamplesByField(projId,fieldName,false);
 
 			citationAdapter.close();
 			
@@ -1356,6 +1358,27 @@ public class CitationControler {
 		
 	}
 	
+	
+	public String getLastAvailableDate(long projectId, String timeStamp) {
+
+		String lastTimeStamp="";
+
+		Cursor lastCitations=mDbAttributes.getLastTimeStamp(projectId,timeStamp);
+		
+		if(lastCitations!=null && lastCitations.getCount()>0) {
+			
+			lastTimeStamp=lastCitations.getString(4);
+			
+		}
+		else lastTimeStamp=timeStamp+" 01:00:00";
+		
+		lastCitations.close();
+		
+		return lastTimeStamp;
+		
+		
+	}
+	
 	public long getCitationIdByPhoto(String photo){
 		
 		CitacionDbAdapter sa=new CitacionDbAdapter(baseContext);
@@ -1529,6 +1552,10 @@ public class CitationControler {
 		
 	}
 	
+
+
+
+	
 	private boolean isTimestampAvailable(long projId, String presettedDate){
 		
 		CitacionDbAdapter cAdapt = new CitacionDbAdapter(baseContext);
@@ -1543,6 +1570,8 @@ public class CitationControler {
 	
 		
 	}
+	
+	
 
 	
 	
@@ -1579,6 +1608,8 @@ public class CitationControler {
 	public Context getBaseContext() {
 		return baseContext;
 	}
+
+
 
 
 

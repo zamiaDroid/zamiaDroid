@@ -23,13 +23,12 @@
        android:layout_width="fill_parent"
        android:layout_height="fill_parent"
         android:clickable="true"
-		android:apiKey="0iepYHdiW7LMvYV-Y5Z8RXdD1iVnXmtL5XCU-Fg"
+		android:apiKey="0iepYHdiW7LO15QOFSmv46OpgMfM-_foplBtaCA"
 		
     />
     
     	<!-- Feina -->
-           <!--  android:apiKey="0iepYHdiW7LP6Jd7SkVZ8sMML5RIGudGFe5rCGA"--> 
-           <!-- 0iepYHdiW7LP6Jd7SkVZ8sMML5RIGudGFe5rCGA -->
+           <!-- 0iepYHdiW7LO15QOFSmv46OpgMfM-_foplBtaCA -->
        <!-- portatil casa -->
                <!--  android:apiKey="0iepYHdiW7LPuKkUru1YG_Mu4d3WN1q-A3lGLgg"--> 
                <!-- 0iepYHdiW7LPJskUhI7eryrsQBiW_QrzDK6EcNA-->

@@ -181,6 +181,7 @@ public class ZamiaCitationHandlerXML extends DefaultHandler{
           else if (localName.equals("ObservationDate")) {
           	
         	  tempVal=tempVal.trim();
+        	  //cutreeeeeeeeeeeeeeeeee
               repeatedCitation=fReader.createObservationDate(tempVal);
               tempVal="";
 

@@ -172,6 +172,8 @@ public class Sampling extends Activity {
     	private MainLocationListener mLocationListener;
 
     	private boolean tempGPS=false;
+    	private boolean uniqueCitationEntry;
+
 
 
 		
@@ -218,6 +220,7 @@ public class Sampling extends Activity {
         elevation=getIntent().getExtras().getDouble("altitude");
         presettedDate=getIntent().getExtras().getString("timestamp");
         citationIdCopy=getIntent().getExtras().getLong("citationId");
+        uniqueCitationEntry=getIntent().getExtras().getBoolean("uniqueCitation");
         
 
         if(lat==0.0 && longitude==0.0){
@@ -231,6 +234,7 @@ public class Sampling extends Activity {
         if(lat!=null && longitude!=null){
         	
         	predefinedLocation=true;
+        	uniqueCitationEntry=true;
         	bUpdateLoc.setVisibility(View.INVISIBLE);
         	
         	if(elevation==null || elevation==0.0){
@@ -1206,13 +1210,12 @@ public class Sampling extends Activity {
 
        	removeAttributes();
        	
-       	if(predefinedLocation) {
+       	if(uniqueCitationEntry) {
 		    	
 		    	finish();
 		    	
 		}		   
 		else{
-
 
 			   if(prefCnt.gpsNeeded()){
 			        
@@ -1220,10 +1223,7 @@ public class Sampling extends Activity {
 		        	callGPS();
 		        
 		        }
-
-
-			 
-			   
+  
 			 elementsList.get(0).requestFocus();
 		 
 		 }

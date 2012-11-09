@@ -1,0 +1,61 @@
+package uni.projecte.network;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+
+import android.widget.Toast;
+
+
+
+public class ServerSender {
+
+	String urlString="http://10.0.2.2/~david/loginSystem/api/sample/";
+	
+
+	
+	 public void sendData(String user, String m){
+		    
+	    	try { 
+	    		
+	    		
+    	    URL url = new URL(urlString);
+	         String data = URLEncoder.encode("nm", "UTF-8") + "=" + URLEncoder.encode(user, "UTF-8");
+	         String mostra = URLEncoder.encode("sampleData", "UTF-8") + "=" + URLEncoder.encode(m, "UTF-8");
+
+	    
+	         // Send data
+	         URLConnection conn = url.openConnection();
+	         conn.setDoOutput(true);
+	         OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+	         wr.write(data);
+	         wr.write("&"+mostra);
+	         wr.flush();
+	    
+	         // Get the response
+	         BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	         String line;
+	         
+	         
+	         while ((line = rd.readLine()) != null) {                
+	                        
+	             
+	         	/*Toast.makeText(getBaseContext(), 
+	                    "M: " + line, 
+	                    Toast.LENGTH_SHORT).show();*/
+	         }
+	         wr.close();
+	        
+	        rd.close(); 
+	        
+	        
+	        } catch (Exception e) {
+	        	
+	        	System.out.println("errros");
+	        }
+	    }
+
+}

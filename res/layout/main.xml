@@ -186,6 +186,22 @@
         
         />
          
+               
+                       <Button
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/gallery_old"
+        android:text="Galeria" 
+        android:id="@+id/btShowGalleryMain"
+        
+        />
+                       
+        <Button
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/preferences"
+        android:text="Configuració" 
+        android:id="@+id/btConfigMain"
+        
+        />
 
     <!--     <LinearLayout
             android:layout_width="wrap_content"

@@ -8,30 +8,16 @@
     <!-- Project List -->
 
     <string name="tvInfoListProj"><b>Aquesta és la llista de projectes. Si cliqueu sobre un d\'ells podreu veure les propietats i els camps. </b></string>
-    <string name="projDescription">Descripció del Projecte</string>
     <string name="deleteProjQuestion">"Vol esborrar el projecte?"</string>
-    <string name="projFieldList">"Llista de de camps del Projecte"</string>
     <string name="yes">"Sí"</string>
     <string name="no">"No"</string>
     <string name="tvProjectName">"Nom del projecte:"</string>
    	<string name="removeFieldQuestion">Hi ha %1$d citacions amb el camp %2$s ple. Estàs segur que vols perdre aquestes dades?</string>
    	<string name="removeFieldQuestionNoCit">No hi ha citacions amb el camp %1$s ple. No es perdran dades. Vols esborrar el camp?</string>
-   	
-    
-
-    <!-- Project Chooser -->
-
-    <string name="noFiles">No hi ha projectes</string>
-    <string name="titulo_no_directorio">No es un directorio</string>
-    <string name="no_directorio">Eso es un archivo. ¡No un directorio!</string>
-    <string name="cancelar">Cancelar</string>
-
+   	 
 
     <!-- Project Import -->
 
-    <string name="pImportIntroText">Escull projecte de Fagus a Importar</string>
-    <string name="mImportFagus">Importar Projecte</string>
-    <string name="mImportProjectFromCitations">Crear projecte des de fitxer de citacions</string>
     <string name="sameNameProject">Ja existeix un projecte amb el nom </string>
 
     <!-- Project Creation -->
@@ -39,7 +25,6 @@
     <string name="projName">Nom Projecte</string>
     <string name="projectFieldList">Llista de Camps</string>
     <string name="brsAddField">Afegir Nou Camp</string>
-    <string name="bAddPredField">Afegir Camp Predefinit</string>
     <string name="tvChooseTh">Escull Tesaure</string>
     <string name="projNameMissing">Manca el nom del projecte</string>
     <string name="projFieldsMissing">Manquen camps al projecte</string>
@@ -70,12 +55,10 @@
     <string name="tvFieldName">Nom del camp</string>
     <string name="tvFieldLabel">Text de l\'etiqueta</string>
     <string name="tvFieldDesc">Text de consell</string>
-    <string name="tvFieldPredValue">Valor per defecte</string>
     <string name="tvPredValues">Valors pre-definits</string>
     <string name="bCreateField">Afegir Camp</string>
     <string name="tFieldValuesMissing">Manca el nom o l\'etiqueta del camp</string>
 
-    <string name="bAddNewField">Afegir Camp</string>
     <string name="noProjectChosen">No s\'ha escollit projecte</string>
     <string name="altitudeLabel">Altitud</string>
     
@@ -101,7 +84,6 @@
 	<string name="tvlFields">Llista de camps</string>
 	<string name="tvVisible">Visible: </string>
 	<string name="projCreationTitle">Introduir dades</string>
-    <string name="bShowFields">Veure Camps del Projecte</string>
     <string name="mAddField">Afegir Camp al projecte</string>
     <string name="mChangeTh">Canviar Tesaure</string>
 

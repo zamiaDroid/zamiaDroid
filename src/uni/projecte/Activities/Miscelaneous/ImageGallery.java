@@ -17,6 +17,7 @@ import uni.projecte.controler.PhotoControler;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.CitationControler;
+import uni.projecte.dataLayer.dataStructures.ImageCache;
 import uni.projecte.dataTypes.AttributeValue;
 import uni.projecte.dataTypes.Utilities;
 import uni.projecte.maps.overlays.MyTracksOverlay;
@@ -29,6 +30,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -89,6 +93,7 @@ public class ImageGallery extends Activity{
     private String preSettedLoc;
     private int lastKnownPosition=-1;
     private boolean secondaryStorage=false;
+    private String storagePath;
     
 	private HashMap<String, String> fieldsLabelNames;
     private HashMap<String, Long> selectedPhotos;
@@ -139,7 +144,9 @@ public class ImageGallery extends Activity{
  
         preSettedLoc=getIntent().getExtras().getString("idSelection");
         
-        secondaryStorage=photoCnt.isSecondaryExternalStorageDefault(projId);
+        storagePath=getIntent().getExtras().getString("storagePath");
+        
+        //secondaryStorage=photoCnt.isSecondaryExternalStorageDefault(projId);
         
         if(preSettedLoc!=null){
         	
@@ -219,18 +226,8 @@ public class ImageGallery extends Activity{
 
 
 	private void loadGalleryImages() {
-
-		if(secondaryStorage){
-			
-			   loadImageList(photoCnt.getSecondayExternalStoragePath(),selectedPhotos!=null);
-
-		}
-		else{
-			
-			   loadImageList(photoCnt.getMainPhotoPath(),selectedPhotos!=null);
-			
-		}
-		
+					
+		loadImageList(storagePath,selectedPhotos!=null);
 		g.setAdapter(new ImageGalleryAdapter(this));
 		    
 	}
@@ -623,13 +620,16 @@ public class ImageGallery extends Activity{
 	
 
 	public class ImageGalleryAdapter extends BaseAdapter {
-	    int mGalleryItemBackground;
+	    
+		int mGalleryItemBackground;
 	    private Context mContext;
 
+	    private ImageCache imageCache;
 
 	    public ImageGalleryAdapter(Context c) {
 	       
 	    	mContext = c;
+	    	imageCache=new ImageCache(mContext);
 	        
 	    }
 
@@ -662,21 +662,67 @@ public class ImageGallery extends Activity{
 
 	    	  layInner.setLayoutParams(innerLP);
 	    	 
-	    	  Bitmap bm;
 	    	  Uri uri=mUrls[position];
-	    	  bm = decodeFile(new File(uri.getEncodedPath()));
 	    	  
+	    	  Bitmap bm=imageCache.getBitmapFromMemCache(uri.getEncodedPath());
 	    	  ImageView i = (ImageView) layInner.findViewById(R.id.galleryImage);
 	    	  i.setAdjustViewBounds(true);
-	        
-	    	  i.setImageBitmap(bm);
 	    	  i.setTag(mUrls[position]);
+	    	  
+	    	  if(bm!=null){
+	    		  
+	    		  i.setImageBitmap(bm);	    		  
+	    	  }
+	    	  else{
+	    	  
+		    	  bm = decodeFile(new File(uri.getEncodedPath()));
+		    	  
+		    	  if(bm!=null && bm.getWidth()>0){
+		    		  
+		    		  i.setImageBitmap(bm);
+			    	  imageCache.addBitmapToMemoryCache(uri.getEncodedPath(), bm);
+		    		  
+		    	  }
+		    	  else{
+		    		  
+		    		  bm=createWrongImageBitmap((int) IMAGE_MAX_SIZE/4);
+		    		  
+		    		  i.setImageBitmap(bm);
+			    	  imageCache.addBitmapToMemoryCache(uri.getEncodedPath(), bm);
+		    		  
+		    	  }
+		    	  
+		    	
+	    	  
+	    	  }
 	        
 	  
 	    	  return layOuter;
 
 	    }
 	}
+	
+	private Bitmap createWrongImageBitmap(int width){
+		
+		Paint paint = new Paint();
+		paint.setAntiAlias(true);
+
+		Bitmap bitmap = Bitmap.createBitmap(width, width,Bitmap.Config.ARGB_8888);
+		Canvas c = new Canvas(bitmap);
+		
+	    paint.setColor(Color.argb(0xff, 0x88, 0xaa, 0x00));
+		paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1);
+        paint.setTextSize(14);
+
+		c.drawColor(Color.WHITE);
+		c.drawText("Foto incorrecta", width/4, width/2, paint);
+		
+		    
+       return bitmap;
+		
+	}
+
 	
 	private Bitmap decodeFile(File f){
 	    Bitmap b = null;

@@ -2,16 +2,23 @@ package uni.projecte.ui;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import uni.projecte.R;
+import uni.projecte.dataLayer.dataStructures.ImageCache;
 import uni.projecte.dataTypes.Utilities;
 import uni.projecte.ui.ImageLoader.ImageLoadListener;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.storage.StorageManager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -32,15 +39,21 @@ public class LazyImageAdapter extends BaseAdapter implements ImageLoadListener {
 	private Handler mHandler;
 	private ImageLoader mImageLoader = null;
 	
-	private File mDirectory;
-	
-	private String lPath;
 	private String projName;
 	
-	private Uri[] mUrls;  
+	private File imageGalleryDir;
+	private String storagePath;
+
+	
+	private ArrayList<String> availableImageList;  
     private int thMaxSize;
     
     private HashMap<String, Long> selectedPhotos;
+    
+    private ImageCache imageCache;
+    
+    private boolean mBusy;
+
 	
 	/**
 	 * Lazy loading image adapter
@@ -48,35 +61,44 @@ public class LazyImageAdapter extends BaseAdapter implements ImageLoadListener {
 	 * @param lClickListener click listener to attach to each item
 	 * @param lPath the path where the images are located
 	 * @param selectedPhotos 
+	 * @param mBusy 
 	 * @throws Exception when path can't be read from or is not a valid directory
 	 */
 	public LazyImageAdapter(
 			Context aContext,
 			OnClickListener lClickListener,
-			String lPath,
+			String storagePath,
 			String projName,
 			HashMap<String, Long> selectedPhotos, int thMaxSize
 		) throws Exception {
 		
 		mContext = aContext;
 		mItemClickListener = lClickListener;
-		mDirectory = new File(lPath);
-		this.lPath=lPath;
+		imageGalleryDir = new File(storagePath);
+		this.storagePath=storagePath;
 		this.projName=projName;
 		this.thMaxSize=thMaxSize;
 		this.selectedPhotos=selectedPhotos;
 		
+		this.imageCache = new ImageCache(aContext);
+		
+		
 		// Do some error checking
-		if(!mDirectory.canRead()){
+		if(!imageGalleryDir.canRead()){
+			
 			throw new Exception("Can't read this path");
+			
 		}
-		else if(!mDirectory.isDirectory()){
+		else if(!imageGalleryDir.isDirectory()){
+			
 			throw new Exception("Path is a not a directory");
+			
+			
 		}
 		
 		createImageList(selectedPhotos!=null);
 		
-		mImageLoader = new ImageLoader(this);
+		mImageLoader = new ImageLoader(this,imageCache,thMaxSize);
 		mImageLoader.start();
 		mHandler = new Handler();
 
@@ -90,16 +112,27 @@ public class LazyImageAdapter extends BaseAdapter implements ImageLoadListener {
 		// stop the thread we started
 		mImageLoader.stopThread();
 	}
+	
+
+	
+	public void clearHandler() throws Throwable {
+		
+		mImageLoader.interrupt();
+		mImageLoader.start();
+		
+		mHandler = new Handler();
+
+	}
 
 	public int getCount() {
 		
-		return mUrls.length;
+		return availableImageList.size();
 		
 	}
 
 	public Object getItem(int aPosition) {
 		
-		return mUrls[aPosition].toString();
+		return availableImageList.get(aPosition).toString();
 	}
 
 	public long getItemId(int arg0) {
@@ -108,11 +141,18 @@ public class LazyImageAdapter extends BaseAdapter implements ImageLoadListener {
 		
 	}
 	
+	
+	/*
+	 * 
+	 * 
+	 * 
+	 */
+	
 	private void createImageList(boolean filtered) {
 
-	    File images = new File(lPath); 
-
+	    File images = new File(storagePath); 
 	    
+	    //List of images at lPath
 	    File[] imagelist = images.listFiles(new FilenameFilter(){  
 
 	        public boolean accept(File dir, String name){
@@ -122,71 +162,34 @@ public class LazyImageAdapter extends BaseAdapter implements ImageLoadListener {
 	    }
 	    );  
             
-            
-	    String[] mFiles = new String[imagelist.length];  
+	    
+	    availableImageList= new ArrayList<String>();
         
-        int filteredFiles=0;
-  
+ 
         for(int i= 0 ; i< imagelist.length; i++){
         	
-            mFiles[i] = imagelist[i].getAbsolutePath();  
+            String fileName = imagelist[i].getName();  
             
-            if(filtered && selectedPhotos.get(mFiles[i])!=null) filteredFiles++;
-            
+            if(!filtered || (filtered && selectedPhotos.get(fileName)!=null)){
+            	            	
+            	availableImageList.add(storagePath+fileName); 
+            } 
+
         }  
         
-        
-        if(!filtered) filteredFiles=mFiles.length;
-        
-        mUrls = new Uri[filteredFiles];
-        
-        if(mUrls.length==0){
+        if(availableImageList.size()==0){
         	
         	Utilities.showToast(mContext.getString(R.string.noPhotoInProject),mContext);
         	
-        	//finish();
-        	
         }
-        else{
-        	
-        	filteredFiles=0;
-
-		      for(int i=0; i < mFiles.length; i++){
-		    	  
-		    	  if(filtered){
-		    		  
-		    		  if(selectedPhotos.get(mFiles[i])!=null) {
-		    			  
-		    			  mUrls[filteredFiles] = Uri.parse(mFiles[i]); 
-				    	  filteredFiles++;
-
-		    		  }
-		    		  
-		    	  }
-		    	  else{
-		    		  
-			    	  mUrls[i] = Uri.parse(mFiles[i]);   
-
-		    	  }
-		    	  
-		    	  
-		      }
-	
-        }
-
-   
-
+        
 	}
 	
 	public View getView(final int aPosition, View aConvertView, ViewGroup parent) {
 		final ViewSwitcher lViewSwitcher;
 		
-		String lPath = (String)getItem(aPosition);
+			String lPath = (String)getItem(aPosition);
 
-		// logic for conserving resources see google video on making your ui fast
-		// and responsive
-		
-		//if (null == aConvertView) {
 			
 			lViewSwitcher = new ViewSwitcher(mContext);
 			lViewSwitcher.setPadding(4, 4, 4, 4);
@@ -204,11 +207,6 @@ public class LazyImageAdapter extends BaseAdapter implements ImageLoadListener {
 			// attach the onclick listener
 			lViewSwitcher.setOnClickListener(mItemClickListener);
 			
-			
-	//	} else {
-	//		lViewSwitcher = (ViewSwitcher) aConvertView;
-	//	}
-	
 
 		ViewTagInformation lTagHolder = (ViewTagInformation) lViewSwitcher
 				.getTag();
@@ -229,24 +227,51 @@ public class LazyImageAdapter extends BaseAdapter implements ImageLoadListener {
 			// Then queue the image loading
 			ImageView lImageView = (ImageView) lViewSwitcher.getChildAt(1);
 			lViewSwitcher.setDisplayedChild(PROGRESSBARINDEX);
-			mImageLoader.queueImageLoad(lPath, lImageView, lViewSwitcher);
 			
+			if(!mBusy){
+			
+				Bitmap bitmap=imageCache.getBitmapFromMemCache(lPath);
+				
+				Log.i("Images","Cache size: ("+imageCache.getSize()+"/"+imageCache.getMaxSize()+") --- "+(imageCache.getSize()*100)/imageCache.getMaxSize()+"%");
+	
+				
+				if(bitmap!=null){
+	
+					mImageLoader.signalUI(lViewSwitcher, lImageView, bitmap);
+					Log.i("Images","OK - HIT cache: "+lPath);
+					
+				}
+				else{
+				
+					Log.i("Images","KO - MISS cache: "+lPath);
+					
+					if(!mImageLoader.isAlive()) mImageLoader.start();
+					
+					mImageLoader.queueImageLoad(lPath, lImageView, lViewSwitcher);
+				}
+			}
+			else{
+				
+				
+			}
 
 		}
 
 		return lViewSwitcher;
 	}
 	
+	
+
+	
 	public int size(){
 		
-		return mUrls.length;
+		return availableImageList.size();
 	}
 
 	
-	public void handleImageLoaded(
-			final ViewSwitcher aViewSwitcher,
-			final ImageView aImageView, 
-			final Bitmap aBitmap) {
+
+	
+	public void handleImageLoaded( final ViewSwitcher aViewSwitcher, final ImageView aImageView, final Bitmap aBitmap) {
 		
 		// The enqueue the following in the UI thread
 		mHandler.post(new Runnable() {
@@ -260,6 +285,24 @@ public class LazyImageAdapter extends BaseAdapter implements ImageLoadListener {
 			}
 		});
 
+	}
+	
+	
+	public boolean isBusy() {
+		return mBusy;
+	}
+
+
+	public void setBusy(boolean mBusy) {
+		this.mBusy = mBusy;
+	}
+
+	public ArrayList<String> getAvailableImageList() {
+		return availableImageList;
+	}
+
+	public void setAvailableImageList(ArrayList<String> availableImageList) {
+		this.availableImageList = availableImageList;
 	}
 
 

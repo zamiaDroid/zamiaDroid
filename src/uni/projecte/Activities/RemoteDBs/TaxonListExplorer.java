@@ -1,6 +1,5 @@
 	package uni.projecte.Activities.RemoteDBs;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,21 +9,16 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import uni.projecte.R;
-import uni.projecte.R.drawable;
-import uni.projecte.R.id;
-import uni.projecte.R.layout;
-import uni.projecte.R.string;
+import uni.projecte.Activities.Citations.Sampling;
+import uni.projecte.controler.CitationControler;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
-import uni.projecte.controler.CitationControler;
 import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.dataLayer.CitationManager.FileExporter;
 import uni.projecte.dataLayer.RemoteDBManager.AbstractDBConnection;
-import uni.projecte.dataLayer.RemoteDBManager.BiocatDBManager;
 import uni.projecte.dataLayer.RemoteDBManager.DBManager;
 import uni.projecte.dataLayer.RemoteDBManager.RemoteTaxon;
 import uni.projecte.dataLayer.RemoteDBManager.objects.LocalTaxonListAdapter;
-import uni.projecte.dataLayer.RemoteDBManager.objects.LocalTaxonNoThListAdapter;
 import uni.projecte.dataLayer.RemoteDBManager.objects.RemoteTaxonListAdapter;
 import uni.projecte.dataLayer.RemoteDBManager.objects.RemoteTaxonsExport;
 import uni.projecte.dataLayer.RemoteDBManager.objects.TotalTaxonListAdapter;
@@ -54,9 +48,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -65,9 +58,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
-import android.widget.Toast;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 import edu.ub.bio.biogeolib.CoordConverter;
 import edu.ub.bio.biogeolib.CoordinateLatLon;
 import edu.ub.bio.biogeolib.CoordinateUTM;
@@ -78,8 +71,10 @@ public class TaxonListExplorer extends TabActivity {
 	public static final int CHANGE_METHOD=Menu.FIRST;
 	public static final int DB_CONFIG=Menu.FIRST+1;
 	public static final int EXPORT_PRESENCE=Menu.FIRST+2;
+	public static final int ADD_CITATION=Menu.FIRST+3;
 	
 	public final static int UPDATE_TAXON_LIST = 1;
+	public final static int UPDATE_LOCAL_TAXON_LIST = 2;
 	 
 	private ListView lvRemotetaxonList;
 	private ListView lvLocalTaxonList;
@@ -144,6 +139,7 @@ public class TaxonListExplorer extends TabActivity {
 	private ProjectControler projCnt;
 	private DBManager dbM;
 	private Dialog dialogPresenceExport;
+	private boolean remoteNotReload=false;
 	
 	
 	@Override
@@ -224,17 +220,6 @@ public class TaxonListExplorer extends TabActivity {
     }
 	
 
-
-	@Override
-	public void onResume(){
-		
-		super.onResume();
-		
-		//loadDataThread();
-		
-		
-	}
-	
 	
 	  private void loadLocalTaxons() {
 
@@ -257,7 +242,10 @@ public class TaxonListExplorer extends TabActivity {
 
 		  }
 			  
-		   remoteList=dbConn.getList();
+		   if(remoteList==null || !remoteNotReload) remoteList=dbConn.getList();
+		   
+		   remoteNotReload=false;
+		   
 		   rl= new RemoteTaxonListAdapter(this,remoteList.getTaxonList(),localTaxonList,showTaxonCitations,showTaxonInfoClick);
 	       
 	  }
@@ -387,6 +375,7 @@ public class TaxonListExplorer extends TabActivity {
 		
     	menu.add(0,DB_CONFIG, 0,R.string.mConfigDB).setIcon(getResources().getDrawable(R.drawable.ic_menu_db));
     	menu.add(0,EXPORT_PRESENCE, 0,R.string.btExportPresences).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_save));
+    	menu.add(0,ADD_CITATION,0, R.string.mAddCitation).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_add));
 			
     	return super.onCreateOptionsMenu(menu);
     }
@@ -419,6 +408,24 @@ public class TaxonListExplorer extends TabActivity {
 				
 				exportPresence();
 				 			 
+			break;
+			
+			case ADD_CITATION:
+				
+				Intent citationCaptureActivity = new Intent(this,Sampling.class);
+				
+					Bundle b = new Bundle();
+					b.putLong("id",projId);
+					citationCaptureActivity.putExtras(b);
+					
+					b = new Bundle();
+					b.putBoolean("uniqueCitation",true);
+					citationCaptureActivity.putExtras(b);
+					
+			
+				startActivityForResult(citationCaptureActivity,UPDATE_LOCAL_TAXON_LIST);
+				
+				
 			break;
 			
 			
@@ -1184,6 +1191,14 @@ public class TaxonListExplorer extends TabActivity {
                  
          case UPDATE_TAXON_LIST :
          	
+        	 loadTaxonsList();
+            
+             break;
+             
+         case UPDATE_LOCAL_TAXON_LIST :
+          	
+        	 remoteNotReload=true;
+        	 
         	 loadTaxonsList();
             
              break;

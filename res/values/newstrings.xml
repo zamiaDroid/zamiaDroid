@@ -19,18 +19,13 @@
 	<string name="thInfoName"><b>Nom del tesaure: </b></string>
 	<string name="thInfoNumItems"><b>Número d\'items: </b></string>
 	
-    <string name="mCreateDefProj">Crear projectes d\'exemple</string>
     <string name="noProjectNeedCreate">No hi ha projectes al sistema. N\'has de crear un o importar-lo.</string>
-    
-    <string name="GOOGLE_MAPS_API_KEY">0iepYHdiW7LP6Jd7SkVZ8sMML5RIGudGFe5rCGA</string>
-    
-    <string name="prefAutoFields">Camps automàtics</string>
-    <string name="prefAutoFieldsSum">Hi ha camps que es poden completar de forma automàtica.</string>
-    
-    <string name="prefAutoFieldLocality">Camp localitat</string>
-    <string name="prefAutoFieldLocalitySum">El camp localitat es determinarà de forma automàtica.</string>
-    
+        
     <string name="cbNumField">Camp numèric</string>
+    <string name="cbFieldText">Camp textual</string>
+    <string name="cbFieldBoolean">Camp booleà</string>
+    
+   
     
     <string name="citCoord"><b>Coord:</b></string>
     <string name="citAltitude"><b>Altura:</b></string>
@@ -48,9 +43,7 @@
     <string name="mShowGallery">Veure galeria de fotos</string>
   	<string name="slSaveModif">Desar modificacions</string>
   
-  
-    <string name="mapYouAreHere">Estàs aquí</string>
-    <string name="mapCreateCitation">Vols crear una citació al punt %1$f | %2$f ?</string>
+      <string name="mapCreateCitation">Vols crear una citació al punt %1$f | %2$f ?</string>
     
     <string name="repRemoteTitle">Projectes del repositori remot</string>
     <string name="repLocalTitle">Projectes del repositori local</string>
@@ -72,7 +65,6 @@
     
     <string name="btExportFile">Exportar Fitxer a </string>
     <string name="tvExportDialogFileName">Nom del fitxer</string>
-    <string name="tvExportDialogTitle">Exportació de citacions</string>
      
     <string name="downloadingTh">Descarregant tesaure&#8230;</string>
     <string name="remoteThDescription">Pots descarregar des d\'Internet un tesaure taxonòmic. Si tens tarifa de dades amb límit de descàrrega
@@ -81,7 +73,6 @@
     
      <string name="cbThModeRemote">Descarregar tesaure on-line</string>
      <string name="cbThModeLocal">Escollir tesaure local</string>
-     <string name="cbThModeNone">Sense tesaure</string>
      
   
     <string name="synonymQuestion">El taxon <b>%1$s</b> és un sinònim. Vols substituir-ho pel nom acceptat?</string>
@@ -124,14 +115,12 @@
      <string name="toastGPSWorking">El GPS encara està buscant la posició</string>
      
     <string name="toastWrongFile">Arxiu incorrecte</string>
-    <string name="toastShowLocation">Veure localització</string>
     
     
     <!-- New CitationManager -->
     
     <string name="filterDialogEmptyValue">Valor buit</string>
-    <string name="appliedFilter">Dades filtrades pel camp <b>%1$s</b> amb valor %2$s <b>%3$s</b></string>
-        
+       
      <string name="countFiltered"><b>Filtrades:</b> %1d | </string>
      <string name="countTotal"><b>Total:</b> %1d </string>
      <string name="countSelected"><b>Seleccionades:</b> %1d | </string>
@@ -174,10 +163,7 @@
     
   <string name="etHintThGender">Gènere</string>  
   <string name="etHintThSpEp">Epítet específic</string>  
-  <string name="etHintThSpEpAut">Autor epítet específic</string>  
-  <string name="etHintThRange">Rang infra-específic</string>  
   <string name="etHintThSpInfraEp">Epítet infra-específic</string>  
-  <string name="etHintThSpInfraEpAut">Autor epítet infra-específic</string>  
   <string name="etHintThPrimKey">Clau primària</string>  
   <string name="etHintThSecKey">Clau secundària</string>  
 
@@ -264,7 +250,6 @@
    
     <string name="utm10km">10x10</string>    
     <string name="utm1km">1x1</string>    
-    <string name="utm1m">1x1</string>    
     
     <string name="removeCitationPhoto">Vols esborrar la fotografia amb el camp de la citació vinculada?</string>
 	<string name="mRemovePhoto">Esborrar fotografia</string>
@@ -276,7 +261,6 @@
 
 	<!-- ZamiaImport -->
 	<string name="zamiaImportTitle">Importar fitxer de citacions en format</string>
-   	<string name="zamiaImportProgress">Important noves citations al projecte %1$s</string>
    	<string name="zamiaImportWrongFormat">El fitxer no té format Zamia correcte o no hi ha citacions.</string>
     <string name="zamiaImportCitationsCount">Hi ha %1d citacions al fitxer</string>
 	<string formatted="false" name="zamiaImportAddFields">Hi ha &lt;b> %1d camps &lt;b>que &lt;b> no presents al projecte &lt;/b>. Els vols afegir al projecte &lt;b> %2$s &lt;/b> ?</string>
@@ -353,6 +337,9 @@
     <string name="fieldTypeSubProject">sub-projecte</string>
        
     <string name="mCheckTaxonTh">Exclosos del tesaure</string>
+    <string name="btStoragePrim">Emm. Primari</string>
+    <string name="btStorageSec">Emm. Secundari</string>
     
+    <string name="mAddCitation">Afegir citació</string>
 
 </resources>

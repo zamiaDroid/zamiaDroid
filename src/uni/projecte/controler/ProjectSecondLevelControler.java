@@ -119,7 +119,7 @@ public class ProjectSecondLevelControler extends ProjectControler {
 	 	fi.open();
 		
 		//checking if project has citations
-		Cursor numSamp=sC.getCitationsWithFirstFieldByProjectId(projId,false);
+		Cursor numSamp=sC.getCitationsWithFirstFieldByProjectId(projId,false,false);
 	 	 	   	
 	   numSamp.moveToFirst();
 	 	   	

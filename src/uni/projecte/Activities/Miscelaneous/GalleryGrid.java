@@ -1,11 +1,11 @@
 package uni.projecte.Activities.Miscelaneous;
 
-import java.util.Date;
 import java.util.HashMap;
 
 import uni.projecte.R;
 import uni.projecte.controler.PhotoControler;
 import uni.projecte.controler.ProjectControler;
+import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.Utilities;
 import uni.projecte.ui.LazyImageAdapter;
 import uni.projecte.ui.ViewTagInformation;
@@ -13,24 +13,26 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
-import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 
 
 
@@ -42,11 +44,14 @@ public class GalleryGrid extends Activity{
 	private static final int MOVE_PHOTOS=Menu.FIRST+2;   
 
 	public final static int REFRESH_IMAGE_LIST = 2;
+	
+	private static final int GRID_COLUMNS=3;
 
     private ProjectControler projCnt;
     private PhotoControler photoCnt;
 
 	public GridView lLazyGrid;
+	public Button btSecondaryStorage;
     private int thWidth;
     
 	private long projId;
@@ -57,9 +62,13 @@ public class GalleryGrid extends Activity{
 
     private LazyImageAdapter lLazyAdapter;
     private boolean secondaryStorage=false;
+    private String storagePath;
+    
     
 	private ProgressDialog pdMovePhotos;
 	private Dialog movePhotosDialog;
+	private ProgressBar progBar;
+	private TextView tvGalleryCount;
 
 	
 	
@@ -67,51 +76,143 @@ public class GalleryGrid extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    
+	    
         Utilities.setLocale(this);
 	    setContentView(R.layout.gallerygrid);
 
         projCnt=new ProjectControler(this);
 		photoCnt=new PhotoControler(this);
-
-        
+	
         projId=getIntent().getExtras().getLong("id");
         projCnt.loadProjectInfoById(projId);
         projectName=projCnt.getName();
 
         preSettedLoc=getIntent().getExtras().getString("idSelection");
         
+        progBar=(ProgressBar)findViewById(R.id.progsBarGalleryLoading);
+        tvGalleryCount=(TextView)findViewById(R.id.tvGalleryCount);
+        btSecondaryStorage=(Button)findViewById(R.id.btSecondaryStorage);
+        
+        btSecondaryStorage.setOnClickListener(btChangeStorageListener);
+        
         secondaryStorage=photoCnt.isSecondaryExternalStorageDefault(projId);
         
-        if(preSettedLoc!=null){
-        	
-        	loadSelectedPhotos();
-        	
-        }
+        loadSelectedPhotos();
         
-        loadGridView();
-        
+                
 	}
+	
+	public void onStop(){
+		
+		super.onStop();
+		
+		try {
+			
+			lLazyAdapter.finalize();
+			
+		} catch (Throwable e) {
+
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void onConfigurationChanged(Configuration newConfig) {
+		  
+		super.onConfigurationChanged(newConfig);
+
+		loadGridView();
+	
+	}
+	
+	
+	private void updateStorageState(){
+		
+		
+        if(lLazyAdapter!=null) tvGalleryCount.setText("("+lLazyAdapter.getCount()+")");
+
+		
+		if(photoCnt.hasSecondaryStorage()) {
+			
+			btSecondaryStorage.setVisibility(View.VISIBLE);
+			
+			if(secondaryStorage) btSecondaryStorage.setText(getString(R.string.btStorageSec));
+			else btSecondaryStorage.setText(getString(R.string.btStoragePrim));
+			
+		}
+		else btSecondaryStorage.setVisibility(View.GONE);
+		
+		
+	}
+	
+	public OnClickListener btChangeStorageListener = new OnClickListener() {
+		
+		public void onClick(View v) {
+
+			if(secondaryStorage) secondaryStorage=false;
+			else secondaryStorage=true;
+
+			progBar.setVisibility(View.VISIBLE);
+			
+			loadGridView();
+			updateStorageState();
+			
+			progBar.setVisibility(View.GONE);
+			
+		
+		
+			
+		}
+	};
+
 	
 	private void loadSelectedPhotos() {
 		
-		long photoFieldId=photoCnt.getProjectPhotoFieldId(projId);
+
+		progBar.setVisibility(View.VISIBLE);
 		
-		selectedPhotos=new HashMap<String,Long>();
+	/* thread in background that load photos */			
 		
-		String[] ids=preSettedLoc.split(":");
+		new Thread(new Runnable() {
+			  public void run() {
+				  
+				  
+				  //subset of selected photos
+				  if(preSettedLoc!=null){
 		
-		for(int i=1;i<ids.length;i++){
-			
-			long citationId=Long.valueOf(ids[i]);
-			
-			String photoPath=photoCnt.getPhotoPathByCitationId(citationId,photoFieldId);
-			
-			if(!photoPath.equals("")) selectedPhotos.put(photoPath,citationId);
-			
-		}	
+						long photoFieldId=photoCnt.getProjectPhotoFieldId(projId);
+						
+						selectedPhotos=new HashMap<String,Long>();
+						
+						String[] ids=preSettedLoc.split(":");
+						
+						for(int i=1;i<ids.length;i++){
+							
+							long citationId=Long.valueOf(ids[i]);
+							
+							String photoPath=photoCnt.getPhotoPathByCitationId(citationId,photoFieldId);
+							
+							if(!photoPath.equals("")){ 
+								
+								selectedPhotos.put(PhotoUtils.getFileName(photoPath),citationId);
+								
+							}
+							
+	
+						}	
+					
+				  }
+				  
+				  
+				  loadImageGridHandler.sendEmptyMessage(0);
 		
+			  }
+			    
+				
+					}).start();
 		
 	}
+	
 
 	/*
 	 * 
@@ -120,33 +221,101 @@ public class GalleryGrid extends Activity{
 	 */
 	
 	    private void loadGridView(){
+	    	
+    		if(secondaryStorage) storagePath=photoCnt.getSecondayExternalStoragePath();
+    		else storagePath=photoCnt.getMainPhotoPath();
+    		
 	    
 			lLazyGrid = (GridView) findViewById(R.id.gridGallery);
-			
+					
 			try {
-				
-		        thWidth = (getResources().getDisplayMetrics().widthPixels-10)/3;
-	
-		        if(secondaryStorage){
-		        	
-					lLazyAdapter = new LazyImageAdapter(this.getApplicationContext(),loadImageSlideListener,photoCnt.getSecondayExternalStoragePath(),projectName.replace(" ", "_"),selectedPhotos,thWidth-5);		
 
-		        }
-		        else{
-		        	
-					lLazyAdapter = new LazyImageAdapter(this.getApplicationContext(),loadImageSlideListener,photoCnt.getMainPhotoPath(),projectName.replace(" ", "_"),selectedPhotos,thWidth-5);		
+				thWidth = (getResources().getDisplayMetrics().widthPixels-10)/GRID_COLUMNS;
 
-		        }
-		        
+				lLazyAdapter = new LazyImageAdapter(getApplicationContext(),loadImageSlideListener,storagePath,projectName.replace(" ", "_"),selectedPhotos,thWidth-5);		
+
 				lLazyGrid.setAdapter(lLazyAdapter);
-				
+				lLazyGrid.setOnScrollListener(scrollListener);
+
 			} 
 			catch (Exception e) {
-			
+
 				e.printStackTrace();
 			}
 	    
 	    }
+	    
+	  
+	    
+	    private Handler loadImageGridHandler = new Handler() {
+
+	    	@Override
+			public void handleMessage(Message msg) {
+	    		
+	    		
+	    		progBar.setVisibility(View.GONE);
+	    		
+	            loadGridView();
+	            	            
+	            updateStorageState();
+
+
+            }
+	    };
+	    
+	    
+	    public OnScrollListener scrollListener = new OnScrollListener() {
+			
+	    	public void onScrollStateChanged(AbsListView view, int scrollState) {
+	    	    
+	    		switch (scrollState) {
+	    	    
+		    	    case OnScrollListener.SCROLL_STATE_IDLE:
+		    	        
+		    	    	lLazyAdapter.setBusy(false);
+		    	        
+		    	        try {
+		    	        	
+		    	        	Log.i("Images","Netejant Cua pendent");
+							lLazyAdapter.clearHandler();
+							
+						} 
+		    	        catch (Throwable e) {
+	
+							e.printStackTrace();
+							
+						}
+		    	        
+		    	        lLazyAdapter.notifyDataSetChanged(); 
+		    	        		
+		    	        break;
+		    	        
+		    	        
+		    	    case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+		    	    	
+		    	    	lLazyAdapter.setBusy(true);
+	
+		    	        break;
+		    	        
+		    	        
+		    	    case OnScrollListener.SCROLL_STATE_FLING:
+	
+		    	    	lLazyAdapter.setBusy(true);
+	
+		    	        break;
+		    	        
+	    	    }
+	    	}
+			
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+
+				
+			}
+		};
+
+    	
+
 	    
 	    
 		@Override
@@ -211,7 +380,7 @@ public class GalleryGrid extends Activity{
 				if(secondaryStorage) secondaryStorage=false;
 				else secondaryStorage=true;
 
-				loadGridView();	
+				loadSelectedPhotos();
 
 				break;
 				
@@ -219,7 +388,6 @@ public class GalleryGrid extends Activity{
 				
 				movePhotosDialog();
 				break;
-
 				
 				
 			case ALLOW_SEC_EXTERNAL_STORAGE:
@@ -249,6 +417,12 @@ public class GalleryGrid extends Activity{
 		
 			return super.onOptionsItemSelected(item);
 		}
+	    
+	    /*
+	     * Creates a dialog with all information and options to move
+	     * the photos to a secondary storage such as external_sd 
+	     * 
+	     */
 	    
 		private void movePhotosDialog() {
 			
@@ -329,7 +503,7 @@ public class GalleryGrid extends Activity{
 					@Override
 					public void run() {
 				               	  
-						photoCnt.movePhotosToSecondaryStorage(projId,secondaryStorage,copyPhoto,handlerMove);
+						photoCnt.movePhotosToSecondaryStorage(projId,storagePath,selectedPhotos,secondaryStorage,copyPhoto,lLazyAdapter.getAvailableImageList(),handlerMove);
 				               	  
 				    }
 				};
@@ -356,7 +530,15 @@ public class GalleryGrid extends Activity{
 							
 							secondaryStorage=msg.getData().getBoolean("secondaryStorage");
 							pdMovePhotos.dismiss();
-							loadGridView();
+							progBar.setVisibility(View.GONE);
+							
+							btSecondaryStorage.setVisibility(View.VISIBLE);
+							
+							if(secondaryStorage) btSecondaryStorage.setText(getString(R.string.btStorageSec));
+							else btSecondaryStorage.setText(getString(R.string.btStoragePrim));
+							
+							loadSelectedPhotos();
+
 							
 						}
 						else{
@@ -389,6 +571,10 @@ public class GalleryGrid extends Activity{
 			 			
 			 			b = new Bundle();
 			 			b.putInt("position", tagInfo.position);
+			 			intent.putExtras(b);
+			 			
+			 			b = new Bundle();
+			 			b.putString("storagePath", storagePath);
 			 			intent.putExtras(b);
 			 			
 			 	        
@@ -424,7 +610,7 @@ public class GalleryGrid extends Activity{
 	         switch(requestCode) {
 	         
 	         
-	         case REFRESH_IMAGE_LIST :
+	         case REFRESH_IMAGE_LIST:
 	             
      			if(lLazyAdapter!=null){
 

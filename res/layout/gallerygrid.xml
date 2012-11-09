@@ -4,36 +4,64 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-   <!--   <LinearLayout
+      <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             style="@style/ActionBar">
 
+           <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" >
+                
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
-                android:text="Fotografies: Projecte"
+                android:text="@string/photoGallery"
                 android:textColor="@color/background1"
-                android:textSize="16dp" />
+                android:textSize="18dp" />
+            
+            </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearLayout1"
+                android:id="@+id/linearLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_gravity="right" >
-
-                <ImageButton
-                    android:id="@+id/imageButton1"
+                android:layout_gravity="right"
+                android:layout_weight="0" >
+            
+                <Button
+                    android:id="@+id/btSecondaryStorage"
+                    style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/action_sd" />
+                    android:text="@string/btStoragePrim"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvGalleryCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryGreen"
+                    android:textSize="18dp" />
+                
+
+      		<ProgressBar
+                android:id="@+id/progsBarGalleryLoading"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp" />
 
             </LinearLayout>
 
-        </LinearLayout>    -->
+      
+
+        </LinearLayout>    
     
     <GridView
         android:id="@+id/gridGallery"

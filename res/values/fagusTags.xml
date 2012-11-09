@@ -9,11 +9,8 @@
 	<string name="biological_record_type">Botànica</string>
 	<string name="CitationNotes">Comentaris</string>
 	<string name="OriginalTaxonName">Nom Original</string>
-	<string name="CorrectedTaxonName">Nom Corregit</string>
 	<string name="sureness">Certesa Original</string>
-	<string name="correctedSureness">Certesa Corretgida</string>
 	<string name="origin">Plec</string>
 	<string name="InformatisationDate">Data d\'Informatització</string>
-	<string name="SecondaryCitationCoordinate">Codi de coordenades secundàries</string>
 
 </resources>

@@ -71,9 +71,10 @@ public class MyTracksOverlay extends com.google.android.maps.Overlay {
 		
 		private void getLastAltitude(){
 			
-			Location lastLoc=myTracksProviderUtils.getLastLocation();
-			if(lastLoc!=null) elevation=lastLoc.getAltitude();
-			
+//			Location lastLoc=myTracksProviderUtils.getLastLocation();
+			//if(lastLoc!=null) elevation=lastLoc.getAltitude();
+			elevation=0.0;
+		
 		}
 		
 		public GeoPoint getLastLocation(){
@@ -86,7 +87,7 @@ public class MyTracksOverlay extends com.google.android.maps.Overlay {
 
 			
 			trackPointsList=new ArrayList<GeoPoint>();
-			LocationIterator it = myTracksProviderUtils.getLocationIterator(trackId, -1,false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+			LocationIterator it = myTracksProviderUtils.getTrackPointLocationIterator(trackId, -1,false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
 			
 			getLastAltitude();
 

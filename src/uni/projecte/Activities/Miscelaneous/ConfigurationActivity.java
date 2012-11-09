@@ -58,7 +58,6 @@ public class ConfigurationActivity extends PreferenceActivity {
                 PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
                 // Get the custom preference
-                
                 Preference customPref = findPreference("customPref");
                 customPref
                                 .setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -73,7 +72,6 @@ public class ConfigurationActivity extends PreferenceActivity {
                                                 editor.putString("myCustomPref",
                                                                 "The preference has been clicked");
                                                 editor.commit();
-
                                                 
                                                 return true;
                                         }
@@ -155,7 +153,7 @@ public class ConfigurationActivity extends PreferenceActivity {
                     });
                 
                 
-                Preference geoidGPSPref = findPreference("geoidGPSCorrection");
+                final Preference geoidGPSPref = findPreference("geoidGPSCorrection");
                 geoidGPSPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -183,6 +181,24 @@ public class ConfigurationActivity extends PreferenceActivity {
                     }
                     	
                     });
+                
+                Preference geoidResetGeoidPref = findPreference("customPrefGeoid");
+                geoidResetGeoidPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+                    public boolean onPreferenceClick(Preference preference)  {
+                    	
+                    	geoidGPSPref.setSummary("49 (m)");
+                    	
+                     	SharedPreferences.Editor editor = prefs.edit();
+                    	editor.putString("geoidGPSCorrection","49");
+                    	editor.commit();
+                    	
+                    	
+                    	return true;
+                    	
+                    }
+                    	
+                });
                 
                 
                 Preference pathThPref = findPreference("urlThPref");

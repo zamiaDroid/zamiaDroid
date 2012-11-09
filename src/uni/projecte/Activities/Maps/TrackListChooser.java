@@ -249,10 +249,10 @@ public class TrackListChooser extends Activity{
 			 }
 		   	 
 			 
-			 	Double distance=trackList.get(position).getStatistics().getTotalDistance();
+			 	Double distance=trackList.get(position).getTripStatistics().getTotalDistance();
 			 	holder.tvTrackDistance.setText((int)distance.doubleValue()+" m");
 			 	
-			 	holder.tvTrackTime.setText(trackList.get(position).getStatistics().getTotalTime()+" ms");
+			 	holder.tvTrackTime.setText(trackList.get(position).getTripStatistics().getTotalTime()+" ms");
 
 			 
 			 	holder.tvTrackDesc.setText(trackList.get(position).getDescription());

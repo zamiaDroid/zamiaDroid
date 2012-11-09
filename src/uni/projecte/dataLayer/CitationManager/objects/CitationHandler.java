@@ -60,6 +60,13 @@ public class CitationHandler {
 	/* Is alpha ordered? */
 	private boolean alphaOrder=false;
 	
+	/* AlphaASC */
+	private boolean alphaAsc=true;	
+	
+	/* ChronoDesc */
+	private boolean chronoAsc=false;
+	
+	
 	private long projId;
 
 	/* remembers list position */
@@ -139,7 +146,7 @@ public class CitationHandler {
 		mainCitationList= new ArrayList<Citation>();
 		mainCitationListHash=new HashMap<Long, Citation>();
 	
-		Cursor allCitations=citationCnt.getCitationsWithFirstFieldByProjectId(projId,alphaOrder);
+		Cursor allCitations=citationCnt.getCitationsWithFirstFieldByProjectId(projId,alphaOrder,chronoAsc);
 		allCitations.moveToFirst();				
 		int i=0;
 		
@@ -170,9 +177,13 @@ public class CitationHandler {
 		
 		allCitations.close();
 		
+		if(!alphaAsc) Collections.reverse(mainCitationList);
+		
 		return mainCitationList.size();
 				
 	}
+	
+
 	
 	
 	public void reloadFilterStructure(long projId) {
@@ -523,6 +534,14 @@ public class CitationHandler {
 		
 	}
 	
+	public ArrayList<Citation> getCurrentCitationList(){
+		
+		if(filterLevel>0) return getFilteredCitationList();
+		else return getMainCitationList();
+		
+	}
+	
+	
 	public ArrayList<Citation> getFilteredCitationList() {
 		
 		ArrayList<Citation> tempFilter=null;
@@ -729,7 +748,7 @@ public class CitationHandler {
 
 	public CitationListAdapter getListAdapter(boolean filtered) {
 
-		citationListAdapt= new CitationListAdapter(baseContext,this,filtered,projId);
+		citationListAdapt= new CitationListAdapter(baseContext,this,projId);
 		
 		return citationListAdapt;
 	}
@@ -966,7 +985,29 @@ public class CitationHandler {
 	public boolean isAlphaOrder() {
 		return alphaOrder;
 	}
+	
+	public boolean isChronoOrder(){
+		
+		return !alphaOrder;
+		
+	}
 
+
+	public boolean isAlphaAsc() {
+		return alphaAsc;
+	}
+
+	public boolean isChronoAsc() {
+		return chronoAsc;
+	}
+
+	public void setChronoAsc(boolean chronoAsc) {
+		this.chronoAsc = chronoAsc;
+	}
+
+	public void setAlphaAsc(boolean alphaAsc) {
+		this.alphaAsc = alphaAsc;
+	}
 
 	public void setAlphaOrder(boolean alphaOrder) {
 		this.alphaOrder = alphaOrder;

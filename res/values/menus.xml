@@ -10,10 +10,7 @@
 
 <!-- Main submenus -->
 
-<string name="bDataType">Gestor de Tesaures</string>
 <string name="set_preferences">Configuració</string>
-<string name="bConfiguration">Configuració</string>
-<string name="bChooseProjectButton">Escollir projecte</string>
 
 <!-- Welcome dialog -->
 
@@ -31,15 +28,6 @@
 <string name="mConfiguration">Opcions de configuració</string>
 <string name="mAboutUs">Quant a</string>
 <string name="mChooseProject">Escollir projecte</string>
-
-
-
-<!-- About Us texts -->
-
-<string name="aboutUsAuthor"><b>Direcció: </b> Xavier Font</string>
-<string name="aboutUsSupport"><b>Idea original: </b> David Martí Pino i Xavier Font</string>
-<string name="aboutUsThanks"><b>Programació: </b> David Martí Pino</string>
-<string name="aboutUsMore"><b>Agraïm la col·laboració de: </b> Josep Vilaplana, Javier Moreno i Gwendolyn Peyre</string>
 
 
 </resources>

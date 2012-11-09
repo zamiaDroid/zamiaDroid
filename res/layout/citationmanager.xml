@@ -189,7 +189,7 @@ android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
-                    android:background="@drawable/ordre_cron"
+                    android:background="@drawable/ordre_cron_asc"
                     android:maxWidth="30dp" />
             </LinearLayout>
 
@@ -233,8 +233,11 @@ android:orientation="vertical"
             </LinearLayout>
         </LinearLayout>
 
-        <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="wrap_content" android:layout_height="fill_parent">
+        <HorizontalScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center" >
             
         <LinearLayout
             android:id="@+id/linearLayout2"

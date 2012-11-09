@@ -1,8 +1,11 @@
 package uni.projecte.ui;
 
+import uni.projecte.dataLayer.dataStructures.ImageCache;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,13 +23,19 @@ public class ImageLoader extends Thread {
 	private static final String TAG = ImageLoader.class.getSimpleName();
 	ImageLoadListener mListener = null;
 	private Handler handler;
+	private ImageCache imageCache;
+	private int thMaxSize;
 
 	/**
 	 * Image loader takes an object that extends ImageLoadListener
 	 * @param lListener
+	 * @param imageCache 
+	 * @param thMaxSize 
 	 */
-	ImageLoader(ImageLoadListener lListener){
+	ImageLoader(ImageLoadListener lListener, ImageCache imageCache, int thMaxSize){
 		mListener = lListener;
+		this.imageCache=imageCache;
+		this.thMaxSize=thMaxSize;
 	}
 	
 	@Override
@@ -93,21 +102,42 @@ public class ImageLoader extends Thread {
 					        
 							BitmapFactory.Options lOptions = new BitmapFactory.Options();
 							lOptions.inSampleSize = 8;
+							
+							Log.i("Images","Deconding: "+aPath);
 							Bitmap lBitmap = BitmapFactory.decodeFile(aPath, lOptions);
 							
-							int maxSize;
-							if(lBitmap.getWidth()>lBitmap.getHeight()) maxSize=lBitmap.getHeight();
-							else maxSize=lBitmap.getWidth();
 							
-							Bitmap squared=cropBitmap(lBitmap, maxSize, maxSize);
+							if(lBitmap!=null && lBitmap.getWidth()>0){
+								
+								int maxSize;
+								
+								if(lBitmap.getWidth()>lBitmap.getHeight()) maxSize=lBitmap.getHeight();
+								else maxSize=lBitmap.getWidth();
+								
+								Bitmap squared=cropBitmap(lBitmap, maxSize, maxSize);
+								
+								lBitmap.recycle();
+		
+								//aImage.setImageBitmap(lBitmap);
 							
-							lBitmap.recycle();
-	
-	
-							//aImage.setImageBitmap(lBitmap);
+								// Load the image here
+								signalUI(aViewSwitcher, aImageView, squared);
+								
+								imageCache.addBitmapToMemoryCache(aPath, squared);
+								
+							}
+							
+							else{
+								
+								Bitmap bm=createWrongImageBitmap(thMaxSize);
+								
+								signalUI(aViewSwitcher, aImageView, bm);
+								
+								imageCache.addBitmapToMemoryCache(aPath, bm);
+								
+							}
 						
-							// Load the image here
-							signalUI(aViewSwitcher, aImageView, squared);
+							
 						}
 					} 
 					catch(Exception e){
@@ -118,8 +148,33 @@ public class ImageLoader extends Thread {
 		
 		}
 	}
+	
+	
+	private Bitmap createWrongImageBitmap(int width){
+		
+		Paint paint = new Paint();
+		paint.setAntiAlias(true);
+
+		Bitmap bitmap = Bitmap.createBitmap(width, width,Bitmap.Config.ARGB_8888);
+		Canvas c = new Canvas(bitmap);
+		
+	    paint.setColor(Color.argb(0xff, 0x88, 0xaa, 0x00));
+		paint.setStyle(Paint.Style.FILL);
+        paint.setStrokeWidth(1);
+        paint.setTextSize(14);
+
+		c.drawColor(Color.BLACK);
+		c.drawText("Foto incorrecta", thMaxSize/4, thMaxSize/2, paint);
+		
+		    
+       return bitmap;
+		
+	}
+
 
 	public static Bitmap cropBitmap(Bitmap original, int height, int width) {
+		
+		
 	    Bitmap croppedImage = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
 	    Canvas canvas = new Canvas(croppedImage);
 	 
@@ -149,15 +204,15 @@ public class ImageLoader extends Thread {
 	 * @param aImageView - The ImageView the UI thread will load 
 	 * @param aImage - The Bitmap that gets loaded into the ImageView
 	 */
-	private void signalUI(
-			ViewSwitcher aViewSwitcher, 
-			ImageView aImageView, 
-			Bitmap aImage){
+	
+	
+	public void signalUI( ViewSwitcher aViewSwitcher, ImageView aImageView, Bitmap aImage){
 		
 		if(mListener != null){
 			// we have an object that implements ImageLoadListener
-			
 			mListener.handleImageLoaded(aViewSwitcher, aImageView, aImage);
+			
+			
 		}
 	}
 	
