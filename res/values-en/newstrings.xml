@@ -352,5 +352,7 @@
     <string name="fieldTypePredefined">predefined</string>
     <string name="fieldTypeSubProject">sub-project</string>
        
-    <string name="mCheckTaxonTh">Excluded from thesaurus</string>	
+    <string name="mCheckTaxonTh">Excluded from thesaurus</string>
+    <string name="mAddCitation">Add citation</string>
+    	
 </resources>

@@ -337,5 +337,6 @@
     <string name="fieldTypeSubProject">sub-projecte</string>
        
     <string name="mCheckTaxonTh">Exclosos del tesaure</string>
+    <string name="mAddCitation">Afegir citació</string>
     
 </resources>
