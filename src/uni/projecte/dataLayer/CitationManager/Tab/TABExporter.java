@@ -16,34 +16,43 @@
 
 package uni.projecte.dataLayer.CitationManager.Tab;
 
+import java.util.HashMap;
+
 import uni.projecte.dataLayer.CitationManager.CitationExporter;
+import uni.projecte.dataTypes.ProjectField;
 
 
 public class TABExporter extends CitationExporter {
 	
-	
-	private boolean first;
-	
+
 	private String result;
 	
-	private String citation;
+	private String[] citation;
 	
-	private String fieldNames;
+	private static int COORDINATE_POS = 0;
+	private static int UTM_POS = 1;
+	private static int DATE_POS = 2;
+	
+	private int fieldsCount;
+	
+	private String[] citationLabels;
+	private int lastField;
+	private HashMap<String, Integer> insertedFieldsHash;
 	
 	
-	public TABExporter(String projectName, String thesaurusName,
-			String projectType) {
+	
+	public TABExporter(String projectName, String thesaurusName,String projectType) {
 		
 		super(projectName, thesaurusName, projectType);
 		
 		result="";
-		citation="";
-		fieldNames="";
-		this.first=true;
-
+		
+		insertedFieldsHash=new HashMap<String, Integer>();
+	
 	
 	}
 	
+
 	@Override
 	public void openCitation(){
 		
@@ -54,50 +63,32 @@ public class TABExporter extends CitationExporter {
 	@Override
 	public void closeCitation(){
 	
-		if(this.first) result=fieldNames+"\n"+citation+"\n";
-		else result=result+citation+"\n";
-		
-		citation="";
-		first=false;
+		result=result+citationToString();
+		citation=new String[fieldsCount];
 
 	}
+	
 	
 	@Override
-	public void createCitationField(String attName, String label, String value,String category){
+	public void createCitationField(String fieldName, String fieldLabel, String value,String category){
 		
-		if(this.first) {
-			
-			if(isLast()) fieldNames=fieldNames+label;
-			else fieldNames=fieldNames+label+"\t";
-			
-		
-		}
+		int fieldPos=addNewCitationField(fieldName, fieldLabel);
 
-		
-		if(isLast()) citation=citation+value;
-		else citation=citation+value+"\t";
-		
+		citation[fieldPos]=value;
 		
 	}
 	
+
+
 	@Override
 	public void writeCitationCoordinateLatLong(double latitude, double longitude) {
 
-		if(this.first) {
-			
-			fieldNames=fieldNames+"CitationCoordinates\t";
-		
-		}
-
 		if(latitude>90 || longitude>180){
     		
-			citation=" "+"\t";
+			citation[COORDINATE_POS]=" ";
 
     	}
-		else citation=citation+latitude+" "+longitude+"\t";
-		
-		 
-
+		else citation[COORDINATE_POS]=latitude+" "+longitude;
 
 		
 	}
@@ -105,14 +96,8 @@ public class TABExporter extends CitationExporter {
 
 	@Override
 	public void writeCitationCoordinateUTM(String utmShortForm) {
-
-		if(this.first) {
-			
-			fieldNames=fieldNames+"SecondaryCitationCoordinates\t";
-		
-		}
 	
-		citation=citation+utmShortForm+"\t";
+		citation[UTM_POS]=utmShortForm;
 
 	}
 
@@ -120,15 +105,7 @@ public class TABExporter extends CitationExporter {
 	@Override
 	public void writeCitationDate(String date) {
 		
-		if(this.first) {
-			
-			fieldNames=fieldNames+"Date\t";
-		
-		}
-		
-		
-		citation=citation+date+"\t";
-
+		citation[DATE_POS]=date;
 		
 	}
 	
@@ -139,12 +116,97 @@ public class TABExporter extends CitationExporter {
 		
 	}
 	
+	public void setProjFieldsList(HashMap<Long, ProjectField> projectFields){
+		
+		fieldsCount=projectFields.size()+3;
+		
+		citation=new String[fieldsCount];
+		citationLabels=new String[fieldsCount];
+				
+		setDefaultFields();
+		
+	}
+	
 	@Override
 	public void closeDocument(){
+		
+		result=labelsToString()+result;		
 		
 		setFormat(".tab");
 		setResult(result);
 		
+	}
+	
+	private String labelsToString() {
+
+		String labelString="";
+		
+		for(int i=0; i<fieldsCount; i++){
+		
+			String citationLabel=citationLabels[i];
+			
+			if(citationLabel==null) citationLabel="";
+			
+			if(fieldsCount==i+1) labelString=labelString+citationLabels[i];
+			else labelString=labelString+citationLabels[i]+"\t";
+			
+		}
+		
+		return labelString+"\n";
+	}
+
+
+	private String citationToString() {
+
+		String citationValues="";
+		
+		for(int i=0; i<fieldsCount; i++){
+			
+			String citationVal=citation[i];
+			
+			if(citationVal==null)  citationVal="";
+			
+			citationVal=citationVal.replace("\t", " ");
+			citationVal=citationVal.trim();
+			
+			if(fieldsCount==i+1) citationValues=citationValues+citationVal;
+			else citationValues=citationValues+citationVal+"\t";
+						
+		}	
+		
+		return citationValues+"\n";
+		
+	}
+	
+	private int addNewCitationField(String attName, String label) {
+
+		Integer pos=insertedFieldsHash.get(attName);
+		
+		if(pos==null){
+			
+			int fieldPos=lastField;
+			
+			insertedFieldsHash.put(attName, fieldPos);
+			citationLabels[fieldPos]=label;
+			
+			lastField++;
+			
+			return fieldPos;
+			
+		}
+			
+		else return pos;	
+		
+	}
+	
+	private void setDefaultFields() {
+		
+		citationLabels[COORDINATE_POS]="CitationCoordinates";
+		citationLabels[UTM_POS]="SecondaryCitationCoordinates";
+		citationLabels[DATE_POS]="Date";
+	
+		lastField=3;
+
 	}
 	
 

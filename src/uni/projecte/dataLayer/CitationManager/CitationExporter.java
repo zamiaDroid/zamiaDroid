@@ -20,8 +20,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 
 import uni.projecte.controler.PreferencesControler;
+import uni.projecte.dataTypes.ProjectField;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
@@ -45,6 +47,7 @@ public abstract class CitationExporter {
 	protected String format;
 
 	protected Context baseContext;
+	protected HashMap<Long, ProjectField> projectFields;
 
 	public CitationExporter(String projectName, String thesaurusName, String projectType) {
 		
@@ -160,6 +163,14 @@ public abstract class CitationExporter {
 	public void setFieldType(long fieldId, String type, Context c) {
 
 		this.baseContext=c;
+		
+	}
+
+
+	public void setProjFieldsList(HashMap<Long, ProjectField> projectFields) {
+
+		this.projectFields=projectFields;
+						
 		
 	}
 	

@@ -882,6 +882,8 @@ public class CitationControler {
 		
 		//c= list of Fields
 		HashMap<Long, ProjectField> projectFields=rC.getProjectFieldsMap(projId);
+		
+		cExporter.setProjFieldsList(projectFields);
 
 		Log.d("Citations","Exportant Citacions Start "+exportFormat);
 		
@@ -929,7 +931,6 @@ public class CitationControler {
 		// When exporting to KML if there's no location citation is not added to overlay 
 		if(cExporter instanceof KMLExporter && (citations.getDouble(2)>90 || citations.getDouble(3)>180)){
 			
-		
 			
 		}
 		else{
@@ -944,7 +945,6 @@ public class CitationControler {
 			
 		
 			cExporter.openCitation();
-			
 			
 			cExporter.writeCitationCoordinateLatLong(citations.getDouble(2),citations.getDouble(3));
 			
@@ -969,21 +969,21 @@ public class CitationControler {
 			int m=citationFieldValue.getCount();
 			
 			//iterating over each field value
-					while(!citationFieldValue.isAfterLast()){
+			while(!citationFieldValue.isAfterLast()){
 				
-						if(j==m-1) cExporter.setLast(true); 
+				if(j==m-1) cExporter.setLast(true); 
 						
-						ProjectField projField=projectFields.get(citationFieldValue.getLong(2));
+				ProjectField projField=projectFields.get(citationFieldValue.getLong(2));
 						
-						cExporter.createCitationField(projField.getName(), projField.getLabel(), citationFieldValue.getString(3), projField.getType());
-						cExporter.setFieldType(projField.getId(),projField.getType(),baseContext);
+				cExporter.createCitationField(projField.getName(), projField.getLabel(), citationFieldValue.getString(3), projField.getType());
+				cExporter.setFieldType(projField.getId(),projField.getType(),baseContext);
 				
-						cExporter.closeCitationField();
+				cExporter.closeCitationField();
 						
-						citationFieldValue.moveToNext();
-						j++;
+				citationFieldValue.moveToNext();
+				j++;
 							
-					}
+			}
 					
 			citationFieldValue.close();		
 			
