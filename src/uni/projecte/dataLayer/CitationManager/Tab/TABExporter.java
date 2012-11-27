@@ -31,7 +31,9 @@ public class TABExporter extends CitationExporter {
 	
 	private static int COORDINATE_POS = 0;
 	private static int UTM_POS = 1;
-	private static int DATE_POS = 2;
+	private static int UTM_X = 2;
+	private static int UTM_Y = 3;	
+	private static int DATE_POS = 4;
 	
 	private int fieldsCount;
 	
@@ -100,6 +102,13 @@ public class TABExporter extends CitationExporter {
 		citation[UTM_POS]=utmShortForm;
 
 	}
+	
+	public void writeCitationCoordinateXY(double x, double y) {
+		
+		citation[UTM_X]=String.valueOf((int)x);
+		citation[UTM_Y]=String.valueOf((int)y);			
+		
+	}
 
 
 	@Override
@@ -118,7 +127,7 @@ public class TABExporter extends CitationExporter {
 	
 	public void setProjFieldsList(HashMap<Long, ProjectField> projectFields){
 		
-		fieldsCount=projectFields.size()+3;
+		fieldsCount=projectFields.size()+5;
 		
 		citation=new String[fieldsCount];
 		citationLabels=new String[fieldsCount];
@@ -203,9 +212,11 @@ public class TABExporter extends CitationExporter {
 		
 		citationLabels[COORDINATE_POS]="CitationCoordinates";
 		citationLabels[UTM_POS]="SecondaryCitationCoordinates";
+		citationLabels[UTM_X]="X";
+		citationLabels[UTM_Y]="Y";
 		citationLabels[DATE_POS]="Date";
 	
-		lastField=3;
+		lastField=5;
 
 	}
 	

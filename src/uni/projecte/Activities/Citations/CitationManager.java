@@ -1890,8 +1890,8 @@ public class CitationManager extends Activity{
 				result=formats;
 				
 			}			
-		/*	else if(projectType.equals("Fagus")){
-				
+			else if(projectType.equals("Fagus")){
+			
 				result= new String[formats.length+1];
 				
 				for(int i=0; i<formats.length; i++){
@@ -1900,10 +1900,10 @@ public class CitationManager extends Activity{
 					
 				}
 
-				result[formats.length]="Fagus";
+				result[formats.length]="Xflora";
 				
 				
-			}*/
+			}
 			else if(projectType.equals("Quercus")){
 				
 				result= new String[formats.length+1];

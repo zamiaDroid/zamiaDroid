@@ -16,87 +16,111 @@
 
 package uni.projecte.dataLayer.CitationManager.Xflora;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import uni.projecte.dataLayer.CitationManager.CitationExporter;
+import android.util.Log;
 
 
 public class XfloraExporter extends CitationExporter {
-	
-	
-	private boolean first;	
-	
+
 	private String result;
+
+	private String taxonLine;
+	private String sureness;
+	private String naturenessLine;
+	private String fieldsLine;
 	
-	private String citation;
-	
-	private String fieldNames;
+	private XfloraTags XFloraParser;
 	
 	
-	public XfloraExporter(String projectName, String thesaurusName,
-			String projectType) {
+	public XfloraExporter(String projectName, String thesaurusName,String projectType) {
 		
 		super(projectName, thesaurusName, projectType);
 		
-		result="";
-		citation="";
-		fieldNames="";
-		this.first=true;
+		XFloraParser= new XfloraTags();
 
+		result="";
+	
 	
 	}
 	
+
 	@Override
 	public void openCitation(){
 		
+		taxonLine="";
+		naturenessLine="";
+		sureness="";
+		fieldsLine="";
 		
 		
 	}
 	
 	@Override
 	public void closeCitation(){
-	
-		if(this.first) result=fieldNames+"\n"+citation+"\n";
-		else result=result+citation+"\n";
+			
+		if(naturenessLine.equals("")) naturenessLine="{"+XfloraTags.NATURENESS+"} Espontània";
 		
-		citation="";
-		first=false;
+		result=result+ 
+				XFloraParser.getCitationInit()+sureness+
+				taxonLine+"\n"+
+				naturenessLine+"\n"+
+				XFloraParser.getFieldsInit()+fieldsLine+"\n\n";
 
 	}
+	
 	
 	@Override
-	public void createCitationField(String attName, String label, String value,String category){
+	public void createCitationField(String fieldName, String fieldLabel, String value,String category){
 		
-		if(this.first) {
+		if(fieldName.equals("OriginalTaxonName")){
 			
-			if(isLast()) fieldNames=fieldNames+label;
-			else fieldNames=fieldNames+label+"\t";
-			
-		
+			taxonLine=XFloraParser.createTaxonLine(value);
+									
 		}
-
-		
-		if(isLast()) citation=citation+value;
-		else citation=citation+value+"\t";
+		else if(fieldName.equals("Natureness")){
+			
+			naturenessLine="{"+XfloraTags.NATURENESS+"} "+value;
+			
+		}
+		else if(fieldName.equals("CitationNotes")){
+			
+			addFieldValue(XFloraParser.getObservationComment(value));
+			
+		}
+		else if(fieldName.equals("Sureness")){
+			
+			sureness=XFloraParser.getSurenessCod(value);
+			
+		}
+		else if(fieldName.equals("ObservationAuthor")){
+			
+			addFieldValue(XFloraParser.getObservationAuthor(value));
+			
+		}
+		else if(fieldName.equals("Locality")){
+			
+			addFieldValue(value);
+			
+		}
+		else if(fieldName.equals("altitude")){
+			
+			addFieldValue(XFloraParser.getAltitude(value));
+		}
+		else{
+			
+			
+		}
 		
 		
 	}
 	
+
 	@Override
 	public void writeCitationCoordinateLatLong(double latitude, double longitude) {
-
-		if(this.first) {
-			
-			fieldNames=fieldNames+"CitationCoordinates\t";
-		
-		}
-
-		if(latitude>90 || longitude>180){
-    		
-			citation=" "+"\t";
-
-    	}
-		else citation=citation+latitude+" "+longitude+"\t";
-		
-		 
 
 
 		
@@ -105,33 +129,32 @@ public class XfloraExporter extends CitationExporter {
 
 	@Override
 	public void writeCitationCoordinateUTM(String utmShortForm) {
-
-		if(this.first) {
-			
-			fieldNames=fieldNames+"SecondaryCitationCoordinates\t";
-		
-		}
 	
-		citation=citation+utmShortForm+"\t";
+		addFieldValue(XFloraParser.getUTMCod(utmShortForm.replace("_","")));
 
 	}
-
-
+	
 	@Override
-	public void writeCitationDate(String date) {
+	public void writeCitationDate(String dateString) {
 		
-		if(this.first) {
-			
-			fieldNames=fieldNames+"Date\t";
-		
-		}
-		
-		
-		citation=citation+date+"\t";
+		SimpleDateFormat inFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	    SimpleDateFormat outputFormatter = new SimpleDateFormat("dd/MM/yyyy");
 
-		
+		    try {
+		        
+		    	Date date = inFormat.parse(dateString);
+		        String XfloraDate = outputFormatter.format(date);
+		        
+				addFieldValue(XFloraParser.getDateCod(XfloraDate));
+
+
+		    } catch (ParseException e) {
+		        e.printStackTrace();
+		    }
+				
 	}
-	
+
+
 	@Override
 	public void openDocument(){
 		
@@ -139,10 +162,16 @@ public class XfloraExporter extends CitationExporter {
 		
 	}
 	
+	private void addFieldValue(String value) {
+
+		fieldsLine=fieldsLine+"    "+value;
+		
+	}
+	
 	@Override
 	public void closeDocument(){
-		
-		setFormat(".tab");
+				
+		setFormat(".txt");
 		setResult(result);
 		
 	}

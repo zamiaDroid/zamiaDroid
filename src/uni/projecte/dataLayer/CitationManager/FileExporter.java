@@ -68,6 +68,12 @@ public class FileExporter {
 		        exportMimeType=MimeTypes.txtMimeType;
 			
 		}
+		else if(format.equals("Xflora")){
+			
+		       file = new File(Environment.getExternalStorageDirectory()+"/"+pC.getDefaultPath()+"/Citations/",fileName+".txt");
+		        exportMimeType=MimeTypes.txtMimeType;
+			
+		}
 		else{
 			
 	        file = new File(Environment.getExternalStorageDirectory()+"/"+pC.getDefaultPath()+"/Citations/", fileName+".tab");

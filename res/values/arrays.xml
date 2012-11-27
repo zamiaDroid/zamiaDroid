@@ -32,7 +32,7 @@
         <item>JSON</item>
         <item>Quercus</item>    
         <item>Zamia</item>    
-        <item>KML</item>         
+        <item>KML</item>
     </string-array>
     
     <string-array name="mainExportFormats">
@@ -40,7 +40,7 @@
        <item>TAB</item>
         <item>JSON</item>
         <item>Zamia</item>    
-        <item>KML</item>         
+        <item>KML</item>   
     </string-array>
     
     <string-array name="importCitFormats">

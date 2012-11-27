@@ -33,6 +33,7 @@ import uni.projecte.dataLayer.CitationManager.Fagus.FagusExporter;
 import uni.projecte.dataLayer.CitationManager.JSON.JSONExporter;
 import uni.projecte.dataLayer.CitationManager.KML.KMLExporter;
 import uni.projecte.dataLayer.CitationManager.Tab.TABExporter;
+import uni.projecte.dataLayer.CitationManager.Xflora.XfloraExporter;
 import uni.projecte.dataLayer.CitationManager.Zamia.ZamiaCitationExporter;
 import uni.projecte.dataLayer.CitationManager.objects.Citation;
 import uni.projecte.dataLayer.bd.CitacionDbAdapter;
@@ -876,6 +877,11 @@ public class CitationControler {
 			cExporter=new KMLExporter(rC.getName(),rC.getThName(),rC.getCitationType());
 
 		}
+		else if (exportFormat.equals("Xflora")){
+			
+			cExporter=new XfloraExporter(rC.getName(),rC.getThName(),rC.getCitationType());
+
+		}
 		
 		cExporter.openDocument();
 
@@ -958,6 +964,7 @@ public class CitationControler {
 				
 				utm = CoordConverter.getInstance().toUTM(new CoordinateLatLon(citations.getDouble(2),citations.getDouble(3)));
 				cExporter.writeCitationCoordinateUTM(utm.getShortForm());
+				cExporter.writeCitationCoordinateXY(utm.getX(),utm.getY());
 				
 			}
 				
