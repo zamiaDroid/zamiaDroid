@@ -54,7 +54,7 @@ public class LocalTaxonNoThListAdapter extends BaseAdapter implements SectionInd
 			  int size = elements.size();
 	          for (int i = size - 1; i >= 0; i--) {
 	                  String element = elements.get(i).getTaxon();
-	                  alphaIndexer.put(element.substring(0, 1), i);
+	                  if(element!=null && !element.equals("")) alphaIndexer.put(element.substring(0, 1), i);
 	          //We store the first letter of the word, and its index.
 	          //The Hashmap will replace the value for identical keys are putted in
 	          } 

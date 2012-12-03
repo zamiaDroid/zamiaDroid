@@ -1,5 +1,6 @@
 package uni.projecte.dataLayer.utils;
 
+import android.util.Log;
 import android.util.Pair;
 import uni.projecte.dataLayer.ThesaurusManager.ThesaurusElement;
 import uni.projecte.dataTypes.TaxonElement;
@@ -125,6 +126,10 @@ public class TaxonUtils {
 
 	//genus, specificEpitet, specificEpitetAuthor, [ {rank: subsp., form., var. } infraSpecEpitet, infraSpecEpitetAuthor ]
 
+		if(taxonName!=null) taxonName=taxonName.trim();
+		
+		//Log.i("Thesaurus","MapTh: "+taxonName);
+		
 		String genus="";
 		String specificEpithet="";
 		String specificEpithetAuthor="";
@@ -153,7 +158,17 @@ public class TaxonUtils {
 					}
 					else{
 						
-						specificEpithetAuthor=taxonName.substring(taxonName.indexOf(taxonSplitet[2]),subEpPos.first-1);
+						//No specific Epithet Autor
+						if(taxonName.indexOf(taxonSplitet[2])>=subEpPos.first-1){
+							
+							specificEpithetAuthor="";
+							
+						}
+						else{
+						
+							specificEpithetAuthor=taxonName.substring(taxonName.indexOf(taxonSplitet[2]),subEpPos.first-1);
+						
+						}
 						
 						String infraSpec=taxonName.substring(subEpPos.first);
 						String[] infraSpecSplited=infraSpec.split(" ");
