@@ -319,11 +319,11 @@
     <string name="cbBackupAddPhotos">Afegir fotografies</string>
     <string name="btBackupCreate">Crear Backup</string>
     <string name="tvGalleryCitationWithoutInfo">Sense informació</string>
-    <string name="cbGalleryCopyPhotos">Deixar còpia al directori d&amp;apos;origen</string>
+    <string name="cbGalleryCopyPhotos">Deixar còpia al directori d\'origen</string>
     <string name="rbMovePhotoInternalToExternal">De la targeta interna a l\'externa</string>
     <string name="rbMovePhotoExternalToInternal">De la targeta externa a la interna</string>
     <string name="tvImportCitationsTitle">Importació de citacions</string>
-    <string name="tvImportCitationsAchtung">Atenció! No s&amp;apos;importaran les dades referents als camps que no hi són al projecte i que tampoc s\'afegeixin al projecte.</string>
+    <string name="tvImportCitationsAchtung">Atenció! No s\'importaran les dades referents als camps que no hi són al projecte i que tampoc s\'afegeixin al projecte.</string>
     <string name="tvTrackList">Llistat de tracks: </string>
     <string name="tvNoThTaxonsInfo">Llistat de tàxons del projecte &lt;b> %1$s &lt;/b> no presents al tesaure</string>   
     <string name="cbSendByMail">Enviar per e-mail</string>
@@ -341,5 +341,9 @@
     <string name="btStorageSec">Emm. Secundari</string>
     
     <string name="mAddCitation">Afegir citació</string>
+    
+	<string formatted="false" name="zamiaImportProjAddFields">El fitxer té &lt;b> %1d camps.&lt;/b> Selecciona els que vols afegir al nou projecte.</string>
+   	<string name="tvImportCitationsProjAchtung">Atenció! No s\'importaran les dades referents als camps que s\'afegeixin al projecte.</string>
+	
 
 </resources>

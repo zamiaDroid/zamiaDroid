@@ -21,7 +21,7 @@
                 android:textSize="22dp" />
 
         </LinearLayout>
-    
+         
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="fill_parent"
@@ -29,6 +29,8 @@
         android:layout_weight="1"
         android:orientation="vertical"
 		android:padding="5dp">
+
+
 
         <TextView
             android:id="@+id/tvCitations"

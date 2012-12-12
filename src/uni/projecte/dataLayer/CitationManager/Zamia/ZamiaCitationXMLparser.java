@@ -28,6 +28,8 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
+import uni.projecte.dataLayer.ProjectManager.objects.Project;
+import uni.projecte.dataTypes.FieldsList;
 import uni.projecte.dataTypes.ProjectField;
 import android.content.Context;
 import android.util.Log;
@@ -58,7 +60,7 @@ public class ZamiaCitationXMLparser {
 	
 	
 	
-	public int preReadXML(Context c, String url,HashMap<String, ProjectField> fieldsList){
+	public int preReadXML(Context c, String url,Project projObj, FieldsList fieldsList){
 		
 		
 		try {
@@ -70,7 +72,7 @@ public class ZamiaCitationXMLparser {
 
 	         XMLReader xr = sp.getXMLReader();
 	    
-	         	ZamiaCitationFastHandlerXML zcFastXMLHandler = new ZamiaCitationFastHandlerXML(fieldsList);
+	         	ZamiaCitationFastHandlerXML zcFastXMLHandler = new ZamiaCitationFastHandlerXML(projObj,fieldsList);
 	         	xr.setContentHandler(zcFastXMLHandler);
 	     		  
 	      	  BufferedReader fis = new BufferedReader(new InputStreamReader(new FileInputStream(url), "UTF-8"));

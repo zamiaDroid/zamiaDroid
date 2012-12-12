@@ -26,14 +26,20 @@ import uni.projecte.R.id;
 import uni.projecte.R.layout;
 import uni.projecte.R.string;
 import uni.projecte.controler.ProjectControler;
+import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.dataLayer.CitationManager.Zamia.ZamiaCitationXMLparser;
 import uni.projecte.dataLayer.CitationManager.Zamia.ZamiaExportCitationReader;
+import uni.projecte.dataLayer.ProjectManager.ListAdapters.NewFieldsListAdapter;
+import uni.projecte.dataLayer.ProjectManager.objects.Project;
+import uni.projecte.dataTypes.FieldsList;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,10 +49,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -60,9 +70,13 @@ import android.widget.TextView;
  * Firstly, citation file provided {getIntent().getExtras().getString("file")} is pre-read and new Fields are shown
  * inside a listView with checkBoxes.
  * 
- * Checked fields will be created inside project {getIntent().getExtras().getLong("id")} and then
+ * a) Checked fields will be created inside project {getIntent().getExtras().getLong("id")} and then
  * citations will be imported to the project provided
- *
+ * 
+ * or
+ * 
+ * b) when no project is provided a dialog will be shown to create a new project with a selected thesaurus.
+ * In that case, the list of new fields will contain all fields belonging to citation file.
  * 
  */
 
@@ -70,13 +84,18 @@ public class CitationImportZamia extends Activity {
 	
 	public static int SUCCESSFUL_IMPORT =1;
 	
-	private HashMap<String, ProjectField> fieldList;
+	private Project projObj;	
+	private FieldsList fieldsList;
+	
 	private ArrayList<String> newFields;
-	private FieldListAdapter newFieldListAdapter;
+	private NewFieldsListAdapter newFieldListAdapter;
 	private long projId;
 	private ProjectControler projCnt;
 	private static String fileName;
+	
 	private ProgressDialog pdRemove;
+	private Dialog dialog;
+
 	
 	private int newCitations;
 
@@ -94,29 +113,46 @@ public class CitationImportZamia extends Activity {
     	Button btImport=(Button)findViewById(R.id.btZamiaImport);
     	LinearLayout llBottomPanel=(LinearLayout)findViewById(R.id.llBottomPanel);
 
+    	//when no projId    	
     	projId=getIntent().getExtras().getLong("id");
+    	    	    	
        	fileName=getIntent().getExtras().getString("file");
 
     	ZamiaCitationXMLparser zCP= new ZamiaCitationXMLparser();
     	
-    	fieldList= new HashMap<String, ProjectField>();
-    	projCnt=new ProjectControler(this);
-    	projCnt.loadProjectInfoById(projId);
+    	projObj= new Project(projId);
+    	fieldsList = new FieldsList();
     	
+    	projCnt=new ProjectControler(this);
+    	  
     	// pre-reading file Structure
-       	newCitations=zCP.preReadXML(this, fileName, fieldList);    	
+       	newCitations=zCP.preReadXML(this, fileName, projObj,fieldsList);    	
 
        	//Well formatted with citations
        	if(newCitations>0){
+       		
+       		loadProjectInfo();
 
            	tvCitationsInfo.setText(String.format(getString(R.string.zamiaImportCitationsCount),newCitations));
 
-	    	//creating list of new Fields (fields that not exists in the project)
-	    	checkNewFields();
+           	if(projObj.isCreated()){
+		    	
+	    		//creating list of new Fields (fields that not exists in the project)
+		    	checkNewFields();
+		    	tvFieldsInfo.setText(Html.fromHtml(String.format(getString(R.string.zamiaImportAddFields),newFields.size(),projObj.getProjName())));
+
+	    	}
+	    	else{
+	    		
+	    		newFields=fieldsList.getFieldsNames();
+	    		
+		    	tvFieldsInfo.setText(Html.fromHtml(String.format(getString(R.string.zamiaImportProjAddFields),newFields.size())));
+		    	btImport.setText(getString(R.string.projCreation));
+		    			    	
+	    	}
 	    	
-	    	tvFieldsInfo.setText(Html.fromHtml(String.format(getString(R.string.zamiaImportAddFields),newFields.size(),projCnt.getName())));
 	
-	    	newFieldListAdapter=new FieldListAdapter(this, newFields);
+	    	newFieldListAdapter=new NewFieldsListAdapter(this, newFields);
 	    	lvNewFields.setAdapter(newFieldListAdapter);
 	    	
 	    	btImport.setOnClickListener(btZamiaImportListener);
@@ -133,73 +169,181 @@ public class CitationImportZamia extends Activity {
     }
 
     
+	private void loadProjectInfo() {
+
+		if(projObj.isCreated()){
+    		
+        	projCnt.loadProjectInfoById(projId);
+        	projObj.setProjName(projCnt.getName());
+        	    		
+    	}
+				
+	}
+
+
 	private OnClickListener btZamiaImportListener = new OnClickListener()
     {
-        public void onClick(View v)
-        {        
+        public void onClick(View v){        
         	
         	
+        	if(projObj.isCreated()){
+        		
+            	importCitationsDialog();
 
-        	String progressMessage = String.format(v.getContext().getString(R.string.zamiaImportTitle), projCnt.getName());
+        	}
+        	else{
+        		
+                    	
+        		//createProject Dialog
+        		createProjectDialog();
+                		
+        	}
         	
-            pdRemove = new ProgressDialog(v.getContext());
-		    pdRemove.setCancelable(true);
-		    pdRemove.setMessage(progressMessage);
-		    pdRemove.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		    pdRemove.setProgress(0);
-		    pdRemove.setMax(newCitations);
-		    pdRemove.show();
-			
-	                 Thread thread = new Thread(){
-			  	        	   
-		                 @Override
-						public void run() {
-				               	  
-		                	 importCitationsThread();
-				               	  
-		                 }
-								
-		           };
-				           
-				           
-		   thread.start();
-
         }
+        
 	};
     
-    
+	private void importCitationsDialog(){
+
+
+		String progressMessage = String.format(getString(R.string.zamiaImportTitle), projObj.getProjName());
+
+		pdRemove = new ProgressDialog(this);
+		pdRemove.setCancelable(true);
+		pdRemove.setMessage(progressMessage);
+		pdRemove.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		pdRemove.setProgress(0);
+		pdRemove.setMax(newCitations);
+		pdRemove.show();
+
+		Thread thread = new Thread(){
+
+			@Override
+			public void run() {
+
+				importCitationsThread();
+
+			}
+
+		};
+
+
+		thread.start();
+		
+	}
+	
     private void importCitationsThread() {
 
 		Log.i("Import","Format:Zamia | (A) Action: Importing Citations ("+newCitations+")");
 
-        
-        boolean[] selectedNewFields=newFieldListAdapter.getItemSelection();
-    	
-    	Iterator<String> it=newFields.iterator();
-    	int i=0;
-    	
-    	//creating fields that not exists and we have chosen to create them    	
-    	while(it.hasNext()){
-    		
-    		String fieldName=it.next();
-    		
-    		if(selectedNewFields[i]){
-    			
-    			createNewField(fieldList.get(fieldName));
-    			
-    		}
-    		
-    		i++;
-    		
-    	}
-    	
-    	//importing citations
+		addProjectFields();
+		
+      	//importing citations
     	importCitations();        	
     	        	
     	handlerUpdateProcessDialog.sendEmptyMessage(1);
     	
     	
 	}
+	
+	private void createProjectDialog() {
+
+
+		ThesaurusControler thCont= new ThesaurusControler(this);
+
+		//Context mContext = getApplicationContext();
+		dialog = new Dialog(this);
+
+		dialog.setContentView(R.layout.projectcreation);
+		dialog.setTitle("Introdueixi les dades");
+
+		Button createProject = (Button)dialog.findViewById(R.id.bAddItem);
+		EditText name=(EditText)dialog.findViewById(R.id.etNameItem);
+
+
+		Spinner thList=(Spinner)dialog.findViewById(R.id.thList);
+
+
+		ArrayAdapter<String> dtAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, thCont.getThList());
+
+
+		dtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		thList.setAdapter(dtAdapter);
+
+		name.setText(projObj.getProjName());
+
+		createProject.setOnClickListener(new Button.OnClickListener(){
+
+
+			public void onClick(View v)
+			{
+
+				EditText et=(EditText)dialog.findViewById(R.id.etNameItem);
+				Spinner thList=(Spinner)dialog.findViewById(R.id.thList);
+
+				String projName=et.getText().toString();
+				String thName=(String)thList.getSelectedItem();
+
+				projCnt= new ProjectControler(v.getContext());
+
+				projId=projCnt.createProject(projName, thName,"");
+
+
+				if(projId<=0) {
+
+					String sameProject=getBaseContext().getString(R.string.sameNameProject);
+					Toast.makeText(getBaseContext(), 
+							sameProject+" "+projName, 
+							Toast.LENGTH_LONG).show();
+
+				}
+				else{
+					
+					dialog.dismiss();
+					importCitationsDialog();
+
+				}
+
+
+			}
+
+		});
+
+		dialog.show();
+
+
+
+	}
+	
+	private int addProjectFields(){
+
+		boolean[] selectedNewFields=newFieldListAdapter.getItemSelection();
+		
+		Iterator<String> it=newFields.iterator();
+		int i=0;
+
+		//creating fields that not exists and we have chosen to create them    	
+		while(it.hasNext()){
+
+			String fieldName=it.next();
+
+			if(selectedNewFields[i]){
+
+				createNewField(fieldsList.getProjectField(fieldName));
+
+			}
+
+			i++;
+
+		}
+
+		return i;
+
+	}
+
+    
+
     
 	   /*
 	    * This handler handles the result of the import dialog:
@@ -243,14 +387,18 @@ public class CitationImportZamia extends Activity {
 		ProjectControler pC= new ProjectControler(this);
 		newFields=new ArrayList<String>();
 		
-		for (String key : fieldList.keySet()) {
+		Iterator<String> it=fieldsList.getFieldsNames().iterator();
+				
+		while (it.hasNext()) {
+			
+			String key=it.next();
 			
 			long fieldId=pC.getFieldIdByName(projId,key);
 			if(fieldId<0) newFields.add(key);
-
+			
 		}
-		
-		
+
+				
 	}
 	
 	protected void finishActivity() {
@@ -294,89 +442,8 @@ public class CitationImportZamia extends Activity {
 				
 		
 	}
-
-	/*
-	 * 	BaseAdapter that includes a list of newFields and a Checkbox that will 
-	 * 	allow us to decide if we want to create the newField to the current project
-	 * 
-	 */
-
-    private class FieldListAdapter extends BaseAdapter {
-        
-    	private ArrayList<String> newFields;
-        private Context mContext;
-        
-        private LayoutInflater inflater;
-        
-        // array of items selection
-        private boolean[] itemSelection;
-
-    	
-    	public FieldListAdapter(Context context,ArrayList<String> newFields){
-    		
-            mContext = context;
-            this.newFields=newFields;
-            inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            itemSelection=new boolean[getCount()];
-            
-        }
-
-
-        public int getCount() {
-        	
-            return newFields.size();
-            
-        }
-
-
-        public String getItem(int position) {
-            return newFields.get(position);
-        }
-
-  
-        public long getItemId(int position) {
-            return position;
-        }
-
-      
- 
-        public View getView(final int position, View convertView, ViewGroup parent) {
-
-        	convertView = inflater.inflate(R.layout.zamiaimportfield, null);
-        	final ViewHolder holder = new ViewHolder();
-        	
-        	holder.chkItem = (CheckBox)convertView.findViewById(R.id.cbField);
-        	
-        	holder.chkItem.setOnCheckedChangeListener(new OnCheckedChangeListener(){
-
-        		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        			
-        			itemSelection[position] = holder.chkItem.isChecked();
-        			
-        		}
-        	});
-        	 
-        	holder.chkItem.setChecked(itemSelection[position]);
-        	convertView.setTag(holder);
-        	
-        	holder.chkItem.setText(getItem(position));
-        	
-        	return convertView;
-        	}
-
-
-		public boolean[] getItemSelection() {
-			return itemSelection;
-		}
-
-    }
-
-    public static class ViewHolder {
-    	
-    	CheckBox chkItem;
-    
-    }
-    
+	
 }
+
 
 

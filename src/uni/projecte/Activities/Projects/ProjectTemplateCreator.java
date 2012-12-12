@@ -143,6 +143,7 @@ public class ProjectTemplateCreator extends Activity{
 					           
 						    	dialog.dismiss();
 					    		Intent intent = new Intent(getBaseContext(), CitationProjectImport.class);
+					    		intent.putExtra("format", formats2[item]);
 					            startActivityForResult(intent,1);
 					    	   
 					       }

@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uni.projecte.R;
-import uni.projecte.R.id;
-import uni.projecte.R.layout;
-import uni.projecte.R.string;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.ThesaurusControler;
@@ -39,6 +36,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -46,33 +44,43 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-
-
+/*
+ *  @author utoPiC
+ *  
+ * This activity allows to create a new project with the citations'
+ * file chosen from the list.
+ * 
+ * Formats:
+ * 	- Zamia
+ *  - Fagus
+ *
+ */
 
 public class CitationProjectImport extends Activity{
 	
-	//   private AutoCompleteTextView txtName;
-	  // private  ResearchControler rsCont;
+	   private static final int ZAMIA_IMPORT = 0;
+	   
 	   private List<String> elements = null;
 	   private ListView fileList;
 	   private String url;
 	   private Button createProject;
 
 	   private PreferencesControler prefCnt;
-	   private ProgressDialog pd;
+	   private ProgressDialog pdCitationImport;
 	   
 	   private FagusReader fR;
 	   
 	   private Dialog dialog;
+	   private String format;
 	   
 	   private ProjectControler projCnt;
 
 	   private long projId=-1;
 
-	   
-	static final int DIALOG_PAUSED_ID = 0;
+	   	   
 
 	
 	  @Override
@@ -84,9 +92,20 @@ public class CitationProjectImport extends Activity{
 	        setContentView(R.layout.citation_import);
 	        
 	        prefCnt=new PreferencesControler(this);
-
+	        
+	        format=getIntent().getExtras().getString("format");
 	        
 	        fileList = (ListView)findViewById(R.id.projectList);
+	        
+	        TextView tvTitle=(TextView)findViewById(R.id.tvImportCitationsTitle);
+	        tvTitle.setText(getString(R.string.zamiaImportTitle)+" "+format);
+	        
+	        TextView tvPath=(TextView)findViewById(R.id.tvImportPath);
+	        tvPath.setText("/"+prefCnt.getDefaultPath()+"/Citations/");
+	        
+	        TextView tvPathText=(TextView)findViewById(R.id.tvImportPathInitial);
+	        tvPathText.setText(Html.fromHtml(getString(R.string.citationsAtDir)));
+	          
 
 	        
 	        if(isSdPresent()) fillFileList(new File(Environment.getExternalStorageDirectory()+"/"+prefCnt.getDefaultPath()+"/Citations/").listFiles(new XMLFilter()));
@@ -119,71 +138,39 @@ public class CitationProjectImport extends Activity{
 		   
 	   }
 	   
-	 
-	  public static boolean isSdPresent() {
-
-	      return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
-	
-	  }
-	  
-	  
-	  private void fillFileList(File[] listFiles) {
-		
-		        elements = new ArrayList<String>();
-		        elements.add(getString(R.string.root));
-		        
-		        for( File archivo: listFiles)
-		            elements.add(archivo.getPath());
-		       
-		        ArrayAdapter<String> listaArchivos= new ArrayAdapter<String>(this, R.layout.row, elements);
-		        fileList.setAdapter(listaArchivos);
-		    
-		
-	}
-	   private void rellenarConElRaiz() {
-	        fillFileList(new File("/").listFiles());
-	    } 
-	   
-	
 	  
 	  public OnItemClickListener theListListener = new OnItemClickListener() {
 		    
 		    public void onItemClick(android.widget.AdapterView<?> parent, View v, int position, long id) {
-		    		
-		    	  int IDFilaSeleccionada = position;
-		          if (IDFilaSeleccionada==0){
-		              rellenarConElRaiz();
-		          } else {
-		              File archivo = new File(elements.get(IDFilaSeleccionada));
-		              if (archivo.isDirectory()){
-		            	  fillFileList(archivo.listFiles(new XMLFilter()));
-		            	  
-		              }
-		               else{
-		            
-	     		            url= archivo.getAbsolutePath();
-	                    	createProjectDialog(archivo.getName());   
 		    	
-		    }
-		    
-		    
-		    }
+
+		    	File archivo = new File(elements.get(position));
+		    	if (archivo.isDirectory()){
+		    		
+		    		fillFileList(archivo.listFiles(new XMLFilter()));
+
+		    	}
+		    	else{
+		    		
+		    		if(format.equals("Zamia")){
+	            		   
+	            		zamiaImporter(prefCnt.getCitationsPath()+archivo.getPath());
+	            		   
+	            	}
+	            	else {
+	            		
+	            		url= archivo.getAbsolutePath();
+	            		createProjectDialog(archivo.getName());   
+	            	}
+
+		    	}
+
 		    }   
 		
 		    };
 		    
 		    
-		    class XMLFilter implements FilenameFilter {
-		    	  
-		    	  
-		              public boolean accept(File dir, String name) {
-	
-		                return (name.endsWith(".xml"));
-	
-		        }
-	              
-		    }
-		    		    
+
 		   private void createProjectDialog(String prName) {
 		        
 		        
@@ -256,10 +243,21 @@ public class CitationProjectImport extends Activity{
 		    }
 		   
 		   
-			 private void importFagusCitationFile(final String url, final long projId) {
+			 private boolean importFagusCitationFile(final String url, final long projId) {
 				 
-				 pd = ProgressDialog.show(this, getString(R.string.citationLoading), getString(R.string.citationLoadingTxt), true,false);
+				 String progressMessage=getString(R.string.citationLoading);
+				 
+				 //pdCitationImport = ProgressDialog.show(this, getString(R.string.citationLoading), getString(R.string.citationLoadingTxt), true,false);
 
+				 pdCitationImport = new ProgressDialog(this);
+				 pdCitationImport.setCancelable(true);
+				 pdCitationImport.setMessage(progressMessage);
+				 pdCitationImport.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+				 pdCitationImport.setProgress(0);
+				 pdCitationImport.setMax(newCitations);
+				 pdCitationImport.show();
+				 
+				 
 				                 Thread thread = new Thread(){
 				  	        	   
 					                 @Override
@@ -272,7 +270,18 @@ public class CitationProjectImport extends Activity{
 					           
 					           
 				   thread.start();
-				}	
+				}
+			 
+			    private void zamiaImporter(String fileName) {
+			    	
+			    	
+			    	Intent myIntent = new Intent(this, CitationImportZamia.class);
+		        	//myIntent.putExtra("id", projectId);
+		        	myIntent.putExtra("file", fileName);
+
+		            startActivityForResult(myIntent,ZAMIA_IMPORT);
+					
+			    } 
 			 
 			 
 			   private void importFagusThread(String url,long projId){
@@ -294,7 +303,7 @@ public class CitationProjectImport extends Activity{
 						@Override
 						public void handleMessage(Message msg) {	
 							
-							pd.dismiss();
+							pdCitationImport.dismiss();
 							dialog.dismiss();
 
 							
@@ -330,6 +339,60 @@ public class CitationProjectImport extends Activity{
 
 						}
 					};
+					
+					
+					  public static boolean isSdPresent() {
+
+					      return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+					
+					  }
+					  
+					  
+					  private void fillFileList(File[] listFiles) {
+						
+						        elements = new ArrayList<String>();
+						        //elements.add(getString(R.string.root));
+						        
+						        for( File archivo: listFiles)
+						            elements.add(archivo.getName());
+						       
+						        ArrayAdapter<String> listaArchivos= new ArrayAdapter<String>(this, R.layout.row, elements);
+						        fileList.setAdapter(listaArchivos);
+						    
+						
+					}
+					  
+					    class XMLFilter implements FilenameFilter {
+					    	  
+					    	  
+				              public boolean accept(File dir, String name) {
+			
+				                return (name.endsWith(".xml"));
+			
+				        }
+			              
+				    }
+					    
+					    @Override
+						protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+					        super.onActivityResult(requestCode, resultCode, intent);
+					        
+					    
+					        switch(requestCode) {          	
+					        
+						        case ZAMIA_IMPORT:
+						
+						          	finish();
+						                        
+						            break;
+						                
+						        default:
+						            	
+						     
+						    }
+					        
+					    }					    
+				    		    
 
 
 }

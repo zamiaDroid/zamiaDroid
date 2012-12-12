@@ -26,6 +26,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import uni.projecte.dataLayer.ProjectManager.objects.Project;
+import uni.projecte.dataTypes.FieldsList;
 import uni.projecte.dataTypes.ProjectField;
 
 
@@ -43,16 +45,22 @@ public class ZamiaCitationFastHandlerXML extends DefaultHandler{
 	private String fieldType="";
 	private String fieldCat="";
 	private String fieldValue="";
+	
+	private String projName="";
+	private String filum="";
+	private String thName="";
 
 	 private int citationCount=0;
-	 private HashMap<String, ProjectField> fieldsList;
+	 private FieldsList fieldsList;
+	 private Project projObj;
 	 private ArrayList<String> fieldItems;
 
 
 	 
-	 public ZamiaCitationFastHandlerXML(HashMap<String, ProjectField> fieldsList) {
+	 public ZamiaCitationFastHandlerXML(Project projObj, FieldsList fieldsList) {
 		super();
 		
+		this.projObj=projObj;
 		this.fieldsList=fieldsList;
 		fieldItems=new ArrayList<String>();
 		
@@ -83,7 +91,8 @@ public class ZamiaCitationFastHandlerXML extends DefaultHandler{
     	 if (localName.equals("ZamiaCitationList")) {
       
     		 
-          }else if (localName.equals("ZamiaCitation")) {
+          }
+    	 else if (localName.equals("ZamiaCitation")) {
         	  
         	  
                            
@@ -99,8 +108,17 @@ public class ZamiaCitationFastHandlerXML extends DefaultHandler{
 
                             
            }
-    	 
-          else{
+          else if (localName.equals("zamia_project")) {
+          	  
+          	  projObj.setProjName(atts.getValue("name"));
+                
+          }
+          else if (localName.equals("thesaurus")) {
+          	  
+          	  projObj.setProjType(atts.getValue("filum"));
+                
+          }
+    	   else{
         	  
         	  ///no fem res...
         	  
@@ -138,16 +156,25 @@ public class ZamiaCitationFastHandlerXML extends DefaultHandler{
           }else if (localName.equals("field")) {
         	  
         	  
-        	     if(fieldsList.get(fieldName)==null){
+        	     if(!fieldsList.fieldExists(fieldName)){
 
                  	  ProjectField pf= new ProjectField(fieldName, fieldDesc, fieldLabel, fieldValue, fieldType,fieldItems);
-                 	  fieldsList.put(fieldName, pf);
+                 	  fieldsList.addNewField(fieldName, pf);
                  	  
                    }
        		  
         	     fieldItems=new ArrayList<String>();
   			   	 fieldValue="";
         	     
+          }
+          else if (localName.equals("thesaurus")) {
+          	  
+        	  projObj.setThName(tempVal);
+                
+          } 
+          else if (localName.equals("zamia_project")) {
+          	  
+               
           }
           else{
 

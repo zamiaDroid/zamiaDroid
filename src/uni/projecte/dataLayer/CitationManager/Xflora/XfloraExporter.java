@@ -16,14 +16,21 @@
 
 package uni.projecte.dataLayer.CitationManager.Xflora;
 
+import java.nio.charset.Charset;
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.http.util.EncodingUtils;
+
 import uni.projecte.dataLayer.CitationManager.CitationExporter;
+import uni.projecte.dataLayer.utils.StringASCIIFormat;
+import android.annotation.TargetApi;
 import android.util.Log;
 
 
+@TargetApi(9)
 public class XfloraExporter extends CitationExporter {
 
 	private String result;
@@ -75,6 +82,9 @@ public class XfloraExporter extends CitationExporter {
 	
 	@Override
 	public void createCitationField(String fieldName, String fieldLabel, String value,String category){
+		
+		//value = StringASCIIFormat.toASCII(value);
+		
 		
 		if(fieldName.equals("OriginalTaxonName")){
 			

@@ -83,19 +83,8 @@ public class FagusXMLparser {
 
        		  
        	  }
-         
-         
-         
-         /* Parse the xml-data from our URL. */
-
-         /* Parsing has finished. */
-         /* Our ExampleHandler now provides the parsed data to us. */
-         ParsedDataSet parsedExampleDataSet = myExampleHandler.getParsedData();
-         
-         System.out.println(parsedExampleDataSet.toString());
-         
-         /* Set the result to be displayed in our GUI. */
-         //tv.setText(parsedExampleDataSet.toString());
+        
+        
          
     } catch (Exception e) {
          /* Display any Error to the GUI. */

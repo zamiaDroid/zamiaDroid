@@ -15,6 +15,19 @@ public class Project {
 		this.thName = thName;
 	}
 	
+	public Project(long projId) {
+
+		if(projId==0) this.projId=-1;
+		else this.projId=projId;
+	
+	}
+	
+	public boolean isCreated(){
+		
+		return projId>=0;
+		
+	}
+
 	public String getProjName() {
 		return projName;
 	}
