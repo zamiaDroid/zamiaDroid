@@ -395,7 +395,7 @@ public class CitationImportZamia extends Activity {
 			
 			long fieldId=pC.getFieldIdByName(projId,key);
 			if(fieldId<0) newFields.add(key);
-			
+						
 		}
 
 				
@@ -407,9 +407,14 @@ public class CitationImportZamia extends Activity {
     	
 		Bundle b = new Bundle();
 		b.putInt("numCitations", newCitations);
+		intent.putExtras(b);
+   
+		
+		b = new Bundle();
+		b.putLong("projId", projId);
 					
-			intent.putExtras(b);
-			setResult(1, intent);
+		intent.putExtras(b);
+		setResult(1, intent);
 		
 		finish();
 		

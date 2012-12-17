@@ -50,8 +50,7 @@ public class XfloraExporter extends CitationExporter {
 		XFloraParser= new XfloraTags();
 
 		result="";
-	
-	
+		
 	}
 	
 
@@ -85,6 +84,7 @@ public class XfloraExporter extends CitationExporter {
 		
 		//value = StringASCIIFormat.toASCII(value);
 		
+		value=value.trim();
 		
 		if(fieldName.equals("OriginalTaxonName")){
 			

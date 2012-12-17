@@ -75,7 +75,7 @@
 	
 	<!-- Citation Project Import -->
 	
-	<string name="citationLoading">Carregant citacions al nou projecte&#8230;</string>
+	<string name="citationLoading">Carregant citacions...</string>
    <string name="citationLoadingTxt">Si us plau, no tenqui aquesta finestra. Depenent de la quantitat de citacions la importació pot trigar alguns minuts.</string>
 
     <!-- Project  list -->

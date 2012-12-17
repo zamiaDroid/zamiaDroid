@@ -17,65 +17,150 @@
 
 package uni.projecte.Activities.Miscelaneous;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import uni.projecte.R;
-import uni.projecte.R.id;
-import uni.projecte.R.layout;
-import uni.projecte.dataLayer.RemoteDBManager.GBIFDBConnection;
+import uni.projecte.dataTypes.Utilities;
+import uni.projecte.ui.multiphoto.MultiPhotoFieldForm;
+
 import android.app.Activity;
-import android.os.Bundle;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.net.Uri;
+import android.os.Bundle;
+import android.widget.Toast;
 
 
 public class ActivityProvadora extends Activity {
 	
+	private final int CAMERA_PICTURE = 1;
+	private final int GALLERY_PICTURE = 2;
+	private Intent pictureActionIntent = null;
 	
-	private TextView tvInfo;
-	private Spinner spFilum;
+	private ImageView userPictureImageView;
+	private LinearLayout llMultiPhoto;
+	private MultiPhotoFieldForm multi;
 
 	  @Override
 	  public void onCreate(Bundle savedInstanceState) {
 		  
-		   super.onCreate(savedInstanceState);
-	       setContentView(R.layout.dbmanager);
-	       
-	       Button btConnect = (Button)findViewById(R.id.btConnectDb);
-	       btConnect.setOnClickListener(btConnectListener);
-	       
-	       spFilum = (Spinner) findViewById(R.id.spFilumList);
+	       super.onCreate(savedInstanceState);
 	        
-	       tvInfo = (TextView) findViewById(R.id.tvInfoEror);
+	       Utilities.setLocale(this);
+		   
+	       setContentView(R.layout.actprovadora);
 	       
-	       tvInfo.setText("Escull database...");
+	       llMultiPhoto=(LinearLayout)findViewById(R.id.llMultiPhoto);
+	       userPictureImageView = (ImageView)findViewById(R.id.ivPhotoDownload);
 
+	       
+	       //ProjectField projField=new ProjectField(
+	       multi= new MultiPhotoFieldForm(this, -1, null, llMultiPhoto);
 
+	       
+	      userPictureImageView.setOnClickListener(new OnClickListener() {
+	           public void onClick(View v) {
+	        	   
+	               startDialog();
+	               
+	           }
+
+	       });
+	      
+	      
+	      // Field --> secondLevelField
+	      
+	      // 
+	      
+	      
+	      
+	      
+	       
 		    
 	  }
 	  
-
-		private OnClickListener btConnectListener = new OnClickListener()
-		{
-		    public void onClick(View v)
-		    {                        
-		    	    	
-			       tvInfo.setText("Connectant...");
+	  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		    super.onActivityResult(requestCode, resultCode, data);
+		    		    
+		    if (requestCode == GALLERY_PICTURE) {
 		    	
-			       GBIFDBConnection gbif= new GBIFDBConnection(v.getContext(), spFilum.getSelectedItem().toString(), "ca");
-			       gbif.setLocation(41.15, 1.40, false);
-			       
-		       
-			       int elements=gbif.serviceGetTaxonList();
-
-			       
-			   //    tvInfo.setText("Elements: "+elements+"\n"+gbif.getList().printList());
-			       
+		        Uri uri = data.getData();
+		        
+		        if (uri != null) {
+		            // User had pick an image.
+		            Cursor cursor = getContentResolver().query(uri, new String[] { android.provider.MediaStore.Images.ImageColumns.DATA }, null, null, null);
+		            cursor.moveToFirst();
+		            // Link to the image
+		            final String imageFilePath = cursor.getString(0);
+		            
+			 	    multi.addPhoto(imageFilePath);
+		            
+		            cursor.close();
+		            
+		        }
+		        else {
+		        	
+		            Toast toast = Toast.makeText(this, "No Image is selected.", Toast.LENGTH_LONG);
+		            toast.show();
+		            
+		        }
 		    }
-		};
+		    
+		    else if (requestCode == CAMERA_PICTURE) {
+		    	
+		        if (data.getExtras() != null) {
+		        	
+		            // here is the image from camera
+		            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
+		            //multi.addPhoto(imageFilePath);
+		            
+		            userPictureImageView.setImageBitmap(bitmap);
+		            
+		        }
+		    }
+		    
+		    
+		}
+
+
+
+		private void startDialog() {
+			
+			
+		    AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
+		    myAlertDialog.setTitle("Upload Pictures Option");
+		    myAlertDialog.setMessage("How do you want to set your picture?");
+
+		    myAlertDialog.setPositiveButton("Gallery", new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface arg0, int arg1) {
+		            pictureActionIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
+		            pictureActionIntent.setType("image/*");
+		            pictureActionIntent.putExtra("return-data", true);
+		            startActivityForResult(pictureActionIntent, GALLERY_PICTURE);
+		        }
+		    });
+
+		    myAlertDialog.setNegativeButton("Camera", new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface arg0, int arg1) {
+		            pictureActionIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+		            startActivityForResult(pictureActionIntent, CAMERA_PICTURE);
+		        }
+		    });
+		    myAlertDialog.show();
+		}
 	  
+
 }
 
 

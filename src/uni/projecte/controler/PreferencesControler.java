@@ -333,6 +333,20 @@ public class PreferencesControler {
 
 	}
 	
+	public void setLastPhotoFieldName(String fieldName) {
+
+	    SharedPreferences.Editor editor = settings.edit();
+	    editor.putString("photoFieldName",fieldName);
+	    		
+	    editor.commit();
+	}
+	
+	public String getLastPhotoFieldName(){
+		
+		return settings.getString("photoFieldName", ""); 
+
+	}
+	
 	public void setMapElevationShown(boolean enabled) {
 
 	    SharedPreferences.Editor editor = settings.edit();

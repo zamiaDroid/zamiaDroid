@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
 <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-     android:orientation="vertical"
-  
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content">
+    android:id="@+id/llMultiPhoto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
 
+</LinearLayout>
 
-<Button android:text="Iniciar Servei Tracking" android:id="@+id/btInitTrack" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-<Button android:text="Finalitzar Servei Tracking" android:id="@+id/btEndTrack" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-
-<Button android:text="Mostrar Tracks" android:id="@+id/btShowTracks" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-
-<TextView
-    android:id="@+id/tvTracks"
+<ImageView
+    android:id="@+id/ivPhotoDownload"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="" />
+    android:src="@drawable/main_citation_photos_inv" />
     
 </LinearLayout>

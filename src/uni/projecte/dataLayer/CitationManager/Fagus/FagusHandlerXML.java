@@ -21,6 +21,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.os.Handler;
+
 import uni.projecte.dataTypes.ParsedDataSet;
 
 
@@ -42,12 +44,15 @@ public class FagusHandlerXML extends DefaultHandler{
 	 private String origin;
 	 
 	 private boolean insideCollectionData=false;
+	
+	 private Handler handlerUpdateProcess;
 	 
 	 
-	 public FagusHandlerXML(FagusReader fReader) {
+	 public FagusHandlerXML(FagusReader fReader, Handler handlerUpdateProcess) {
 		super();
 		
 		this.fReader=fReader;
+		this.handlerUpdateProcess=handlerUpdateProcess;
 		
 	}
 
@@ -164,6 +169,7 @@ public class FagusHandlerXML extends DefaultHandler{
         	  
     		  fReader.closeCitation();
     		  tempVal="";
+    		  handlerUpdateProcess.sendEmptyMessage(1);
     		  
    			   
           }else if (localName.equals("Datum")) {

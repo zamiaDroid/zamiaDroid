@@ -345,5 +345,7 @@
 	<string formatted="false" name="zamiaImportProjAddFields">El fitxer té &lt;b> %1d camps.&lt;/b> Selecciona els que vols afegir al nou projecte.</string>
    	<string name="tvImportCitationsProjAchtung">Atenció! No s\'importaran les dades referents als camps que s\'afegeixin al projecte.</string>
 	
-
+	<string name="citationWrongFileFormat">El fitxer no té un format %1s correcte</string>
+    <string name="pdCheckingCitFile">Comprovant fitxer de citacions&#8230;</string>
+	
 </resources>

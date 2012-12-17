@@ -27,17 +27,26 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
+import uni.projecte.dataLayer.CitationManager.Zamia.ZamiaCitationFastHandlerXML;
+import uni.projecte.dataLayer.ProjectManager.objects.Project;
+import uni.projecte.dataTypes.FieldsList;
 import uni.projecte.dataTypes.ParsedDataSet;
 import android.content.Context;
+import android.os.Handler;
+import android.util.Log;
 
 public class FagusXMLparser {
 
 	private FagusReader fR;
 	private boolean error=false;
-
-	public FagusXMLparser(FagusReader fR){
+	private static int WRONG_FORMAT=-1;
+	private Handler handlerUpdateProcess;
+	
+	
+	public FagusXMLparser(FagusReader fR, Handler handler){
 		
-		this.fR=fR;;
+		this.fR=fR;
+		this.handlerUpdateProcess=handler;
 		
 	}
 	
@@ -47,9 +56,9 @@ public class FagusXMLparser {
 
 	public void readXML(Context c, String url ,boolean internet){
 	try {
-         /* Create a URL we want to load some xml-data from. */
+      
+			/* Create a URL we want to load some xml-data from. */
   	  
-
   	   
          /* Get a SAXParser from the SAXPArserFactory. */
          SAXParserFactory spf = SAXParserFactory.newInstance();
@@ -59,7 +68,7 @@ public class FagusXMLparser {
          XMLReader xr = sp.getXMLReader();
          /* Create a new ContentHandler and apply it to the XML-Reader*/
     
-         FagusHandlerXML myExampleHandler = new FagusHandlerXML(fR);
+         FagusHandlerXML myExampleHandler = new FagusHandlerXML(fR,handlerUpdateProcess);
          xr.setContentHandler(myExampleHandler);
          
          
@@ -73,15 +82,9 @@ public class FagusXMLparser {
        	  
        	  else{
         	  
-       		  
-       		  BufferedReader fis = new BufferedReader(new InputStreamReader(new FileInputStream(url), "UTF-8"));
-
-       	  	//  InputStream fis = c.getAssets().open("botanical_project.xml");
+       		 BufferedReader fis = new BufferedReader(new InputStreamReader(new FileInputStream(url), "UTF-8"));
        	  	 xr.parse(new InputSource(fis));
-       	  	 
-       	  	 
-
-       		  
+       	  	        		  
        	  }
         
         
@@ -93,6 +96,39 @@ public class FagusXMLparser {
     }
 	
 	
+	}
+	
+	
+	public int preReadXML(Context c, String url){
+		
+		
+		try {
+
+			
+	         /* Get a SAXParser from the SAXPArserFactory. */
+	         SAXParserFactory spf = SAXParserFactory.newInstance();
+	         SAXParser sp = spf.newSAXParser();
+
+	         XMLReader xr = sp.getXMLReader();
+	    
+	         	FagusFastHandlerXML fagusFastXMLHandler = new FagusFastHandlerXML();
+	         	xr.setContentHandler(fagusFastXMLHandler);
+	     		  
+	      	  BufferedReader fis = new BufferedReader(new InputStreamReader(new FileInputStream(url), "UTF-8"));
+       		  xr.parse(new InputSource(fis));
+	 
+	         return fagusFastXMLHandler.getCitationCount();
+	         
+	    } 
+		catch (Exception e) {
+
+			Log.e("Info",e.getCause()+" : "+e.getMessage());
+			
+	    	return WRONG_FORMAT;
+	    	
+	    }
+		
+		
 	}
 	
 }

@@ -45,6 +45,7 @@ import uni.projecte.dataTypes.Utilities;
 import uni.projecte.hardware.gps.MainLocationListener;
 import uni.projecte.maps.GoogleMapsAPI;
 import uni.projecte.maps.UTMDisplay;
+import uni.projecte.ui.multiphoto.PhotoFieldForm;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -103,7 +104,10 @@ public class Sampling extends Activity {
 	   private CitationControler citCnt;
 
 	   public final static int SUCCESS_RETURN_CODE = 1;
+	   
 	   public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 3;
+	   public static final int LOAD_REMOTE_TAB = 6;
+
 	   public static final int ENABLE_GPS=Menu.FIRST;
 	   public static final int REPEATED_VALUES=Menu.FIRST+1;
 	   public static final int SHOW_TAXON_INFO=Menu.FIRST+2;
@@ -117,7 +121,7 @@ public class Sampling extends Activity {
 	   private long projId=-1;
 	   
 	   private PreferencesControler prefCnt;
-	   private TextView rsNameTV;
+	   private TextView tvProjectName;
 	   
 	   private TextView mLocationDisplay;
 	   private TextView mAltitudeDisplay;
@@ -148,12 +152,10 @@ public class Sampling extends Activity {
     	
     	private boolean thStatus;
     	
-    	private ImageView photoTV;
-    	private ImageButton rmPhotoButton;
-    	private EditText etPhotoPath;
     	private String fileName="";
     	private Uri imageUri;
-    	private String _path;
+    	private String photoPath;
+    	private String lastPhotoField;
     	
     	private ImageButton photoButton;
     	private Button bUpdateLoc;
@@ -167,6 +169,8 @@ public class Sampling extends Activity {
     	private Hashtable<String, Integer> complexValuesList;
     	private Hashtable<String, Boolean> repetedValuesList;
     	private Hashtable<String, String> repetedValuesLabelList;
+    	
+    	private Hashtable<String, PhotoFieldForm> photoFieldsList;
     	
     	private LocationManager mLocationManager;
     	private MainLocationListener mLocationListener;
@@ -207,13 +211,13 @@ public class Sampling extends Activity {
         mAltitudeDisplay = (TextView) findViewById(R.id.tvAltitude);
         mTimeStampDisplay = (TextView) findViewById(R.id.tvSettedDate);
 
-        rsNameTV = (TextView)findViewById(R.id.projectName);
+        tvProjectName = (TextView)findViewById(R.id.projectName);
 
         projId=getIntent().getExtras().getLong("id");
         
         projCnt.loadProjectInfoById(projId);
         	
-        rsNameTV.setText(projCnt.getName());
+        tvProjectName.setText(projCnt.getName());
 
         lat=getIntent().getExtras().getDouble("latitude");
         longitude=getIntent().getExtras().getDouble("longitude");
@@ -538,7 +542,7 @@ public class Sampling extends Activity {
 			intent.putExtra("taxon",taxonName);
 			intent.putExtra("projId",projId);
 
-			startActivityForResult(intent,6);
+			startActivityForResult(intent,LOAD_REMOTE_TAB);
 			
 		}
 
@@ -759,7 +763,7 @@ public class Sampling extends Activity {
         	  
         	  else{
         		 
-        			if(rsNameTV.length()==0){
+        			if(tvProjectName.length()==0){
         	    		
         	    		Toast.makeText(getBaseContext(), 
         	                    R.string.projNameMissing, 
@@ -894,7 +898,7 @@ public class Sampling extends Activity {
         	  
         	  else{
         		 
-        			if(rsNameTV.length()==0){
+        			if(tvProjectName.length()==0){
         	    		
         	    		Toast.makeText(getBaseContext(), 
         	                    R.string.projNameMissing, 
@@ -1058,23 +1062,21 @@ public class Sampling extends Activity {
 					createRandomIdSecondLevelField(et);
 					
 				}
-				
-				
-				 if(photoTV!=null) {
-					 
-			         	photoTV.setVisibility(View.GONE);
-			         	etPhotoPath.setVisibility(View.GONE);
-
-	                	photoButton.setVisibility(View.VISIBLE);
-	                	rmPhotoButton.setVisibility(View.GONE);
-
-				 }
-				
+			
 				
 			}
 			
+			//iterate over all photos
+			Iterator<String> photoFields=photoFieldsList.keySet().iterator();
+			
+			while(photoFields.hasNext()){
+				
+				PhotoFieldForm tmpField=photoFieldsList.get(photoFields.next());
+				
+				tmpField.clearForm();
+				
+			}
    		    
-
     }
     
     /*
@@ -1204,7 +1206,7 @@ public class Sampling extends Activity {
                 getString(R.string.bSuccessCitationCreation), 
                 Toast.LENGTH_SHORT).show();
        	
-	    Log.d("Citation","Action -> Citation Created: "+rsNameTV.getText().toString()+":"+idSample+"|"+latPoint+":"+longPoint);
+	    Log.d("Citation","Action -> Citation Created: "+tvProjectName.getText().toString()+":"+idSample+"|"+latPoint+":"+longPoint);
 
 	  	tempGPS=true;
 
@@ -1323,6 +1325,8 @@ public class Sampling extends Activity {
 		   complexValuesList= new Hashtable<String, Integer>();
 		   repetedValuesList= new Hashtable<String, Boolean>();
 		   repetedValuesLabelList= new Hashtable<String, String>();
+		   
+		   photoFieldsList = new Hashtable<String, PhotoFieldForm>();
 
 		   
 		   sCLH=new SecondLevelFieldHandler(this);
@@ -1458,138 +1462,20 @@ public class Sampling extends Activity {
 			   
 			   //when the field is photo we show photo Interface
 			   else if (fieldType.equals("photo")){
-				   
-				   ImageView ivPhoto=(ImageView) new ImageView(getBaseContext());
-				   EditText etFieldValue= (EditText) new EditText(getBaseContext());
-				   
-				   etFieldValue.setLayoutParams(new LayoutParams
-					        (ViewGroup.LayoutParams.FILL_PARENT,ViewGroup.LayoutParams.
-					                WRAP_CONTENT));
-				   
-				   int idD= (int) att.getId();
-				   
-				   photoTV=ivPhoto;
-				   
-				   etFieldValue.setId(idD);
-				   etFieldValue.setTag(att.getName());
-				   				   
-				   etPhotoPath=etFieldValue;
-				   
-				  etFieldValue.setImeOptions(EditorInfo.IME_ACTION_NEXT);
-				  
-				  etFieldValue.setEnabled(false);
-				 
-				   photoButton=(ImageButton) new ImageButton(getBaseContext());
-				   photoButton.setBackgroundResource(android.R.drawable.ic_menu_camera);
-				   
-				   rmPhotoButton=(ImageButton) new ImageButton(getBaseContext());
-				   rmPhotoButton.setBackgroundResource(android.R.drawable.ic_input_delete);
-				   
-				   //rmPhotoButton.setEnabled(false);
-				   rmPhotoButton.setVisibility(View.GONE);
-				   
-				   rmPhotoButton.setOnClickListener(new OnClickListener() {
 
-		                public void onClick(View v) {
-		                  
-		                	etPhotoPath.setText("");
-		         
-		                	Utilities.removePhoto(Environment.getExternalStorageDirectory()+"/"+prefCnt.getDefaultPath()+"/Photos/"+fileName);
-		                	  
-		                	photoTV.setVisibility(View.GONE);
-		           		 	etPhotoPath.setVisibility(View.GONE);
-
-		                	photoButton.setVisibility(View.VISIBLE);
-		                	rmPhotoButton.setVisibility(View.GONE);
-		                	
-		                }
-		        });
 				   
+				   PhotoFieldForm photoFieldForm= new PhotoFieldForm(this,projId,att,llField);
 				   
-				   photoTV.setOnClickListener(new OnClickListener() {
+				   elementsList.add(photoFieldForm.getEtPhotoPath());
 
-		                public void onClick(View v) {
-		                  		                	
-		                	Intent viewPhIntent = new Intent(v.getContext(), uni.projecte.Activities.Miscelaneous.ImageView.class);
-						       
-				 			Bundle b = new Bundle();
-				 			b.putString("photoPath", v.getTag().toString());
-				 			viewPhIntent.putExtras(b);
-				 			
-				 			b = new Bundle();
-				 			b.putLong("projId", projId);
-				 			viewPhIntent.putExtras(b);
-				 							 			
-				 			startActivity(viewPhIntent);  
-		                	
-		                }
-				   });
+				   lPhoto=photoFieldForm.getlPhoto();
+				   llField=photoFieldForm.getLlField();
 				   
-				   photoButton.setOnClickListener(new OnClickListener() {
-
-		                public void onClick(View v) {
-		                  
-		                	String rsName=rsNameTV.getText().toString();
-		                	String currentTime = formatter.format(new Date());
-		                	rsName=rsName.replace(" ", "_");
-		                	
-		                	prefCnt.setLastPhotoPath(rsName + currentTime + ".jpg");
-		                	fileName = rsName + currentTime + ".jpg";
-		                	
-		                	//create parameters for Intent with filename
-		                	ContentValues values = new ContentValues();
-		                	values.put(MediaStore.Images.Media.TITLE, fileName);
-		                	values.put(MediaStore.Images.Media.DESCRIPTION,"Image capture by camera");
-		                	
-		                	//imageUri is the current activity attribute, define and save it for later usage (also in onSaveInstanceState)
-		                	_path=Environment.getExternalStorageDirectory() + "/zamiaDroid/Photos/"+fileName;
-		                	
-		                	//Utilities.showToast("Path: "+fileName, v.getContext());
-		                	
-		                  	File file = new File( _path );
-	                	    imageUri = Uri.fromFile( file );
-		                	
-		                	//create new Intent
-		                	Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-		 
-	                	    intent.putExtra( MediaStore.EXTRA_OUTPUT, imageUri );		                	
-		                	intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-		                	startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-
-		                }
-		        });
+				   photoFieldForm.setAddPhotoEvent(takePicture);
+				   photoFieldForm.setRemoveEvent(removePicture);
 				   
-
-				   lPhoto=new LinearLayout(this);
-				   lPhoto.setOrientation(LinearLayout.VERTICAL);
-				   lPhoto.setGravity(Gravity.CENTER);
-
-				   etFieldValue.setVisibility(View.GONE);
-				   lPhoto.addView(etFieldValue);
-
-				   LinearLayout lButtons=new LinearLayout(this);
-				   lButtons.setGravity(Gravity.RIGHT);
-	 				
-	 				LayoutParams param = new LinearLayout.LayoutParams(
-                            LayoutParams.FILL_PARENT,
-                            LayoutParams.WRAP_CONTENT, 0.0f);
-	 				
-	 				lButtons.setLayoutParams(param);
-				   
-	 				lButtons.addView(photoButton);
-	 				lButtons.addView(rmPhotoButton);
-				   
-				   llField.addView(lButtons);
-				   lPhoto.addView(ivPhoto);
-				   
-				   param = new LinearLayout.LayoutParams(
-                           LayoutParams.WRAP_CONTENT,
-                           LayoutParams.WRAP_CONTENT, 1.0f);
-      	       
-				   etFieldValue.setLayoutParams(param);
-		
-				  // lp.addView(e);
-				   elementsList.add(etFieldValue);
+				   photoFieldsList.put(att.getName(), photoFieldForm);
+			
 			   
 			   }
 			   
@@ -1845,6 +1731,60 @@ public class Sampling extends Activity {
 	   }
     
     
+    
+    private OnClickListener removePicture = new OnClickListener() {
+
+        public void onClick(View v) {
+
+        	PhotoFieldForm photoField=photoFieldsList.get(v.getTag());
+        	photoField.removePhoto();
+ 
+        	Utilities.removePhoto(Environment.getExternalStorageDirectory()+"/"+prefCnt.getDefaultPath()+"/Photos/"+fileName);
+        	  
+        	        	
+        }
+    };
+    
+    
+    
+    private OnClickListener takePicture = new OnClickListener() {
+
+        public void onClick(View v) {
+          
+ 	       	String projName=tvProjectName.getText().toString();
+ 	       	String currentTime = formatter.format(new Date());
+ 	       	projName=projName.replace(" ", "_");
+ 	       	
+ 	       	prefCnt.setLastPhotoPath(projName + currentTime + ".jpg");
+ 	       	
+ 	       	lastPhotoField=(String) v.getTag();		
+ 	       	
+ 	       	fileName = projName + currentTime + ".jpg";
+ 	       	
+ 	       	//create parameters for Intent with filename
+ 	       	ContentValues values = new ContentValues();
+ 	       	values.put(MediaStore.Images.Media.TITLE, fileName);
+ 	       	values.put(MediaStore.Images.Media.DESCRIPTION,"Image capture by camera");
+ 	       	
+ 	       	//imageUri is the current activity attribute, define and save it for later usage (also in onSaveInstanceState)
+ 	       	photoPath=Environment.getExternalStorageDirectory() + "/zamiaDroid/Photos/"+fileName;
+ 	       	
+ 	       	
+         	File file = new File( photoPath );
+ 	   	    imageUri = Uri.fromFile( file );
+ 	       	
+ 	       	//create new Intent
+ 	       	Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+ 	
+ 	   	    intent.putExtra( MediaStore.EXTRA_OUTPUT, imageUri );		                	
+ 	       	intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+ 	       	startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+
+        }
+        
+    };
+    
+    
     private void checkAutoField(ProjectField att) {
     	
     	if(prefCnt.isAutoFieldEnabled(att.getName().toLowerCase())){
@@ -1885,181 +1825,137 @@ public class Sampling extends Activity {
        // super.onActivityResult(requestCode, resultCode, intent);
    	
        	
-        switch(requestCode) {
-        case 0 :
-            
-        	//back from research choice
-        	
-        /*	nomEstudi = extras.getString(KEY_NOM);
-            idRs=extras.getLong(KEY_ID);
-            desc=extras.getString(DESCRIPCIO);
+    	switch(requestCode) {
 
-            txtName.setText(nomEstudi);*/
-            
-            break;
-            
-       case 6 :
-            
-    	   	elements = tC.fillData((AutoCompleteTextView) thElem);
-
-			  ((AutoCompleteTextView) thElem).setAdapter(elements);
-			  
-			  ((AutoCompleteTextView) thElem).setOnItemClickListener(synonimThListener);
-
-            
-            break;
-            
-                
-        case 1 :
-        	
-        	//this case is not used because the UI was redesigned and attribute creation was mixed with sample capturing
-        	//back from filled attributes
-        	
-           
-            break;
-            
-        case 2 :
-        	
-        	//back from GPS Activity
-        	
-        	   if(intent!=null){
-        	
-        		   Bundle ext = intent.getExtras();
-		        	
-		        	lat= ext.getDouble("latitude");
-		        	longitude= ext.getDouble("longitude");
-		        	elevation= ext.getDouble("elevation");
+	    	case LOAD_REMOTE_TAB :
+	
+	    		elements = tC.fillData((AutoCompleteTextView) thElem);
+	
+	    		((AutoCompleteTextView) thElem).setAdapter(elements);
+	
+	    		((AutoCompleteTextView) thElem).setOnItemClickListener(synonimThListener);
+	
+	
+	    		break;
+	
+	
+	    	case 2 :
+	
+	    		//back from GPS Activity
+	
+	    		if(intent!=null){
+	
+	    			Bundle ext = intent.getExtras();
+	
+	    			lat= ext.getDouble("latitude");
+	    			longitude= ext.getDouble("longitude");
+	    			elevation= ext.getDouble("elevation");
+	
+	    			//it can be 0 and 0 when it's located in the south of nigeria. It has to be improved.
+	    			if (lat==0 || longitude ==0){
+	
+	    				Toast.makeText(getBaseContext(), 
+	    						getBaseContext().getString(R.string.gps_missing), 
+	    						Toast.LENGTH_SHORT).show();
+	
+	
+	    			}
+	
+	    			else{
+	
+	    				prefCnt.setGPSNeeded(true);
+	    				updateDisplay();
+	
+	    			}
+	
+	    		}
+	
+	
+	    		break;
+	
+	    	case 4 :
+	
+	    		//back from GPS Activity
+	
+	    		if(intent!=null){
+	
+	    			Bundle ext = intent.getExtras();
+	
+	    			int numSecCitations=ext.getInt("numSecCit");
+	    			Long subProjId=ext.getLong("subProjId");
+	
+	    			sCLH.updateNumCitations(subProjId.intValue(), numSecCitations);
+	
+	    			TextView counter=sCLH.getSecLevelCounterByFieldId(subProjId.intValue());
+	
+	    			int numSec= sCLH.getSecLevelChildrenByFieldId(subProjId.intValue());
+	
+	    			counter.setText(""+numSec);
+	
+	
+	    		}
+	
+	
+	    		break;
+	
+	    	case 5 :
+	
+	    		//back from GPS Activity
+	
+	    		if(intent!=null){
+	
+	    			Bundle ext = intent.getExtras();
+	
+	    			int numSecCitations=ext.getInt("numSecCit");
+	    			Long subProjId=ext.getLong("subProjId");
+	
+	    			sCLH.setNumCitations(subProjId.intValue(), numSecCitations);
+	
+	    			TextView counter=sCLH.getSecLevelCounterByFieldId(subProjId.intValue());
+	
+	    			int numSec= sCLH.getSecLevelChildrenByFieldId(subProjId.intValue());
+	
+	    			counter.setText(""+numSec);
+	
+	    		}
+	
+	
+	    		break;
+	
+	    	case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE :
+	
+	    		if (resultCode == RESULT_OK) {
+	
+	    			if(photoPath==null){
+	
+	    				String fileName=prefCnt.getLastPhotoPath();
+	
+	    				photoPath=Environment.getExternalStorageDirectory().toString();
+	    				photoPath=photoPath + "/zamiaDroid/Photos/"+ fileName;
+	
+	    				//Utilities.showToast("Path: "+fileName, getBaseContext());
+	
+	
+	    			}
+	    			
+	    			PhotoFieldForm photoFieldForm=photoFieldsList.get(lastPhotoField);
+	    			photoFieldForm.addPhoto(photoPath);
 		
-		        	//it can be 0 and 0 when it's located in the south of nigeria. It has to be improved.
-		        	if (lat==0 || longitude ==0){
-		        		
-		            	Toast.makeText(getBaseContext(), 
-		            			getBaseContext().getString(R.string.gps_missing), 
-		                        Toast.LENGTH_SHORT).show();
-		            	
-		            	
-		        	}
-		        	
-		        	else{
-		        		
-		        		prefCnt.setGPSNeeded(true);
-		        		updateDisplay();
-		        		
-		        	}
-        	
-        	   }
-        	
-        	
-        	break;
-        	
-        case 4 :
-        	
-        	//back from GPS Activity
-        	
-        	   if(intent!=null){
-        	
-		        	 Bundle ext = intent.getExtras();
-		    		
-		    		int numSecCitations=ext.getInt("numSecCit");
-		    		Long subProjId=ext.getLong("subProjId");
-		    		
-		    		sCLH.updateNumCitations(subProjId.intValue(), numSecCitations);
-
-		    		TextView counter=sCLH.getSecLevelCounterByFieldId(subProjId.intValue());
-		    
-		    		int numSec= sCLH.getSecLevelChildrenByFieldId(subProjId.intValue());
-		    		
-		    		counter.setText(""+numSec);
-
-        	
-        	   }
-        	
-        	
-        	break;
-        	
-        case 5 :
-        	
-        	//back from GPS Activity
-        	
-        	   if(intent!=null){
-        	
-		        	 Bundle ext = intent.getExtras();
-		    		
-		    		int numSecCitations=ext.getInt("numSecCit");
-		    		Long subProjId=ext.getLong("subProjId");
-		    		
-		    		sCLH.setNumCitations(subProjId.intValue(), numSecCitations);
-
-		    		TextView counter=sCLH.getSecLevelCounterByFieldId(subProjId.intValue());
-		    
-		    		int numSec= sCLH.getSecLevelChildrenByFieldId(subProjId.intValue());
-		    		
-		    		counter.setText(""+numSec);
-
-        	   }
-        	
-        	
-        	break;
-        	
-        case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE :
-        	
-        	 if (resultCode == RESULT_OK) {
-        		   
-        		 if(_path==null){
-        			         			
-        			 String fileName=prefCnt.getLastPhotoPath();
-        			 
-        			 _path=Environment.getExternalStorageDirectory().toString();
-        			 _path=_path + "/zamiaDroid/Photos/"+ fileName;
-        			 
-	               Utilities.showToast("Path: "+fileName, getBaseContext());
-
-        			 
-        		 }
-        		 
-        		 etPhotoPath.setText(_path);
-        		 photoTV.setTag(_path);
-        		 
-        		 LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-    		 	 llp.setMargins(5, 5, 5, 5);
-				 photoTV.setLayoutParams(llp);
-        		 
-        		 etPhotoPath.setVisibility(View.VISIBLE);
-        		 
-        		  BitmapFactory.Options options = new BitmapFactory.Options();
-        		  options.inSampleSize = 5;
-
-        		  Bitmap PhotoFromCamera = BitmapFactory.decodeFile(_path, options );
-
-        		  MediaStore.Images.Media.insertImage(getContentResolver(), PhotoFromCamera, "fileName", "");
-
-        		  //rmPhotoButton.setEnabled(true);
-        		  rmPhotoButton.setVisibility(View.VISIBLE);
-        		  photoButton.setVisibility(View.GONE);
-    				
-        		  //photoButton.setEnabled(false);
-    				
-        		  photoTV.setImageBitmap(PhotoFromCamera);
-        	      photoTV.setScaleType(ScaleType.CENTER_CROP);
-        	      photoTV.setVisibility(View.VISIBLE);
-        	        
-        	      photoTV.invalidate();
-        			
-        			break;
+	    			break;
+	
+	
+	    		} else if (resultCode == RESULT_CANCELED) {
+	    			Utilities.showToast("Picture was not taken", this);
+	    		} else {
+	    			Utilities.showToast("Picture was not taken", this);
+	    		}
+	
+	
+	    		break;
+	
+	    	default:
 
 
-        	    } else if (resultCode == RESULT_CANCELED) {
-           	    	Utilities.showToast("Picture was not taken", this);
-        	    } else {
-           	    	Utilities.showToast("Picture was not taken", this);
-        	    }
-
-        	
-        	break;
-            
-            default:
-            	
-            	
   
         }
         

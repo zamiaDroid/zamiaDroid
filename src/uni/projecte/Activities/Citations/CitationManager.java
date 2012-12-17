@@ -82,8 +82,7 @@ public class CitationManager extends Activity{
 	private static final int REPORT_CREATOR = Menu.FIRST+3;
 	private static final int TAXON_CHECKER = Menu.FIRST+4;
 
-
-		
+	
 	private long projId;
 	private ExpandableListView mainCitListView;
 	private CitationListAdapter citListAdap;
@@ -214,6 +213,7 @@ public class CitationManager extends Activity{
 		        /* Getting intent params */
 		        projId=getIntent().getExtras().getLong("id"); 
 		        
+		        /* Setting main controlers */
 		        projCnt= new ProjectControler(this);
 	            tC= new ThesaurusControler(this);
 
@@ -509,6 +509,7 @@ public class CitationManager extends Activity{
 
 	        		    		}
 	        		    	});
+	        		    	
 	        		    	AlertDialog alert = builder.create();
 	        		    	alert.show();
 	        			   
@@ -609,9 +610,6 @@ public class CitationManager extends Activity{
 		     */
 		    
 		    private void showGallery() {
-
-
-	 			
 	 			
 	        	if(citHand.getSelectionList().size()==0){
 	        		
@@ -665,11 +663,7 @@ public class CitationManager extends Activity{
 
 		            		citHand.unCheckAllItems(true);
 		            		cbSelectAll.setChecked(false);
-		            		
-		               	   //hideFilter();
-		               	   removeFilter();
-		               	              
-		               	   //
+		            		removeFilter();
 		            	
 		             } }
 		            
@@ -767,7 +761,6 @@ public class CitationManager extends Activity{
 					
 					//apply filter
 					dialog.dismiss();
-			
 					
 					if(chosenFieldType.equals("date")){
 						
@@ -884,10 +877,7 @@ public class CitationManager extends Activity{
 				    	
 				    		        chosenFieldType="location";
 				    		        
-				        			//String filterString = String.format(getString(R.string.appliedFilter),"UTM","",locationValue);
-
 				        			updateUIFilterBar("UTM", "=", locationValue);
-				    		        //tvFilterMessage.setText(filterString);
 				    					
 				       			 	llFilter.setVisibility(View.VISIBLE);
 				    					
@@ -1207,18 +1197,8 @@ public class CitationManager extends Activity{
 				}
 				else{
 				
-					//hidding compare buttons
-					
-					 /* Button btGreater=(Button) layoutFilter.findViewById(R.id.btGreaterFilter);
-			 		  Button btLess=(Button) layoutFilter.findViewById(R.id.btLessFilter);
-			 		  Button btEq=(Button) layoutFilter.findViewById(R.id.btEqualFilter);
-			 		  btGreater.setVisibility(View.GONE);
-			 		  btLess.setVisibility(View.GONE);
-			 		  btEq.setVisibility(View.GONE);*/
-					
-			 		  spListValues.setVisibility(View.GONE);
+					spListValues.setVisibility(View.GONE);
 			 		 
-			 		  
 					
 					if(type.equals("complex")){
 						
@@ -1284,12 +1264,7 @@ public class CitationManager extends Activity{
 				
 				
 			}
-		 
 
-			
-			
-
-		    
 
 		    /*
 		     * Citation removal panel and thread
@@ -1645,10 +1620,7 @@ public class CitationManager extends Activity{
 		 		   	dialog.setContentView(R.layout.citationfilterfield);
 
 		 		   Button applyFilter = (Button)dialog.findViewById(R.id.btApplyFilter);
-		 		   final Button btGreater=(Button)dialog.findViewById(R.id.btGreaterFilter);
-		 		   final Button btLess=(Button)dialog.findViewById(R.id.btLessFilter);
-		 		   final Button btEq=(Button)dialog.findViewById(R.id.btEqualFilter);
-		    	   final LinearLayout llFieldSelection = (LinearLayout) dialog.findViewById(R.id.llFieldSelection);
+		 		   final LinearLayout llFieldSelection = (LinearLayout) dialog.findViewById(R.id.llFieldSelection);
 		 		   Spinner fieldsList=(Spinner)dialog.findViewById(R.id.spFieldsList);
 
 		    	  
@@ -1659,55 +1631,7 @@ public class CitationManager extends Activity{
 		 		  
 		 		  fieldsList.setAdapter(m_adapterForSpinner);
 	    			
-		 		//  btEq.getBackground().setColorFilter(new LightingColorFilter(0xFFFFFFFF, 0xFFAA0000));
-
-		 		  
-		 		/*  btGreater.setOnClickListener(new Button.OnClickListener(){
-
-		    	    	public void onClick(View v){
-		    	    		
-		    	    			btGreater.getBackground().setColorFilter(new LightingColorFilter(0xFFFFFFFF, 0xFFAA0000));
-		    	    			btLess.getBackground().invalidateSelf();
-		    	    			btLess.getBackground().setColorFilter(null);
-		    	    			btEq.getBackground().invalidateSelf();
-		    	    			btEq.getBackground().setColorFilter(null);
-		    	    			comparator=">";
-		    	    			
-		    	    		}
-		    	    	             
-		    	    });
-		 		  
-				  btEq.setOnClickListener(new Button.OnClickListener(){
-
-		    	    	public void onClick(View v){
-		    	    		
-		    	    			btEq.getBackground().setColorFilter(new LightingColorFilter(0xFFFFFFFF, 0xFFAA0000));
-		    	    			btLess.getBackground().invalidateSelf();
-		    	    			btLess.getBackground().setColorFilter(null);
-		    	    			btGreater.getBackground().invalidateSelf();
-		    	    			btGreater.getBackground().setColorFilter(null);
-		    	    			comparator="=";
-		
-		    	    		}
-		    	    	             
-		    	    });
-				  
-				  btLess.setOnClickListener(new Button.OnClickListener(){
-
-		    	    	public void onClick(View v){
-		    	    		
-		    	    			btLess.getBackground().setColorFilter(new LightingColorFilter(0xFFFFFFFF, 0xFFAA0000));
-		    	    			btEq.getBackground().invalidateSelf();
-		    	    			btGreater.getBackground().setColorFilter(null);	
-		    	    			btGreater.getBackground().invalidateSelf();
-		    	    			btEq.getBackground().setColorFilter(null);
-		    	    			comparator="<";
-		    	    			
-		    	    		}
-		    	    	             
-		    	    });
-				  */
-				 fieldsList.setOnItemSelectedListener(new OnItemSelectedListener() {
+		 		  fieldsList.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 
 						public void onItemSelected(AdapterView<?> arg0,View arg1, int arg2, long arg3) {

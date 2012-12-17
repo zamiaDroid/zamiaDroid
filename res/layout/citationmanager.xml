@@ -147,7 +147,8 @@ android:orientation="vertical"
               <ExpandableListView
                   android:id="@+id/citationLV"
                   android:layout_width="fill_parent"
-                  android:layout_height="wrap_content" >
+                  android:layout_height="wrap_content"
+                  android:fastScrollEnabled="true" >
               </ExpandableListView>
 
           </LinearLayout>

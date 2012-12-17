@@ -74,11 +74,15 @@ public class CitationProjectImport extends Activity{
 	   private FagusReader fR;
 	   
 	   private Dialog dialog;
+	   
+		/* Import format {"Zamia","Fagus"} */
 	   private String format;
 	   
 	   private ProjectControler projCnt;
 
 	   private long projId=-1;
+	   private String fileName;
+
 
 	   	   
 
@@ -125,8 +129,15 @@ public class CitationProjectImport extends Activity{
 	   @Override
 	protected void onRestart(){
 		   
+		   super.onRestart();
 		   
-		   if(isSdPresent()) fillFileList(new File(Environment.getExternalStorageDirectory()+"/"+prefCnt.getDefaultPath()+"/Projects/").listFiles(new XMLFilter()));
+		 /*  if(isSdPresent()) {
+			   
+			   fillFileList(new File(Environment.getExternalStorageDirectory()+"/"+prefCnt.getDefaultPath()+"/Projects/").listFiles(new XMLFilter()));
+			   fileList.setOnItemClickListener(theListListener);
+
+		   
+		   }
 		   else {
 	        	
 	        	Toast.makeText(getBaseContext(), 
@@ -134,14 +145,15 @@ public class CitationProjectImport extends Activity{
 	                    Toast.LENGTH_SHORT).show();
 	        	
 	        	
-	        }
+	        }*/
 		   
 	   }
 	   
 	  
 	  public OnItemClickListener theListListener = new OnItemClickListener() {
 		    
-		    public void onItemClick(android.widget.AdapterView<?> parent, View v, int position, long id) {
+
+			public void onItemClick(android.widget.AdapterView<?> parent, View v, int position, long id) {
 		    	
 
 		    	File archivo = new File(elements.get(position));
@@ -159,8 +171,11 @@ public class CitationProjectImport extends Activity{
 	            	}
 	            	else {
 	            		
-	            		url= archivo.getAbsolutePath();
-	            		createProjectDialog(archivo.getName());   
+	            		url= prefCnt.getCitationsPath()+archivo.getPath();
+	            		fileName=archivo.getName();
+	            		
+	            		checkFagusFile();
+	            	
 	            	}
 
 		    	}
@@ -168,10 +183,12 @@ public class CitationProjectImport extends Activity{
 		    }   
 		
 		    };
+
+	private int citationCount;
 		    
 		    
 
-		   private void createProjectDialog(String prName) {
+		   private void createProjectDialog() {
 		        
 		        
 			  	
@@ -197,7 +214,7 @@ public class CitationProjectImport extends Activity{
 		 		   dtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		 		   thList.setAdapter(dtAdapter);
 		    	 
-		    	   	name.setText(prName.replace(".xml", ""));
+		    	   	name.setText(fileName.replace(".xml", ""));
 
 		    	    createProject.setOnClickListener(new Button.OnClickListener(){
 		    	    	             
@@ -226,7 +243,7 @@ public class CitationProjectImport extends Activity{
 			    	    	                }
 			    	    	                else{
 			    	    	                	
-			    	    	                	importFagusCitationFile(url,projId);
+			    	    	                	importFagusCitationFile();
 			    	    	                	
 				    	    	                 
 			    	    	                }
@@ -242,41 +259,100 @@ public class CitationProjectImport extends Activity{
 		    	 
 		    }
 		   
-		   
-			 private boolean importFagusCitationFile(final String url, final long projId) {
-				 
-				 String progressMessage=getString(R.string.citationLoading);
-				 
-				 //pdCitationImport = ProgressDialog.show(this, getString(R.string.citationLoading), getString(R.string.citationLoadingTxt), true,false);
-
+		   private void checkFagusFile(){
+			   
+				 String progressMessage=getString(R.string.pdCheckingCitFile);
+			   
 				 pdCitationImport = new ProgressDialog(this);
 				 pdCitationImport.setCancelable(true);
 				 pdCitationImport.setMessage(progressMessage);
-				 pdCitationImport.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-				 pdCitationImport.setProgress(0);
-				 pdCitationImport.setMax(newCitations);
 				 pdCitationImport.show();
 				 
-				 
-				                 Thread thread = new Thread(){
-				  	        	   
-					                 @Override
-									public void run() {
-					               	  
-					                	 importFagusThread(url,projId);
-					               	  
-					                 }
-					           };
-					           
-					           
-				   thread.start();
+			       Thread thread = new Thread(){
+	  	        	   
+		                 @Override
+						public void run() {
+		               	  
+						   
+						   	FagusXMLparser fagusXMLparser = new FagusXMLparser(null,null);
+							 
+							citationCount=fagusXMLparser.preReadXML(getBaseContext(), url);
+							
+							handlerCheckFagusFile.sendEmptyMessage(0);
+				
+             	  
+		                 }
+		           };
+		           
+		           
+		           thread.start();
+	 
+			   
+		   }
+		   
+		   private Handler handlerCheckFagusFile = new Handler() {
+
+				@Override
+				public void handleMessage(Message msg) {
+					
+					pdCitationImport.cancel();
+
+					if(citationCount>0){
+						
+						createProjectDialog();   
+									
+						
+					}
+					 else{
+
+						String message=String.format(getString(R.string.citationWrongFileFormat), format);
+						
+						Utilities.showToast(message, getBaseContext());
+					 
+						 				 
+						 
+					 }
+					
+					
 				}
+				
+		   };
+		   
+		   
+			 private void importFagusCitationFile() {
+
+				 String progressMessage=getString(R.string.citationLoading);
+				 
+				 pdCitationImport = new ProgressDialog(this);
+				 pdCitationImport.setCancelable(true);
+				 pdCitationImport.setMessage(progressMessage);
+						
+					 pdCitationImport.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+					 pdCitationImport.setProgress(0);
+					 pdCitationImport.setMax(citationCount);
+					 
+					 pdCitationImport.show();
+
+					 
+					                 Thread thread = new Thread(){
+					  	        	   
+						                 @Override
+										public void run() {
+						        
+						                	 importFagusThread(url,projId);
+						               	  
+						                 }
+						           };
+						           
+						           
+					   thread.start();
+					 
+				 }
+			
 			 
 			    private void zamiaImporter(String fileName) {
-			    	
-			    	
+			    		    	
 			    	Intent myIntent = new Intent(this, CitationImportZamia.class);
-		        	//myIntent.putExtra("id", projectId);
 		        	myIntent.putExtra("file", fileName);
 
 		            startActivityForResult(myIntent,ZAMIA_IMPORT);
@@ -288,7 +364,7 @@ public class CitationProjectImport extends Activity{
 				   
 				   fR=new FagusReader(this, projId);
 				
-				   FagusXMLparser fXML=new FagusXMLparser(fR);
+				   FagusXMLparser fXML=new FagusXMLparser(fR,handler);
 				   fXML.readXML(this,url, false);
 				   
 			   	 	 if(fXML.isError()) handler.sendEmptyMessage(-1);
@@ -303,11 +379,27 @@ public class CitationProjectImport extends Activity{
 						@Override
 						public void handleMessage(Message msg) {	
 							
-							pdCitationImport.dismiss();
-							dialog.dismiss();
-
+													
+							if(msg.what<0){
+								
+								pdCitationImport.dismiss();
+								dialog.dismiss();
+								
+								projCnt.removeProject(projId);
+								
+								Toast.makeText(getBaseContext(), 
+				   	                    getString(R.string.errorCitationFile), 
+				   	                    Toast.LENGTH_SHORT).show();	
+								
+								
+							}
 							
-							if(msg.what==0){
+							
+							else if(msg.what==0){
+								
+								pdCitationImport.dismiss();
+								dialog.dismiss();
+								
 								
 								Toast.makeText(getBaseContext(), 
 										String.format(getString(R.string.projSuccesCreatedWithCitations),fR.getNumSamples()), 
@@ -324,17 +416,11 @@ public class CitationProjectImport extends Activity{
 								
 						        finish();
 					        
-							}
-							
+							}						
 							else{
 								
-								projCnt.removeProject(projId);
-								
-								Toast.makeText(getBaseContext(), 
-				   	                    getString(R.string.errorCitationFile), 
-				   	                    Toast.LENGTH_SHORT).show();	
-								
-								
+								pdCitationImport.incrementProgressBy(1);
+																
 							}
 
 						}
@@ -382,7 +468,20 @@ public class CitationProjectImport extends Activity{
 					        
 						        case ZAMIA_IMPORT:
 						
-						          	finish();
+						        	if(intent!=null){
+						    		
+							        	Intent setProject = new Intent();
+							        	Long createdProjectId=intent.getLongExtra("projId",-1);
+							        							        	
+										Bundle b = new Bundle();
+										b.putLong("projId", createdProjectId);
+										setProject.putExtras(b);
+	
+										setResult(1, intent);
+																        	
+							          	finish();
+							          	
+						        	}
 						                        
 						            break;
 						                

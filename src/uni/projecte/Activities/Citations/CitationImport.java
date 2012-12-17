@@ -62,10 +62,16 @@ public class CitationImport extends Activity{
 	private long projectId;
 	private PreferencesControler prefCnt;
 	private ProgressDialog pd;
+    private ProgressDialog pdCitationImport;
 	  
 	
 	/* Import format {"Zamia","Fagus"} */
 	private String format;
+	
+
+	private int citationCount;
+	private String filePath;
+		    
 
 	   
 	
@@ -176,14 +182,20 @@ public class CitationImport extends Activity{
 		            		zamiaImporter(prefCnt.getCitationsPath()+archivo.getPath());
 		            		   
 		            	}
-		            	else importFagus(prefCnt.getCitationsPath()+archivo.getPath());
+		            	else {
+		            		
+		            		filePath=prefCnt.getCitationsPath()+archivo.getPath();
+		            		checkFagusFile();
+		            		
+		            	}
 		            }
 		    
 
 		    	}   
 		
 		    };
-		    
+
+
 		    
 	 
 		    class XMLFilter implements FilenameFilter {
@@ -198,14 +210,74 @@ public class CitationImport extends Activity{
 		    }
 		    
 		    
-		    private void importFagusThread(String url){
+			   private void checkFagusFile(){
+				   
+					 String progressMessage=getString(R.string.pdCheckingCitFile);
+				   
+					 pdCitationImport = new ProgressDialog(this);
+					 pdCitationImport.setCancelable(true);
+					 pdCitationImport.setMessage(progressMessage);
+					 pdCitationImport.show();
+					 
+				       Thread thread = new Thread(){
+		  	        	   
+			                 @Override
+							public void run() {
+			               	  
+							   
+							   	FagusXMLparser fagusXMLparser = new FagusXMLparser(null,null);
+								 
+								citationCount=fagusXMLparser.preReadXML(getBaseContext(), filePath);
+								
+								handlerCheckFagusFile.sendEmptyMessage(0);
+					
+	             	  
+			                 }
+			           };
+			           
+			           
+			           thread.start();
+		 
+				   
+			   }
+			   
+			   private Handler handlerCheckFagusFile = new Handler() {
+
+					@Override
+					public void handleMessage(Message msg) {
+						
+						pdCitationImport.cancel();
+
+						if(citationCount>0){
+							
+		            		importFagus();
+										
+							
+						}
+						 else{
+
+							String message=String.format(getString(R.string.citationWrongFileFormat), format);
+							
+							Utilities.showToast(message, getBaseContext());
+						 
+							 				 
+							 
+						 }
+						
+						
+					}
+					
+			   };
+		    
+		    
+		    private void importFagusThread(){
 		    	
          	   Log.d("Import","Format: Fagus (A) Action: Importing citations");
 
          	   fR=new FagusReader(this,projectId);
 
-         	   FagusXMLparser fXML=new FagusXMLparser(fR);
-	       	   fXML.readXML(this, url, false);
+         	   FagusXMLparser fXML=new FagusXMLparser(fR,handler);
+	       	   fXML.readXML(this, filePath, false);
 	       	 	 
 	       	   if(fXML.isError()) handler.sendEmptyMessage(-1);
 	       	   else handler.sendEmptyMessage(0);
@@ -221,24 +293,34 @@ public class CitationImport extends Activity{
 					@Override
 					public void handleMessage(Message msg) {
 						
-						pd.dismiss();
 						
-						if(msg.what==0){
+						if(msg.what<0){
 							
-				       	 	String numCit= getString(R.string.numCitationsImported);
+							pdCitationImport.dismiss();
+
+							Toast.makeText(getBaseContext(), 
+			   	                    "Error a l'arxiu de citacions", 
+			   	                    Toast.LENGTH_SHORT).show();	
+							
+							
+						}
+						else if(msg.what==0){
+							
+							pdCitationImport.dismiss();
+
+							String numCit= getString(R.string.numCitationsImported);
+								
 							Toast.makeText(getBaseContext(), 
 			   	                    fR.getNumSamples()+" "+numCit, 
 			   	                    Toast.LENGTH_SHORT).show();	
 							finish();
 							
 						}
+						
 						else{
 							
-							Toast.makeText(getBaseContext(), 
-			   	                    "Error a l'arxiu de citacions", 
-			   	                    Toast.LENGTH_SHORT).show();	
-							
-							
+							pdCitationImport.incrementProgressBy(1);
+															
 						}
 					
 				        
@@ -247,16 +329,27 @@ public class CitationImport extends Activity{
 					}
 				};
 		    
-			 private void importFagus(final String url) {
+			 private void importFagus() {
 				 
-				 pd = ProgressDialog.show(this, getString(R.string.citationLoading), getString(R.string.citationLoadingTxt), true,false);
+				String progressMessage=getString(R.string.citationLoadingTxt);
 				 
+				 pdCitationImport = new ProgressDialog(this);
+				 pdCitationImport.setCancelable(true);
+				 pdCitationImport.setMessage(progressMessage);
+						
+				 pdCitationImport.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+				 pdCitationImport.setProgress(0);
+				 pdCitationImport.setMax(citationCount);	
+				
+				 pdCitationImport.show();
+				 
+					 
 				                 Thread thread = new Thread(){
 				  	        	   
 					                 @Override
 									public void run() {
 					               	  
-					                	 importFagusThread(url);
+					                	 importFagusThread();
 					               	  
 					                 }
 					           };
