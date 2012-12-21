@@ -76,7 +76,8 @@ public class ProjectFieldChooser extends Activity{
 	   private ProjectSecondLevelControler rsC;
 	   private CitationControler sC;
 	   private FieldCreator fc;	   
-	   //private static final int DIALOG_RS_FIELDS=1;
+	   
+	   
 	   private static final int ADD_FIELD=Menu.FIRST;
 	   private static final int CHANGE_TH=Menu.FIRST+1;
 
@@ -99,8 +100,6 @@ public class ProjectFieldChooser extends Activity{
 	        
 	        projectName=getIntent().getExtras().getString("projName");
 	       
-	        
-	        String projNameText=getApplicationContext().getString(R.string.tvProjectName);
 
 	        tip.setText(Html.fromHtml("<b>Nom del Sub-projecte</b> "+projectName));
 	        thName= (TextView)findViewById(R.id.tvProjTh);
@@ -112,32 +111,22 @@ public class ProjectFieldChooser extends Activity{
 	        projId= getIntent().getExtras().getLong("Id"); 
 	        subProjId= getIntent().getExtras().getLong("subProjId"); 
 	        subProjName= getIntent().getExtras().getString("subProjName"); 
-
-	        
-	       /* Button btAddField = (Button)findViewById(R.id.bAddNewField);
-	        btAddField.setOnClickListener(bAddNewFieldListener);*/
-	        
-	        
-    
+  
 	        llista = (ListView)findViewById(R.id.lFields);
 	        
 	        llista.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 	        llista.setItemsCanFocus(true);
-	        
+       
 	        
 	        bAddSubField = (Button)findViewById(R.id.bCreateSubProject);
 	        bAddSubField.setOnClickListener(bCreateSubFieldsListener);
 
 	        
-	    //    llista.setOnItemClickListener(theListListener);
-
-
 	        rsC=new ProjectSecondLevelControler(this);
 	        fillFieldList();
-	        
 	          
 
-	        //listener for item cliked more than 3 seconds
+	       //listener for item cliked more than 3 seconds
 	       llista.setOnItemLongClickListener(theListLongListener);
 
 	       fc=new FieldCreator(this, projId);
@@ -147,8 +136,7 @@ public class ProjectFieldChooser extends Activity{
 	   
 	    private OnClickListener bCreateSubFieldsListener = new OnClickListener()
 	    {
-	        public void onClick(View v)
-	        {                        
+	        public void onClick(View v){                        
 	             
 	          storeSubProjectFields();
 	        	
@@ -280,6 +268,12 @@ public class ProjectFieldChooser extends Activity{
 	        	        	
 	        	        	//camp fotografia
 	        	        	fc.createPredFieldDialog("photo",messageHandler);
+	        	        	
+	        	        }
+	        	        else if(items[item].equals(items[3])){
+	        	        	
+	        	        	//camp fotografia
+	        	        	fc.createPredFieldDialog("multiPhoto",messageHandler);
 	        	        	
 	        	        }
 	        	        else{
@@ -432,14 +426,10 @@ public class ProjectFieldChooser extends Activity{
 		   
 		  rsC.cloneFieldToSubField(projId,subProjId,name,label);
 		  
+		  
 		  Intent intent = new Intent();
-	    	
-		 // Bundle b = new Bundle();
-	//	  b.putDouble("latitude", lat);
-	
-
-			
-			setResult(2, intent);
+	    				
+		  setResult(2, intent);
 		  
 		  
 		  finish();
@@ -500,266 +490,7 @@ public class ProjectFieldChooser extends Activity{
 	   } 
    
 	   }
-	   
-	  /* private void createPredFieldDialog() {
-	        
-		  	final Dialog dialog;
-	        
-	  		        	
-	        	//Context mContext = getApplicationContext();
-	    	  dialog = new Dialog(this);
-	    	   	
-	    	  dialog.setContentView(R.layout.predfieldcreation);
-	    	  dialog.setTitle(R.string.projCreationTitle);
-	    	   	
-
-	    	  Button addField = (Button)dialog.findViewById(R.id.bCreateField);
-
-
-	    	   //	EditText name=(EditText)dialog.findViewById(R.id.etNameItem);
-
-	    	  Spinner predList=(Spinner)dialog.findViewById(R.id.sPrefFields);
-	    	  
-			  final String[] predValues=getResources().getStringArray(R.array.predValues);
-
-	    	  m_adapterForSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,predValues);
-	    	  m_adapterForSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	    	  predList.setAdapter(m_adapterForSpinner);
-	    	  
-	
-	    	    
-	    	    //listener for the creation of a new field. Data is collected and checked from EditText fields.
-	    	    //if all necessary data is correct the dialog is destroyed
-	    	    
-	    	 	  addField.setOnClickListener(new Button.OnClickListener(){
-	    	             
-		    	    	
-		    	    	public void onClick(View v)
-		    	    		{
-	    	                 			
-		    	    			EditText etLabel=(EditText)dialog.findViewById(R.id.etFieldLabel);
-		    	    			EditText etDesc=(EditText)dialog.findViewById(R.id.etFieldDesc);
-		    	    			
-	    	    				Spinner predList=(Spinner)dialog.findViewById(R.id.sPrefFields);
-
-
-		    	    			String fieldLabel=etLabel.getText().toString();
-
-
-		    	    			if(fieldLabel.length()==0){
-		    	    				
-		    	    				 Toast.makeText(getBaseContext(), R.string.tFieldValuesMissing, 
-			        		   	              Toast.LENGTH_LONG).show();
-		    	    				
-		    	    				
-		    	    			} 	
-		    	    			else{
-		    	    				
-		    	    				String selected=predList.getSelectedItem().toString();
-		    	    				ProjectField a=null;
-		    	    				
-		    	    				if(selected.equals(predValues[0])){
-		    	    					
-			    	        	    	a = new ProjectField("OriginalTaxonNames",etDesc.getText().toString(),fieldLabel,"","thesaurus");
-
-		    	    					
-		    	    				}
-		    	    				else if (selected.equals(predValues[1])){
-		    	    					
-			    	        	    	a = new ProjectField("photo",etDesc.getText().toString(),fieldLabel,"","photo");
-
-		    	    					
-		    	    				}
-		    	    				else if (selected.equals(predValues[2])){
-		    	    					
-			    	        	    	a = new ProjectField("CitationNotes",etDesc.getText().toString(),fieldLabel,"","simple");
-
-		    	    					
-		    	    				}
-		    	    				else if (selected.equals(predValues[3])){
-		    	    					
-			    	        	    	a = new ProjectField("Inventaris",etDesc.getText().toString(),fieldLabel,"","secondLevel");
-
-		    	    					
-		    	    				}
-
-		    	    				createField(a);
-		    	        	    	
-		    	        	    	dialog.dismiss();
-		    	    				
-		    	    				
-		    	    			}
-
-		    	    	            	 
-		    	    	     }
-		    	    	             
-		    	    });
-	    	    
-	    	    dialog.show();
-
-
-	    	 
-	    }
-
-	    
-	    private void createFieldCreatorDialog() {
-	        
-		  	final Dialog dialog;
-	        
-	  		        	
-	        	//Context mContext = getApplicationContext();
-	    	  dialog = new Dialog(this);
-	    	   	
-	    	  dialog.setContentView(R.layout.fieldcreation);
-	    	  dialog.setTitle("Introdueixi les dades");
-	    	   	
-	    	  Button addPredField = (Button)dialog.findViewById(R.id.bAddPredField);
-	    	  Button remPredField = (Button)dialog.findViewById(R.id.bRemovePredField);
-	    	  Button addField = (Button)dialog.findViewById(R.id.bCreateField);
-
-
-	    	   //	EditText name=(EditText)dialog.findViewById(R.id.etNameItem);
-
-	    	  Spinner predList=(Spinner)dialog.findViewById(R.id.sPrefFields);
-	    	  
-	    	  m_adapterForSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-	    	  m_adapterForSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	    	  predList.setAdapter(m_adapterForSpinner);
-	    	  
-	    	   //	Spinner thList=(Spinner)dialog.findViewById(R.id.thList);
-	    	   	
-	    	    
-	    	   	
-	    	   	//name.setText(prName);
-	    	  
-	    	  remPredField.setOnClickListener(new Button.OnClickListener(){
-    	             
-	    	    	
-	    	    	public void onClick(View v)
-	    	    		{
-
-	    	    				Spinner predList=(Spinner)dialog.findViewById(R.id.sPrefFields);
-
-	    	    				String element= predList.getSelectedItem().toString();
-	    	    				m_adapterForSpinner.remove(element);
-	    	    				
-	    	    				//predList.removeViewAt(0);	    	                	 
-
-	    	    	            	 
-	    	    	     }
-	    	    	             
-	    	    }); 
-	    	  
-
-	    	    addPredField.setOnClickListener(new Button.OnClickListener(){
-	    	    	             
-	    	    	
-	    	    	public void onClick(View v){
-
-	    	    	                 EditText et=(EditText)dialog.findViewById(R.id.etPredValue);
-	    	    	                 
-	    	    	                 String text=et.getText().toString();
-
-	    	    	                 if(text.compareTo("")==0){
-	    	    	                	 
-	    	    	                	 
-	    	    	                	 
-	    	    	                	 
-	    	    	                 }
-	    	    	                 
-	    	    	                 else{
-	    	    	                	 
-	    	    	                	 m_adapterForSpinner.insert(text, 0);
-	 		    	    	            
-		    	    			    	 et.setText("");
-	    	    	                	 
-	    	    	                 }
-	    	    	                 
-	    	    			    	
-	    	    	                 
-	    	    	               //  dialog.dismiss();
-	    	    	            	 
-	    	    	              }
-	    	    	             
-	    	    }); 
-	    	    
-	    	    //listener for the creation of a new field. Data is collected and checked from EditText fields.
-	    	    //if all necessary data is correct the dialog is destroyed
-	    	    
-	    	 	  addField.setOnClickListener(new Button.OnClickListener(){
-	    	             
-		    	    	
-		    	    	public void onClick(View v)
-		    	    		{
-	    	                 			
-		    	    			EditText etName=(EditText)dialog.findViewById(R.id.etFieldName);
-		    	    			EditText etLabel=(EditText)dialog.findViewById(R.id.etFieldLabel);
-		    	    			EditText etPredValue=(EditText)dialog.findViewById(R.id.etFieldPredValue);
-		    	    			EditText etDesc=(EditText)dialog.findViewById(R.id.etFieldDesc);
-		    	    			
-	    	    				Spinner predList=(Spinner)dialog.findViewById(R.id.sPrefFields);
-
-
-		    	    			String fieldName=etName.getText().toString();
-		    	    			String fieldLabel=etLabel.getText().toString();
-		    	    			String predValue=etPredValue.getText().toString();
-
-
-
-		    	    			if(fieldName.length()==0){
-		    	    				
-		    	    				 Toast.makeText(getBaseContext(), R.string.tFieldValuesMissing, 
-			        		   	              Toast.LENGTH_LONG).show();
-		    	    				
-		    	    				
-		    	    			} 	
-		    	    			else {
-		    	    				
-		    	    					
-		    	    				if(fieldLabel.length()==0){
-			    	    					
-			    	    				etLabel.setText(fieldName);
-					    	    		fieldLabel=etLabel.getText().toString();
-
-			    	    			}
-		    	    				
-		    	    				ProjectField a = new ProjectField(fieldName,etDesc.getText().toString(),fieldLabel,predValue);
-		    	        	    	
-		    	        	    	insertSpinnerItems(predList, a);
-		    	    				
-		    	        	    	createField(a);
-		    	        	    	
-		    	        	    	dialog.dismiss();
-		    	        	 
-
-		    	    				
-		    	    			}
-
-		    	    	            	 
-		    	    	     }
-		    	    	             
-		    	    });
-	    	    
-	    	    dialog.show();
-
-
-	    	 
-	    } */
-	    
-		private void insertSpinnerItems(Spinner s, ProjectField a){
-
-			int n=s.getCount();
-			
-			for(int i=0;i<n;i++){
-				
-				a.insertPredValue(s.getItemAtPosition(i).toString());
-				
-			}
-			
-			
-		}
-	    
-	
+	 
 	  	       
 	   
 }

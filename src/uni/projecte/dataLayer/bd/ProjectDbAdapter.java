@@ -40,8 +40,7 @@ public class ProjectDbAdapter {
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase mDb;
     
-    /* Second level fields */
-    
+    /* Second level fields */	    
     public static final String PROJ_FIELD_ID = "projFieldId";
 
     

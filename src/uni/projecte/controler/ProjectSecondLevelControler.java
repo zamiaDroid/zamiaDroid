@@ -203,17 +203,6 @@ public class ProjectSecondLevelControler extends ProjectControler {
 		  projDbAdapter = new ProjectDbAdapter(baseContext);
 		  projDbAdapter.open();
 		  
-		 // Cursor fieldC=projDbAdapter.fetchFieldsFromProject(projectId, fieldName);
-		//  fieldC.moveToFirst();
-		  
-		  
-		  //it exists
-		  ///if(fieldC.getCount()>0){
-			  
-			 //fieldId=fieldC.getLong(0);
-			  
-		 // }
-		 /// else{
 			  
 		  if(type.equals("text")){
 				
@@ -226,10 +215,6 @@ public class ProjectSecondLevelControler extends ProjectControler {
 			  
 		  }
 			  
-			  
-		//  }
-		  
-		  // fieldC.close();
 		
 		  projDbAdapter.close();
 		  

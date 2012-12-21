@@ -259,8 +259,12 @@ public class ProjectInfo extends Activity{
 	        	        }
 	        	        else if(items[item].equals(items[2])){
 	        	        	
-	        	        	//camp fotografia
 	        	        	fc.createPredFieldDialog("photo",messageHandler);
+	        	        	
+	        	        }
+	        	        else if(items[item].equals(items[3])){
+	        	        	
+	        	        	fc.createPredFieldDialog("multiPhoto",messageHandler);
 	        	        	
 	        	        }
 	        	        else{

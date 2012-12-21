@@ -79,12 +79,7 @@ public class ActivityProvadora extends Activity {
 	      
 	      
 	      // Field --> secondLevelField
-	      
-	      // 
-	      
-	      
-	      
-	      
+	      	      
 	       
 		    
 	  }

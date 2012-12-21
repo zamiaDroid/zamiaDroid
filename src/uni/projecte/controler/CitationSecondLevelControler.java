@@ -121,10 +121,11 @@ public class CitationSecondLevelControler extends CitationControler {
 	 * */
 	
 	@Override
-	public void addCitationField(long fieldId,long idSample, long idRs,String attName, String value){
+	public long addCitationField(long fieldId,long idSample, long idRs,String attName, String value){
 		
 		
 		long attId;
+		long citationValueId=-1;
 		
 		ProjectDbAdapter aTypes=new ProjectDbAdapter(baseContext);
 		aTypes.open();
@@ -140,7 +141,7 @@ public class CitationSecondLevelControler extends CitationControler {
 			
 			attId=att.getLong(0);
 		
-			mDbAttributes.createCitationField(idSample,attId,value,attName);  
+			citationValueId=mDbAttributes.createCitationField(idSample,attId,value,attName);  
 
 			
 		}
@@ -156,6 +157,7 @@ public class CitationSecondLevelControler extends CitationControler {
 		att.close();		
 	aTypes.close();
 	
+		return citationValueId;
 		
 	}
 	

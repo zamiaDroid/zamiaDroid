@@ -1,3 +1,19 @@
+/*    	This file is part of ZamiaDroid.
+*
+*	ZamiaDroid is free software: you can redistribute it and/or modify
+*	it under the terms of the GNU General Public License as published by
+*	the Free Software Foundation, either version 3 of the License, or
+*	(at your option) any later version.
+*
+*    	ZamiaDroid is distributed in the hope that it will be useful,
+*    	but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    	GNU General Public License for more details.
+*
+*    	You should have received a copy of the GNU General Public License
+*    	along with ZamiaDroid.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 package uni.projecte.dataLayer.ProjectManager;
 
 import java.util.ArrayList;
@@ -8,6 +24,7 @@ import uni.projecte.R;
 import uni.projecte.Activities.Projects.ProjectFieldChooser;
 import uni.projecte.controler.ProjectSecondLevelControler;
 import uni.projecte.dataLayer.ProjectManager.ListAdapters.ProjectFieldCreatorListAdapter;
+import uni.projecte.dataLayer.bd.SecondLevelCitacionDbAdapter;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
 import android.app.Activity;
@@ -170,6 +187,12 @@ public class FieldCreator {
 		    	    				else if (selected.equals("photo")){
 		    	    					
 			    	        	    	a = new ProjectField(fieldName,etDesc.getText().toString(),fieldName,"","photo");
+
+			    	        	    	
+		    	    				}
+		    	    				else if (selected.equals("multiPhoto")){
+		    	    					
+			    	        	    	a = new ProjectField(fieldName,etDesc.getText().toString(),fieldName,"","multiPhoto");
 
 			    	        	    	
 		    	    				}
@@ -660,7 +683,15 @@ public class FieldCreator {
 					else if (at.getType().equals("photo")){
 						
 						attId=rsC.addProjectField(projId, at.getName(),at.getLabel(), at.getDesc(),at.getValue(),"photo","ECO");
-
+						
+					}
+					else if (at.getType().equals("multiPhoto")){
+						
+						attId=rsC.addProjectField(projId, at.getName(),at.getLabel(), at.getDesc(),at.getValue(),"multiPhoto","ECO");
+						
+						createFakeSubProject(attId);
+						
+						//crear subField
 						
 					}
 					else if (at.getType().equals("secondLevel")){
@@ -713,7 +744,16 @@ public class FieldCreator {
 		    }
 		    
 		    
-		    public void createProjectChooser(final String name, final long fieldId){
+		    private void createFakeSubProject(long fieldId) {
+
+		    	ProjectSecondLevelControler projSLCnt= new ProjectSecondLevelControler(baseContext);
+		    	
+		    	projSLCnt.createField(fieldId, "photo", "photo","","","photo");
+		    	
+		    	
+			}
+
+			public void createProjectChooser(final String name, final long fieldId){
 		    	
 		    	
 		    	final CharSequence [] projList=rsC.getProjectListCS();

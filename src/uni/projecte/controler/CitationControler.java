@@ -660,8 +660,9 @@ public class CitationControler {
 	 * 
 	 * */
 	
-	public void addCitationField(long projId,long idSample, long idRs,String attName, String value){
+	public long addCitationField(long projId,long idSample, long idRs,String attName, String value){
 		
+		long citationFieldId=-1;
 		
 		if(!citationExists){	
 		
@@ -680,7 +681,7 @@ public class CitationControler {
 			if(att.getCount()>0){
 				
 				attId=att.getLong(0);
-				mDbAttributes.createCitationField(idSample,attId,value,attName);  
+				citationFieldId=mDbAttributes.createCitationField(idSample,attId,value,attName);  
 	
 				
 			}
@@ -697,6 +698,8 @@ public class CitationControler {
 			aTypes.close();
 			
 		}
+		
+		return citationFieldId;
 		
 	}
 	

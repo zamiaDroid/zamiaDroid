@@ -27,17 +27,13 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import uni.projecte.R;
-import uni.projecte.Activities.RemoteDBs.TaxonExplorer;
 import uni.projecte.Activities.RemoteDBs.TaxonRemoteTab;
-import uni.projecte.R.id;
-import uni.projecte.R.layout;
-import uni.projecte.R.string;
+import uni.projecte.controler.CitationControler;
+import uni.projecte.controler.CitationSecondLevelControler;
 import uni.projecte.controler.DataTypeControler;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
-import uni.projecte.controler.CitationControler;
 import uni.projecte.controler.ThesaurusControler;
-import uni.projecte.dataLayer.RemoteDBManager.BiocatDBManager;
 import uni.projecte.dataLayer.ThesaurusManager.ListAdapters.ThesaurusAutoCompleteAdapter;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.SecondLevelFieldHandler;
@@ -45,7 +41,9 @@ import uni.projecte.dataTypes.Utilities;
 import uni.projecte.hardware.gps.MainLocationListener;
 import uni.projecte.maps.GoogleMapsAPI;
 import uni.projecte.maps.UTMDisplay;
+import uni.projecte.ui.multiphoto.MultiPhotoFieldForm;
 import uni.projecte.ui.multiphoto.PhotoFieldForm;
+import uni.projecte.ui.multiphoto.SimplePhotoFieldForm;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -53,8 +51,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -68,7 +64,6 @@ import android.provider.MediaStore;
 import android.text.Html;
 import android.text.InputType;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -84,9 +79,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -157,7 +150,6 @@ public class Sampling extends Activity {
     	private String photoPath;
     	private String lastPhotoField;
     	
-    	private ImageButton photoButton;
     	private Button bUpdateLoc;
     	
     	private boolean predefinedLocation=false;
@@ -1096,6 +1088,9 @@ public class Sampling extends Activity {
 
 	private void addFieldValues(long idSample, CitationControler smplCntr){
     			
+			boolean isMultiPhotoField=false;
+		
+		
 			n=elementsList.size();
 			
 			smplCntr.startTransaction();
@@ -1106,6 +1101,7 @@ public class Sampling extends Activity {
 				
 				String value="";
 				String label="";
+				long citationValueId=-1;
 				
 				View et=elementsList.get(i);
 				
@@ -1117,9 +1113,6 @@ public class Sampling extends Activity {
 					label=et.getTag().toString();
 					
 				}
-				
-				
-				
 				else if (et instanceof EditText){
 					
 					value= ((EditText) et).getText().toString();
@@ -1133,9 +1126,19 @@ public class Sampling extends Activity {
 					label= ((TextView) et).getTag().toString();
 					
 				}
-				
-			
-				
+				else if(et instanceof HorizontalScrollView){
+					
+					//multiPhotoElement
+					
+					MultiPhotoFieldForm multiPhoto=(MultiPhotoFieldForm) photoFieldsList.get(et.getTag());
+
+					isMultiPhotoField=true;
+					
+					value=multiPhoto.getSecondLevelId();
+					label=(String) et.getTag();
+					
+					
+				}
 				else {
 					
 					Spinner sp=(Spinner)et;
@@ -1148,7 +1151,6 @@ public class Sampling extends Activity {
 					
 				}
 				
-				
 					/*if value is empty we don't add the value into the database*/
 					if(value.compareTo("")==0){
 						
@@ -1156,14 +1158,22 @@ public class Sampling extends Activity {
 					
 					else{
 						
-						smplCntr.addCitationField(projId,idSample, et.getId(),label, value);
-	
+						Log.i("Citation","Action-> created citationValue : Label: "+label+" Value: "+value);
+						citationValueId=smplCntr.addCitationField(projId,idSample,et.getId(),label, value);
+							
+					}
+					
+					if(isMultiPhotoField){
 						
+						MultiPhotoFieldForm multiPhoto=(MultiPhotoFieldForm) photoFieldsList.get(et.getTag());
+						addPhotosList(multiPhoto);
+						
+						isMultiPhotoField=false;
 					}
 
 			}
 			
-			smplCntr.addObservationAuthor(projId,idSample);
+			smplCntr.addObservationAuthor(projId,idSample);	
 			
 			if(altitudeFieldId>0 && elevation!=0.0) smplCntr.addCitationField(projId,idSample,altitudeFieldId,"altitude", String.valueOf((int)elevation.doubleValue()));
 
@@ -1171,6 +1181,33 @@ public class Sampling extends Activity {
 
     	
     }
+	
+    
+    private void addPhotosList(MultiPhotoFieldForm photoFieldForm) {
+   	
+        CitationSecondLevelControler cit_SL_Cnt=new CitationSecondLevelControler(this);
+		
+        cit_SL_Cnt.startTransaction();
+        
+	        //long citationId=cit_SL_Cnt.createCitation(photoFieldForm.getSecondLevelId(), 100, 190, "");
+	        
+	    	ArrayList<String> photoList=photoFieldForm.getPhotoList();
+	    	
+	    	Iterator<String> photoIt=photoList.iterator();
+	    	
+	    	while(photoIt.hasNext()){
+	    		
+	    		String photoValue=photoIt.next();
+				Log.i("Citation","Action-> created citation[Photo]Value : Label: "+photoFieldForm.getSecondLevelId()+" Value: "+photoValue);
+
+	    		//cit_SL_Cnt.addCitationField(subProjId,citationId,projId,photoFieldForm.getFieldName(),photoValue);
+	    		
+	    	}
+    	    	
+    	cit_SL_Cnt.EndTransaction();
+
+	}
+    
     
     /*
      * 
@@ -1179,12 +1216,10 @@ public class Sampling extends Activity {
      * 
      */
     
-    
     private long createSample(double latPoint, double longPoint){
     	
     
 	    CitationControler sampleCntr=new CitationControler(this);
-	    Log.d("Citations","New SC");
 
 	    long idSample=-1;
         		
@@ -1192,7 +1227,7 @@ public class Sampling extends Activity {
         if(presettedDate==null) idSample=sampleCntr.createCitation(projId, latPoint, longPoint, "");
         else idSample=sampleCntr.createCitationWithDate(projId, latPoint, longPoint, "",presettedDate);
         
-	    Log.d("Citation","Action -> Create Citation");
+	    Log.d("Citation","Action -> Create New Citation");
 
         
         ((Vibrator)getSystemService(VIBRATOR_SERVICE)).vibrate(300);
@@ -1464,7 +1499,7 @@ public class Sampling extends Activity {
 			   else if (fieldType.equals("photo")){
 
 				   
-				   PhotoFieldForm photoFieldForm= new PhotoFieldForm(this,projId,att,llField);
+				   SimplePhotoFieldForm photoFieldForm = new SimplePhotoFieldForm(this,projId,att,llField);
 				   
 				   elementsList.add(photoFieldForm.getEtPhotoPath());
 
@@ -1477,6 +1512,23 @@ public class Sampling extends Activity {
 				   photoFieldsList.put(att.getName(), photoFieldForm);
 			
 			   
+			   }
+			   else if(fieldType.equals("multiPhoto")){
+				   
+				   MultiPhotoFieldForm multiPhotoFieldForm = new MultiPhotoFieldForm(this, projId, att, llField);
+				   
+				   multiPhotoFieldForm.setAddPhotoEvent(takePicture);
+				   
+				   
+				   String subLevelIdentifier=sCLH.addSecondLevelField((int) att.getId(), att.getName());
+				   multiPhotoFieldForm.setSecondLevelId(subLevelIdentifier);
+
+				   
+				   photoFieldsList.put(att.getName(), multiPhotoFieldForm);
+
+				   elementsList.add(multiPhotoFieldForm.getImageScroll());
+
+				   
 			   }
 			   
 			   //when the field is a thesaurus we create an AutoCompleteView and we fill it with the items provided by the ThesaurusControler
@@ -1940,7 +1992,8 @@ public class Sampling extends Activity {
 	    			
 	    			PhotoFieldForm photoFieldForm=photoFieldsList.get(lastPhotoField);
 	    			photoFieldForm.addPhoto(photoPath);
-		
+	    			
+	    			
 	    			break;
 	
 	

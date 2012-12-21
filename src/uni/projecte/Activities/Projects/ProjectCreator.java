@@ -53,7 +53,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
-
 public class ProjectCreator extends Activity{
 	
 	   private ListView listAttributesPres;
@@ -233,6 +232,12 @@ public class ProjectCreator extends Activity{
 	        	        	fc.createPredFieldDialog("photo",messageHandler);
 
 	        	        }
+	        	        else if(items[item].equals(items[3])){
+	        	        	
+	        	        	//camp fotografia
+	        	        	fc.createPredFieldDialog("multiPhoto",messageHandler);
+
+	        	        }
 	        	        else{
 	        	        	
 	        	        	//camps de dos nivells
@@ -409,6 +414,11 @@ public class ProjectCreator extends Activity{
 	    				else if (at.getType().equals("photo")){
 	    					
 	    					fieldId=rsCont.addProjectField(projId, at.getName(),at.getLabel(), at.getDesc(),at.getValue(),"photo","ECO");
+	    					
+	    				}
+	    				else if (at.getType().equals("multiPhoto")){
+	    					
+	    					fieldId=rsCont.addProjectField(projId, at.getName(),at.getLabel(), at.getDesc(),at.getValue(),"multiPhoto","ECO");
 	    					
 	    				}
 	    				else if (at.getType().equals("number")){

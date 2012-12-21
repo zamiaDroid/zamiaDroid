@@ -14,6 +14,7 @@ public class FieldTypeTranslator {
 	private String predefined;
 	private String subProject;
 	private String photo;
+	private String multiPhoto;
 	
 	private Context baseContext;
 	
@@ -28,6 +29,7 @@ public class FieldTypeTranslator {
 		photo=baseContext.getString(R.string.fieldTypePhoto);
 		subProject=baseContext.getString(R.string.fieldTypeSubProject);
 		predefined=baseContext.getString(R.string.fieldTypePredefined);
+		multiPhoto=baseContext.getString(R.string.fieldTypeMultiPhoto);
 				
 	}
 	
@@ -48,6 +50,8 @@ public class FieldTypeTranslator {
 		else if(fieldType.equals("text")) return predefined;
 		
 		else if(fieldType.equals("complex")) return predefined;
+		
+		else if (fieldType.equals("multiPhoto")) return multiPhoto;
 		
 		else return "";
 			

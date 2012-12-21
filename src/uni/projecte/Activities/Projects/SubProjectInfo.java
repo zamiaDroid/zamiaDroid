@@ -357,7 +357,13 @@ public class SubProjectInfo extends Activity{
 	        	        	fc.createPredFieldDialog("photo",messageHandler);
 	        	        	
 	        	        }
-	        	        else{
+	        	        else if(items[item].equals(items[3])){
+	        	        	
+	        	        	//camp fotografia
+	        	        	fc.createPredFieldDialog("multiPhoto",messageHandler);
+	        	        	
+	        	        }
+        	    	    else{
 	        	        	
 
 	        	        	fc.createPredFieldDialog("secondLevel",messageHandler);

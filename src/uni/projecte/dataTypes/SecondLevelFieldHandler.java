@@ -25,6 +25,18 @@ public class SecondLevelFieldHandler {
 		
 	}
 	
+	public String addSecondLevelField(int id,String fieldName){
+		
+		String secondLevelId=createSecondLevelIdentifier(fieldName);
+		
+		SecondLevelField sLF= new SecondLevelField(secondLevelId);
+		
+		secLevFields.put(id,sLF);
+		
+		return secondLevelId;
+		
+	}
+	
 	public String addSecondLevelField(int id,String fieldName, TextView numElements){
 		
 		String secondLevelId=createSecondLevelIdentifier(fieldName);
@@ -151,6 +163,13 @@ class SecondLevelField{
 		this.secondLevelId=secondLevelId;
 		this.children=0;
 		this.counter=numElements;
+		
+	}
+	
+	public SecondLevelField(String secondLevelId){
+		
+		this.secondLevelId=secondLevelId;
+		this.children=0;
 		
 	}
 	
