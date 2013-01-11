@@ -766,7 +766,7 @@ public class CitationControler {
 	public int exportProject(long projId, Context co,String fileName, String exportFormat){
 		
 				
-		ProjectControler rC= new ProjectControler(co);
+		ProjectControler projCnt= new ProjectControler(co);
 		sC= new CitationControler(co);
 	
 		Cursor citations= sC.getCitationListCursorByProjIdUnsyncro(projId);
@@ -774,41 +774,40 @@ public class CitationControler {
 		
 		int n= citations.getCount();
 		
-		rC.loadProjectInfoById(projId);
+		projCnt.loadProjectInfoById(projId);
 		
 		//Depending on the chosen type of file we'll instantiate the concrete exporter subclass
 		
 		if(exportFormat.equals("Fagus")){
 			
-			cExporter=new FagusExporter(rC.getName(),rC.getThName(),rC.getCitationType());
+			cExporter=new FagusExporter(projCnt.getName(),projCnt.getThName(),projCnt.getCitationType());
 			
 		}
 		else if (exportFormat.equals("TAB")){
 			
-			cExporter=new TABExporter(rC.getName(),rC.getThName(),rC.getCitationType());
+			cExporter=new TABExporter(projCnt.getName(),projCnt.getThName(),projCnt.getCitationType());
 
 		}
 		else if (exportFormat.equals("JSON")){
 			
-			cExporter=new JSONExporter(rC.getName(),rC.getThName(),rC.getCitationType());
+			cExporter=new JSONExporter(projCnt.getName(),projCnt.getThName(),projCnt.getCitationType());
 
 		}
 		else if (exportFormat.equals("Zamia")){
 			
-			cExporter=new ZamiaCitationExporter(rC.getProjectId(),rC.getName(),rC.getThName(),rC.getCitationType(),baseContext);
+			cExporter=new ZamiaCitationExporter(projCnt.getProjectId(),projCnt.getName(),projCnt.getThName(),projCnt.getCitationType(),baseContext);
 
 		}
 		else if (exportFormat.equals("KML")){
 			
-			cExporter=new KMLExporter(rC.getName(),rC.getThName(),rC.getCitationType());
+			cExporter=new KMLExporter(projCnt.getName(),projCnt.getThName(),projCnt.getCitationType());
 
 		}
 		
 		cExporter.openDocument();
 
 		
-		//c= list of types
-		HashMap<Long, ProjectField> projectFields=rC.getProjectFieldsMap(projId);
+		HashMap<Long, ProjectField> projectFields=projCnt.getProjectFieldsMap(projId);
 
 		Log.d("Citations","Exportant Citacions Start "+exportFormat);
 				
@@ -842,8 +841,6 @@ public class CitationControler {
 	 * with all project @projId citations. 
 	 * 
 	 */
-	
-
 	public int exportProject(long projId,Set<Long> selectionIds,String fileName, String exportFormat, Handler handlerExportProcessDialog){
 		
 				
@@ -913,7 +910,7 @@ public class CitationControler {
 			
 			handlerExportProcessDialog.sendMessage(handlerExportProcessDialog.obtainMessage());
 						
-			//fagus needs to know which is the last citation
+			//Fagus Exporter needs to know which is the last citation
 			cExporter.setLast(false); 
 			
 			citations.close();
@@ -944,14 +941,13 @@ public class CitationControler {
 		}
 		else{
 			
-				if(cExporter instanceof FagusExporter){
-				
-				
-					String value=sC.getSheetFieldValue(citations.getLong(0));
-					if(!value.equals("") && value.equals("true") ) ((FagusExporter)cExporter).forceSpecimen(value);
-				
-				}
-			
+			if(cExporter instanceof FagusExporter){
+
+				String value=sC.getSheetFieldValue(citations.getLong(0));
+				if(!value.equals("") && value.equals("true") ) ((FagusExporter)cExporter).forceSpecimen(value);
+
+			}
+
 		
 			cExporter.openCitation();
 			
@@ -985,8 +981,20 @@ public class CitationControler {
 						
 				ProjectField projField=projectFields.get(citationFieldValue.getLong(2));
 						
-				cExporter.createCitationField(projField.getName(), projField.getLabel(), citationFieldValue.getString(3), projField.getType());
-				cExporter.setFieldType(projField.getId(),projField.getType(),baseContext);
+				
+				
+				if(projField.isSubFieldExport()){ 
+					
+					cExporter.createCitationField(projField.getName(), projField.getLabel(), getSubCitationValue(projField,citationFieldValue.getString(3)), projField.getDesc());
+					cExporter.setFieldType(projField.getId(),projField.getType(),baseContext);
+					
+				}
+				else{
+					
+					cExporter.createCitationField(projField.getName(), projField.getLabel(), citationFieldValue.getString(3), projField.getDesc());
+					cExporter.setFieldType(projField.getId(),projField.getType(),baseContext);
+					
+				}
 				
 				cExporter.closeCitationField();
 						
@@ -1005,6 +1013,17 @@ public class CitationControler {
 		
 		
 	
+	private String getSubCitationValue(ProjectField projField,String subCitId) {
+
+		CitationSecondLevelControler citSLCnt= new CitationSecondLevelControler(baseContext);
+
+		String value=citSLCnt.getMultiPhotosValues(subCitId);
+		
+		return value;
+		
+		
+	}
+
 	private String getSheetFieldValue(long sampleId) {
 		
 		mDbAttributes = new CitacionDbAdapter(baseContext);

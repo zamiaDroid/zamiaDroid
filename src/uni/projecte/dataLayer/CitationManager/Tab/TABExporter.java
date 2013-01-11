@@ -26,17 +26,20 @@ public class TABExporter extends CitationExporter {
 	
 
 	private String result;
-	
 	private String[] citation;
+
 	
+	/* Fixed Field */
 	private static int COORDINATE_POS = 0;
 	private static int UTM_POS = 1;
 	private static int UTM_X = 2;
 	private static int UTM_Y = 3;	
 	private static int DATE_POS = 4;
 	
+	/* Maximum number of fields */
 	private int fieldsCount;
 	
+	/* Field labels */
 	private String[] citationLabels;
 	private int lastField;
 	private HashMap<String, Integer> insertedFieldsHash;
@@ -144,6 +147,13 @@ public class TABExporter extends CitationExporter {
 		setFormat(".tab");
 		setResult(result);
 		
+	}
+	
+
+	public void createCitationSubField() {
+
+		
+				
 	}
 	
 	private String labelsToString() {

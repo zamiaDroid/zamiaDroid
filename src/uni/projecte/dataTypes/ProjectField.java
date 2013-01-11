@@ -24,6 +24,7 @@ public class ProjectField{
 	private String type;
 	private String desc;
 	private int visible;
+	private String category;
 
 
 	private long id;
@@ -71,18 +72,7 @@ public class ProjectField{
 		
 	}
 
-	public ProjectField (long fieldId,String nom, String desc, String label,String value,String type){
-		
-		this.id=fieldId;
-		this.name=nom;
-		this.desc=desc;
-		this.label=label;
-		this.value=value;
-		this.type=type;
-		predValues=new ArrayList<String>();
 
-		
-	}
 	
 	public ProjectField (String nom, String desc, String label,String value,String type){
 		
@@ -127,15 +117,28 @@ public class ProjectField{
 		predValues=predValuesList;
 		
 	}
+	
 	public ProjectField (long id,String nom, String tipus, String label,String value){
 		
 		this.id=id;
 		this.name=nom;
 		this.type=tipus;
 		this.label=label;
-	
 		
-}
+	}
+	
+	public ProjectField (long fieldId,String nom, String desc, String label,String value,String type){
+		
+		this.id=fieldId;
+		this.name=nom;
+		this.desc=desc;
+		this.label=label;
+		this.value=value;
+		this.type=type;
+		predValues=new ArrayList<String>();
+
+		
+	}
 
 
 	public String getName() {
@@ -193,6 +196,30 @@ public class ProjectField{
 
 	public void setOrder(int order) {
 		this.order = order;
+	}
+	
+	public boolean isSubFieldExport(){
+		
+		return isMultiPhoto();
+		
+	}
+	
+	public boolean isMultiPhoto(){
+		
+		return type.equals("multiPhoto");		
+	}
+	
+	public boolean isSecondLevel(){
+		
+		return type.equals("secondLevel");		
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 }

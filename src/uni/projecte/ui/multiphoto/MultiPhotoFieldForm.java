@@ -3,8 +3,12 @@ package uni.projecte.ui.multiphoto;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
@@ -16,6 +20,7 @@ import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +32,11 @@ import android.widget.LinearLayout;
 
 public class MultiPhotoFieldForm extends PhotoFieldForm {
 
+	public static int CREATE_MODE = 1;
+	public static int EDIT_MODE = 2;
+	
+	private int PHOTO_FIELD_MODE;
+	
 	
 	/* Main container */
 	private LinearLayout llPhotosList;
@@ -41,27 +51,42 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 	private HorizontalScrollView imageScroll;
 	
 	private ArrayList<String> photoList;
+	private ArrayList<String> newPhotos;
 	
 	private String secondLevelId;
+	private long citationId;
+	
 	
 	
 		
-	public MultiPhotoFieldForm(Context baseContext, long projId, ProjectField field, LinearLayout llField){
+	public MultiPhotoFieldForm(Context baseContext, long projId, ProjectField field, LinearLayout llField, int mode){
 		
 		super(baseContext,projId,field,llField);
+		
+		PHOTO_FIELD_MODE=mode;
 	
 		photoList=new ArrayList<String>();
+		newPhotos=new ArrayList<String>();
+		
+
+		/* Layout resources */
+		
 		imageScroll=new HorizontalScrollView(baseContext);
-				
 		llPhotosList= new LinearLayout(baseContext);
+
 		
 		imageScroll.addView(llPhotosList);
-		
 		imageScroll.setTag(field.getName());
 
-	    createLayoutButtons();
 		
+	    createLayoutButtons();
 		llField.addView(imageScroll);
+		
+		if(PHOTO_FIELD_MODE==CREATE_MODE){
+
+			secondLevelId=createSecondLevelIdentifier(field.getName());
+			
+		}
 			
 	}
 	
@@ -111,14 +136,25 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 				
 	}
 	
+
 	
-	private void addButtons() {
+	public void clearForm() {
 
-
-		
+		photoList=new ArrayList<String>();
+		llPhotosList.removeAllViews();
+		secondLevelId=createSecondLevelIdentifier(field.getName());
 		
 	}
 	
+	private String createSecondLevelIdentifier(String fieldName){
+				
+    	SimpleDateFormat dfDate  = new SimpleDateFormat("yyyy-MM-dd_kk:mm:ss");
+    	Calendar c = Calendar.getInstance(); 
+    	String date=dfDate.format(c.getTime());
+    	
+    	return fieldName.toLowerCase()+"_"+date;
+		
+	}	
 
 
 	public void addPhoto(String imageFilePath) {
@@ -138,15 +174,40 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
         
         newImage.setOnClickListener(showPhotoActions);
         
-		
-        llPhotosList.addView(newImage,0);	
+		llPhotosList.addView(newImage,0);	
         
         photoList.add(0, imageFilePath);
-		
+  
 		
 	}
 	
+	public void addNewPhoto(String photoPath) {
+
+		addPhoto(photoPath);
+			        	
+		newPhotos.add(0, photoPath);
+			
+		
+	}
 	
+	public void setCitationData(List<String> list,String photoIdTag) {
+
+		//photoList.addAll(list);
+		
+		secondLevelId=photoIdTag;
+		
+		Iterator<String> it=list.iterator();
+		
+		while(it.hasNext()){
+			
+			String photoPath=(String)it.next();
+			
+			addPhoto(photoPath);
+			
+		}
+		
+		
+	}
 	
 	private Bitmap createScaledBitmap(Bitmap decodedBitmap) {
 		 
@@ -286,6 +347,8 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
         	
         	hideButtons();
         	
+        	//	esborrar subCitació
+        	//	esborrar foto físicament
         	
         }
    };
@@ -315,7 +378,10 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 	}
 
 	public ArrayList<String> getPhotoList() {
-		return photoList;
+		
+		if(PHOTO_FIELD_MODE==EDIT_MODE) return newPhotos;
+		else return photoList;
+		
 	}
 
 	public long getFieldId() {
@@ -335,6 +401,20 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 	public void setSecondLevelId(String secondLevelId) {
 		this.secondLevelId = secondLevelId;
 	}
+
+	public void setCitationId(long citationValueId) {
+
+		this.citationId=citationValueId;
+		
+	}
+	
+	public long getCitationid(){
+		
+		return citationId;
+		
+	}
+
+
 
 
 

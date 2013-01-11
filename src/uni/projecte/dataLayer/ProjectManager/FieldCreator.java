@@ -265,8 +265,12 @@ public class FieldCreator {
 				    	        	    		
 				    	        	    		chooseSecondFieldDialog(name,fieldId);
 				    	        	    		
-				    	        	    		
 				    	        	    	}
+			    	        	    		
+			    	        	    		if(a.isMultiPhoto()){
+			    	        	    			
+			    	        	    			createMultiPhotoField(fieldId);
+			    	        	    		}
 			    	        	    		
 			    	        	    	}
 			    	        	    	else{
@@ -290,6 +294,11 @@ public class FieldCreator {
 				    	        	    		
 				    	        	    	}
 				    	        	    	
+				    	        	    	if(a.isMultiPhoto()){
+			    	        	    			
+				    	        	    		createMultiPhotoField(secondLevelId);
+			    	        	    		}
+				    	        	    	
 			    	        	    		
 			    	        	    	}
 			    	        	    	
@@ -312,15 +321,39 @@ public class FieldCreator {
 
 	    	 
 	    }
+
+	   
+	   
+	 private void createMultiPhotoField(long fieldId) {
+		   
+		 long secLevId;
+		 
+		 if(createField) {
+			   
+			   secLevId=fieldId;
+			   
+		   }
+		   else{
+			   
+			   secondLevelId++;
+			   secLevId=-secondLevelId;
+			   
+		   }
+		 
+		 
+		 ProjectSecondLevelControler projSLCnt= new ProjectSecondLevelControler(baseContext);
+		 projSLCnt.createField(secLevId, "Photo", "photo", "", "", "ECO");
+		   
+	}
+
 	   
 	   /*
 	    * 
 	    * 
 	    * 
 	    */
-	   
-	   
-	   protected void chooseSecondFieldDialog(final String name, final long fieldId) {
+	 
+	protected void chooseSecondFieldDialog(final String name, final long fieldId) {
 
 			
 		   
@@ -389,7 +422,7 @@ public class FieldCreator {
 			b.putString("projName", projName);
 			intent.putExtras(b);
 
-			Utilities.showToast("Subproj "+secLevId,baseContext);
+			//Utilities.showToast("Subproj "+secLevId,baseContext);
 
 
 			b = new Bundle();
@@ -689,7 +722,7 @@ public class FieldCreator {
 						
 						attId=rsC.addProjectField(projId, at.getName(),at.getLabel(), at.getDesc(),at.getValue(),"multiPhoto","ECO");
 						
-						createFakeSubProject(attId);
+						//createFakeSubProject(attId);
 						
 						//crear subField
 						
@@ -743,16 +776,6 @@ public class FieldCreator {
 		    	
 		    }
 		    
-		    
-		    private void createFakeSubProject(long fieldId) {
-
-		    	ProjectSecondLevelControler projSLCnt= new ProjectSecondLevelControler(baseContext);
-		    	
-		    	projSLCnt.createField(fieldId, "photo", "photo","","","photo");
-		    	
-		    	
-			}
-
 			public void createProjectChooser(final String name, final long fieldId){
 		    	
 		    	

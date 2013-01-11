@@ -420,6 +420,10 @@ public class ProjectCreator extends Activity{
 	    					
 	    					fieldId=rsCont.addProjectField(projId, at.getName(),at.getLabel(), at.getDesc(),at.getValue(),"multiPhoto","ECO");
 	    					
+	    					subPojId++;
+	    					
+	    					rsCont.updateSubFieldId(-subPojId, fieldId);
+	    					
 	    				}
 	    				else if (at.getType().equals("number")){
 	    					

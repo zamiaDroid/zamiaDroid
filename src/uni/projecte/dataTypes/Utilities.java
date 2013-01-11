@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import uni.projecte.R;
@@ -305,6 +308,17 @@ public class Utilities
 
 		if(connectivityManager!=null) return connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
 		else return false;
+	}
+
+
+
+	public static List<String> splitToArrayList(String photos) {
+	      
+		String[] splitted=photos.split("; ");
+		
+		List<String> wordList = Arrays.asList(splitted);  
+
+		return wordList;
 	}
 
 

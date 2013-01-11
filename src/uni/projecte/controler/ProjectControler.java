@@ -251,7 +251,14 @@ public class ProjectControler {
 			
 			while(!cur.isAfterLast()){
 				
-				ProjectField projField=new ProjectField(cur.getLong(0), cur.getString(2),cur.getString(6),cur.getString(4),cur.getString(3));
+				//(long fieldId,String nom, String desc, String label,String value,String type)
+				
+				//ID, Name, categoria, label, tipus
+				//ProjectField projField=new ProjectField(cur.getLong(0), cur.getString(2),cur.getString(6),cur.getString(4),cur.getString(3));
+				
+				ProjectField projField=new ProjectField(cur.getLong(0), cur.getString(2),cur.getString(6),cur.getString(4),"",cur.getString(3));
+
+				
 				projectFields.put(projField.getId(), projField);
 				
 				cur.moveToNext();

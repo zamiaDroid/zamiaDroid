@@ -179,6 +179,13 @@ public abstract class CitationExporter {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	public void createCitationSubField() {
+
+		
+		
+	}
 	
 	
 

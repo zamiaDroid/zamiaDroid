@@ -196,6 +196,31 @@ public class CitationSecondLevelControler extends CitationControler {
 		
 	}
 	
+	public String getMultiPhotosValues(String secondLevelFieldId){
+		
+		String multiPhotoValue="";
+		
+		SecondLevelCitacionDbAdapter mDbSample=new SecondLevelCitacionDbAdapter(baseContext);
+		mDbSample.open();
+			
+			Cursor list=  mDbSample.fetchMultiPhotoValues(secondLevelFieldId);
+			list.moveToFirst();
+			
+			if(list!=null || list.getCount()>0){
+				
+				multiPhotoValue=list.getString(3);
+				
+			}
+			
+		list.close();	
+			
+		mDbSample.close();
+
+		return multiPhotoValue;
+		
+		
+	}
+	
 
 	
 

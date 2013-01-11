@@ -258,6 +258,20 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
         return mCursor;
     	
     }
+    
+    public Cursor fetchMultiPhotoValues(String secondLevelId) throws SQLException{
+    	
+    	
+       	Cursor mCursor=mDb.rawQuery("SELECT idSample,fieldId,date,group_concat(value,\"; \") FROM " + DATABASE_TABLE_CITATION +","+DATABASE_TABLE_FIELD
+				+ " WHERE fieldId=\""+secondLevelId+"\" and CitationTable._id="+CitacionDbAdapter.KEY_SAMPLE_ID+" GROUP BY fieldId",null);
+    	
+    	
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    	
+    }
 
     public Cursor fetchSecondLevelFieldValues(String secondLevelId) throws SQLException{
     	

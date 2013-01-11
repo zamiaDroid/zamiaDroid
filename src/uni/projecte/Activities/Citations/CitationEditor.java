@@ -32,6 +32,7 @@ import uni.projecte.Activities.RemoteDBs.TaxonRemoteTab;
 import uni.projecte.controler.CitationControler;
 import uni.projecte.controler.CitationSecondLevelControler;
 import uni.projecte.controler.DataTypeControler;
+import uni.projecte.controler.MultiPhotoControler;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.ProjectSecondLevelControler;
@@ -41,6 +42,8 @@ import uni.projecte.dataLayer.bd.ProjectDbAdapter;
 import uni.projecte.dataTypes.AttributeValue;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
+import uni.projecte.ui.multiphoto.MultiPhotoFieldForm;
+import uni.projecte.ui.multiphoto.PhotoFieldForm;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -71,6 +74,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -88,6 +92,7 @@ public class CitationEditor extends Activity {
 	
 	   public final static int SUCCESS_RETURN_CODE = 1;
 	   public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
+	   public static final int CAPTURE_IMAGE_MULTI_PHOTO = 3;
 
 	   private static final int REMOVE_CITATION = Menu.FIRST;
 	   private static final int SHOW_MAP =Menu.FIRST+1;
@@ -109,12 +114,14 @@ public class CitationEditor extends Activity {
 	   private String thName;
 	   private String projType;
 	   private String thType;
+	   private String projName;
 	   
 	   private ArrayList<String> attList;
 	   private TextView txtName;
 	   private ArrayList<AttributeValue> attValuesList;
 	   private ArrayList<ProjectField> fieldList;
-	   
+   	   private Hashtable<String, PhotoFieldForm> photoFieldsList;
+
 	   
 	   private TextView mDateDisplay;
 	   private TextView mLocationDisplay;
@@ -135,7 +142,10 @@ public class CitationEditor extends Activity {
 
 	   	private String fileName="";
 		private Uri imageUri;
+    	private String photoPath;
 		private String _path;
+    	private String lastPhotoField;
+
 		
 		private ImageButton rmPhotoButton;
 		private ImageButton photoButton;
@@ -202,7 +212,9 @@ public class CitationEditor extends Activity {
         	        	
         	projCont.loadProjectInfoById(projId);
         	
-        	txtName.setText(projCont.getName());
+        	projName=projCont.getName();
+        	
+        	txtName.setText(projName);
         	
         	createForm(projId);
         	
@@ -566,6 +578,8 @@ public class CitationEditor extends Activity {
         	    		
         	    		updateFieldValues(citationId, sC);
         	    		
+        	    		addCitationSubFields();
+        	    		
         	    	      String toastText=v.getContext().getString(R.string.tModifiedCitation);
 	    	                 
 	    	                 Toast.makeText(getBaseContext(), 
@@ -585,6 +599,28 @@ public class CitationEditor extends Activity {
         	
     };
     
+    private void addCitationSubFields() {
+    	
+    	//Adding MultiPhoto: photoList
+    	
+    	MultiPhotoControler multiProjCnt= new MultiPhotoControler(this);
+    	   	   	
+    	Iterator<String> photoFields=photoFieldsList.keySet().iterator();
+		
+		while(photoFields.hasNext()){
+			
+			PhotoFieldForm tmpField=photoFieldsList.get(photoFields.next());
+							
+			if(tmpField instanceof MultiPhotoFieldForm){
+				
+				long subFieldId=multiProjCnt.getMultiPhotoSubFieldId(((MultiPhotoFieldForm) tmpField).getFieldId());
+				
+				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId);				
+				
+			}						
+		}
+
+	}
 
     
     private void updateFieldValues(long idSample, CitationControler smplCntr){
@@ -615,7 +651,12 @@ public class CitationEditor extends Activity {
 				
 				value =((TextView) et).getText().toString();
 			}
-			
+			else if(et instanceof HorizontalScrollView){
+								
+				MultiPhotoFieldForm multiPhoto=(MultiPhotoFieldForm) photoFieldsList.get(et.getTag());
+				value=multiPhoto.getSecondLevelId();
+				
+			}
 			else if(et instanceof Spinner){
 				
 				if(((Spinner) et).getSelectedItem()==null) value="";
@@ -852,11 +893,15 @@ public class CitationEditor extends Activity {
 		   formValues=new ArrayList<String>();
 
 		   secLevFields = new Hashtable<Integer, String>();
+		   photoFieldsList = new Hashtable<String, PhotoFieldForm>();
 
 
 		   LinearLayout l= (LinearLayout)findViewById(R.id.atributsS);
 		   LinearLayout lPhoto=null;
 
+		   CitationSecondLevelControler citSLCnt=new CitationSecondLevelControler(this);
+		   
+		   
 		   ProjectControler rsC=new ProjectControler(this);
 		   rsC.loadProjectInfoById(id);
 		   sC.startTransaction();
@@ -1148,6 +1193,25 @@ public class CitationEditor extends Activity {
 				   
 				 
 				   elementsList.add(tvFieldValue);
+
+				   
+			   }
+			   else if(fieldType.equals("multiPhoto")){
+				   
+				   String pred=sC.getFieldValue(citationId,att.getId());			   
+				   String photos=citSLCnt.getMultiPhotosValues(pred);				   
+				   
+				   MultiPhotoFieldForm multiPhotoFieldForm = new MultiPhotoFieldForm(this, projId, att, llField,MultiPhotoFieldForm.EDIT_MODE);
+				   
+				   multiPhotoFieldForm.setCitationData(Utilities.splitToArrayList(photos),pred);
+				   
+				   multiPhotoFieldForm.setAddPhotoEvent(takePicture);
+				   
+				   photoFieldsList.put(att.getName(), multiPhotoFieldForm);
+
+				   elementsList.add(multiPhotoFieldForm.getImageScroll());
+				   
+				   formValues.add(pred);
 
 				   
 			   }
@@ -1451,6 +1515,43 @@ public class CitationEditor extends Activity {
 
 		   
 	   }
+	
+    private OnClickListener takePicture = new OnClickListener() {
+
+        public void onClick(View v) {
+          
+     	   	SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_hhmmss");
+ 	       	String currentTime = formatter.format(new Date());
+
+ 	       	projName=projName.replace(" ", "_");
+ 	       	fileName = projName + currentTime + ".jpg";
+
+ 	       	prefCnt.setLastPhotoPath(fileName);
+ 	       	
+ 	       	lastPhotoField=(String) v.getTag();		
+ 	       	 	       	
+ 	       	//create parameters for Intent with filename
+ 	       	ContentValues values = new ContentValues();
+ 	       	values.put(MediaStore.Images.Media.TITLE, fileName);
+ 	       	values.put(MediaStore.Images.Media.DESCRIPTION,"Image capture by camera");
+ 	       	
+ 	       	//imageUri is the current activity attribute, define and save it for later usage (also in onSaveInstanceState)
+ 	       	photoPath=Environment.getExternalStorageDirectory() + "/zamiaDroid/Photos/"+fileName;
+ 	       	 	       	
+         	File file = new File(photoPath);
+ 	   	    imageUri = Uri.fromFile( file );
+ 	       	
+ 	       	//create new Intent
+ 	       	Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+ 	
+ 	   	    intent.putExtra( MediaStore.EXTRA_OUTPUT, imageUri );		                	
+ 	       	intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+ 	       	startActivityForResult(intent, CAPTURE_IMAGE_MULTI_PHOTO);
+ 	
+
+        }
+        
+    };
     	
     protected void updateFieldValue(long citationId, int idField, String value, int i) {
 
@@ -1489,9 +1590,7 @@ public class CitationEditor extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        
-        if(intent!=null){
-        	
+      	
         	
         switch(requestCode) {
         case 0 :
@@ -1548,6 +1647,34 @@ public class CitationEditor extends Activity {
             }
            
             break;
+        
+        case CAPTURE_IMAGE_MULTI_PHOTO :	
+
+        	if (resultCode == RESULT_OK) {
+        		
+    			if(photoPath==null){
+
+    				String fileName=prefCnt.getLastPhotoPath();
+
+    				photoPath=Environment.getExternalStorageDirectory().toString();
+    				photoPath=photoPath + "/zamiaDroid/Photos/"+ fileName;
+
+    			}
+    			
+    			PhotoFieldForm photoFieldForm=photoFieldsList.get(lastPhotoField);
+    			((MultiPhotoFieldForm) photoFieldForm).addNewPhoto(photoPath);
+    			    			
+    			break;
+
+
+    		} else if (resultCode == RESULT_CANCELED) {
+    			Utilities.showToast("Picture was not taken", this);
+    		} else {
+    			Utilities.showToast("Picture was not taken", this);
+    		}
+
+        	
+        	break;
             
         case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE :
         	
@@ -1619,8 +1746,6 @@ public class CitationEditor extends Activity {
      
         }
         
-
-        }
     }
     
 }

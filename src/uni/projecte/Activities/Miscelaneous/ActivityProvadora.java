@@ -65,7 +65,7 @@ public class ActivityProvadora extends Activity {
 
 	       
 	       //ProjectField projField=new ProjectField(
-	       multi= new MultiPhotoFieldForm(this, -1, null, llMultiPhoto);
+	       multi= new MultiPhotoFieldForm(this, -1, null, llMultiPhoto,1);
 
 	       
 	      userPictureImageView.setOnClickListener(new OnClickListener() {

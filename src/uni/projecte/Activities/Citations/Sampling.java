@@ -31,6 +31,7 @@ import uni.projecte.Activities.RemoteDBs.TaxonRemoteTab;
 import uni.projecte.controler.CitationControler;
 import uni.projecte.controler.CitationSecondLevelControler;
 import uni.projecte.controler.DataTypeControler;
+import uni.projecte.controler.MultiPhotoControler;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.ThesaurusControler;
@@ -50,6 +51,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.MutableContextWrapper;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.location.LocationListener;
@@ -1071,11 +1073,6 @@ public class Sampling extends Activity {
    		    
     }
     
-    /*
-     * This method takes the values filled by the user in the form and store them into the DB
-     * For each type of field the retrieval of the value will be different
-     * 
-     */
     
     private void createRandomIdSecondLevelField(View et) {
 		
@@ -1085,12 +1082,16 @@ public class Sampling extends Activity {
 		
 	}
 
+    /*
+     * This method takes the values filled by the user in the form and store them into the DB
+     * For each type of field the retrieval of the value will be different
+     * 
+     */
 
 	private void addFieldValues(long idSample, CitationControler smplCntr){
     			
 			boolean isMultiPhotoField=false;
-		
-		
+				
 			n=elementsList.size();
 			
 			smplCntr.startTransaction();
@@ -1132,11 +1133,10 @@ public class Sampling extends Activity {
 					
 					MultiPhotoFieldForm multiPhoto=(MultiPhotoFieldForm) photoFieldsList.get(et.getTag());
 
-					isMultiPhotoField=true;
-					
 					value=multiPhoto.getSecondLevelId();
 					label=(String) et.getTag();
 					
+					isMultiPhotoField=true;
 					
 				}
 				else {
@@ -1161,16 +1161,17 @@ public class Sampling extends Activity {
 						Log.i("Citation","Action-> created citationValue : Label: "+label+" Value: "+value);
 						citationValueId=smplCntr.addCitationField(projId,idSample,et.getId(),label, value);
 							
+						if(isMultiPhotoField){
+						
+							MultiPhotoFieldForm multiPhoto=(MultiPhotoFieldForm) photoFieldsList.get(et.getTag());
+							multiPhoto.setCitationId(citationValueId);
+							
+							isMultiPhotoField=false;
+						} 
+						
 					}
 					
-					if(isMultiPhotoField){
-						
-						MultiPhotoFieldForm multiPhoto=(MultiPhotoFieldForm) photoFieldsList.get(et.getTag());
-						addPhotosList(multiPhoto);
-						
-						isMultiPhotoField=false;
-					}
-
+				
 			}
 			
 			smplCntr.addObservationAuthor(projId,idSample);	
@@ -1178,35 +1179,35 @@ public class Sampling extends Activity {
 			if(altitudeFieldId>0 && elevation!=0.0) smplCntr.addCitationField(projId,idSample,altitudeFieldId,"altitude", String.valueOf((int)elevation.doubleValue()));
 
 			smplCntr.EndTransaction();
+			
 
     	
     }
 	
     
-    private void addPhotosList(MultiPhotoFieldForm photoFieldForm) {
-   	
-        CitationSecondLevelControler cit_SL_Cnt=new CitationSecondLevelControler(this);
+    private void addCitationSubFields() {
+    	
+    	//Adding MultiPhoto: photoList
+    	
+    	MultiPhotoControler multiProjCnt= new MultiPhotoControler(this);
+    	   	   	
+    	Iterator<String> photoFields=photoFieldsList.keySet().iterator();
 		
-        cit_SL_Cnt.startTransaction();
-        
-	        //long citationId=cit_SL_Cnt.createCitation(photoFieldForm.getSecondLevelId(), 100, 190, "");
-	        
-	    	ArrayList<String> photoList=photoFieldForm.getPhotoList();
-	    	
-	    	Iterator<String> photoIt=photoList.iterator();
-	    	
-	    	while(photoIt.hasNext()){
-	    		
-	    		String photoValue=photoIt.next();
-				Log.i("Citation","Action-> created citation[Photo]Value : Label: "+photoFieldForm.getSecondLevelId()+" Value: "+photoValue);
-
-	    		//cit_SL_Cnt.addCitationField(subProjId,citationId,projId,photoFieldForm.getFieldName(),photoValue);
-	    		
-	    	}
-    	    	
-    	cit_SL_Cnt.EndTransaction();
+		while(photoFields.hasNext()){
+			
+			PhotoFieldForm tmpField=photoFieldsList.get(photoFields.next());
+							
+			if(tmpField instanceof MultiPhotoFieldForm){
+				
+				long subFieldId=multiProjCnt.getMultiPhotoSubFieldId(((MultiPhotoFieldForm) tmpField).getFieldId());
+				
+				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId);				
+				
+			}						
+		}
 
 	}
+
     
     
     /*
@@ -1235,8 +1236,12 @@ public class Sampling extends Activity {
         addFieldValues(idSample, sampleCntr);
           
 	    Log.d("Citation","Action -> Fields Added");
+	    
+		addCitationSubFields();
+	    
+		Log.d("Citation","Action -> MutliFields Added");
 
-        
+		
        	Toast.makeText(getBaseContext(), 
                 getString(R.string.bSuccessCitationCreation), 
                 Toast.LENGTH_SHORT).show();
@@ -1515,14 +1520,10 @@ public class Sampling extends Activity {
 			   }
 			   else if(fieldType.equals("multiPhoto")){
 				   
-				   MultiPhotoFieldForm multiPhotoFieldForm = new MultiPhotoFieldForm(this, projId, att, llField);
+				   MultiPhotoFieldForm multiPhotoFieldForm = new MultiPhotoFieldForm(this, projId, att, llField,MultiPhotoFieldForm.CREATE_MODE);
 				   
 				   multiPhotoFieldForm.setAddPhotoEvent(takePicture);
 				   
-				   
-				   String subLevelIdentifier=sCLH.addSecondLevelField((int) att.getId(), att.getName());
-				   multiPhotoFieldForm.setSecondLevelId(subLevelIdentifier);
-
 				   
 				   photoFieldsList.put(att.getName(), multiPhotoFieldForm);
 
@@ -1807,12 +1808,12 @@ public class Sampling extends Activity {
  	       	String currentTime = formatter.format(new Date());
  	       	projName=projName.replace(" ", "_");
  	       	
- 	       	prefCnt.setLastPhotoPath(projName + currentTime + ".jpg");
+ 	       	fileName = projName + currentTime + ".jpg";
+
+ 	       	prefCnt.setLastPhotoPath(fileName);
  	       	
  	       	lastPhotoField=(String) v.getTag();		
- 	       	
- 	       	fileName = projName + currentTime + ".jpg";
- 	       	
+ 	       	 	       	
  	       	//create parameters for Intent with filename
  	       	ContentValues values = new ContentValues();
  	       	values.put(MediaStore.Images.Media.TITLE, fileName);
@@ -1820,8 +1821,7 @@ public class Sampling extends Activity {
  	       	
  	       	//imageUri is the current activity attribute, define and save it for later usage (also in onSaveInstanceState)
  	       	photoPath=Environment.getExternalStorageDirectory() + "/zamiaDroid/Photos/"+fileName;
- 	       	
- 	       	
+ 	       	 	       	
          	File file = new File( photoPath );
  	   	    imageUri = Uri.fromFile( file );
  	       	

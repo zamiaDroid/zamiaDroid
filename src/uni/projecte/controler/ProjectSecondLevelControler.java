@@ -29,8 +29,8 @@ import android.database.Cursor;
 
 public class ProjectSecondLevelControler extends ProjectControler {
 
-	private ProjectDbAdapter projDbAdapter;
-	private Context baseContext;
+	protected ProjectDbAdapter projDbAdapter;
+	protected Context baseContext;
 	
 	
 	public ProjectSecondLevelControler(Context c) {
@@ -491,6 +491,26 @@ public class ProjectSecondLevelControler extends ProjectControler {
 		}
 	
 }
+
+  
+	public ProjectField getMultiPhotoSubFieldId(long fieldId){
+	
+		projDbAdapter = new ProjectDbAdapter(baseContext);
+		projDbAdapter.open();
+		
+		Cursor fieldList=projDbAdapter.fetchSLFieldsFromProject(fieldId);
+		
+		fieldList.moveToFirst();
+		
+		ProjectField projField= new ProjectField(fieldList.getLong(0), fieldList.getString(2), "", fieldList.getString(4), "", "multiPhoto");
+
+		
+		fieldList.close();
+		projDbAdapter.close();
+				
+		return projField;
+		
+	}
 	
 
 }
