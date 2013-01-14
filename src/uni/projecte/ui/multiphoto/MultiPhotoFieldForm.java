@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Environment;
@@ -161,22 +162,26 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 
 		File photos = new File(imageFilePath);
         Bitmap b = decodeFile(photos);
-                
-        b= createScaledBitmap(b);
+         
+        if(b!=null){
         
-        ImageView newImage=new ImageView(baseContext);
-    	LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		llp.setMargins(5, 5, 5, 5);
-        newImage.setImageBitmap(b);		
-        newImage.setLayoutParams(llp);
-
-        newImage.setTag(imageFilePath);
+	        b= createScaledBitmap(b);
+	        
+	        ImageView newImage=new ImageView(baseContext);
+	    	LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+			llp.setMargins(5, 5, 5, 5);
+	        newImage.setImageBitmap(b);		
+	        newImage.setLayoutParams(llp);
+	
+	        newImage.setTag(imageFilePath);
+	        
+	        newImage.setOnClickListener(showPhotoActions);
+	        
+			llPhotosList.addView(newImage,0);	
+	        
+	        photoList.add(0, imageFilePath);
         
-        newImage.setOnClickListener(showPhotoActions);
-        
-		llPhotosList.addView(newImage,0);	
-        
-        photoList.add(0, imageFilePath);
+        }
   
 		
 	}
@@ -255,6 +260,8 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 	    }
 	    return null;
 	}
+	
+	
 	
 	private Bitmap adjustOpacity(Bitmap bitmap, int opacity){
 		

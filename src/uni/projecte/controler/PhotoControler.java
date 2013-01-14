@@ -22,8 +22,11 @@ public class PhotoControler {
 	private Context baseContext;
 	private PreferencesControler prefCnt;
 	private ProjectConfigControler projCnfCnt;
+	
 	private String mainPhotoFieldName;
-
+	private String mainMultiPhotoFieldName;
+	
+	
 	
 	/*
 	 * External storage this can be:
@@ -340,6 +343,72 @@ public class PhotoControler {
 		return mainPhotoFieldId;
 	}
 
+	
+	
+	/*
+	 * This method gives the fieldId of the photo field inside project with @projId
+	 * 
+	 */
+	
+	public long getMultiPhotoFieldId(long projId) {
+		
+		ProjectControler projCnt=new ProjectControler(baseContext);
+		
+		long mainMultiPhotoFieldId=-1;
+		
+		Cursor photoFields=projCnt.getMultiPhotoFieldsFromProject(projId);
+		
+		if(photoFields.getCount()>0){
+
+			mainMultiPhotoFieldId=photoFields.getLong(0);
+			mainMultiPhotoFieldName=photoFields.getString(2);
+			
+		}
+		
+		photoFields.close();
+		
+		return mainMultiPhotoFieldId;
+		
+		
+	}
+	
+	
+	public HashMap<String,Long> getSelectedPhotos(long projId, String[] ids){
+		
+		MultiPhotoControler multiPhotoCnt= new MultiPhotoControler(baseContext);
+		
+		HashMap<String,Long> selectedPhotos=new HashMap<String,Long>();
+		
+		
+		long photoFieldId=getProjectPhotoFieldId(projId);
+		long multiPhotoFieldId=getMultiPhotoFieldId(projId);
+	
+
+		for(int i=1;i<ids.length;i++){
+			
+			long citationId=Long.valueOf(ids[i]);
+			
+			//simplePhoto
+			String photoPath=getPhotoPathByCitationId(citationId,photoFieldId);
+			
+			if(!photoPath.equals("")){ 
+				
+				selectedPhotos.put(PhotoUtils.getFileName(photoPath),citationId);
+				
+			}
+			
+			//multiPhoto
+			if(multiPhotoFieldId>0) multiPhotoCnt.getMultiPhotoValuesByCitationId(citationId, multiPhotoFieldId, selectedPhotos);
+			
+
+		}	
+		
+		return selectedPhotos;
+		
+	}
+	
+	
+	
 	/*
 	 * @return PhotoPath (if it exists) of @citationId and photoFieldValue -> @photoField
 	 * 
@@ -367,5 +436,8 @@ public class PhotoControler {
 		
 		return photoPath;
 	}
+
+
+	
 
 }

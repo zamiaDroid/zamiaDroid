@@ -90,6 +90,9 @@ public class PhotoFieldForm {
    };
 
 
+   public LinearLayout getLlField() {
+		return llField;
+	}
 
 	
 	

@@ -699,6 +699,12 @@ public class ProjectDbAdapter {
 		   return mDb.query(DATABASE_TABLE_FIELD, new String[] {KEY_ROWID, PROJ_ID,
 		  			  PROJ_NAME,TYPE,LABEL,PREVALUE,CAT,VISIBLE}, PROJ_ID + " = " + projId +" and "+ TYPE + " = \"photo\"" , null, null, null,null);
 	}
+	
+	public Cursor getMultiPhotoFieldsFromProject(long projId) {
+
+		   return mDb.query(DATABASE_TABLE_FIELD, new String[] {KEY_ROWID, PROJ_ID,
+		  			  PROJ_NAME,TYPE,LABEL,PREVALUE,CAT,VISIBLE}, PROJ_ID + " = " + projId +" and "+ TYPE + " = \"multiPhoto\"" , null, null, null,null);
+	}
 
 	public boolean updateComplexType(long fieldId) {
 

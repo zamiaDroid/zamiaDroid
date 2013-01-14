@@ -1502,7 +1502,6 @@ public class Sampling extends Activity {
 			   
 			   //when the field is photo we show photo Interface
 			   else if (fieldType.equals("photo")){
-
 				   
 				   SimplePhotoFieldForm photoFieldForm = new SimplePhotoFieldForm(this,projId,att,llField);
 				   

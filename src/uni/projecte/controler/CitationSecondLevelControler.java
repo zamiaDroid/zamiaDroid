@@ -640,8 +640,6 @@ public class CitationSecondLevelControler extends CitationControler {
 	public String getFieldValueNoTrans(long sampleId,long attId){
 
 		
-		
-		
 		SecondLevelCitacionDbAdapter mDbAttributes = new SecondLevelCitacionDbAdapter(baseContext);
 		mDbAttributes.open();
 		

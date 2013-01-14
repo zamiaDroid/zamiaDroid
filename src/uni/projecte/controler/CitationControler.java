@@ -47,6 +47,7 @@ import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.maps.MapLocation;
 import uni.projecte.maps.UTMDisplay;
 import android.content.Context;
+import android.content.MutableContextWrapper;
 import android.database.Cursor;
 import android.os.Handler;
 import android.util.Log;
@@ -985,7 +986,7 @@ public class CitationControler {
 				
 				if(projField.isSubFieldExport()){ 
 					
-					cExporter.createCitationField(projField.getName(), projField.getLabel(), getSubCitationValue(projField,citationFieldValue.getString(3)), projField.getDesc());
+					cExporter.createCitationField(projField.getName(), projField.getLabel(), getSubCitationValue(citationFieldValue.getString(3)), projField.getDesc());
 					cExporter.setFieldType(projField.getId(),projField.getType(),baseContext);
 					
 				}
@@ -1013,7 +1014,7 @@ public class CitationControler {
 		
 		
 	
-	private String getSubCitationValue(ProjectField projField,String subCitId) {
+	private String getSubCitationValue(String subCitId) {
 
 		CitationSecondLevelControler citSLCnt= new CitationSecondLevelControler(baseContext);
 
@@ -1075,6 +1076,29 @@ public class CitationControler {
 		mDbAttributes.close();	
 	
 		return c;
+		
+	}	
+	
+	public String getMultiPhotoFieldTag(long citationId, long multiPhotoFieldId){
+		
+		String multiPhotoTag="";
+		
+		mDbAttributes = new CitacionDbAdapter(baseContext);
+		mDbAttributes.open();
+		
+			Cursor c=mDbAttributes.fetchCitationsByMultiPhoto(citationId, multiPhotoFieldId);
+			c.moveToFirst();
+			
+			if(c!=null && c.getCount()>0){
+			
+				multiPhotoTag=c.getString(1);
+				
+				c.close();
+			}
+			
+		mDbAttributes.close();	
+	
+		return multiPhotoTag;
 		
 	}	
 	
@@ -1360,7 +1384,7 @@ public class CitationControler {
 		
 	}
 	
-		
+
 	public String[] getCitationInfoByPhoto(String photo, HashMap<String, String> fieldsLabelNames){
 		
 		CitacionDbAdapter sa=new CitacionDbAdapter(baseContext);
@@ -1431,7 +1455,7 @@ public class CitationControler {
 		
 	}
 	
-	private String[] getCitationValues(long citationId, HashMap<String, String> fieldsLabelNames) {
+	public String[] getCitationValues(long citationId, HashMap<String, String> fieldsLabelNames) {
 	
 		
 		CitacionDbAdapter citations = new CitacionDbAdapter(baseContext);

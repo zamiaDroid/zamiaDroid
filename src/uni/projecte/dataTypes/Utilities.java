@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -79,6 +80,33 @@ public class Utilities
 
     	
     }
+	
+	public static int findStringArrayList(ArrayList<String> items, String item){
+		
+		int pos=-1;
+		int i=0;
+    	boolean found=false;
+
+		
+		Iterator<String> it=items.iterator();
+		
+		while(it.hasNext() && !found){
+			
+			String value=it.next();
+			
+			if(value.equals(item)) {
+				
+				found=true;
+				pos=i;
+			}
+			else i++;
+			
+		}
+		
+		return pos;
+		
+	}
+	
 	
     public static String convertStreamToString(InputStream is) {
         /*

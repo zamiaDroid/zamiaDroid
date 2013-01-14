@@ -36,7 +36,6 @@ public class SimplePhotoFieldForm extends PhotoFieldForm {
 	private ImageView photoView;
 	
 	/* Main container */
-	private LinearLayout llField;
 	private LinearLayout lPhoto;
 	private LinearLayout lButtons;
 
@@ -216,10 +215,7 @@ public class SimplePhotoFieldForm extends PhotoFieldForm {
 
 
 
-	public LinearLayout getLlField() {
-		return llField;
-	}
-
+	
 
 	public LinearLayout getlPhoto() {
 		return lPhoto;

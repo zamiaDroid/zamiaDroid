@@ -1119,6 +1119,20 @@ public String createSecondLevelIdentifier(String fieldName){
 		
 	}
 	
+	public Cursor getMultiPhotoFieldsFromProject(long projId){
+		
+		projDbAdapter = new ProjectDbAdapter(baseContext);
+		projDbAdapter.open();
+		
+			Cursor list=projDbAdapter.getMultiPhotoFieldsFromProject(projId);
+			list.moveToFirst();
+		
+		projDbAdapter.close();
+		
+		return list;
+		
+	}
+	
 	
 	public String getPhotoFieldName(long projId){
 		

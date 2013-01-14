@@ -168,7 +168,8 @@ public class GalleryGrid extends Activity{
 	
 	private void loadSelectedPhotos() {
 		
-
+		final PhotoControler photoCnt=new PhotoControler(this);
+		
 		progBar.setVisibility(View.VISIBLE);
 		
 	/* thread in background that load photos */			
@@ -180,26 +181,12 @@ public class GalleryGrid extends Activity{
 				  //subset of selected photos
 				  if(preSettedLoc!=null){
 		
-						long photoFieldId=photoCnt.getProjectPhotoFieldId(projId);
-						
+																
 						selectedPhotos=new HashMap<String,Long>();
 						
 						String[] ids=preSettedLoc.split(":");
 						
-						for(int i=1;i<ids.length;i++){
-							
-							long citationId=Long.valueOf(ids[i]);
-							
-							String photoPath=photoCnt.getPhotoPathByCitationId(citationId,photoFieldId);
-							
-							if(!photoPath.equals("")){ 
-								
-								selectedPhotos.put(PhotoUtils.getFileName(photoPath),citationId);
-								
-							}
-							
-	
-						}	
+						selectedPhotos=photoCnt.getSelectedPhotos(projId, ids);
 					
 				  }
 				  

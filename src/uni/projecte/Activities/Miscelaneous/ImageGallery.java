@@ -18,6 +18,7 @@ import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.CitationControler;
 import uni.projecte.dataLayer.dataStructures.ImageCache;
+import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.AttributeValue;
 import uni.projecte.dataTypes.Utilities;
 import uni.projecte.maps.overlays.MyTracksOverlay;
@@ -64,8 +65,10 @@ public class ImageGallery extends Activity{
 	
 	public static final int BACK_FROM_EDIT = 1;
 	
-	private Uri[] mUrls;  
-    private String[] mFiles=null;  
+	private ArrayList<String> availableImageList;  
+
+//	private Uri[] availableImageList;  
+ //   private String[] mFiles=null;  
     private String[] photoInfos;
     private long[] photosIds;
     double IMAGE_MAX_SIZE= 800;
@@ -163,7 +166,7 @@ public class ImageGallery extends Activity{
 		/*choosing concrete photo*/
 		else if(choosedPhotoPath!=null){
 			
-			int position=Utilities.findString(mFiles, choosedPhotoPath.replace("/mnt",""));
+			int position=Utilities.findStringArrayList(availableImageList, PhotoUtils.getFileName(choosedPhotoPath));
 			
 			if(position>-1) g.setSelection(position);
 			else Utilities.showToast(getString(R.string.photoNotLinked), this);
@@ -202,7 +205,7 @@ public class ImageGallery extends Activity{
 				   	Intent viewPhIntent = new Intent(v.getContext(), uni.projecte.Activities.Miscelaneous.ImageView.class);
 				       
 		 			Bundle b = new Bundle();
-		 			b.putString("photoPath", mUrls[position].toString());
+		 			b.putString("photoPath", availableImageList.get(position));
 		 			viewPhIntent.putExtras(b);
 		 			
 		 			b = new Bundle();
@@ -237,22 +240,12 @@ public class ImageGallery extends Activity{
 	private void loadSelectedPhotos() {
 
 		PhotoControler photoCnt=new PhotoControler(this);
-		
-		long photoFieldId=photoCnt.getProjectPhotoFieldId(projId);
-		
+	
 		selectedPhotos=new HashMap<String,Long>();
 		
 		String[] ids=preSettedLoc.split(":");
 		
-		for(int i=1;i<ids.length;i++){
-			
-			long citationId=Long.valueOf(ids[i]);
-			
-			String photoPath=photoCnt.getPhotoPathByCitationId(citationId,photoFieldId);
-			
-			if(!photoPath.equals("")) selectedPhotos.put(photoPath,citationId);
-			
-		}
+		selectedPhotos=photoCnt.getSelectedPhotos(projId, ids);
 		
 	}
 
@@ -355,7 +348,7 @@ public class ImageGallery extends Activity{
 		int pos=g.getSelectedItemPosition();
 		
 		long citationId=photosIds[pos];
-		String photoPath=mUrls[pos].toString();
+		String photoPath=availableImageList.get(pos);
 
 		if(citationId>0){
 			
@@ -385,10 +378,11 @@ public class ImageGallery extends Activity{
 		            	photoInfos[position]=citationInfoText[0];
 		    			tvInfo.setText(photoInfos[position]);
 		    			
-		            	photosIds[position]=citCnt.getCitationIdByPhoto(mUrls[position].toString());
+		            	photosIds[position]=citCnt.getCitationIdByPhoto(availableImageList.get(position));
 		            	
 		            	editButton.setVisibility(View.VISIBLE);
-		            	editButton.setId((int) photosIds[position]);
+		            	//editButton.setId((int) photosIds[position]);
+		            	editButton.setTag(availableImageList.get(position));
 		            	
 		            	editButton.setOnClickListener(new OnClickListener() {  
 		 	            	
@@ -409,8 +403,10 @@ public class ImageGallery extends Activity{
 		 					 			b.putString("rsDescription",projCnt.getThName());
 		 					 			intent.putExtras(b);
 		 					 			
+		 					 			String photoPath=(String)v.getTag();
+		 					 			
 		 					 			b = new Bundle();
-		 					 			b.putLong("idSample", v.getId());
+		 					 			b.putLong("idSample", selectedPhotos.get(PhotoUtils.getFileName(photoPath)));
 		 					 			intent.putExtras(b);
 		 					 			
 		 					 		   startActivityForResult(intent, BACK_FROM_EDIT); 
@@ -463,8 +459,10 @@ public class ImageGallery extends Activity{
 			   new Thread(new Runnable() {
 
 					public void run() {
-							
-						citationInfoText=citCnt.getCitationInfoByPhoto(mUrls[position].toString(),fieldsLabelNames);
+						
+						String photoPath=availableImageList.get(position);
+						
+						citationInfoText=citCnt.getCitationValues(selectedPhotos.get(PhotoUtils.getFileName(photoPath)),fieldsLabelNames);
 						updateTaxonInfoHandler.sendEmptyMessage(position);
 						updateCounterHandler.sendEmptyMessage(position);
 		
@@ -490,7 +488,9 @@ public class ImageGallery extends Activity{
 
         	editButton.setVisibility(View.VISIBLE);
         	           	
-        	editButton.setId((int) photosIds[position]);
+        	//editButton.setId((int) photosIds[position]);
+        	
+        	editButton.setTag(availableImageList.get(position));
         	
         	editButton.setOnClickListener(new OnClickListener() {  
 	            	
@@ -511,8 +511,10 @@ public class ImageGallery extends Activity{
 				 			b.putString("rsDescription",projCnt.getThName());
 				 			intent.putExtras(b);
 				 			
+				 			String photoPath=(String)v.getTag();
+				 			
 				 			b = new Bundle();
-				 			b.putLong("idSample", v.getId());
+				 			b.putLong("idSample", selectedPhotos.get(PhotoUtils.getFileName(photoPath)));
 				 			intent.putExtras(b);
 				 			
 				 		   startActivityForResult(intent, 1); 
@@ -544,10 +546,9 @@ public class ImageGallery extends Activity{
 		
 	}
 	
-	private void loadImageList(String photoPath,boolean filtered) {
+	private void loadImageList(String storagePath,boolean filtered) {
 
-	    File images = new File(photoPath); 
-
+	    File images = new File(storagePath); 
 	    
 	    File[] imagelist = images.listFiles(new FilenameFilter(){  
 
@@ -558,8 +559,25 @@ public class ImageGallery extends Activity{
     
 	    });  
             
+	    availableImageList= new ArrayList<String>();
+        
+	    
+        for(int i= 0 ; i< imagelist.length; i++){
+        	
+            String fileName = imagelist[i].getName();  
             
-	    mFiles = new String[imagelist.length];  
+            if(!filtered || (filtered && selectedPhotos.get(fileName)!=null)){
+            	            	
+            	availableImageList.add(storagePath+fileName); 
+            } 
+
+        }  
+        
+        photoInfos=new String[availableImageList.size()];
+        photosIds=new long[availableImageList.size()];
+        total=availableImageList.size();
+        
+	   /* mFiles = new String[imagelist.length];  
 	    
         int filteredFiles=0;
 	    
@@ -571,9 +589,10 @@ public class ImageGallery extends Activity{
         }  
         
         if(!filtered) filteredFiles=mFiles.length;
-        mUrls = new Uri[filteredFiles];
         
-        if(mUrls.length==0){
+        availableImageList = new Uri[filteredFiles];
+        
+        if(availableImageList.length==0){
         	
         	Toast.makeText(this,this.getString(R.string.noPhotoInProject), Toast.LENGTH_SHORT).show();
         	
@@ -582,9 +601,9 @@ public class ImageGallery extends Activity{
         }
         else{
         	
-            photoInfos=new String[mUrls.length];
-            photosIds=new long[mUrls.length];
-            total=mUrls.length;
+            photoInfos=new String[availableImageList.length];
+            photosIds=new long[availableImageList.length];
+            total=availableImageList.length;
             
             filteredFiles=0;
 
@@ -594,7 +613,7 @@ public class ImageGallery extends Activity{
 		    		  
 		    		  if(selectedPhotos.get(mFiles[i])!=null) {
 		    			  
-		    			  mUrls[filteredFiles] = Uri.parse(mFiles[i]); 
+		    			  availableImageList[filteredFiles] = Uri.parse(mFiles[i]); 
 				    	  filteredFiles++;
 
 		    		  }
@@ -602,14 +621,14 @@ public class ImageGallery extends Activity{
 		    	  }
 		    	  else{
 		    		  
-			    	  mUrls[i] = Uri.parse(mFiles[i]);   
+			    	  availableImageList[i] = Uri.parse(mFiles[i]);   
 
 		    	  }
 		    	  
 		    	  
 		      }
 	
-        }
+        }*/
         
 
     
@@ -634,7 +653,7 @@ public class ImageGallery extends Activity{
 	    }
 
 	    public int getCount() {
-            return mUrls.length;  
+            return availableImageList.size();  
             
 	    }
 
@@ -662,12 +681,13 @@ public class ImageGallery extends Activity{
 
 	    	  layInner.setLayoutParams(innerLP);
 	    	 
-	    	  Uri uri=mUrls[position];
+	    	  String uri=availableImageList.get(position);
 	    	  
-	    	  Bitmap bm=imageCache.getBitmapFromMemCache(uri.getEncodedPath());
+	    	  
+	    	  Bitmap bm=imageCache.getBitmapFromMemCache(uri);
 	    	  ImageView i = (ImageView) layInner.findViewById(R.id.galleryImage);
 	    	  i.setAdjustViewBounds(true);
-	    	  i.setTag(mUrls[position]);
+	    	  i.setTag(availableImageList.get(position));
 	    	  
 	    	  if(bm!=null){
 	    		  
@@ -675,12 +695,12 @@ public class ImageGallery extends Activity{
 	    	  }
 	    	  else{
 	    	  
-		    	  bm = decodeFile(new File(uri.getEncodedPath()));
+		    	  bm = decodeFile(new File(uri));
 		    	  
 		    	  if(bm!=null && bm.getWidth()>0){
 		    		  
 		    		  i.setImageBitmap(bm);
-			    	  imageCache.addBitmapToMemoryCache(uri.getEncodedPath(), bm);
+			    	  imageCache.addBitmapToMemoryCache(uri, bm);
 		    		  
 		    	  }
 		    	  else{
@@ -688,7 +708,7 @@ public class ImageGallery extends Activity{
 		    		  bm=createWrongImageBitmap((int) IMAGE_MAX_SIZE/4);
 		    		  
 		    		  i.setImageBitmap(bm);
-			    	  imageCache.addBitmapToMemoryCache(uri.getEncodedPath(), bm);
+			    	  imageCache.addBitmapToMemoryCache(uri, bm);
 		    		  
 		    	  }
 		    	  
