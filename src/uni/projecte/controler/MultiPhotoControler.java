@@ -99,5 +99,14 @@ public class MultiPhotoControler{
     	    	
 	}
 
+	public boolean removeMultiPhoto(String imagePath) {
+
+    	citSLCnt=new CitationSecondLevelControler(baseContext);
+
+    	return citSLCnt.removeMultiPhoto(imagePath);
+    			
+		
+	}
+
 	
 }

@@ -300,6 +300,7 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
 		return null;
 	}
 	
+
 	
     public Cursor fetchCitationBySubProjIdValue(String value) throws SQLException {
 
@@ -307,6 +308,12 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
  	   return mDb.query(DATABASE_TABLE_CITATION, new String[] {KEY_ROWID,FIELD_ID}, FIELD_ID + "=   \"" + value +"\"", null, null, null, null);
  
  }
+    
+    public Cursor fetchCitationIdByMultiPhoto(String value) throws SQLException {
+ 	
+  	   return mDb.query(DATABASE_TABLE_FIELD, new String[] {KEY_ROWID,KEY_SAMPLE_ID}, VALUE + "=   \"" + value +"\"", null, null, null, null);
+  
+    }
 
 	public long createEmptyCitation(String secondFieldId) {
 

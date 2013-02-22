@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import uni.projecte.controler.MultiPhotoControler;
+import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
 import android.content.Context;
@@ -214,6 +216,24 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 		
 	}
 	
+	public int removeAllPhotos(){
+		
+		int removed=0;	
+
+		Iterator<String> it=photoList.iterator();
+
+		while(it.hasNext()){
+
+			String photoPath=(String)it.next();
+
+			if (PhotoUtils.removePhoto(photoPath)) removed++;
+
+		}
+
+		return removed;
+		
+	}
+	
 	private Bitmap createScaledBitmap(Bitmap decodedBitmap) {
 		 
 		int x= decodedBitmap.getWidth();
@@ -350,12 +370,16 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
         	
         	photoList.remove(position);
         	
-        	Utilities.removePhoto(imagePath);
+        	PhotoUtils.removePhoto(imagePath);
         	
         	hideButtons();
-        	
-        	//	esborrar subCitació
-        	//	esborrar foto físicament
+        	       	
+        	//we need to remove subcitation values
+        	if(PHOTO_FIELD_MODE==EDIT_MODE){
+        		
+        			removeSubCitation(imagePath);
+        		
+        	}
         	
         }
    };
@@ -376,6 +400,13 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 	}
 	
    
+	private void removeSubCitation(String imagePath) {
+
+		MultiPhotoControler multiPhotoCnt=new MultiPhotoControler(baseContext);
+		multiPhotoCnt.removeMultiPhoto(imagePath);		
+		
+	}
+
 	public LinearLayout getLlField() {
 		return llField;
 	}

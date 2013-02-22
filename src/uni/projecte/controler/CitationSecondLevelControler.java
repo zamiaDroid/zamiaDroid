@@ -1057,5 +1057,44 @@ public class CitationSecondLevelControler extends CitationControler {
 		
 	}
 
+	public boolean removeMultiPhoto(String imagePath) {
+		
+		
+		mDbAttributes = new SecondLevelCitacionDbAdapter(baseContext);
+		mDbAttributes.open();
+		
+			Cursor c=mDbAttributes.fetchCitationIdByMultiPhoto(imagePath);
+			c.moveToFirst();
+			
+			if(c!=null && c.getCount()>0){
+				
+				long subCitId=c.getLong(1);
+				
+				long subCitFieldId=c.getLong(0);
+					
+				
+				c.close();
+				
+				
+				boolean result= mDbAttributes.deleteCitation(subCitId);
+				result= mDbAttributes.deleteCitationFields(subCitFieldId);
+				
+				
+				mDbAttributes.close();
+
+				return result;
+				
+			}
+			else{
+				
+				mDbAttributes.close();
+
+				return false;
+			}
+			
+			
+		
+	}
+
 
 }

@@ -38,6 +38,7 @@ import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.controler.ProjectSecondLevelControler;
 import uni.projecte.dataLayer.RemoteDBManager.BiocatDBManager;
 import uni.projecte.dataLayer.ThesaurusManager.ListAdapters.ThesaurusAutoCompleteAdapter;
+import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
 import uni.projecte.hardware.gps.MainLocationListener;
@@ -1347,7 +1348,7 @@ public class SecondLevelSampling extends Activity {
 		                  
 		                	etPhotoPath.setText("");
 		         
-		                	boolean deleted=Utilities.removePhoto(Environment.getExternalStorageDirectory()+"/"+pm.getDefaultPath()+"/Photos/"+fileName);
+		                	boolean deleted=PhotoUtils.removePhoto(Environment.getExternalStorageDirectory()+"/"+pm.getDefaultPath()+"/Photos/"+fileName);
 		                	  
 		                	if(deleted) Utilities.showToast("Fotos esborrada", v.getContext());
 		                	

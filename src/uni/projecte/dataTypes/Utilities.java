@@ -139,15 +139,7 @@ public class Utilities
         return sb.toString();
     }
 
-	public static boolean removePhoto(String path){
-		
 
-    	File file = new File(path); 
-    	boolean deleted = file.delete();
-
-		return deleted;
-    	
-	}
 	
 
 	/*public static String prettyUTM(String shortForm) {

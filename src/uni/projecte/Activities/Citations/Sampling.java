@@ -36,6 +36,7 @@ import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.dataLayer.ThesaurusManager.ListAdapters.ThesaurusAutoCompleteAdapter;
+import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.SecondLevelFieldHandler;
 import uni.projecte.dataTypes.Utilities;
@@ -619,6 +620,17 @@ public class Sampling extends Activity {
     	   if(tempGPS && prefCnt.gpsNeeded() && mLocationManager!=null && mLocationListener !=null) mLocationManager.removeUpdates(mLocationListener);
     	   
     	   sCLH.removeSecondLevelFields();
+    	       	   
+    	   //removing stored multiPhotos
+    	   Iterator<String> photoFields=photoFieldsList.keySet().iterator();
+	
+			while(photoFields.hasNext()){
+				
+				PhotoFieldForm tmpField=photoFieldsList.get(photoFields.next());
+				
+				if(tmpField instanceof MultiPhotoFieldForm) ((MultiPhotoFieldForm) tmpField).removeAllPhotos();
+				
+			}
     	   
     	   tC.closeThReader();
     	   
@@ -1791,7 +1803,7 @@ public class Sampling extends Activity {
         	PhotoFieldForm photoField=photoFieldsList.get(v.getTag());
         	photoField.removePhoto();
  
-        	Utilities.removePhoto(Environment.getExternalStorageDirectory()+"/"+prefCnt.getDefaultPath()+"/Photos/"+fileName);
+        	PhotoUtils.removePhoto(Environment.getExternalStorageDirectory()+"/"+prefCnt.getDefaultPath()+"/Photos/"+fileName);
         	  
         	        	
         }

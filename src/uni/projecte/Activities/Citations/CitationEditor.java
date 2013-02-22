@@ -39,6 +39,7 @@ import uni.projecte.controler.ProjectSecondLevelControler;
 import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.dataLayer.ThesaurusManager.ListAdapters.ThesaurusAutoCompleteAdapter;
 import uni.projecte.dataLayer.bd.ProjectDbAdapter;
+import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.AttributeValue;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
@@ -1054,7 +1055,7 @@ public class CitationEditor extends Activity {
 		                	String photoPath=v.getTag().toString();
 		                	etPhotoValue.setText("");
 		   		         
-		                	Utilities.removePhoto(photoPath);
+		                	PhotoUtils.removePhoto(photoPath);
 		                	  
 		                	photoTV.setVisibility(View.GONE);
 		                	photoButton.setVisibility(View.VISIBLE);
@@ -1206,7 +1207,9 @@ public class CitationEditor extends Activity {
 				   multiPhotoFieldForm.setCitationData(Utilities.splitToArrayList(photos),pred);
 				   
 				   multiPhotoFieldForm.setAddPhotoEvent(takePicture);
-				   
+				  // multiPhotoFieldForm.setRemoveEvent(removePicture);
+
+
 				   photoFieldsList.put(att.getName(), multiPhotoFieldForm);
 
 				   elementsList.add(multiPhotoFieldForm.getImageScroll());
@@ -1515,6 +1518,21 @@ public class CitationEditor extends Activity {
 
 		   
 	   }
+	
+	
+    /*private OnClickListener removePicture = new OnClickListener() {
+
+        public void onClick(View v) {
+
+        	PhotoFieldForm photoField=photoFieldsList.get(v.getTag());
+        	photoField.removePhoto();
+ 
+        	PhotoUtils.removePhoto(Environment.getExternalStorageDirectory()+"/"+prefCnt.getDefaultPath()+"/Photos/"+fileName);
+        	  
+        	        	
+        }
+    };*/
+    
 	
     private OnClickListener takePicture = new OnClickListener() {
 
