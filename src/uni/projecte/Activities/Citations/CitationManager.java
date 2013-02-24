@@ -101,6 +101,7 @@ public class CitationManager extends Activity{
 	private FileExporter fExp;
 	
 	private boolean exportMail=false;
+	private boolean erdapfel=false;
 
 	private TextView tvTotalFields;
 	private TextView tvFilteredFields;
@@ -169,6 +170,7 @@ public class CitationManager extends Activity{
 		        ImageButton removeButton = (ImageButton)findViewById(R.id.ibRemoveCit);
 		        ImageButton exportButton = (ImageButton)findViewById(R.id.ibExportCit);
 		        ImageButton photoButton = (ImageButton)findViewById(R.id.ibPhotoCit);
+		        ImageButton offLineMapButton = (ImageButton)findViewById(R.id.ibOffLineMap);
 
 		        /* Ordering list */
 		        btOrderCron=(ImageButton) findViewById(R.id.btOrderCron);
@@ -196,6 +198,9 @@ public class CitationManager extends Activity{
 		        
 		        photoButton.setBackgroundResource(android.R.drawable.ic_menu_gallery);
 		        photoButton.setOnClickListener(photoCitListener);
+		        
+		        offLineMapButton.setBackgroundResource(android.R.drawable.ic_menu_mapmode);
+		        offLineMapButton.setOnClickListener(offlineMapListener);
 		        
 		        cbSelectAll=(CheckBox)findViewById(R.id.cbSelectAllCitations);
 		        cbSelectAll.setOnCheckedChangeListener(selectAllListener);
@@ -1511,6 +1516,44 @@ public class CitationManager extends Activity{
 		        }
 		    };
 		    
+		    /*
+		     *  Show off-line Map Listener
+		     * 		     
+		     */
+            
+        	private OnClickListener offlineMapListener = new OnClickListener()
+		    {
+		        public void onClick(View v)
+		        {        
+		        	
+		        	if(citHand.getSelectionList().size()==0){
+		        		
+		        		
+		        		Utilities.showToast(getString(R.string.noCitationsSelected), v.getContext());
+		        		
+		        		
+		        	}
+		        	else{
+		        		
+		        		   if(Utilities.isSdPresent()){ 
+		        			   
+		        			   erdapfel=true;
+		        			   exportFileCheck("tmp_"+projectName.replace(" ","_"),"KML",-1);
+		        			   
+		        		   }
+						   else {
+					        	
+					        	Toast.makeText(getBaseContext(), 
+					                    R.string.noSdAlert, 
+					                    Toast.LENGTH_SHORT).show();
+					        	
+					        }
+		        				        		
+		        	}
+		        }
+		    };
+		    
+		    
 
 		    /*
 		     * Order all citations on the list alphabetically
@@ -1996,7 +2039,7 @@ public class CitationManager extends Activity{
 							
 							pdCitationExport.dismiss();
 							
-							dialog.dismiss();
+							if(dialog!=null) dialog.dismiss();
 							
 							String toastText=getString(R.string.bFagusFileExported);
 
@@ -2021,6 +2064,14 @@ public class CitationManager extends Activity{
 				               sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"+fExp.getFile().getAbsolutePath()+""));
 				               sendIntent.putExtra(Intent.EXTRA_TEXT, exportSubjectText);
 				               startActivity(Intent.createChooser(sendIntent, "Email:"));
+				        	   
+				           }
+				           
+				           if(erdapfel){
+				        	   
+				        	   Utilities.showToast("Obrim erdapfel", getBaseContext());				        	   
+				        	   erdapfel=false;
+				        	   
 				        	   
 				           }
 							

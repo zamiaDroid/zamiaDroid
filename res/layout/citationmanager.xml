@@ -5,7 +5,6 @@
     android:orientation="vertical" >
   
         <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
@@ -23,7 +22,7 @@ android:orientation="vertical"
 >    
 
 
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="2dp"
@@ -31,7 +30,6 @@ android:orientation="vertical"
     <TableRow>
     
 	    <LinearLayout
-	  xmlns:android="http://schemas.android.com/apk/res/android"
 	  android:layout_width="wrap_content"
 	  android:layout_height="wrap_content"  
 	  android:orientation="vertical" android:padding="2dp">
@@ -235,7 +233,6 @@ android:orientation="vertical"
         </LinearLayout>
 
         <HorizontalScrollView
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_gravity="center" >
@@ -259,6 +256,10 @@ android:orientation="vertical"
                 
                 <ImageButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/ibPhotoCit"></ImageButton>
                 <TextView android:text="@string/actionPhoto" android:layout_height="wrap_content" android:layout_marginRight="5dp" android:id="@+id/textView4" android:layout_width="wrap_content"></TextView>
+                
+                <ImageButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/ibOffLineMap"></ImageButton>
+                <TextView android:text="Veure dades off-line" android:layout_height="wrap_content" android:layout_marginRight="5dp" android:id="@+id/textView4" android:layout_width="wrap_content"></TextView>
+                
                 
             </LinearLayout>
         </LinearLayout>
