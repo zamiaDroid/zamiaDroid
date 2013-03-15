@@ -298,7 +298,6 @@ public class RemoteDBControler {
 		
 		allDBs=getAvailableDBs();		
 		
-		
 		remoteDBAdapter.open();
 			
 			try {

@@ -100,4 +100,9 @@
 	<string name="backupInfoPhotos">Segons la quantiat de fotografies la mida del backup resultat pot ser molt gran!</string>
 	<string name="backupCreateTitle">Backup: %1s</string>
 	
+	<!-- SubProject -->
+	<string name="subProjectTitle">Nom del sub-projecte</string>
+	
+	
+	
 </resources>

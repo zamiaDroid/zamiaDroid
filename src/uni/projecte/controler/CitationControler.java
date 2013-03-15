@@ -963,7 +963,7 @@ public class CitationControler {
 			else {
 				
 				utm = CoordConverter.getInstance().toUTM(new CoordinateLatLon(citations.getDouble(2),citations.getDouble(3)));
-				cExporter.writeCitationCoordinateUTM(utm.getShortForm());
+				cExporter.writeCitationCoordinateUTM(utm.getShortForm().replace("_", ""));
 				cExporter.writeCitationCoordinateXY(utm.getX(),utm.getY());
 				
 			}

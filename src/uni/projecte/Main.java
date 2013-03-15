@@ -29,12 +29,12 @@ import uni.projecte.Activities.Projects.ProjectManagement;
 import uni.projecte.controler.BackupControler;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
+import uni.projecte.controler.ThesaurusControler;
+import uni.projecte.dataLayer.ThesaurusManager.ThesaurusDownloader.ThUpdater;
 import uni.projecte.dataTypes.Utilities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,15 +42,18 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -78,6 +81,8 @@ public class Main extends Activity {
 	
 	private String projName;
 	
+	private ThUpdater thUpdater;
+	private Dialog updateFlora;
 	 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -145,7 +150,7 @@ public class Main extends Activity {
 		
 		}
 		
-		
+		updateFloraThDialog();
 
     }
     
@@ -195,6 +200,7 @@ public class Main extends Activity {
         		
             	tvProjName.setText(projName);
             	
+            	Log.i("Project","Working with project: "+projName);
             		
         	}
         	
@@ -476,6 +482,58 @@ public class Main extends Activity {
 	}
 
     
+    private void updateFloraThDialog(){
+    	
+    	//check taxFlora
+    	thUpdater= new ThUpdater(this, "bdbc_Flora");
+
+    	if(thUpdater.isOutdated()){
+    	
+    	
+	    	String thName=thUpdater.getThName();
+	
+	    	if(thName!=null && !thName.equals("")){
+	    	    	
+		    	updateFlora = new Dialog(this);
+		    	updateFlora.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		    	updateFlora.setContentView(R.layout.th_update);
+		    	
+		    	TextView tv_info=(TextView) updateFlora.findViewById(R.id.tvThChangeTitle);
+		    	
+		    	String title_message=String.format(getString(R.string.thChangeTitle), thName,thUpdater.getLastUpdated());
+		    	tv_info.setText(title_message);
+		    	
+		    	Button btThUpdate=(Button) updateFlora.findViewById(R.id.btUpdateTh);
+		    	btThUpdate.setOnClickListener(updateTh);
+		    	
+		    	updateFlora.show();
+		    	
+	    	}
+    	
+    	}
+    	
+    }
+    
+    public OnClickListener updateTh = new OnClickListener() {
+		
+		public void onClick(View v) {
+
+			thUpdater.update_bdb_Flora_Th(postThDownloadHandler);
+								
+		}
+	};
+	
+	 private Handler postThDownloadHandler = new Handler(){
+		 
+		 @Override
+		public void handleMessage(Message msg){
+			 
+			 updateFlora.dismiss();
+			 
+		 }
+		 
+	 };
+    
     private void createFistExecutionDialog() {
         
 	  	final Dialog dialog;
@@ -483,7 +541,7 @@ public class Main extends Activity {
     	   	
     	dialog.setContentView(R.layout.welcomedialog);
     	dialog.setTitle("ZamiaDroid");
-    	  
+    	
     	final SharedPreferences.Editor editor = configPrefs.edit();
     	   	
     	Button bStart = (Button)dialog.findViewById(R.id.bStart);

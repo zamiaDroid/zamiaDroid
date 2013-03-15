@@ -99,10 +99,6 @@
        <activity android:name=".Activities.Miscelaneous.ImageView" android:configChanges="orientation|locale" 
                   android:label="@string/app_name">   
        </activity>
-                   
-        <activity android:name=".Activities.Miscelaneous.LoginScreen" android:configChanges="locale" 
-         android:label="@string/app_name">
-	    </activity>
        
         
 		<!-- Project Activities -->
@@ -187,10 +183,6 @@
             <activity android:name=".Activities.RemoteDBs.DBLocation" android:configChanges="locale" 
                   android:label="@string/app_name">
        </activity>  
-                   
-       	<activity android:name=".Activities.RemoteDBs.RemoteCallAct" android:configChanges="locale" 
-                  android:label="@string/app_name">
-       </activity> 
 
        <activity android:name=".Activities.RemoteDBs.RemoteDBConfig" android:configChanges="locale" 
                   android:label="@string/app_name">

@@ -5,7 +5,7 @@ import android.content.Context;
 public class BiocatDBManager extends DBManager {
 
 	public BiocatDBManager(Context baseContext) {
-		super(baseContext);
+		super(baseContext,true);
 
 	}
 	

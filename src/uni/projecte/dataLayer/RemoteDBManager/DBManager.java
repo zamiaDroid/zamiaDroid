@@ -85,10 +85,10 @@ public class DBManager {
 	
 	
 	
-	public DBManager(Context baseContext){
+	public DBManager(Context baseContext, boolean checkAvailableDBs){
 		
 		this.baseContext=baseContext;
-		remoteDBCnt=new RemoteDBControler(baseContext);
+		if(checkAvailableDBs) remoteDBCnt=new RemoteDBControler(baseContext);
 		
 	}
 

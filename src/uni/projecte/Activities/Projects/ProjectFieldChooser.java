@@ -101,7 +101,7 @@ public class ProjectFieldChooser extends Activity{
 	        projectName=getIntent().getExtras().getString("projName");
 	       
 
-	        tip.setText(Html.fromHtml("<b>Nom del Sub-projecte</b> "+projectName));
+	        tip.setText(Html.fromHtml("<b>"+getString(R.string.subProjectTitle)+"</b> "+projectName));
 	        thName= (TextView)findViewById(R.id.tvProjTh);
 	        
 	        

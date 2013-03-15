@@ -255,7 +255,7 @@ public class CitationImportZamia extends Activity {
 		dialog = new Dialog(this);
 
 		dialog.setContentView(R.layout.projectcreation);
-		dialog.setTitle("Introdueixi les dades");
+		dialog.setTitle(getString(R.string.insert_data));
 
 		Button createProject = (Button)dialog.findViewById(R.id.bAddItem);
 		EditText name=(EditText)dialog.findViewById(R.id.etNameItem);

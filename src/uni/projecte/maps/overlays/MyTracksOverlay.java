@@ -69,7 +69,7 @@ public class MyTracksOverlay extends com.google.android.maps.Overlay {
 			
 		}
 		
-		private void getLastAltitude(){
+			private void getLastAltitude(){
 			
 //			Location lastLoc=myTracksProviderUtils.getLastLocation();
 			//if(lastLoc!=null) elevation=lastLoc.getAltitude();

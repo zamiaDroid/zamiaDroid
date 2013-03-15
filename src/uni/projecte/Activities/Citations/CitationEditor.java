@@ -1551,7 +1551,10 @@ public class CitationEditor extends Activity {
  	       	//create parameters for Intent with filename
  	       	ContentValues values = new ContentValues();
  	       	values.put(MediaStore.Images.Media.TITLE, fileName);
- 	       	values.put(MediaStore.Images.Media.DESCRIPTION,"Image capture by camera");
+ 	       	
+ 	       	String imageDesc=String.format(getString(R.string.photoDescription),projName);
+ 	       	
+ 	       	values.put(MediaStore.Images.Media.DESCRIPTION,imageDesc);
  	       	
  	       	//imageUri is the current activity attribute, define and save it for later usage (also in onSaveInstanceState)
  	       	photoPath=Environment.getExternalStorageDirectory() + "/zamiaDroid/Photos/"+fileName;

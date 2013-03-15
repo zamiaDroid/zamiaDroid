@@ -24,6 +24,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import edu.ub.bio.biogeolib.CoordConverter;
+import edu.ub.bio.biogeolib.CoordinateLatLon;
+import edu.ub.bio.biogeolib.CoordinateUTM;
+
 import uni.projecte.dataLayer.CitationManager.Fagus.FagusExporter;
 import uni.projecte.dataLayer.CitationManager.JSON.JSONExporter;
 import uni.projecte.dataLayer.CitationManager.KML.KMLExporter;
@@ -35,6 +39,7 @@ import uni.projecte.dataLayer.bd.ProjectDbAdapter;
 import uni.projecte.dataLayer.bd.SampleDbAdapter;
 import uni.projecte.dataLayer.bd.SecondLevelCitacionDbAdapter;
 import uni.projecte.dataTypes.ProjectField;
+import uni.projecte.maps.utils.CoordinateUtils;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Handler;
@@ -291,7 +296,15 @@ public class CitationSecondLevelControler extends CitationControler {
 				
 				qW.openReleve(secLevId, "BB");			
 				qW.addDate(sC.getDate());
-			    
+				
+				if(CoordinateUtils.isCorrectCoordinate(sC.latitude, sC.longitude)){ 
+					
+					qW.writeReleveCoordinate(sC.latitude+", "+sC.longitude);
+					
+					CoordinateUTM utm = CoordConverter.getInstance().toUTM(new CoordinateLatLon(sC.latitude,sC.longitude));
+					qW.writeSecondaryCitationCoordinate(utm.getShortForm().replace("_",""));
+				
+				}
 			    
 				Cursor subProjItems=getFieldValuesBySLId(secLevId);
 				
@@ -302,8 +315,7 @@ public class CitationSecondLevelControler extends CitationControler {
 				  fieldList.moveToFirst();
 				  
 			    //value, layer, sureness, comment
-				  
-				  
+			  
 			    while(subProjItems.isAfterLast() == false){
 			    
 			    	String attributes=subProjItems.getString(5);

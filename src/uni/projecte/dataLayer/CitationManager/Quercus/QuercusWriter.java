@@ -489,8 +489,7 @@ public class QuercusWriter {
 
     	
 		try {
-		            	
-		//	serializer.attribute("", "origin", origin);
+
 			            
 	        serializer.startTag("", "CitationCoordinate");
 				serializer.attribute("", "code",code);

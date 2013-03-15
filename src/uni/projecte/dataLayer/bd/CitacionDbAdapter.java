@@ -328,7 +328,6 @@ public class CitacionDbAdapter {
 	         
 			 }
 		
-		// TODO Auto-generated method stub
 		return mCursor;
 	}
     

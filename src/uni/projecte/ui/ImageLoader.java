@@ -165,7 +165,7 @@ public class ImageLoader extends Thread {
 
 		c.drawColor(Color.BLACK);
 		c.drawText("Foto incorrecta", thMaxSize/4, thMaxSize/2, paint);
-		
+		 
 		    
        return bitmap;
 		

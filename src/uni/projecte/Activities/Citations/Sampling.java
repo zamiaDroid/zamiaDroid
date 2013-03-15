@@ -1828,7 +1828,9 @@ public class Sampling extends Activity {
  	       	//create parameters for Intent with filename
  	       	ContentValues values = new ContentValues();
  	       	values.put(MediaStore.Images.Media.TITLE, fileName);
- 	       	values.put(MediaStore.Images.Media.DESCRIPTION,"Image capture by camera");
+ 	       	
+ 	       	String imageDesc=String.format(getString(R.string.photoDescription),projName);
+ 	       	values.put(MediaStore.Images.Media.DESCRIPTION,imageDesc);
  	       	
  	       	//imageUri is the current activity attribute, define and save it for later usage (also in onSaveInstanceState)
  	       	photoPath=Environment.getExternalStorageDirectory() + "/zamiaDroid/Photos/"+fileName;
@@ -1996,21 +1998,21 @@ public class Sampling extends Activity {
 	    				photoPath=Environment.getExternalStorageDirectory().toString();
 	    				photoPath=photoPath + "/zamiaDroid/Photos/"+ fileName;
 	
-	    				//Utilities.showToast("Path: "+fileName, getBaseContext());
-	
-	
 	    			}
 	    			
 	    			PhotoFieldForm photoFieldForm=photoFieldsList.get(lastPhotoField);
 	    			photoFieldForm.addPhoto(photoPath);
-	    			
+   			
 	    			
 	    			break;
 	
 	
 	    		} else if (resultCode == RESULT_CANCELED) {
+	    			
 	    			Utilities.showToast("Picture was not taken", this);
+	    			
 	    		} else {
+	    			
 	    			Utilities.showToast("Picture was not taken", this);
 	    		}
 	

@@ -464,7 +464,7 @@ public class ProjectControler {
 		 * 
 		 */
 		
-		DBManager dbL=new DBManager(baseContext);
+		DBManager dbL=new DBManager(baseContext,false);
 		ThesaurusControler tC=new ThesaurusControler(baseContext);
 		String thType=tC.getTHType(getThName());
 		

@@ -349,4 +349,7 @@
 	<string name="citationWrongFileFormat">El fitxer no té un format %1s correcte</string>
     <string name="pdCheckingCitFile">Comprovant fitxer de citacions&#8230;</string>
 	
+   <string name="thChangeInfo">El tesaure carregat al sistema ha estat actualitzat. Es baixarà el nou tesaure i serà substituït per l\'actual.</string>
+   <string formatted="false" name="thChangeTitle">El tesaure %1s s\'ha d\'actualitzar! El tesaure va ser carregat %2s.</string>
+    
 </resources>

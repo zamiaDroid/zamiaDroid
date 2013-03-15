@@ -124,7 +124,7 @@ public class TaxonRemoteCitationList extends Activity {
         PreferencesControler pC=new PreferencesControler(this);
 
 
-        DBManager dbM=new DBManager(this);
+        DBManager dbM=new DBManager(this,true);
     	dbConn=dbM.getDBInstance(workingDB,filum,pC.getLang());   	
     	dbConn.setLocation(latitude, longitude,utm1x1);
         

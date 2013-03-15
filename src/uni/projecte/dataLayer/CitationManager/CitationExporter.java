@@ -176,7 +176,7 @@ public abstract class CitationExporter {
 
 
 	public void writeCitationCoordinateXY(double x, double y) {
-		// TODO Auto-generated method stub
+
 		
 	}
 

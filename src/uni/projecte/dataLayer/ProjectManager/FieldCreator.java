@@ -426,7 +426,7 @@ public class FieldCreator {
 
 
 			b = new Bundle();
-			b.putString("projDescription", "mamifers");
+			b.putString("projDescription", "sub-project-desc");
 			intent.putExtras(b);
 			
 			b = new Bundle();

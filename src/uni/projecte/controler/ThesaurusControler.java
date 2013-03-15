@@ -47,6 +47,7 @@ public class ThesaurusControler {
 	public Cursor allTc;
 	
 	private String thType;
+	private String lastUpdate;
 	
 	
 	public ThesaurusControler(Context c){
@@ -142,7 +143,28 @@ public class ThesaurusControler {
 		
 	}
 	
+	public String getThByType(String thRemoteId){
+		
+		String thName="";
+		
+		thIndexAdapter= new ThesaurusIndexDbAdapter(c);
+		thIndexAdapter.open();
 	
+		Cursor cursor=thIndexAdapter.fetchRemoteTh(thRemoteId);
+		cursor.moveToFirst();
+		
+		if(cursor.getCount()>0){
+
+			thName=cursor.getString(1);
+			lastUpdate=cursor.getString(7);
+			thIndexAdapter.close();
+
+
+		}
+		
+		return thName;
+		
+	}
 	
 	public int removeTh(String thName){
 		
@@ -768,6 +790,14 @@ public class ThesaurusControler {
 		 else return false;
 		 
 		 
+	}
+
+	public String getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(String lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 
 

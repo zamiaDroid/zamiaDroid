@@ -239,7 +239,7 @@ public class ProjectInfo extends Activity{
 			final CharSequence[] items = getBaseContext().getResources().getStringArray(R.array.newFieldTypes);
 
         	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        	builder.setTitle("Escull un tipus");
+        	builder.setTitle(getBaseContext().getString(R.string.fieldTypeMessage));
         	builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
         	    public void onClick(DialogInterface dialog, int item) {
         	    	

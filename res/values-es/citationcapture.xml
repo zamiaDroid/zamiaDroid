@@ -22,7 +22,10 @@
 	
 	<string name="photoMissing">No se ha añadido fotografía</string>
 	
+	<!-- SubProject -->
+	<string name="btShowList">Ver lista</string>
 
-
-
+	<!-- Photo Description -->
+	<string name="photoDescription">Imagen capturada con zamiaDroid en el proyecto: %1s</string>
+	
 </resources>

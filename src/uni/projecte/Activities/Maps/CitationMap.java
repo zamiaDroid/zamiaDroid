@@ -1051,7 +1051,7 @@ public class CitationMap extends MapActivity implements LocationListener {
 		        		else lastPointCenter=mapView.getMapCenter();
 	        		
 		        		
-		    			DBManager dbL=new DBManager(v.getContext());
+		    			DBManager dbL=new DBManager(v.getContext(),true);
 	
 		    			ProjectControler rsC=new ProjectControler(v.getContext());
 		    			rsC.loadProjectInfoById(projId);

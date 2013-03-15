@@ -212,7 +212,7 @@ public class TaxonListExplorer extends TabActivity {
         
         lang=prefC.getLang();
 
-        dbM=new DBManager(this);
+        dbM=new DBManager(this,true);
 
 		determineDBThread();
 
