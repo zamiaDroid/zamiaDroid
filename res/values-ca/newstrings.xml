@@ -339,4 +339,8 @@
     <string name="mCheckTaxonTh">Exclosos del tesaure</string>
     <string name="mAddCitation">Afegir citació</string>
     
+    <string name="thChangeInfo">El tesaure carregat al sistema ha estat actualitzat. Es baixarà el nou tesaure i serà substituït per l\'actual.</string>
+  	<string formatted="false" name="thChangeTitle">El tesaure %1s s\'ha d\'actualitzar! El tesaure va ser carregat %2s.</string>
+  
+    
 </resources>

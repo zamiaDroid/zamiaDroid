@@ -104,9 +104,6 @@ public class ThesaurusInfo extends Activity{
 		
 		private Button addButton;
 
-		
-		
-		
 		private TextView tvThNumItems;
 		
 		private long thId;
@@ -217,7 +214,6 @@ public class ThesaurusInfo extends Activity{
 					}
 								
 				}
-
 
 				public void onNothingSelected(AdapterView<?> arg0) {
 					
@@ -390,9 +386,7 @@ public class ThesaurusInfo extends Activity{
         			
         			Utilities.showToast(getString(R.string.thNewItemExists),v.getContext());
         			
-        			
-        		}
-        		
+        		}       		
         		
         	}
         	else{
@@ -400,7 +394,6 @@ public class ThesaurusInfo extends Activity{
         		Utilities.showToast(getString(R.string.thNewItemGenusEpMissing), v.getContext());
         		
         	}
-        	
         	
         }
     };

@@ -32,6 +32,8 @@ public class ThUpdater {
 	private PreferencesControler pC;
 	
 	private static String urlBDBCFlora="http://biodiver.bio.ub.es/biocat/servlet/biocat.ExportaThesaurusServlet?F12.0%25tesa=tax%25downloadthesa=true%25format=XML%25sinonims=true";
+    private static String bdbcFloraUpdated="2013-03-21 16:58:00";
+    	
 	private ProgressDialog pd;
 	private Handler removeUpdateDialog;
 	
@@ -45,9 +47,8 @@ public class ThUpdater {
 		
 		thName=thCnt.getThByType("bdbc_Flora");
 		
-		lastUpdated=thCnt.getLastUpdate();
-		
-		
+		if(!thName.equals("")) lastUpdated=thCnt.getLastUpdate();
+				
 	}
 
 
@@ -173,23 +174,15 @@ public class ThUpdater {
 
 
 	public boolean isOutdated() {
-		
-		
-		Calendar cal = Calendar.getInstance();
-	    cal.set(Calendar.YEAR, 2013);
-	    cal.set(Calendar.MONTH, 2);
-	    cal.set(Calendar.DAY_OF_MONTH, 15);
-	    cal.set(Calendar.HOUR_OF_DAY,14);
-	    Date date = cal.getTime();
-
+	    
 	    try {
 	    	
-    	
-			Date updated=new SimpleDateFormat("yyyy-MM-dd kk:mm:ss",Locale.ENGLISH).parse(lastUpdated);
+	    	Date currentDate =new SimpleDateFormat("yyyy-MM-dd kk:mm:ss",Locale.ENGLISH).parse(bdbcFloraUpdated);
+			Date dateCreated=new SimpleDateFormat("yyyy-MM-dd kk:mm:ss",Locale.ENGLISH).parse(lastUpdated);
+						
+			Log.i("Th","ThDate: "+dateCreated.toLocaleString()+" UpdateDate: "+currentDate.toLocaleString());
 			
-			Log.i("Th","ThDate: "+updated.toLocaleString()+" UpdateDate: "+date.toLocaleString());
-			
-			if(date.after(updated)) return true;
+			if(currentDate.after(dateCreated)) return true;
 			
 			
 		} catch (ParseException e) {

@@ -355,4 +355,7 @@
     <string name="mCheckTaxonTh">Excluded from thesaurus</string>
     <string name="mAddCitation">Add citation</string>
     	
+    <string name="thChangeInfo">The loaded Thesaurus has been updated. The new thesaurus will be donwloaded and it will overwrite the old one.</string>
+    <string formatted="false" name="thChangeTitle">It is necessary to update the %1s thesaurus! Last update was done: %2s.</string>
+  
 </resources>

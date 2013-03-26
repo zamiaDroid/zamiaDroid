@@ -15,6 +15,9 @@
    	<uses-permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA" />
 	<uses-permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
   
+  	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+  	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	
   <!--  <application android:icon="@drawable/mainicon" android:label="@string/app_name"  android:debuggable="true" android:theme="@android:style/Theme.NoTitleBar">
    --> 
    

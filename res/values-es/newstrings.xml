@@ -364,5 +364,8 @@
        
     <string name="mCheckTaxonTh">Excluidos del tesauro</string>
     <string name="mAddCitation">Añadir cita</string>
-    
+  
+    <string name="thChangeInfo">El tesauro cargado en el sistema se ha actualizado. Se descargará el nuevo tesauro y será sustituido por el actual.</string>
+    <string formatted="false" name="thChangeTitle">Es necesario actualizar el tesauro %1s ! La última acutalización se realizó en %2s.</string>
+  
 </resources>

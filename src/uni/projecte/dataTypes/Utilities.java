@@ -17,6 +17,7 @@ import uni.projecte.controler.PreferencesControler;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -341,7 +342,13 @@ public class Utilities
 		return wordList;
 	}
 
-
+	public static boolean isNetworkConnected(Context baseContext) {
+		  
+		ConnectivityManager cm = (ConnectivityManager) baseContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+		  
+		return (cm.getActiveNetworkInfo() != null);
+		 
+	}
 	  
 	
 	

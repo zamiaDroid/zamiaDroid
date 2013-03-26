@@ -157,11 +157,14 @@ public class ThesaurusControler {
 
 			thName=cursor.getString(1);
 			lastUpdate=cursor.getString(7);
-			thIndexAdapter.close();
 
 
 		}
 		
+		cursor.close();
+		
+		thIndexAdapter.close();
+
 		return thName;
 		
 	}

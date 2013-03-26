@@ -487,12 +487,10 @@ public class Main extends Activity {
     	//check taxFlora
     	thUpdater= new ThUpdater(this, "bdbc_Flora");
 
-    	if(thUpdater.isOutdated()){
-    	
-    	
-	    	String thName=thUpdater.getThName();
-	
-	    	if(thName!=null && !thName.equals("")){
+    	String thName=thUpdater.getThName();
+
+    	if( !thName.equals("") && thUpdater.isOutdated() ){
+
 	    	    	
 		    	updateFlora = new Dialog(this);
 		    	updateFlora.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -509,7 +507,10 @@ public class Main extends Activity {
 		    	updateFlora.show();
 		    	
 	    	}
-    	
+    	else{
+    		
+    		
+    		
     	}
     	
     }
@@ -518,7 +519,16 @@ public class Main extends Activity {
 		
 		public void onClick(View v) {
 
-			thUpdater.update_bdb_Flora_Th(postThDownloadHandler);
+			if(!Utilities.isNetworkConnected(v.getContext())){
+				
+				Utilities.showToast(v.getContext().getString(R.string.noThConnection), v.getContext());
+				
+			}
+			else{
+			
+				thUpdater.update_bdb_Flora_Th(postThDownloadHandler);
+			
+			}
 								
 		}
 	};
