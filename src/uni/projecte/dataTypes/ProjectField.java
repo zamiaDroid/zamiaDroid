@@ -209,6 +209,11 @@ public class ProjectField{
 		return type.equals("multiPhoto");		
 	}
 	
+	public boolean isPolygon(){
+		
+		return type.equals("polygon");		
+	}
+	
 	public boolean isSecondLevel(){
 		
 		return type.equals("secondLevel");		

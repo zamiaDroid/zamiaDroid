@@ -336,7 +336,9 @@
     <string name="fieldTypePredefined">predefinit</string>
     <string name="fieldTypeSubProject">sub-projecte</string>
     <string name="fieldTypeMultiPhoto">multi-fotografia</string>
-           
+    <string name="fieldTypePolygon">polígon</string>
+    
+    
     <string name="mCheckTaxonTh">Exclosos del tesaure</string>
     <string name="btStoragePrim">Emm. Primari</string>
     <string name="btStorageSec">Emm. Secundari</string>

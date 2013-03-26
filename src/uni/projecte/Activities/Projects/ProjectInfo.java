@@ -267,6 +267,11 @@ public class ProjectInfo extends Activity{
 	        	        	fc.createPredFieldDialog("multiPhoto",messageHandler);
 	        	        	
 	        	        }
+	        	        else if(items[item].equals(items[4])){
+	        	        	
+	        	        	fc.createPredFieldDialog("polygon",messageHandler);
+	        	        	
+	        	        }
 	        	        else{
 
 	        	        	fc.createPredFieldDialog("secondLevel",messageHandler);

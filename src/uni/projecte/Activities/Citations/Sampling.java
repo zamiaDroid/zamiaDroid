@@ -46,6 +46,7 @@ import uni.projecte.maps.UTMDisplay;
 import uni.projecte.ui.multiphoto.MultiPhotoFieldForm;
 import uni.projecte.ui.multiphoto.PhotoFieldForm;
 import uni.projecte.ui.multiphoto.SimplePhotoFieldForm;
+import uni.projecte.ui.polygon.PolygonField;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -166,6 +167,8 @@ public class Sampling extends Activity {
     	private Hashtable<String, String> repetedValuesLabelList;
     	
     	private Hashtable<String, PhotoFieldForm> photoFieldsList;
+    	
+    	private PolygonField polygonField; 
     	
     	private LocationManager mLocationManager;
     	private MainLocationListener mLocationListener;
@@ -308,6 +311,8 @@ public class Sampling extends Activity {
 				mLocationManager.removeUpdates(mLocationListener);
 	    		tempGPS=false;
 	    		 
+				if(polygonField!=null && polygonField.isWaitingGPS()) polygonField.addPoint(lat,longitude);
+	    		
 		   	    updateDisplay();
 		   	    
 	   	    }
@@ -1352,7 +1357,7 @@ public class Sampling extends Activity {
         }
 
 	
-}; 
+};
 
     
     /*
@@ -1529,19 +1534,30 @@ public class Sampling extends Activity {
 			
 			   
 			   }
-			   else if(fieldType.equals("multiPhoto")){
-				   
-				   MultiPhotoFieldForm multiPhotoFieldForm = new MultiPhotoFieldForm(this, projId, att, llField,MultiPhotoFieldForm.CREATE_MODE);
-				   
-				   multiPhotoFieldForm.setAddPhotoEvent(takePicture);
+			   else if(fieldType.equals("polygon")){
 				   
 				   
-				   photoFieldsList.put(att.getName(), multiPhotoFieldForm);
-
-				   elementsList.add(multiPhotoFieldForm.getImageScroll());
+				   polygonField= new PolygonField(this, projId, att, llField);
+				   polygonField.setAddPointListener(capturePoint);
+				   
+				   elementsList.add(null);
 
 				   
 			   }
+			   else if(fieldType.equals("multiPhoto")){
+				   
+					  MultiPhotoFieldForm multiPhotoFieldForm = new MultiPhotoFieldForm(this, projId, att, llField,MultiPhotoFieldForm.CREATE_MODE);
+					   
+					   multiPhotoFieldForm.setAddPhotoEvent(takePicture);
+					   
+					   
+					   photoFieldsList.put(att.getName(), multiPhotoFieldForm);
+
+					   elementsList.add(multiPhotoFieldForm.getImageScroll());
+					   
+			
+					   
+				   }
 			   
 			   //when the field is a thesaurus we create an AutoCompleteView and we fill it with the items provided by the ThesaurusControler
 			   
@@ -1809,7 +1825,16 @@ public class Sampling extends Activity {
         }
     };
     
-    
+    private OnClickListener capturePoint = new OnClickListener() {
+
+        public void onClick(View v) {
+
+        	polygonField.setWaitingGPS(true);
+        	callGPS();
+        	        	
+        }
+    };
+     
     
     private OnClickListener takePicture = new OnClickListener() {
 

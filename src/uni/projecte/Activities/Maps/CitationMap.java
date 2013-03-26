@@ -42,8 +42,10 @@ import uni.projecte.maps.MapLocation;
 import uni.projecte.maps.MyTracksService;
 import uni.projecte.maps.UTMDisplay;
 import uni.projecte.maps.overlays.MyTracksOverlay;
+import uni.projecte.maps.overlays.PolygonOverlay;
 import uni.projecte.maps.overlays.UTMOverlay;
 import uni.projecte.maps.overlays.UserLocationOverlay;
+import uni.projecte.maps.utils.LatLonParcel;
 import uni.projecte.ui.TransparentPanel;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -97,6 +99,11 @@ import edu.ub.bio.biogeolib.CoordinateUTM;
 public class CitationMap extends MapActivity implements LocationListener {
     /** Called when the activity is first created. */
 	
+	/* Map modes */
+	public static final int VIEW_CITATIONS=1;
+	public static final int VIEW_POLYGON=2;
+	
+	public static final String MAP_MODE="MAP_MODE";
 	
 	 /* Menu Options  */
 	 private static final int MY_LOCATION=Menu.FIRST;
@@ -169,6 +176,9 @@ public class CitationMap extends MapActivity implements LocationListener {
 
 	 // Project Id
 	 private long projId;
+	 
+	 /* MapMode*/
+	 private int map_mode=VIEW_CITATIONS;
 	 
 	 /* String with a list of selected citationsIds that will be loaded */
 	 private String preSettedLoc;
@@ -265,7 +275,7 @@ public class CitationMap extends MapActivity implements LocationListener {
         mc = mapView.getController();
         
         projId=getIntent().getExtras().getLong("id");
-
+        map_mode=getIntent().getExtras().getInt(MAP_MODE);
 
         sC=new CitationControler(this);
         pC=new PreferencesControler(this);
@@ -288,21 +298,34 @@ public class CitationMap extends MapActivity implements LocationListener {
         myLocation = new MyLocationOverlay(getApplicationContext(), mapView);
         mapView.getOverlays().add(myLocation);
         
-            
-        if(pC.getTrackingService()) myTracksIsWorkingInBackground();       
-        if(mapState.compassEnabled) myLocation.enableCompass();
+        if(map_mode==VIEW_POLYGON){
+        	
+        	ArrayList<LatLonParcel> pointsExtra =  getIntent().getParcelableArrayListExtra("polygon_path");
+
+        	PolygonOverlay polygonOverlay=new PolygonOverlay(pointsExtra);
+        	 mapView.getOverlays().add(polygonOverlay);
+        	
+        	
+        }
+        else{
+                
+            	
+	        if(pC.getTrackingService()) myTracksIsWorkingInBackground();       
+	        if(mapState.compassEnabled) myLocation.enableCompass();
+	        
+	        
+	        preSettedLoc=getIntent().getExtras().getString("idSelection");
+	        
+	        loadCitations();
+	          
+	        loadUTMGrid();
+	        
+	        handleInfoDialog();
+	        
+	        utmPrec=pC.getUTMDisplayPrec();
+	        mapState.elevationEnabled=pC.isMapElevationShown();
         
-        
-        preSettedLoc=getIntent().getExtras().getString("idSelection");
-        
-        loadCitations();
-          
-        loadUTMGrid();
-        
-        handleInfoDialog();
-        
-        utmPrec=pC.getUTMDisplayPrec();
-        mapState.elevationEnabled=pC.isMapElevationShown();
+        }
 
 		
     }
