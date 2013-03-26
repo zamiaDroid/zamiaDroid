@@ -1,95 +1,0 @@
-10
-
-dir
-399
-https://161.116.68.65/svn/biobot/zamiaDroid/src/uni/projecte
-https://161.116.68.65/svn/biobot
-
-
-
-2012-05-29T17:40:26.255750Z
-398
-david
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-b29b0df2-a651-5742-b893-d833d92a3b46
-
-
-
-
-
-
-
-
-()
-
-maps
-dir
-
-Activities
-dir
-
-Main.java
-file
-417
-
-
-
-2012-06-27T15:46:59.858286Z
-d670d3c8fec24bf03ee8bfb0e135d4b7
-2012-07-02T10:47:56.145125Z
-417
-david
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-16125
-
-dataLayer
-dir
-
-controler
-dir
-
-network
-dir
-
-hardware
-dir
-
-ui
-dir
-
-dataTypes
-dir
-
