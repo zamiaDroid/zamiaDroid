@@ -44,6 +44,12 @@
 
        <activity android:name=".Activities.Citations.CitationEditor" android:configChanges="locale" 
                   android:label="@string/app_name">
+             
+             <intent-filter>
+  				<action android:name="uni.projecte.zamiaDroid.Citation.EDIT"/>
+  				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+           
        </activity>
         
        <activity android:name=".Activities.Citations.CitationImport" android:configChanges="locale" 
@@ -56,6 +62,12 @@
         
        <activity android:name=".Activities.Citations.CitationManager" android:configChanges="orientation|locale" 
                   android:label="@string/app_name">
+             
+           <intent-filter>
+  				<action android:name="uni.projecte.zamiaDroid.Citation.LIST"/>
+  				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+           
        </activity>
        
 		<activity android:name=".Activities.Citations.CitationProjectImport" android:configChanges="locale" 
@@ -63,7 +75,12 @@
 		</activity>
 		
 		<activity android:name=".Activities.Citations.Sampling" android:configChanges="orientation|locale" 
-                  android:label="@string/app_name">           
+                  android:label="@string/app_name">     
+                  
+		    <intent-filter>
+  				<action android:name="uni.projecte.zamiaDroid.Citation.CREATE"/>
+  				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
         </activity>
         
 		<activity android:name=".Activities.Citations.SecondLevelList" android:configChanges="locale" 
@@ -77,6 +94,11 @@
         
          <activity android:name=".Activities.Maps.CitationMap" android:configChanges="orientation|locale"
                   android:label="@string/app_name">
+		    
+            <intent-filter>
+  				<action android:name="uni.projecte.zamiaDroid.Citation.MAP"/>
+  				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
        </activity>
        
       <!--    <activity android:name=".Activities.Maps.ShitMapView" android:configChanges="orientation|locale"
