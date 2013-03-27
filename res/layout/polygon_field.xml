@@ -30,7 +30,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Veure polígon" />
-             
+
+             <Button
+                 android:id="@+id/btClosePolygon"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Tancar polígon" />
 
     </LinearLayout>
 

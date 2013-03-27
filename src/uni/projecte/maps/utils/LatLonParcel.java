@@ -38,7 +38,7 @@ public class LatLonParcel implements Parcelable {
 	     private LatLonParcel(Parcel in) {
 	         double lat = in.readDouble();
 	         double lon = in.readDouble();
-	         geoPoint = new LatLon(lat, lon);
+	         geoPoint = new LatLon(lat, lon,0.0);
 	     }
 
 	

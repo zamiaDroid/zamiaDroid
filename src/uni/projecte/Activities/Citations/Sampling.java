@@ -32,6 +32,7 @@ import uni.projecte.controler.CitationControler;
 import uni.projecte.controler.CitationSecondLevelControler;
 import uni.projecte.controler.DataTypeControler;
 import uni.projecte.controler.MultiPhotoControler;
+import uni.projecte.controler.PolygonControler;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.ThesaurusControler;
@@ -43,6 +44,7 @@ import uni.projecte.dataTypes.Utilities;
 import uni.projecte.hardware.gps.MainLocationListener;
 import uni.projecte.maps.GoogleMapsAPI;
 import uni.projecte.maps.UTMDisplay;
+import uni.projecte.maps.utils.LatLon;
 import uni.projecte.ui.multiphoto.MultiPhotoFieldForm;
 import uni.projecte.ui.multiphoto.PhotoFieldForm;
 import uni.projecte.ui.multiphoto.SimplePhotoFieldForm;
@@ -85,6 +87,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -311,7 +314,7 @@ public class Sampling extends Activity {
 				mLocationManager.removeUpdates(mLocationListener);
 	    		tempGPS=false;
 	    		 
-				if(polygonField!=null && polygonField.isWaitingGPS()) polygonField.addPoint(lat,longitude);
+				if(polygonField!=null && polygonField.isWaitingGPS()) polygonField.addPoint(lat,longitude,elevation);
 	    		
 		   	    updateDisplay();
 		   	    
@@ -937,9 +940,8 @@ public class Sampling extends Activity {
     
     private boolean emptyThesaurus(){
     	
-    	
+   	
     	boolean notEmpty=true;
-
     	
     	for (int i=0;i<n;i++){
     		
@@ -974,59 +976,13 @@ public class Sampling extends Activity {
     			if (((TextView)vi).length()!=0) filled=true;	
 
     		}
-
-    		
+ 		
     	}
     	
     	return filled;
     	
-    	
     }
     
-    
-    @SuppressWarnings("unused")
-    
-	private boolean emptyAttributes(){
-    	
-    	boolean notEmpty=true;
-    	
-
-    	//are all the attributes filled?
-    	
-    	for (int i=0;i<n;i++){
-    		
-    		View vi=elementsList.get(i);
-    		
-    		if (vi instanceof EditText){
-				
-    			if (((EditText)vi).length()==0) notEmpty=false;	
-			}
-    		
-    		else if((vi instanceof AutoCompleteTextView)){
-    			
-    			if (((AutoCompleteTextView)vi).length()==0) notEmpty=false;	
-
-    		}
-			
-    		
-    		else if((vi instanceof CheckBox)){
-    			
-    			
-    			//rubish
-    		}
-			
-			else {
-				
-				if (((Spinner)vi).getSelectedItem().toString().length()==0) notEmpty=false;	
-				
-			}
-    		
-    		
-    	}
-
-    	return notEmpty;  
-    	    	
-    }
     
     
     /*
@@ -1108,7 +1064,8 @@ public class Sampling extends Activity {
 	private void addFieldValues(long idSample, CitationControler smplCntr){
     			
 			boolean isMultiPhotoField=false;
-				
+			boolean isPolygon=false;
+			
 			n=elementsList.size();
 			
 			smplCntr.startTransaction();
@@ -1156,6 +1113,12 @@ public class Sampling extends Activity {
 					isMultiPhotoField=true;
 					
 				}
+				else if(et instanceof ListView){
+					
+					value=polygonField.getSecondLevelId();
+					label=polygonField.getFieldLabel();					
+					
+				}
 				else {
 					
 					Spinner sp=(Spinner)et;
@@ -1166,7 +1129,7 @@ public class Sampling extends Activity {
 					label= ((Spinner) et).getTag().toString();
 
 					
-				}
+				}	
 				
 					/*if value is empty we don't add the value into the database*/
 					if(value.compareTo("")==0){
@@ -1185,6 +1148,13 @@ public class Sampling extends Activity {
 							
 							isMultiPhotoField=false;
 						} 
+						
+						if(isPolygon){
+							
+							polygonField.setCitationId(citationValueId);
+							isPolygon=false;
+
+						}
 						
 					}
 					
@@ -1222,7 +1192,17 @@ public class Sampling extends Activity {
 				
 			}						
 		}
-
+		
+		//Adding Polygon
+		if(polygonField!=null){
+		
+			PolygonControler polygonCnt= new PolygonControler(this);
+	
+			polygonCnt.addPolygonList(polygonField);
+	
+		}
+		
+		
 	}
 
     
@@ -1537,10 +1517,10 @@ public class Sampling extends Activity {
 			   else if(fieldType.equals("polygon")){
 				   
 				   
-				   polygonField= new PolygonField(this, projId, att, llField);
+				   polygonField= new PolygonField(this, projId, att, llField,PolygonField.CREATE_MODE);
 				   polygonField.setAddPointListener(capturePoint);
 				   
-				   elementsList.add(null);
+				   elementsList.add(new ListView(this));
 
 				   
 			   }

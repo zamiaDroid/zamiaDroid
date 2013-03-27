@@ -353,7 +353,7 @@ public class FieldCreator {
 		 
 		 
 		 ProjectSecondLevelControler projSLCnt= new ProjectSecondLevelControler(baseContext);
-		 projSLCnt.createField(secLevId, "polygonText", "text", "", "", "ECO");
+		 projSLCnt.createField(secLevId, "polygonAltitude", "text", "", "", "ECO");
 		   
 	}
 

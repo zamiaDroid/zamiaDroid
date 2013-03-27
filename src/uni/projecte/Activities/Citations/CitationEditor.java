@@ -45,6 +45,7 @@ import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
 import uni.projecte.ui.multiphoto.MultiPhotoFieldForm;
 import uni.projecte.ui.multiphoto.PhotoFieldForm;
+import uni.projecte.ui.polygon.PolygonField;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -1207,12 +1208,30 @@ public class CitationEditor extends Activity {
 				   multiPhotoFieldForm.setCitationData(Utilities.splitToArrayList(photos),pred);
 				   
 				   multiPhotoFieldForm.setAddPhotoEvent(takePicture);
-				  // multiPhotoFieldForm.setRemoveEvent(removePicture);
-
 
 				   photoFieldsList.put(att.getName(), multiPhotoFieldForm);
 
 				   elementsList.add(multiPhotoFieldForm.getImageScroll());
+				   
+				   formValues.add(pred);
+
+				   
+			   }
+			   else if(fieldType.equals("polygon")){
+				   
+				   String pred=sC.getFieldValue(citationId,att.getId());			   
+				   String altitudes=citSLCnt.getMultiPhotosValues(pred);				   
+				   
+				   PolygonField polygonField = new PolygonField(this, id, att, llField, PolygonField.EDIT_MODE);
+				   polygonField.setSecondLevelId(pred);
+				  // MultiPhotoFieldForm multiPhotoFieldForm = new MultiPhotoFieldForm(this, projId, att, llField,MultiPhotoFieldForm.EDIT_MODE);
+				   
+				  // multiPhotoFieldForm.setCitationData(Utilities.splitToArrayList(photos),pred);
+				   
+				  // multiPhotoFieldForm.setAddPhotoEvent(takePicture);
+
+				   
+				   elementsList.add(new ListView(this));
 				   
 				   formValues.add(pred);
 

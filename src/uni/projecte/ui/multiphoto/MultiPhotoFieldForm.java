@@ -73,7 +73,6 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 		
 
 		/* Layout resources */
-		
 		imageScroll=new HorizontalScrollView(baseContext);
 		llPhotosList= new LinearLayout(baseContext);
 
