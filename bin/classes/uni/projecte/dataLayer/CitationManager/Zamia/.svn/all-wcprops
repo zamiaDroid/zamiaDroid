@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/biobot/!svn/ver/366/zamiaDroid/src/uni/projecte/dataLayer/CitationManager/Zamia
+END
+ZamiaCitationReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/biobot/!svn/ver/366/zamiaDroid/src/uni/projecte/dataLayer/CitationManager/Zamia/ZamiaCitationReader.java
+END
+ZamiaExportCitationReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/biobot/!svn/ver/365/zamiaDroid/src/uni/projecte/dataLayer/CitationManager/Zamia/ZamiaExportCitationReader.java
+END
+ZamiaCitationExporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/biobot/!svn/ver/366/zamiaDroid/src/uni/projecte/dataLayer/CitationManager/Zamia/ZamiaCitationExporter.java
+END
+ZamiaCitationWriter.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/biobot/!svn/ver/417/zamiaDroid/src/uni/projecte/dataLayer/CitationManager/Zamia/ZamiaCitationWriter.java
+END
+ZamiaCitationFastHandlerXML.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/biobot/!svn/ver/324/zamiaDroid/src/uni/projecte/dataLayer/CitationManager/Zamia/ZamiaCitationFastHandlerXML.java
+END
+ZamiaCitationXMLparser.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/biobot/!svn/ver/308/zamiaDroid/src/uni/projecte/dataLayer/CitationManager/Zamia/ZamiaCitationXMLparser.java
+END
+ZamiaCitationHandlerXML.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/biobot/!svn/ver/412/zamiaDroid/src/uni/projecte/dataLayer/CitationManager/Zamia/ZamiaCitationHandlerXML.java
+END

@@ -1224,12 +1224,7 @@ public class CitationEditor extends Activity {
 				   
 				   PolygonField polygonField = new PolygonField(this, id, att, llField, PolygonField.EDIT_MODE);
 				   polygonField.setSecondLevelId(pred);
-				  // MultiPhotoFieldForm multiPhotoFieldForm = new MultiPhotoFieldForm(this, projId, att, llField,MultiPhotoFieldForm.EDIT_MODE);
-				   
-				  // multiPhotoFieldForm.setCitationData(Utilities.splitToArrayList(photos),pred);
-				   
-				  // multiPhotoFieldForm.setAddPhotoEvent(takePicture);
-
+				 
 				   
 				   elementsList.add(new ListView(this));
 				   

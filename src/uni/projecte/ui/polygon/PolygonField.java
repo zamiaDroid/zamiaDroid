@@ -47,10 +47,10 @@ public class PolygonField {
 	private boolean waitingGPS=false;
 	private ArrayList<LatLon> path;
 	
-	private Button btRemovePolygon;
-	private Button btRemovePoint;
-	private Button btShowPolygon;
-	private Button btClosePolygon;
+	private ImageButton btRemovePolygon;
+	private ImageButton btRemovePoint;
+	private ImageButton btShowPolygon;
+	private ImageButton btClosePolygon;
 	
 	private String secondLevelId;
 
@@ -71,30 +71,30 @@ public class PolygonField {
 		tvCounter=(TextView) llPolygon.findViewById(R.id.tvPolygonCount);
 		ibAddPoint=(ImageButton) llPolygon.findViewById(R.id.ibAddPoint);
 		
-		btShowPolygon=(Button) llPolygon.findViewById(R.id.btShowPolygon);
+		btShowPolygon=(ImageButton) llPolygon.findViewById(R.id.ibShowPolygon);
 		btShowPolygon.setOnClickListener(showPolygonListener);
 		
-		btRemovePolygon=(Button) llPolygon.findViewById(R.id.btPolygonRemove);
+		btRemovePolygon=(ImageButton) llPolygon.findViewById(R.id.ibPolygonRemove);
 		btRemovePolygon.setOnClickListener(removePolygonListener);
 		
-		btRemovePoint=(Button) llPolygon.findViewById(R.id.btPolygonRemovePoint);
+		btRemovePoint=(ImageButton) llPolygon.findViewById(R.id.ibPolygonRemovePoint);
 		btRemovePoint.setOnClickListener(removePointListener);
 		
-		btClosePolygon=(Button) llPolygon.findViewById(R.id.btClosePolygon);
+		btClosePolygon=(ImageButton) llPolygon.findViewById(R.id.ibClosePolygon);
 		btClosePolygon.setOnClickListener(closePolygonListener);
 		
 		llField.addView(llPolygon);
 		
-		btRemovePoint.setVisibility(View.GONE);
-		btRemovePolygon.setVisibility(View.GONE);
-		btClosePolygon.setVisibility(View.GONE);
+		((LinearLayout) btRemovePoint.getParent()).setVisibility(View.GONE);
+		((LinearLayout) btRemovePolygon.getParent()).setVisibility(View.GONE);
+		((LinearLayout) btClosePolygon.getParent()).setVisibility(View.GONE);
 		
 		
 		if(POLYGON_FIELD_MODE==CREATE_MODE){
 			
 			path= new ArrayList<LatLon>();			
 			secondLevelId=createSecondLevelIdentifier(field.getName());
-			btShowPolygon.setVisibility(View.GONE);
+			((LinearLayout) btShowPolygon.getParent()).setVisibility(View.GONE);
 
 		}
 		else{
@@ -126,6 +126,8 @@ public class PolygonField {
 		
 		waitingGPS=false;
 		
+		ibAddPoint.setVisibility(View.VISIBLE);
+		
 		updateUI();
 		
 	}
@@ -140,18 +142,18 @@ public class PolygonField {
 
 		if(path.size()>0 && POLYGON_FIELD_MODE==CREATE_MODE){
 			
-			btRemovePoint.setVisibility(View.VISIBLE);
-			btRemovePolygon.setVisibility(View.VISIBLE);
-			btShowPolygon.setVisibility(View.VISIBLE);
-			btClosePolygon.setVisibility(View.VISIBLE);
+			((LinearLayout) btRemovePoint.getParent()).setVisibility(View.VISIBLE);
+			((LinearLayout) btRemovePolygon.getParent()).setVisibility(View.VISIBLE);
+			((LinearLayout) btShowPolygon.getParent()).setVisibility(View.VISIBLE);
+			((LinearLayout) btClosePolygon.getParent()).setVisibility(View.VISIBLE);
 			
 		}
 		else{
 			
-			btRemovePoint.setVisibility(View.GONE);
-			btRemovePolygon.setVisibility(View.GONE);
-			btShowPolygon.setVisibility(View.GONE);
-			btClosePolygon.setVisibility(View.GONE);
+			((LinearLayout) btRemovePoint.getParent()).setVisibility(View.GONE);
+			((LinearLayout) btRemovePolygon.getParent()).setVisibility(View.GONE);
+			((LinearLayout) btShowPolygon.getParent()).setVisibility(View.GONE);
+			((LinearLayout) btClosePolygon.getParent()).setVisibility(View.GONE);
 
 		}
 		
@@ -231,6 +233,9 @@ public class PolygonField {
 
 	public void setWaitingGPS(boolean waitingGPS) {
 		this.waitingGPS = waitingGPS;
+		
+		if(waitingGPS) ibAddPoint.setVisibility(View.INVISIBLE);
+		
 	}
 
 	public long getFieldId(){

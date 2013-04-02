@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/biobot/!svn/ver/324/zamiaDroid/src/uni/projecte/dataLayer/utils
+END
+FileUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/biobot/!svn/ver/417/zamiaDroid/src/uni/projecte/dataLayer/utils/FileUtils.java
+END
+UTMUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/biobot/!svn/ver/412/zamiaDroid/src/uni/projecte/dataLayer/utils/UTMUtils.java
+END
+StringUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/biobot/!svn/ver/417/zamiaDroid/src/uni/projecte/dataLayer/utils/StringUtils.java
+END
+IoUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/biobot/!svn/ver/417/zamiaDroid/src/uni/projecte/dataLayer/utils/IoUtils.java
+END
+TaxonUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/biobot/!svn/ver/424/zamiaDroid/src/uni/projecte/dataLayer/utils/TaxonUtils.java
+END
+MimeTypes.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/biobot/!svn/ver/424/zamiaDroid/src/uni/projecte/dataLayer/utils/MimeTypes.java
+END
+DateTimeUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/biobot/!svn/ver/267/zamiaDroid/src/uni/projecte/dataLayer/utils/DateTimeUtils.java
+END

@@ -8,53 +8,129 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
         android:padding="5dp" >
 
-        <ImageButton
-            android:id="@+id/ibAddPoint"
+        <LinearLayout
+            android:id="@+id/llAddPoint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/cross_green"
-            android:layout_marginRight="5dp" />
+            android:orientation="vertical" >
 
-   
-	
+            <ImageButton
+                android:id="@+id/ibAddPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/polygon_add_point" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="Afegir punt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llShowPolygon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" 
+            android:gravity="center_horizontal">
+
+            <ImageButton
+                android:id="@+id/ibShowPolygon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/polygon_view" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="Veure polígon" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/tvPolygonCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" />
-        
-             <Button
-            android:id="@+id/btShowPolygon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Veure polígon" />
-
-             <Button
-                 android:id="@+id/btClosePolygon"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="Tancar polígon" />
-
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom|center_horizontal" >
 
-        <Button
-            android:id="@+id/btPolygonRemovePoint"
+        <LinearLayout
+            android:id="@+id/llClosePolygon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Esborrar darrer punt" />
-        
-            <Button
-            android:id="@+id/btPolygonRemove"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/ibClosePolygon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/polygon_close" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="Tancar polígon" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPolygonRemove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Eliminar polígon" />
+            android:orientation="vertical" >
 
+            <ImageButton
+                android:id="@+id/ibPolygonRemove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/polygon_remove" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="Esborrar polígon" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llRemoveLastPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/ibPolygonRemovePoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/polygon_remove_last" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="Esborrar darrer punt" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/biobot/!svn/ver/397/zamiaDroid/src/uni/projecte/dataLayer/RemoteDBManager/objects
+END
+LocalTaxonListAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/biobot/!svn/ver/365/zamiaDroid/src/uni/projecte/dataLayer/RemoteDBManager/objects/LocalTaxonListAdapter.java
+END
+RemoteProviderPair.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/biobot/!svn/ver/383/zamiaDroid/src/uni/projecte/dataLayer/RemoteDBManager/objects/RemoteProviderPair.java
+END
+DataBasesInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/biobot/!svn/ver/390/zamiaDroid/src/uni/projecte/dataLayer/RemoteDBManager/objects/DataBasesInfo.java
+END
+RemoteTaxonTabHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/biobot/!svn/ver/397/zamiaDroid/src/uni/projecte/dataLayer/RemoteDBManager/objects/RemoteTaxonTabHandler.java
+END
+RemoteTaxonsExport.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/biobot/!svn/ver/417/zamiaDroid/src/uni/projecte/dataLayer/RemoteDBManager/objects/RemoteTaxonsExport.java
+END
+LocalTaxonNoThListAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/biobot/!svn/ver/424/zamiaDroid/src/uni/projecte/dataLayer/RemoteDBManager/objects/LocalTaxonNoThListAdapter.java
+END
