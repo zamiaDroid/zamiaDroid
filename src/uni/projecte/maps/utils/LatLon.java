@@ -12,6 +12,14 @@ public final class LatLon {
 		this.longitude=longitude;
 		this.altitude=altitude;
 		
-	}		
+	}
+	
+	public boolean equals(LatLon point){
+		
+		return (latitude == point.latitude) && 
+			   (longitude == point.longitude) && 
+			   (altitude == point.altitude);
+		
+	}
 	
 }

@@ -3,58 +3,68 @@ package uni.projecte.ui.polygon;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
-import java.util.zip.Inflater;
 
 import uni.projecte.R;
+import uni.projecte.Activities.Citations.Sampling;
 import uni.projecte.Activities.Maps.CitationMap;
-import uni.projecte.controler.CitationSecondLevelControler;
 import uni.projecte.controler.PolygonControler;
 import uni.projecte.dataTypes.ProjectField;
+import uni.projecte.dataTypes.Utilities;
 import uni.projecte.maps.utils.LatLon;
 import uni.projecte.maps.utils.LatLonParcel;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import android.app.Activity;
+
+
+import com.google.android.maps.MapView;
+
 public class PolygonField {
 	
-	public static int CREATE_MODE = 1;
-	public static int EDIT_MODE = 2;
+	public static final int CREATE_MODE = 1;
+	public static final int EDIT_MODE = 2;
+	public static final int MAP_MODE = 3;
 	
 	private int POLYGON_FIELD_MODE;
 	
 	protected Context baseContext;
 
-	/* Main container */
-	protected LinearLayout llField;
-
+	private PolygonControler polygonCnt;
+	
 	/* ProjectField object */
 	protected ProjectField field;
 	
+	protected long projId;
+	private long citationId;
+	private String secondLevelId;
+
+	private ArrayList<LatLon> path;
+	private boolean waitingGPS=false;
+	
+	private MapView mapView;
+	
+	/* Main container */
+	protected LinearLayout llField;
+	
 	private TextView tvCounter;
 	private ImageButton ibAddPoint;
-	
-	protected long projId;
-	
-	private boolean waitingGPS=false;
-	private ArrayList<LatLon> path;
 	
 	private ImageButton btRemovePolygon;
 	private ImageButton btRemovePoint;
 	private ImageButton btShowPolygon;
 	private ImageButton btClosePolygon;
+	private ImageButton ibQuitEdit;
 	
-	private String secondLevelId;
+	private TextView tvAddPoint;
 
-	private PolygonControler polygonCnt;
+	
 	
 	public PolygonField(Context baseContext,long projId, ProjectField field, LinearLayout llField, int mode){
 		
@@ -66,16 +76,37 @@ public class PolygonField {
 		POLYGON_FIELD_MODE=mode;
 		
 		LayoutInflater inflater = (LayoutInflater) baseContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
-		View llPolygon=(View) inflater.inflate(R.layout.polygon_field,null);
+		View llPolygon=(View) inflater.inflate(R.layout.polygon_field,null);		
+		
+		loadBasicUi((LinearLayout)llPolygon);
+		
+		llField.addView(llPolygon);
+		
+		((LinearLayout) btRemovePolygon.getParent()).setVisibility(View.GONE);
+		
+		if(POLYGON_FIELD_MODE==CREATE_MODE){
+			
+			path= new ArrayList<LatLon>();			
+			secondLevelId=createSecondLevelIdentifier(field.getName());
 
-		tvCounter=(TextView) llPolygon.findViewById(R.id.tvPolygonCount);
-		ibAddPoint=(ImageButton) llPolygon.findViewById(R.id.ibAddPoint);
+		}
+		else{
+			
+			((LinearLayout) ibAddPoint.getParent()).setVisibility(View.GONE);
+			
+		}
 		
-		btShowPolygon=(ImageButton) llPolygon.findViewById(R.id.ibShowPolygon);
-		btShowPolygon.setOnClickListener(showPolygonListener);
+	}
+	
+	public PolygonField(Context baseContext,long projId, View llPolygon, ArrayList<LatLonParcel> pointsExtra, MapView mapView){
+
+		this.baseContext=baseContext;
+		this.projId=projId;
+		this.mapView=mapView;
 		
-		btRemovePolygon=(ImageButton) llPolygon.findViewById(R.id.ibPolygonRemove);
-		btRemovePolygon.setOnClickListener(removePolygonListener);
+		POLYGON_FIELD_MODE=MAP_MODE;
+
+		loadBasicUi(llPolygon);
 		
 		btRemovePoint=(ImageButton) llPolygon.findViewById(R.id.ibPolygonRemovePoint);
 		btRemovePoint.setOnClickListener(removePointListener);
@@ -83,33 +114,65 @@ public class PolygonField {
 		btClosePolygon=(ImageButton) llPolygon.findViewById(R.id.ibClosePolygon);
 		btClosePolygon.setOnClickListener(closePolygonListener);
 		
-		llField.addView(llPolygon);
+		ibQuitEdit=(ImageButton)llPolygon.findViewById(R.id.ibCreatePolygon);
+		ibQuitEdit.setOnClickListener(savePolygonListener);
+
+		path=new ArrayList<LatLon>();
 		
-		((LinearLayout) btRemovePoint.getParent()).setVisibility(View.GONE);
-		((LinearLayout) btRemovePolygon.getParent()).setVisibility(View.GONE);
-		((LinearLayout) btClosePolygon.getParent()).setVisibility(View.GONE);
+		for(LatLonParcel point: pointsExtra) {
+    		
+    		path.add(point.getGeoPoint());
+    	   
+    	}
 		
-		
-		if(POLYGON_FIELD_MODE==CREATE_MODE){
+		if(path.size()<1){
 			
-			path= new ArrayList<LatLon>();			
-			secondLevelId=createSecondLevelIdentifier(field.getName());
-			((LinearLayout) btShowPolygon.getParent()).setVisibility(View.GONE);
-
-		}
-		else{
-
-			ibAddPoint.setVisibility(View.GONE);
+			((LinearLayout) btRemovePoint.getParent()).setVisibility(View.GONE);
+			((LinearLayout) btRemovePolygon.getParent()).setVisibility(View.GONE);
+			((LinearLayout) btClosePolygon.getParent()).setVisibility(View.GONE);
+			
 		}
 		
 	}
 	
+	public void updatePath(ArrayList<LatLonParcel> pointsExtra){
+		
+		path=new ArrayList<LatLon>();
+		
+		for(LatLonParcel point: pointsExtra) {
+    		
+    		path.add(point.getGeoPoint());
+    	   
+    	}
+
+		updateUI();
+		
+	}
+	
+	
+	private void loadBasicUi(View llPolygon) {
+
+		tvCounter=(TextView) llPolygon.findViewById(R.id.tvPolygonCount);
+		ibAddPoint=(ImageButton) llPolygon.findViewById(R.id.ibAddPoint);
+		
+		btShowPolygon=(ImageButton) llPolygon.findViewById(R.id.ibShowPolygon);
+		if(btShowPolygon!=null)btShowPolygon.setOnClickListener(showPolygonListener);
+		
+		btRemovePolygon=(ImageButton) llPolygon.findViewById(R.id.ibPolygonRemove);
+		btRemovePolygon.setOnClickListener(removePolygonListener);
+		
+		
+		tvAddPoint=(TextView) llPolygon.findViewById(R.id.tvAddPoint);		
+		
+	}
+
 	private void loadPolygonValues() {
 
 		polygonCnt= new PolygonControler(baseContext);
 		
 		path=polygonCnt.getPolygonPath(secondLevelId);			
 	
+		tvCounter.setText(""+path.size());
 		
 	}
 
@@ -127,6 +190,7 @@ public class PolygonField {
 		waitingGPS=false;
 		
 		ibAddPoint.setVisibility(View.VISIBLE);
+		tvAddPoint.setText("Afegir punt");
 		
 		updateUI();
 		
@@ -140,25 +204,59 @@ public class PolygonField {
 	
 	private void updateUI() {
 
-		if(path.size()>0 && POLYGON_FIELD_MODE==CREATE_MODE){
-			
-			((LinearLayout) btRemovePoint.getParent()).setVisibility(View.VISIBLE);
-			((LinearLayout) btRemovePolygon.getParent()).setVisibility(View.VISIBLE);
-			((LinearLayout) btShowPolygon.getParent()).setVisibility(View.VISIBLE);
-			((LinearLayout) btClosePolygon.getParent()).setVisibility(View.VISIBLE);
-			
-		}
-		else{
-			
-			((LinearLayout) btRemovePoint.getParent()).setVisibility(View.GONE);
-			((LinearLayout) btRemovePolygon.getParent()).setVisibility(View.GONE);
-			((LinearLayout) btShowPolygon.getParent()).setVisibility(View.GONE);
-			((LinearLayout) btClosePolygon.getParent()).setVisibility(View.GONE);
-
-		}
+		switch (POLYGON_FIELD_MODE) {
 		
+			case CREATE_MODE:
+			
+				if(path.size()>0){
+					
+					((LinearLayout) btRemovePolygon.getParent()).setVisibility(View.VISIBLE);
+					
+				}
+				else{
+					
+					((LinearLayout) btRemovePolygon.getParent()).setVisibility(View.GONE);
+					
+				}
+				
+			break;
+			
+			case MAP_MODE:
+			
+				if(path.size()>0){
+					
+					((LinearLayout) btRemovePolygon.getParent()).setVisibility(View.VISIBLE);
+					((LinearLayout) btRemovePoint.getParent()).setVisibility(View.VISIBLE);
+					((LinearLayout) btClosePolygon.getParent()).setVisibility(View.VISIBLE);
+				}
+				else{
+					
+					((LinearLayout) btRemovePolygon.getParent()).setVisibility(View.GONE);
+					((LinearLayout) btRemovePoint.getParent()).setVisibility(View.GONE);
+					((LinearLayout) btClosePolygon.getParent()).setVisibility(View.GONE);
+				}
+				
+				mapView.invalidate();
+				
+				
+			break;
+
+		default:
+			break;
+			
+			
+		}
+	
 		tvCounter.setText(path.size()+"");
 
+	}
+	
+	public void clearForm(){
+		
+		path=new ArrayList<LatLon>();
+
+		updateUI();
+		
 	}
 
 	private OnClickListener showPolygonListener=new OnClickListener() {
@@ -170,7 +268,6 @@ public class PolygonField {
 				loadPolygonValues();
 				
 			}
-			
 			
 			ArrayList<LatLonParcel> pointsExtra = new ArrayList<LatLonParcel>();
 						
@@ -185,12 +282,36 @@ public class PolygonField {
 	    	myIntent.putExtra(CitationMap.MAP_MODE,CitationMap.VIEW_POLYGON);
 	    	myIntent.putExtra("polygon_path", pointsExtra);
 			
-	    	baseContext.startActivity(myIntent);
+	    	((Activity)baseContext).startActivityForResult(myIntent,Sampling.POLYGON_EDIT);
+	    	
 			
 		}
 	};
 	
 
+	private OnClickListener savePolygonListener=new OnClickListener() {
+		
+		public void onClick(View v) {
+
+			ArrayList<LatLonParcel> pointsExtra = new ArrayList<LatLonParcel>();
+			
+			for(LatLon point: path){
+			   
+				pointsExtra.add(new LatLonParcel(point));
+				
+			}
+			
+			Intent myIntent = new Intent();
+	    	myIntent.putExtra("polygon_path", pointsExtra);
+				    	
+	    	((Activity)baseContext).setResult(Sampling.SUCCESS_RETURN_CODE, myIntent);
+
+	    	((Activity)baseContext).finish();
+              
+
+		}
+	};
+	
 	
 	private OnClickListener removePolygonListener=new OnClickListener() {
 		
@@ -206,9 +327,27 @@ public class PolygonField {
 		
 		public void onClick(View v) {
 
-			LatLon tmpLatLon=path.get(0);
-			path.add(tmpLatLon);
-			
+			if(path.size()>2){
+				
+				LatLon firstLatLon=path.get(0);
+				LatLon lastLatLon=path.get(path.size()-1);
+				
+				if(firstLatLon.equals(lastLatLon)){
+					
+					Utilities.showToast("El polígon ja està tancat", baseContext);
+					
+				}
+				else path.add(firstLatLon);
+				
+				
+			}
+			else{
+				
+				Utilities.showToast("Es necessiten més de 2 punts per a tancar el polígon", baseContext);
+
+				
+			}
+
 			
 			updateUI();
 
@@ -225,16 +364,23 @@ public class PolygonField {
 			
 		}
 	};
-	private long citationId;
 
 	public boolean isWaitingGPS() {
+		
 		return waitingGPS;
+		
 	}
 
 	public void setWaitingGPS(boolean waitingGPS) {
+		
 		this.waitingGPS = waitingGPS;
 		
-		if(waitingGPS) ibAddPoint.setVisibility(View.INVISIBLE);
+		if(waitingGPS) {
+			
+			ibAddPoint.setVisibility(View.GONE);
+			tvAddPoint.setText(baseContext.getText(R.string.waitingGPS));
+			
+		}
 		
 	}
 

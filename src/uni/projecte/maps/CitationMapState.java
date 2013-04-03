@@ -15,12 +15,13 @@ public class CitationMapState {
 	public boolean elevationEnabled;
 	public boolean noGPS;
 	public boolean movCitationEnabled;
+	public boolean polygonMode;
 
 	public CitationMapState(boolean gpsOn, boolean labelsOn,
 			boolean editModeOn, boolean gridModeOn, boolean myTracksOn,
 			boolean myTracksWorking, boolean myTrackLoaded,
 			boolean compassEnabled, boolean askedGPSUpdate,
-			boolean elevationEnabled, boolean noGPS,boolean movCitationEnabled) {
+			boolean elevationEnabled, boolean noGPS,boolean movCitationEnabled,boolean polygonMode) {
 		
 		this.gpsOn = gpsOn;
 		this.labelsOn = labelsOn;
@@ -34,6 +35,7 @@ public class CitationMapState {
 		this.elevationEnabled = elevationEnabled;
 		this.noGPS = noGPS;
 		this.movCitationEnabled=movCitationEnabled;
+		this.polygonMode=polygonMode;
 		
 	}
 }

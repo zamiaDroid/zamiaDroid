@@ -9,8 +9,8 @@ package com.google.android.apps.mytracks.lib;
 public final class R {
 	public static final class string {
 		public static final int track_started_broadcast_action = 0x7f060007;
-		public static final int mytracks_service_package = 0x7f06000b;
 		public static final int broadcast_notifications_permission = 0x7f060001;
+		public static final int mytracks_service_package = 0x7f06000b;
 		public static final int mytracks_service_class = 0x7f06000a;
 		public static final int write_track_data_permission = 0x7f060003;
 		public static final int track_update_broadcast_action = 0x7f060009;

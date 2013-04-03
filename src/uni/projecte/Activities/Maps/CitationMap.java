@@ -47,6 +47,7 @@ import uni.projecte.maps.overlays.UTMOverlay;
 import uni.projecte.maps.overlays.UserLocationOverlay;
 import uni.projecte.maps.utils.LatLonParcel;
 import uni.projecte.ui.TransparentPanel;
+import uni.projecte.ui.polygon.PolygonField;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -172,7 +173,7 @@ public class CitationMap extends MapActivity implements LocationListener {
 	 private ImageView ivLocation;
 	 private LinearLayout llCitationInfo;
 	 private LinearLayout llCitationWithPhoto;
-
+	 private TransparentPanel llPolygon;
 
 	 // Project Id
 	 private long projId;
@@ -189,14 +190,14 @@ public class CitationMap extends MapActivity implements LocationListener {
 	 
 
 	 /* Current location [userLocation || trackLastPoint] */
-	 private GeoPoint lastKnownLocation;
-	 
+	 private GeoPoint lastKnownLocation;	 
 	 private double elevation;
+	 private PolygonField polygonField;
 	 
 	 
 	 /* State Class */
 	 private CitationMapState mapState = new CitationMapState(false, false, false,
-			false, false, false, false, false, false, false, true,false);
+			false, false, false, false, false, false, false, true,false,false);
 	 
 	 
 	private String utmPrec="10km";
@@ -235,6 +236,8 @@ public class CitationMap extends MapActivity implements LocationListener {
         controlPanel=(TransparentPanel)findViewById(R.id.mapControlPanel);
         llCitationInfo=(LinearLayout)findViewById(R.id.llCitationInfo);
         llCitationWithPhoto=(LinearLayout)findViewById(R.id.llCitationWithPhoto);
+    	llPolygon=(TransparentPanel)findViewById(R.id.llPolygonMapMenu);
+
         
         ImageButton showLabelsButton = (ImageButton)findViewById(R.id.myShowLabels);
         showLabelsButton.setOnClickListener(showLabelsListener);
@@ -300,10 +303,15 @@ public class CitationMap extends MapActivity implements LocationListener {
         
         if(map_mode==VIEW_POLYGON){
         	
+        	mapState.polygonMode=true;
+        	
         	ArrayList<LatLonParcel> pointsExtra =  getIntent().getParcelableArrayListExtra("polygon_path");
 
-        	PolygonOverlay polygonOverlay=new PolygonOverlay(pointsExtra);
-        	 mapView.getOverlays().add(polygonOverlay);
+        	polygonField=new PolygonField(this, projId, llPolygon,pointsExtra,mapView);
+        	polygonField.setAddPointListener(capturePolygonPoint);
+        	
+        	PolygonOverlay polygonOverlay=new PolygonOverlay(mapView,polygonField.getPolygonPath());
+        	mapView.getOverlays().add(polygonOverlay);
         	
         	
         }
@@ -320,41 +328,20 @@ public class CitationMap extends MapActivity implements LocationListener {
 	          
 	        loadUTMGrid();
 	        
-	        handleInfoDialog();
-	        
 	        utmPrec=pC.getUTMDisplayPrec();
 	        mapState.elevationEnabled=pC.isMapElevationShown();
         
         }
 
-		
+        handleInfoDialog();
+
     }
     
-
-
-	//private void setQuickActions() {
-
-		   //ActionItem eraseItem 	= new ActionItem(ID_ERASE, "Clear", getResources().getDrawable(R.drawable.menu_eraser));
-	      // ActionItem okItem 		= new ActionItem(ID_OK, "OK", getResources().getDrawable(R.drawable.menu_ok));
-	        
-
-			
-			//create QuickAction. Use QuickAction.VERTICAL or QuickAction.HORIZONTAL param to define layout 
-	        //orientation
-			//final QuickAction quickAction = new QuickAction(this, QuickAction.VERTICAL);
-			
-	        //quickAction.addActionItem(eraseItem);
-			//quickAction.addActionItem(okItem);
-		  
-	//}
-
-
 	@Override
 	protected void onStart() {
 		    super.onStart();
 
 	     	handleInfoDialog();
-
 	
 	    
 	} 
@@ -459,109 +446,121 @@ public class CitationMap extends MapActivity implements LocationListener {
 	
 
 	   	llCitationInfo.setVisibility(View.GONE);
+	   	
+	   	
+	   	if(mapState.polygonMode){
+	   		
+	   		controlPanel.setVisibility(View.GONE);
+	   		
+	   	}
+	   	
+	   	else{
+	   	
+	   		llPolygon.setVisibility(View.GONE);
 
-    	//Location bar Info
-    	if(mapState.gpsOn || mapState.myTrackLoaded || trackId>0){
-    		
-    		
-    		if(mapState.gpsOn || mapState.myTracksOn) mapState.gpsMode=true;
-    		else mapState.gpsMode=false;
-    		
-    		ivLocation.setImageResource(R.drawable.ic_maps_indicator_verd_pet);
-			
-			if(mapState.gpsOn) {
-    			
-    			if(lastKnownLocation==null) tvCenteredLocation.setText(getString(R.string.waitingGPS));
-    			myTracksButton.setVisibility(View.GONE);
-    			
-  
-    			
-    		}
-    		else{
-    			
-    			myTracksButton.setVisibility(View.VISIBLE);
-    			
-    		}
-			
-    		if(mapState.gpsMode){ 
-    			
-    			trLocation.setVisibility(View.VISIBLE);
-    			createCitationButton.setVisibility(View.VISIBLE);
-    		   	connectDBButton.setVisibility(View.VISIBLE);
-    		   	editModeButton.setVisibility(View.GONE);
-    		   	
-          		if(mapState.elevationEnabled) tableRowAltitude.setVisibility(View.VISIBLE);
-        		else tableRowAltitude.setVisibility(View.GONE);
-    		   	
-    		}
-    		else{
-    			
-    			trLocation.setVisibility(View.GONE);
-        		tableRowAltitude.setVisibility(View.GONE);
-
-    		}
-
-    		
-    	}
-    	//Position mode
-    	else if(mapState.editModeOn || mapState.gridModeOn){
-    		
-    		mapState.gpsMode=false;
-    		
-    		trLocation.setVisibility(View.VISIBLE);
-    		ivLocation.setImageResource(R.drawable.mini_location);
-    		connectDBButton.setVisibility(View.VISIBLE);
-		   	editModeButton.setVisibility(View.VISIBLE);
-    		
-
-		   	
-    		if(mapState.editModeOn) createCitationButton.setVisibility(View.VISIBLE);
-    		else  createCitationButton.setVisibility(View.GONE);
-    		
-    	}
-    	//Nothing chosen mode
-    	else{
-    		
-    		
-    		trLocation.setVisibility(View.GONE);
-    		tableRowAltitude.setVisibility(View.GONE);
-    		
-    		connectDBButton.setVisibility(View.GONE);
-		   	editModeButton.setVisibility(View.VISIBLE);
-    		createCitationButton.setVisibility(View.GONE);
-    		
-			if(mapState.myTracksWorking) myTracksButton.setVisibility(View.VISIBLE);
-
-    		
-    	}
-    	
-    	
-    	//Track bar Info
-    	if(mapState.myTrackLoaded && !tracksService.getLoadedTrackName(trackId).equals("")){
-    		
-    		tableRowTrack.setVisibility(View.VISIBLE);
-    		
-    		if(mapState.myTracksOn) {
-    			
-    			tvInfoTrackName.setText(getString(R.string.trackRegistering));
-    			gpsButton.setVisibility(View.GONE);
-    			
-    		}
-    		else{
-    			
-        		tvInfoTrackName.setText(tracksService.getLoadedTrackName(trackId));
-    			gpsButton.setVisibility(View.VISIBLE);
-
-    		}    		
-    		
-    	}
-    	else{
-    		
-			gpsButton.setVisibility(View.VISIBLE);
-    		tableRowTrack.setVisibility(View.GONE);
-    		
-    	}
+	    	//Location bar Info
+	    	if(mapState.gpsOn || mapState.myTrackLoaded || trackId>0){
+	    		
+	    		
+	    		if(mapState.gpsOn || mapState.myTracksOn) mapState.gpsMode=true;
+	    		else mapState.gpsMode=false;
+	    		
+	    		ivLocation.setImageResource(R.drawable.ic_maps_indicator_verd_pet);
+				
+				if(mapState.gpsOn) {
+	    			
+	    			if(lastKnownLocation==null) tvCenteredLocation.setText(getString(R.string.waitingGPS));
+	    			myTracksButton.setVisibility(View.GONE);
+	    			
+	  
+	    			
+	    		}
+	    		else{
+	    			
+	    			myTracksButton.setVisibility(View.VISIBLE);
+	    			
+	    		}
+				
+	    		if(mapState.gpsMode){ 
+	    			
+	    			trLocation.setVisibility(View.VISIBLE);
+	    			createCitationButton.setVisibility(View.VISIBLE);
+	    		   	connectDBButton.setVisibility(View.VISIBLE);
+	    		   	editModeButton.setVisibility(View.GONE);
+	    		   	
+	          		if(mapState.elevationEnabled) tableRowAltitude.setVisibility(View.VISIBLE);
+	        		else tableRowAltitude.setVisibility(View.GONE);
+	    		   	
+	    		}
+	    		else{
+	    			
+	    			trLocation.setVisibility(View.GONE);
+	        		tableRowAltitude.setVisibility(View.GONE);
+	
+	    		}
+	
+	    		
+	    	}
+	    	//Position mode
+	    	else if(mapState.editModeOn || mapState.gridModeOn){
+	    		
+	    		mapState.gpsMode=false;
+	    		
+	    		trLocation.setVisibility(View.VISIBLE);
+	    		ivLocation.setImageResource(R.drawable.mini_location);
+	    		connectDBButton.setVisibility(View.VISIBLE);
+			   	editModeButton.setVisibility(View.VISIBLE);
+	    		
+	
+			   	
+	    		if(mapState.editModeOn) createCitationButton.setVisibility(View.VISIBLE);
+	    		else  createCitationButton.setVisibility(View.GONE);
+	    		
+	    	}
+	    	//Nothing chosen mode
+	    	else{
+	    		
+	    		
+	    		trLocation.setVisibility(View.GONE);
+	    		tableRowAltitude.setVisibility(View.GONE);
+	    		
+	    		connectDBButton.setVisibility(View.GONE);
+			   	editModeButton.setVisibility(View.VISIBLE);
+	    		createCitationButton.setVisibility(View.GONE);
+	    		
+				if(mapState.myTracksWorking) myTracksButton.setVisibility(View.VISIBLE);
+	
+	    		
+	    	}
+	    	
+	    	
+	    	//Track bar Info
+	    	if(mapState.myTrackLoaded && !tracksService.getLoadedTrackName(trackId).equals("")){
+	    		
+	    		tableRowTrack.setVisibility(View.VISIBLE);
+	    		
+	    		if(mapState.myTracksOn) {
+	    			
+	    			tvInfoTrackName.setText(getString(R.string.trackRegistering));
+	    			gpsButton.setVisibility(View.GONE);
+	    			
+	    		}
+	    		else{
+	    			
+	        		tvInfoTrackName.setText(tracksService.getLoadedTrackName(trackId));
+	    			gpsButton.setVisibility(View.VISIBLE);
+	
+	    		}    		
+	    		
+	    	}
+	    	else{
+	    		
+				gpsButton.setVisibility(View.VISIBLE);
+	    		tableRowTrack.setVisibility(View.GONE);
+	    		
+	    	}
           	 
+	   	}
   	
     }
     
@@ -609,24 +608,9 @@ public class CitationMap extends MapActivity implements LocationListener {
 
 	private void loadUTMGrid() {
 
-      /*																																															  utmSet= new UTMSet(this);
-          	
-        new Thread(new Runnable() {
-
-			public void run() {
-				
-				//utmSet.loadUTMIberianGrid(mapView);
-           	 
-				handlerAddUTMOverlay.sendEmptyMessage(0);				
-			}
-              
-            	
-    	}).start();*/
-
        utmOverlay= new UTMOverlay(mapView,tvCenteredLocation,utmPrec);
 		
-		
-        handleInfoDialog();
+       handleInfoDialog();
     	
 	}
 	
@@ -700,6 +684,20 @@ public class CitationMap extends MapActivity implements LocationListener {
             	
             	
             }        	
+        }
+    };
+    
+    
+    private OnClickListener capturePolygonPoint = new OnClickListener() {
+
+        public void onClick(View v) {
+
+        	polygonField.setWaitingGPS(true);
+
+        	myLocationGPSManager();
+        	//demanar gps i esperar!
+        	
+        	
         }
     };
     
@@ -1196,7 +1194,8 @@ public class CitationMap extends MapActivity implements LocationListener {
  		if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
  	
  			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10, this);
- 			listOfOverlays.add(myLocationOverlay);
+ 			
+ 			if(!mapState.polygonMode) listOfOverlays.add(myLocationOverlay);
  			
       	   	activateGPS(true);
 
@@ -1634,6 +1633,8 @@ public class CitationMap extends MapActivity implements LocationListener {
 			lastKnownLocation = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
 			myLocationOverlay.setCurrent(lastKnownLocation);
 			mc.animateTo(lastKnownLocation);
+			
+			if(polygonField!=null && polygonField.isWaitingGPS()) polygonField.addPoint(lat, lng, elevation);
 			
 		}
 	}

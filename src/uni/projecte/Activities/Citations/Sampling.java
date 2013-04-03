@@ -45,6 +45,7 @@ import uni.projecte.hardware.gps.MainLocationListener;
 import uni.projecte.maps.GoogleMapsAPI;
 import uni.projecte.maps.UTMDisplay;
 import uni.projecte.maps.utils.LatLon;
+import uni.projecte.maps.utils.LatLonParcel;
 import uni.projecte.ui.multiphoto.MultiPhotoFieldForm;
 import uni.projecte.ui.multiphoto.PhotoFieldForm;
 import uni.projecte.ui.multiphoto.SimplePhotoFieldForm;
@@ -107,6 +108,8 @@ public class Sampling extends Activity {
 	   
 	   public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 3;
 	   public static final int LOAD_REMOTE_TAB = 6;
+	   public static final int POLYGON_EDIT = 7;
+
 
 	   public static final int ENABLE_GPS=Menu.FIRST;
 	   public static final int REPEATED_VALUES=Menu.FIRST+1;
@@ -1022,6 +1025,11 @@ public class Sampling extends Activity {
 					int pos=complexValuesList.get(et.getTag());
 					
 					if(pos>-1) ((Spinner) et).setSelection(pos);
+					
+				}
+				else if(et instanceof ListView){
+					
+					polygonField.clearForm();
 					
 				}
 				else if(et instanceof TextView){
@@ -2024,6 +2032,19 @@ public class Sampling extends Activity {
 	
 	    		break;
 	
+	    	case POLYGON_EDIT :
+	    		
+	    		
+	    		if(resultCode != RESULT_CANCELED){
+	    			    			
+	            	ArrayList<LatLonParcel> pointsExtra = intent.getParcelableArrayListExtra("polygon_path");
+	            	
+	            	if(polygonField!=null) polygonField.updatePath(pointsExtra);
+            	
+	    		}
+            		
+	    		break;
+	    		
 	    	default:
 
 

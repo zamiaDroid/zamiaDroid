@@ -228,7 +228,20 @@
 			  			
 			  			</LinearLayout>
 			  			
-			  	</uni.projecte.ui.TransparentPanel>		
+			  	</uni.projecte.ui.TransparentPanel>
+
+			  		 	<uni.projecte.ui.TransparentPanel
+			  		 	    android:id="@+id/llPolygonMapMenu"
+			  		 	    android:layout_width="wrap_content"
+			  		 	    android:layout_height="wrap_content" >
+			     	
+			  		 	            <include
+			              android:id="@+id/include2"
+			              android:layout_width="wrap_content"
+			              android:layout_height="wrap_content"
+			              layout="@layout/polygon_map_edit" />
+			  		 	    
+			  		 	</uni.projecte.ui.TransparentPanel>
   			
   		</LinearLayout>
   		

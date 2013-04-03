@@ -15,86 +15,89 @@
             android:id="@+id/llAddPoint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:layout_marginRight="5dp"
+             >
 
             <ImageButton
                 android:id="@+id/ibAddPoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginRight="5dp"
                 android:background="@drawable/polygon_add_point" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/tvAddPoint"
+                style="@style/ZamiaSmallTextAppereance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
                 android:text="Afegir punt" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llVertexCount"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginRight="5dp"
+             >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/tvPolygonCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="0"
+                    android:textColor="@color/secondaryGreen"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvPolygonCountText"
+                style="@style/ZamiaSmallTextAppereance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Vèrtexs" />
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/llShowPolygon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" 
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_marginRight="5dp"
+             >
 
             <ImageButton
                 android:id="@+id/ibShowPolygon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginRight="5dp"
                 android:background="@drawable/polygon_view" />
 
             <TextView
                 android:id="@+id/textView1"
+                style="@style/ZamiaSmallTextAppereance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="Veure polígon" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvPolygonCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom|center_horizontal" >
-
-        <LinearLayout
-            android:id="@+id/llClosePolygon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <ImageButton
-                android:id="@+id/ibClosePolygon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/polygon_close" />
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="Tancar polígon" />
+                android:text="Edició sobre mapa" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llPolygonRemove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:layout_marginRight="5dp"
+             >
 
             <ImageButton
                 android:id="@+id/ibPolygonRemove"
@@ -105,32 +108,12 @@
 
             <TextView
                 android:id="@+id/textView1"
+                style="@style/ZamiaSmallTextAppereance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
                 android:text="Esborrar polígon" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/llRemoveLastPoint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <ImageButton
-                android:id="@+id/ibPolygonRemovePoint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/polygon_remove_last" />
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="Esborrar darrer punt" />
-        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

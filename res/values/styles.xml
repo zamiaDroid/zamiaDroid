@@ -15,6 +15,10 @@
 		<item name="android:textSize">12sp</item>
 	</style>
 
+	<style name="ZamiaSmallTextAppereance" parent="@android:style/TextAppearance">
+		<item name="android:textSize">10sp</item>
+	</style>
+	
     <style name="DashboardButtonOriginal">
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_width">wrap_content</item>
