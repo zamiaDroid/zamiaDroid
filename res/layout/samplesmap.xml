@@ -3,21 +3,7 @@
 			android:id="@+id/home_container"  
 			android:layout_width="fill_parent" 
 			android:layout_height="fill_parent">
-<!-- 
-<Linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/buttonlayout" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:height="32dp" android:gravity="left|top" android:background="#2B60DE" android:paddingtop="2dp" android:paddingbottom="2dp">
 
-		    <Linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/buttonlayout2" android:orientation="horizontal" android:layout_height="wrap_content" android:gravity="left|center_vertical" android:layout_gravity="left" android:layout_width="wrap_content">
-	    		<Imagebutton android:id="@+id/imgbtn1" android:layout_width="32dp" android:layout_height="32dp" android:background="@drawable/icon"></Imagebutton>
-	    		<Textview android:id="@+id/txtTest" android:layout_width="fill_parent" android:layout_height="fill_parent" android:textstyle="bold" android:text="SimpleActionBar App" android:textcolor="#FFFFFF" android:textsize="15sp" android:gravity="center_vertical" android:paddingleft="5dp">
-
-	    	</Textview></Linearlayout>
-		    <Linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/buttonlayout2" android:orientation="horizontal" android:layout_height="wrap_content" android:gravity="right" android:layout_gravity="right" android:layout_width="fill_parent">
-	    		<Imagebutton android:id="@+id/imgbtn2" android:layout_width="32dp" android:layout_height="32dp" android:background="@drawable/icon"></Imagebutton>
-	    		<Imagebutton android:id="@+id/imgbtn3" android:layout_width="32dp" android:layout_height="32dp" android:background="@drawable/icon"></Imagebutton>
-	    	</Linearlayout>  -->
-
-
-   <!-- <uni.projecte.maps.mapabstraction.MapViewGM-->
    <com.google.android.maps.MapView
           android:id="@+id/mapview"
        android:layout_width="fill_parent"
@@ -33,8 +19,7 @@
                <!--  android:apiKey="0iepYHdiW7LPuKkUru1YG_Mu4d3WN1q-A3lGLgg"--> 
                <!-- 0iepYHdiW7LPJskUhI7eryrsQBiW_QrzDK6EcNA-->
     	<!-- certificat androidMarket -->
-    	
-    	<!--        android:apiKey="0iepYHdiW7LMvYV-Y5Z8RXdD1iVnXmtL5XCU-Fg"-->
+    		<!--  android:apiKey="0iepYHdiW7LMvYV-Y5Z8RXdD1iVnXmtL5XCU-Fg"-->
     
   		<LinearLayout  	xmlns:android="http://schemas.android.com/apk/res/android" 
     			    android:layout_width="fill_parent" 
@@ -233,7 +218,10 @@
 			  		 	<uni.projecte.ui.TransparentPanel
 			  		 	    android:id="@+id/llPolygonMapMenu"
 			  		 	    android:layout_width="wrap_content"
-			  		 	    android:layout_height="wrap_content" >
+			  		 	    android:layout_height="wrap_content"
+			  				android:paddingLeft="9dp"
+			    			android:paddingRight="9dp"
+			    			android:paddingBottom="9dp" >
 			     	
 			  		 	            <include
 			              android:id="@+id/include2"

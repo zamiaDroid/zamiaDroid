@@ -8,6 +8,7 @@ import uni.projecte.ui.polygon.PolygonField;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import android.widget.SlidingDrawer;
 
 public class PolygonControler {
 
@@ -22,7 +23,8 @@ public class PolygonControler {
 	public PolygonControler(Context baseContext) {
 
 		this.baseContext=baseContext;
-		
+		citSLCnt=new CitationSecondLevelControler(baseContext);
+
 	}
 
 	
@@ -40,8 +42,6 @@ public class PolygonControler {
 	public void addPolygonList(PolygonField polygonField) {
 
 		ArrayList<LatLon> path=polygonField.getPolygonPath();
-		
-		citSLCnt=new CitationSecondLevelControler(baseContext);
         
     	long subFieldId=getPolygonSubFieldId(polygonField.getFieldId());
     	
@@ -59,13 +59,19 @@ public class PolygonControler {
     	}
 		
 	}
+	
+	public void updatePolygonList(PolygonField polygonField) {
+
+		citSLCnt.removeCitationsBySLId(polygonField.getSecondLevelId());
+
+		addPolygonList(polygonField);
+		
+	}
 
 
 	public ArrayList<LatLon> getPolygonPath(String secondLevelFieldId) {
 
 		ArrayList<LatLon> path= new ArrayList<LatLon>();
-		
-		citSLCnt=new CitationSecondLevelControler(baseContext);
 		
 		//idSample,fieldId,latitude,longitude,date,group_concat(value,\":\")
 		Cursor points=citSLCnt.getFieldValuesBySLId(secondLevelFieldId);
@@ -90,6 +96,33 @@ public class PolygonControler {
 		return path;
 		
 	}
+
+
+	public String getPolygonString(String subCitId, boolean kmlFormat) {
+
+		String points="";
+		
+		Cursor polyPoints=citSLCnt.getFieldValuesBySLId(subCitId);
+		
+		if(polyPoints!=null) {
+			
+			polyPoints.moveToFirst();
+			
+			while(!polyPoints.isAfterLast()){
+				
+				if(!kmlFormat) points=points+"["+polyPoints.getDouble(2)+", "+polyPoints.getDouble(3)+", "+polyPoints.getString(5)+"] ";
+				else points=points+polyPoints.getDouble(3)+", "+polyPoints.getDouble(2)+", "+polyPoints.getString(5)+"\n ";
+				polyPoints.moveToNext();
+			}		
+			
+			polyPoints.close();
+		} 
+		
+		return points;
+	}
+
+
+
 	
 
 }

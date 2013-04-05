@@ -979,14 +979,15 @@ public class CitationControler {
 			while(!citationFieldValue.isAfterLast()){
 				
 				if(j==m-1) cExporter.setLast(true); 
-						
+					
+				Log.i("Export","Proves -> "+citationFieldValue.getLong(2));
+
 				ProjectField projField=projectFields.get(citationFieldValue.getLong(2));
-						
-				
+				Log.i("Export",projField.toString() +" -> "+citationFieldValue.getString(3));
 				
 				if(projField.isSubFieldExport()){ 
 					
-					cExporter.createCitationField(projField.getName(), projField.getLabel(), getSubCitationValue(citationFieldValue.getString(3)), projField.getDesc());
+					cExporter.createCitationField(projField.getName(), projField.getLabel(), getSubCitationValue(citationFieldValue.getString(3),projField,cExporter instanceof KMLExporter), projField.getDesc());
 					cExporter.setFieldType(projField.getId(),projField.getType(),baseContext);
 					
 				}
@@ -1014,11 +1015,22 @@ public class CitationControler {
 		
 		
 	
-	private String getSubCitationValue(String subCitId) {
+	private String getSubCitationValue(String subCitId, ProjectField projField, boolean kmlFormat) {
 
-		CitationSecondLevelControler citSLCnt= new CitationSecondLevelControler(baseContext);
-
-		String value=citSLCnt.getMultiPhotosValues(subCitId);
+		String value="";
+		
+		if(projField.isMultiPhoto()){
+		
+			CitationSecondLevelControler citSLCnt= new CitationSecondLevelControler(baseContext);
+			value=citSLCnt.getMultiPhotosValues(subCitId);
+		
+		}
+		else{
+			
+			PolygonControler polyCnt = new PolygonControler(baseContext);
+			value=polyCnt.getPolygonString(subCitId, kmlFormat);			
+			
+		}
 		
 		return value;
 		

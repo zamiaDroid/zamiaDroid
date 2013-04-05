@@ -140,6 +140,11 @@ public class ProjectField{
 		
 	}
 
+	public String toString(){
+		
+		return id+" "+name+" ["+type+"]";
+				
+	}
 
 	public String getName() {
 		return name;
@@ -200,7 +205,7 @@ public class ProjectField{
 	
 	public boolean isSubFieldExport(){
 		
-		return isMultiPhoto();
+		return isMultiPhoto() || isPolygon();
 		
 	}
 	

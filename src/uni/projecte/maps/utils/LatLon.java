@@ -15,7 +15,7 @@ public final class LatLon {
 	}
 	
 	public boolean equals(LatLon point){
-		
+			
 		return (latitude == point.latitude) && 
 			   (longitude == point.longitude) && 
 			   (altitude == point.altitude);

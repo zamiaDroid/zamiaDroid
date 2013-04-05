@@ -167,6 +167,8 @@ public class CitationMap extends MapActivity implements LocationListener {
 	 
 	 /* Info Layer: Layouts */
 	 private TransparentPanel controlPanel;
+	 private TransparentPanel transparentPanel;
+
 	 private TableRow trLocation;
 	 private TableRow tableRowTrack;
 	 private TableRow tableRowAltitude;
@@ -234,10 +236,11 @@ public class CitationMap extends MapActivity implements LocationListener {
         ivLocation=(ImageView)findViewById(R.id.ivLocation);
 
         controlPanel=(TransparentPanel)findViewById(R.id.mapControlPanel);
+        transparentPanel=(TransparentPanel)findViewById(R.id.transparent_panel);
         llCitationInfo=(LinearLayout)findViewById(R.id.llCitationInfo);
         llCitationWithPhoto=(LinearLayout)findViewById(R.id.llCitationWithPhoto);
     	llPolygon=(TransparentPanel)findViewById(R.id.llPolygonMapMenu);
-
+    	
         
         ImageButton showLabelsButton = (ImageButton)findViewById(R.id.myShowLabels);
         showLabelsButton.setOnClickListener(showLabelsListener);
@@ -444,18 +447,18 @@ public class CitationMap extends MapActivity implements LocationListener {
     	Log.i("CitationMap","gpsOn:trackId:myTracksOn:myTracksLoaded:editModeOn:gridModeOn");
     	Log.i("CitationMap",mapState.gpsOn+":"+trackId+":"+mapState.myTracksOn+":"+mapState.myTrackLoaded+":"+mapState.editModeOn+":"+mapState.gridModeOn);
 	
-
-	   	llCitationInfo.setVisibility(View.GONE);
-	   	
 	   	
 	   	if(mapState.polygonMode){
 	   		
 	   		controlPanel.setVisibility(View.GONE);
+	   		transparentPanel.setVisibility(View.GONE);
 	   		
 	   	}
 	   	
 	   	else{
-	   	
+		   	
+	   		llCitationInfo.setVisibility(View.GONE);
+
 	   		llPolygon.setVisibility(View.GONE);
 
 	    	//Location bar Info
@@ -692,10 +695,18 @@ public class CitationMap extends MapActivity implements LocationListener {
 
         public void onClick(View v) {
 
-        	polygonField.setWaitingGPS(true);
-
-        	myLocationGPSManager();
-        	//demanar gps i esperar!
+        	if(polygonField.canAddPoint()){
+        	
+	        	polygonField.setWaitingGPS(true);
+	
+	        	myLocationGPSManager();
+        	
+        	}
+        	else{
+        		
+        		Utilities.showToast("El polígon ja està tancat", v.getContext());
+        		
+        	}
         	
         	
         }
@@ -1437,11 +1448,14 @@ public class CitationMap extends MapActivity implements LocationListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-    	menu.add(0,CHOOSE_TRACK, 0,R.string.mLoadTrack).setIcon(android.R.drawable.ic_menu_directions);
-    	menu.add(0,MAP_TYPE, 0,R.string.mapShowNormalView).setIcon(android.R.drawable.ic_menu_mapmode);
-    	menu.add(0,MAP_OPTIONS, 0,R.string.mMapsOptions).setIcon(android.R.drawable.ic_menu_preferences);
-    	menu.add(0,DB_CONFIG, 0,R.string.mConfigDB).setIcon(getResources().getDrawable(R.drawable.ic_menu_db));
+		if(!mapState.polygonMode){
+		
+			menu.add(0,CHOOSE_TRACK, 0,R.string.mLoadTrack).setIcon(android.R.drawable.ic_menu_directions);
+			menu.add(0,MAP_TYPE, 0,R.string.mapShowNormalView).setIcon(android.R.drawable.ic_menu_mapmode);
+			menu.add(0,MAP_OPTIONS, 0,R.string.mMapsOptions).setIcon(android.R.drawable.ic_menu_preferences);
+			menu.add(0,DB_CONFIG, 0,R.string.mConfigDB).setIcon(getResources().getDrawable(R.drawable.ic_menu_db));
 
+		}
 
     	return super.onCreateOptionsMenu(menu);
     }
@@ -1449,31 +1463,34 @@ public class CitationMap extends MapActivity implements LocationListener {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu){
 		
-		if(mapView.isTraffic())  menu.findItem(MAP_TYPE).setTitle(R.string.mapShowNormalView);
-    	else  menu.findItem(MAP_TYPE).setTitle(getString(R.string.mapShowTransitView));
-		
-		if(lastKnownLocation==null){
+		if(!mapState.polygonMode){
+
+			if(mapView.isTraffic())  menu.findItem(MAP_TYPE).setTitle(R.string.mapShowNormalView);
+	    	else  menu.findItem(MAP_TYPE).setTitle(getString(R.string.mapShowTransitView));
 			
-			menu.removeItem(MY_LOCATION);
+			if(lastKnownLocation==null){
+				
+				menu.removeItem(MY_LOCATION);
+				
+			}
+			else{
+				
+		    	if(menu.findItem(MY_LOCATION)==null)menu.add(0, MY_LOCATION, 1,R.string.mCenterLocation).setIcon(android.R.drawable.ic_menu_mapmode);
+	
+			}
 			
-		}
-		else{
-			
-	    	if(menu.findItem(MY_LOCATION)==null)menu.add(0, MY_LOCATION, 1,R.string.mCenterLocation).setIcon(android.R.drawable.ic_menu_mapmode);
+			if(!mapState.myTracksOn && trackId>-1){
+				
+		    	if(menu.findItem(CLEAR_MAP)==null) menu.add(0, CLEAR_MAP, (menu.findItem(CHOOSE_TRACK).getOrder())+1,R.string.mCleanTrackLoaded).setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+	
+				
+			}
+			else {
+				
+				if(menu.findItem(CLEAR_MAP)!=null) menu.removeItem(CLEAR_MAP);
+			}
 
 		}
-		
-		if(!mapState.myTracksOn && trackId>-1){
-			
-	    	if(menu.findItem(CLEAR_MAP)==null) menu.add(0, CLEAR_MAP, (menu.findItem(CHOOSE_TRACK).getOrder())+1,R.string.mCleanTrackLoaded).setIcon(android.R.drawable.ic_menu_close_clear_cancel);
-
-			
-		}
-		else {
-			
-			if(menu.findItem(CLEAR_MAP)!=null) menu.removeItem(CLEAR_MAP);
-		}
-
 
 		return super.onPrepareOptionsMenu(menu);
 		

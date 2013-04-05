@@ -31,7 +31,7 @@ public class PolygonField {
 	public static final int CREATE_MODE = 1;
 	public static final int EDIT_MODE = 2;
 	public static final int MAP_MODE = 3;
-	
+
 	private int POLYGON_FIELD_MODE;
 	
 	protected Context baseContext;
@@ -47,6 +47,7 @@ public class PolygonField {
 
 	private ArrayList<LatLon> path;
 	private boolean waitingGPS=false;
+	private boolean modified=false;
 	
 	private MapView mapView;
 	
@@ -172,7 +173,9 @@ public class PolygonField {
 		
 		path=polygonCnt.getPolygonPath(secondLevelId);			
 	
-		tvCounter.setText(""+path.size());
+		if(isClosed()) tvCounter.setText(path.size()-1+"");
+		else tvCounter.setText(path.size()+"");
+
 		
 	}
 
@@ -193,6 +196,8 @@ public class PolygonField {
 		tvAddPoint.setText("Afegir punt");
 		
 		updateUI();
+		
+		modified=true;
 		
 	}
 	
@@ -247,7 +252,8 @@ public class PolygonField {
 			
 		}
 	
-		tvCounter.setText(path.size()+"");
+		if(isClosed()) tvCounter.setText(path.size()-1+"");
+		else tvCounter.setText(path.size()+"");
 
 	}
 	
@@ -255,7 +261,11 @@ public class PolygonField {
 		
 		path=new ArrayList<LatLon>();
 
+		secondLevelId=createSecondLevelIdentifier(field.getName());
+		
 		updateUI();
+		
+		modified=false;
 		
 	}
 
@@ -281,7 +291,8 @@ public class PolygonField {
 	    	myIntent.putExtra("id", projId);
 	    	myIntent.putExtra(CitationMap.MAP_MODE,CitationMap.VIEW_POLYGON);
 	    	myIntent.putExtra("polygon_path", pointsExtra);
-			
+
+	    	
 	    	((Activity)baseContext).startActivityForResult(myIntent,Sampling.POLYGON_EDIT);
 	    	
 			
@@ -303,7 +314,8 @@ public class PolygonField {
 			
 			Intent myIntent = new Intent();
 	    	myIntent.putExtra("polygon_path", pointsExtra);
-				    	
+	    	myIntent.putExtra("polygon_modified", modified);
+	    	
 	    	((Activity)baseContext).setResult(Sampling.SUCCESS_RETURN_CODE, myIntent);
 
 	    	((Activity)baseContext).finish();
@@ -319,6 +331,8 @@ public class PolygonField {
 
 			path= new ArrayList<LatLon>();
 			updateUI();
+			
+			modified=true;
 
 		}
 	};
@@ -337,18 +351,20 @@ public class PolygonField {
 					Utilities.showToast("El polígon ja està tancat", baseContext);
 					
 				}
-				else path.add(firstLatLon);
-				
+				else {
+					
+					path.add(firstLatLon);
+					modified=true;
+					
+				}
 				
 			}
 			else{
 				
 				Utilities.showToast("Es necessiten més de 2 punts per a tancar el polígon", baseContext);
-
 				
 			}
 
-			
 			updateUI();
 
 		}
@@ -360,11 +376,33 @@ public class PolygonField {
 		public void onClick(View v) {
 
 			path.remove(path.size()-1);
-			updateUI();		
-			
+			updateUI();	
+
+			modified=true;
+
 		}
 	};
 
+	public boolean isClosed(){
+		
+		if(path.size()<=1) return false;
+		else return getFirstPoint().equals(getLastPoint());
+		
+	}
+	
+	private LatLon getLastPoint(){
+		
+		return path.get(path.size()-1);
+		
+	}
+	
+	private LatLon getFirstPoint(){
+		
+		return path.get(0);
+		
+	}
+	
+	
 	public boolean isWaitingGPS() {
 		
 		return waitingGPS;
@@ -424,6 +462,21 @@ public class PolygonField {
 
 		return field.getLabel();
 
+	}
+
+	public boolean canAddPoint() {
+
+		if(path.size()>2 && isClosed()) return false;
+		else return true;
+	
+	}
+
+	public boolean isModified() {
+		return modified;
+	}
+
+	public void setModified(boolean modified) {
+		this.modified = modified;
 	}
 	
 	

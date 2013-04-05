@@ -205,16 +205,12 @@ public class KMLWriter {
 	}
 	
 	
-	
 	public void openCitation(){
-		
-		
 		
 		try {
 			
 			serializer.startTag("","Placemark");
 
-			
 			
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
@@ -324,8 +320,7 @@ public class KMLWriter {
 	 * 
 	 * */
 	
-	public void writeCitationCoordinate(String code){
-
+	public void writeCitationCoordinatePoint(String code){
     	
 		try {
 		            	
@@ -350,10 +345,55 @@ public class KMLWriter {
 		} catch (IOException e) {
 						
 			e.printStackTrace();
-		}
-		            
-		      
-		    
+		}	    
+	}
+	
+	/*
+	 * <Polygon> 
+	 * 	<outerBoundaryIs>  
+	 * 		<LinearRing>  
+  	 *  		<coordinates>
+   	 *				135.2, 35.4, 0. 
+     *				135.4, 35.6, 0.
+   	 *				135.2, 35.6, 0.
+   	 *				135.2, 35.4, 0. 
+   	 *  		</coordinates>
+ 	 *		</LinearRing> 
+ 	 *	</outerBoundaryIs> 
+ 	 * </Polygon>	  
+	 * 
+	 */
+	
+	public void writeCitationCoordinatePolygon(String coords){
+    	
+		try {
+		            	
+	        serializer.startTag("", "Polygon");
+	        	serializer.startTag("", "outerBoundaryIs");
+	        		serializer.startTag("", "LinearRing");
+
+	        			serializer.startTag("", "coordinates");
+
+	        				serializer.text(coords);
+				
+						serializer.endTag("", "coordinates");
+				
+					serializer.endTag("", "LinearRing");
+				serializer.endTag("", "outerBoundaryIs");
+			serializer.endTag("", "Polygon");
+	        
+		} catch (IllegalArgumentException e) {
+						
+			e.printStackTrace();
+			
+		} catch (IllegalStateException e) {
+						
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+						
+			e.printStackTrace();
+		}	    
 	}
 	
 	public void writeSecondaryCitationCoordinate(String code){

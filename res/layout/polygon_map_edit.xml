@@ -30,11 +30,11 @@
 
             <TextView
                 android:id="@+id/tvAddPoint"
+                style="@style/ZamiaSmallTextAppereance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="Afegir punt"
-                style="@style/ZamiaSmallTextAppereance"/>
+                android:text="Afegir punt" />
         </LinearLayout>
 
         <LinearLayout
@@ -48,20 +48,19 @@
 
             <TextView
                 android:id="@+id/tvPolygonCountText"
+                style="@style/ZamiaSmallTextAppereance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Vèrtexs:"
-                style="@style/ZamiaSmallTextAppereance" />
+                android:text="Punts" />
 
             <TextView
                 android:id="@+id/tvPolygonCount"
+                style="@style/ZamiaSmallTextAppereance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="0"
-                style="@style/ZamiaSmallTextAppereance" />
-
+                android:text="0" />
         </LinearLayout>
 
         <LinearLayout
@@ -86,14 +85,6 @@
                 android:text="Tancar polígon" />
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom|center_horizontal" >
-
         <LinearLayout
             android:id="@+id/llPolygonRemove"
             android:layout_width="wrap_content"
@@ -109,11 +100,11 @@
 
             <TextView
                 android:id="@+id/textView1"
+                style="@style/ZamiaSmallTextAppereance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="Esborrar polígon"
-                style="@style/ZamiaSmallTextAppereance" />
+                android:text="Esborrar polígon" />
         </LinearLayout>
 
         <LinearLayout
@@ -131,12 +122,19 @@
 
             <TextView
                 android:id="@+id/textView1"
+                style="@style/ZamiaSmallTextAppereance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="Esborrar darrer punt"
-                style="@style/ZamiaSmallTextAppereance" />
+                android:text="Esborrar darrer punt" />
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom|center_horizontal" >
     </LinearLayout>
 
     <LinearLayout

@@ -33,6 +33,7 @@ import uni.projecte.controler.CitationControler;
 import uni.projecte.controler.CitationSecondLevelControler;
 import uni.projecte.controler.DataTypeControler;
 import uni.projecte.controler.MultiPhotoControler;
+import uni.projecte.controler.PolygonControler;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.ProjectSecondLevelControler;
@@ -43,6 +44,7 @@ import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.AttributeValue;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
+import uni.projecte.maps.utils.LatLonParcel;
 import uni.projecte.ui.multiphoto.MultiPhotoFieldForm;
 import uni.projecte.ui.multiphoto.PhotoFieldForm;
 import uni.projecte.ui.polygon.PolygonField;
@@ -95,6 +97,7 @@ public class CitationEditor extends Activity {
 	   public final static int SUCCESS_RETURN_CODE = 1;
 	   public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
 	   public static final int CAPTURE_IMAGE_MULTI_PHOTO = 3;
+	   public static final int POLYGON_EDIT = 4;
 
 	   private static final int REMOVE_CITATION = Menu.FIRST;
 	   private static final int SHOW_MAP =Menu.FIRST+1;
@@ -123,7 +126,7 @@ public class CitationEditor extends Activity {
 	   private ArrayList<AttributeValue> attValuesList;
 	   private ArrayList<ProjectField> fieldList;
    	   private Hashtable<String, PhotoFieldForm> photoFieldsList;
-
+   	   private PolygonField polygonField;
 	   
 	   private TextView mDateDisplay;
 	   private TextView mLocationDisplay;
@@ -620,6 +623,15 @@ public class CitationEditor extends Activity {
 				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId);				
 				
 			}						
+		}
+		
+		//Updating Polygon
+		if(polygonField!=null){
+		
+			PolygonControler polygonCnt= new PolygonControler(this);
+	
+			polygonCnt.updatePolygonList(polygonField);
+	
 		}
 
 	}
@@ -1222,7 +1234,7 @@ public class CitationEditor extends Activity {
 				   String pred=sC.getFieldValue(citationId,att.getId());			   
 				   String altitudes=citSLCnt.getMultiPhotosValues(pred);				   
 				   
-				   PolygonField polygonField = new PolygonField(this, id, att, llField, PolygonField.EDIT_MODE);
+				   polygonField = new PolygonField(this, id, att, llField, PolygonField.EDIT_MODE);
 				   polygonField.setSecondLevelId(pred);
 				 
 				   
@@ -1778,8 +1790,28 @@ public class CitationEditor extends Activity {
        	
        	break;
        
+    		case Sampling.POLYGON_EDIT :
+    		
+	    		if(resultCode != RESULT_CANCELED){
+	    			    			
+	            	ArrayList<LatLonParcel> pointsExtra = intent.getParcelableArrayListExtra("polygon_path");
+	            	
+	            	boolean modifiedPolygon=intent.getBooleanExtra("polygon_modified", true);
+	            	
+	            	
+	            	if(polygonField!=null && modifiedPolygon) {
+	            		
+	            		polygonField.updatePath(pointsExtra);
+	            		polygonField.setModified(true);
+	            		
+	            	}
+	        	
+	    		}
+        		
+    		break;
      
         }
+
         
     }
     

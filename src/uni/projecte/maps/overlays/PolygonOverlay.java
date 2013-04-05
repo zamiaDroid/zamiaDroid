@@ -65,15 +65,21 @@ public class PolygonOverlay extends Overlay {
 	            mPaint.setStrokeCap(Paint.Cap.ROUND);
 	            mPaint.setStrokeWidth(5);
 	
+	            Paint verPaint=new Paint();
+	            verPaint.setColor(Color.rgb(208, 221, 154));
+	            verPaint.setStrokeWidth(5);
+	            verPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+	            verPaint.setStrokeJoin(Paint.Join.ROUND);
+	            verPaint.setStrokeCap(Paint.Cap.ROUND);
+	           
 	            Path path = new Path();
-	
+	            
 	            GeoPoint start = new LatLonPoint(route.get(0));
 	            firstPoint = new Point();
 	
 	            Projection projection = mapv.getProjection();
 	            projection.toPixels(start, firstPoint);
 	
-	            mPaint.setColor(Color.rgb(208, 221, 154));
 	            
 	            for (int i = 1; i < route.size(); ++i) {
 	                    
@@ -86,7 +92,7 @@ public class PolygonOverlay extends Overlay {
 	                    path.moveTo(p2.x, p2.y);
 	                    path.lineTo(p1.x, p1.y);
 	
-	                    canvas.drawCircle((float)p2.x, (float)p2.y, (float) 4.5, mPaint);
+	                    canvas.drawCircle((float)p2.x, (float)p2.y, (float) 4.5, verPaint);
 	                    
 	                    start = new LatLonPoint(route.get(i));
 	            }
@@ -94,12 +100,11 @@ public class PolygonOverlay extends Overlay {
 	            mPaint.setAntiAlias(true);
 	            
 	            mPaint.setColor(Color.rgb(208, 221, 154));
-	
 	            canvas.drawPath(path, mPaint);
 	            
 	            //drawing firstPoint
-	            mPaint.setColor(Color.rgb(136, 170, 0));
-	            canvas.drawCircle((float)firstPoint.x, (float)firstPoint.y, (float) 4.5, mPaint);
+	            verPaint.setColor(Color.rgb(136, 170, 0));
+	            canvas.drawCircle((float)firstPoint.x, (float)firstPoint.y, (float) 4.5, verPaint);
 	            
 	            
           }
