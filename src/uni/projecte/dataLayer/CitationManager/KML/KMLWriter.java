@@ -76,6 +76,37 @@ public class KMLWriter {
 		        serializer.startTag("", "Document");
 		 
 		        
+		        /* style Polygon */
+	            serializer.startTag("", "Style");
+	            serializer.attribute("", "id", "style_polygon");
+
+		            serializer.startTag("", "LineStyle");
+			            
+		            	serializer.startTag("", "width");
+			            serializer.text("1.5");
+			            serializer.endTag("", "width");
+			            
+		            	serializer.startTag("", "color");
+			            serializer.text("ff00aa88");
+			            serializer.endTag("", "color");
+		            
+		            serializer.endTag("", "LineStyle");
+	            
+		            serializer.startTag("", "PolyStyle");
+		            
+	            	serializer.startTag("", "fill");
+		            serializer.text("1");
+		            serializer.endTag("", "fill");
+		            
+	            	serializer.startTag("", "color");
+		            serializer.text("ff9addd0");
+		            serializer.endTag("", "color");
+	            
+	            serializer.endTag("", "PolyStyle");
+	            
+	            serializer.endTag("", "Style");
+
+	            
 		 } catch (Exception e) {
 		        throw new RuntimeException(e);
 		    } 
@@ -353,10 +384,10 @@ public class KMLWriter {
 	 * 	<outerBoundaryIs>  
 	 * 		<LinearRing>  
   	 *  		<coordinates>
-   	 *				135.2, 35.4, 0. 
-     *				135.4, 35.6, 0.
-   	 *				135.2, 35.6, 0.
-   	 *				135.2, 35.4, 0. 
+   	 *				135.2,35.4, 0. 
+     *				135.4,35.6, 0.
+   	 *				135.2,35.6, 0.
+   	 *				135.2,35.4, 0. 
    	 *  		</coordinates>
  	 *		</LinearRing> 
  	 *	</outerBoundaryIs> 
@@ -367,7 +398,11 @@ public class KMLWriter {
 	public void writeCitationCoordinatePolygon(String coords){
     	
 		try {
-		            	
+		      		
+	        serializer.startTag("", "styleUrl");
+				serializer.text("#style_polygon");
+			serializer.endTag("", "styleUrl");
+			
 	        serializer.startTag("", "Polygon");
 	        	serializer.startTag("", "outerBoundaryIs");
 	        		serializer.startTag("", "LinearRing");

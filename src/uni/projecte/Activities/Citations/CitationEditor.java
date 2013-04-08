@@ -678,6 +678,11 @@ public class CitationEditor extends Activity {
 
 				
 			}
+			else if(et instanceof ListView){
+				
+				value=polygonField.getSecondLevelId();
+				
+			}
 			else{
 				
 				

@@ -111,7 +111,7 @@ public class PolygonControler {
 			while(!polyPoints.isAfterLast()){
 				
 				if(!kmlFormat) points=points+"["+polyPoints.getDouble(2)+", "+polyPoints.getDouble(3)+", "+polyPoints.getString(5)+"] ";
-				else points=points+polyPoints.getDouble(3)+", "+polyPoints.getDouble(2)+", "+polyPoints.getString(5)+"\n ";
+				else points=points+polyPoints.getDouble(3)+","+polyPoints.getDouble(2)+","+polyPoints.getString(5)+"\n ";
 				polyPoints.moveToNext();
 			}		
 			
