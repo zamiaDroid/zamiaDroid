@@ -524,7 +524,7 @@ public class ProjectDbAdapter {
 	public Cursor findSecondLevelField(long projId) {
 
 	 	   return mDb.query(DATABASE_TABLE_FIELD, new String[] {KEY_ROWID, PROJ_ID,
-	  			  PROJ_NAME,TYPE,LABEL,PREVALUE,CAT}, PROJ_ID + "=" + projId +" and "+ TYPE + "=\"secondLevel\"", null, null, null, null);		
+	  			  PROJ_NAME,TYPE,LABEL,PREVALUE,CAT}, PROJ_ID + "=" + projId +" and ("+ TYPE + "=\"secondLevel\" or "+ TYPE + "=\"polygon\"  or "+ TYPE + "=\"multiphoto\")", null, null, null, null);		
 	}
 	
 	public Cursor findThesaurusField(long projId) {

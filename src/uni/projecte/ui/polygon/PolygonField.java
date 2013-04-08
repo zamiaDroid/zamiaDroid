@@ -92,9 +92,9 @@ public class PolygonField {
 
 		}
 		else{
-			
+
 			((LinearLayout) ibAddPoint.getParent()).setVisibility(View.GONE);
-			
+
 		}
 		
 	}
@@ -268,16 +268,19 @@ public class PolygonField {
 		modified=false;
 		
 	}
+	
+	public void loadPoints(String secondLevelId) {
+		
+		this.secondLevelId = secondLevelId;
+		loadPolygonValues();
+
+	}
 
 	private OnClickListener showPolygonListener=new OnClickListener() {
 		
 		public void onClick(View v) {
 
-			if(POLYGON_FIELD_MODE==EDIT_MODE){
-				
-				loadPolygonValues();
-				
-			}
+
 			
 			ArrayList<LatLonParcel> pointsExtra = new ArrayList<LatLonParcel>();
 						
@@ -442,9 +445,7 @@ public class PolygonField {
 		return secondLevelId;
 	}
 
-	public void setSecondLevelId(String secondLevelId) {
-		this.secondLevelId = secondLevelId;
-	}
+
 
 	public void setCitationId(long citationValueId) {
 

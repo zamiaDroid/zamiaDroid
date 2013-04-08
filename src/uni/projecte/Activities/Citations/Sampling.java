@@ -1818,7 +1818,7 @@ public class Sampling extends Activity {
         public void onClick(View v) {
 
         	polygonField.setWaitingGPS(true);
-        	callGPS();
+        	if(!tempGPS) callGPS();
         	        	
         }
     };

@@ -287,22 +287,8 @@ public class CitationMap extends MapActivity implements LocationListener {
         pC=new PreferencesControler(this);
         projCnt=new ProjectControler(this);
         
-        projCnt.loadProjectInfoById(projId);
-        fieldsLabelNames=projCnt.getProjectFieldsPair(projId);
-        
-        
-        /* Getting instance of MyTracksService */
-        tracksService=new MyTracksService(this);
-        tracksService.setProjName(projCnt.getCleanProjectName());
-        
-
         listOfOverlays = mapView.getOverlays();
 
-        // User location overlay (green marker)
-        myLocationOverlay = new UserLocationOverlay(this, mapView,lastKnownLocation);
-        
-        myLocation = new MyLocationOverlay(getApplicationContext(), mapView);
-        mapView.getOverlays().add(myLocation);
         
         if(map_mode==VIEW_POLYGON){
         	
@@ -314,16 +300,27 @@ public class CitationMap extends MapActivity implements LocationListener {
         	polygonField.setAddPointListener(capturePolygonPoint);
         	
         	PolygonOverlay polygonOverlay=new PolygonOverlay(mapView,polygonField.getPolygonPath());
-        	mapView.getOverlays().add(polygonOverlay);
-        	
+        	listOfOverlays.add(polygonOverlay);
         	
         }
         else{
+        	
+            projCnt.loadProjectInfoById(projId);
+            fieldsLabelNames=projCnt.getProjectFieldsPair(projId);
+        	
+            /* Getting instance of MyTracksService */
+            tracksService=new MyTracksService(this);
+            tracksService.setProjName(projCnt.getCleanProjectName());
                 
+        	// User location overlay (green marker)
+            myLocationOverlay = new UserLocationOverlay(this, mapView,lastKnownLocation);
+            
+            myLocation = new MyLocationOverlay(getApplicationContext(), mapView);
+            mapView.getOverlays().add(myLocation);
+        	
             	
 	        if(pC.getTrackingService()) myTracksIsWorkingInBackground();       
 	        if(mapState.compassEnabled) myLocation.enableCompass();
-	        
 	        
 	        preSettedLoc=getIntent().getExtras().getString("idSelection");
 	        
@@ -400,15 +397,19 @@ public class CitationMap extends MapActivity implements LocationListener {
  	
      
      	Log.i("MyTracks", "--------------- onResume");
+     
+     	 if(map_mode!=VIEW_POLYGON){
      	
-	  	mapState.myTracksWorking=tracksService.initMyTracksService(handlerMyTrackUpdates);
-
-
-		if(!pC.isShownMyTracksDialog()) tracksService.showInfoDialog(mapState.myTracksWorking,pC);
-		if(!mapState.myTracksWorking) myTracksButton.setVisibility(View.GONE);
+		  	mapState.myTracksWorking=tracksService.initMyTracksService(handlerMyTrackUpdates);
 	
+	
+			if(!pC.isShownMyTracksDialog()) tracksService.showInfoDialog(mapState.myTracksWorking,pC);
+			if(!mapState.myTracksWorking) myTracksButton.setVisibility(View.GONE);
 		
-     	myLocationOverlay.enableCompass();
+			
+	     	myLocationOverlay.enableCompass();
+     	
+     	 }
      
     }
     
@@ -417,17 +418,22 @@ public class CitationMap extends MapActivity implements LocationListener {
      
     	super.onPause();
 
-     	Log.i("MyTracks", "--------------- onPause");
+    	
+    	 if(map_mode!=VIEW_POLYGON){
 
-    	/* When tracking is not running we can remove the myTracks Service */
+	     	Log.i("MyTracks", "--------------- onPause");
+	
+	    	/* When tracking is not running we can remove the myTracks Service */
+	    	
+	    	if(!pC.getTrackingService()){
+	    		
+	    		if(tracksService!=null) tracksService.endMyTracksService();
+	    		
+	    	}
+	    	
+	    	myLocationOverlay.disableCompass();
     	
-    	if(!pC.getTrackingService()){
-    		
-    		if(tracksService!=null) tracksService.endMyTracksService();
-    		
-    	}
-    	
-    	myLocationOverlay.disableCompass();
+    	 }
      
     }
     
@@ -1648,7 +1654,7 @@ public class CitationMap extends MapActivity implements LocationListener {
 
 			
 			lastKnownLocation = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
-			myLocationOverlay.setCurrent(lastKnownLocation);
+			if(myLocationOverlay!=null) myLocationOverlay.setCurrent(lastKnownLocation);
 			mc.animateTo(lastKnownLocation);
 			
 			if(polygonField!=null && polygonField.isWaitingGPS()) polygonField.addPoint(lat, lng, elevation);

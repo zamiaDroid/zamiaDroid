@@ -54,8 +54,6 @@ public class PolygonControler {
 	        citSLCnt.startTransaction();
 	        	citSLCnt.addCitationField(polygonField.getFieldId(),citationId,subFieldId,projField.getName(),(int)point.altitude+"");
 	    	citSLCnt.EndTransaction();
-
-	    	Utilities.showToast("Alçada: "+(int)point.altitude, baseContext);
 	    	
 			Log.i("Citation","Action-> created citation[Polygon]Value : Label: polygonAltitude Value: "+point.altitude);
 

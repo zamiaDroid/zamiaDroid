@@ -1187,14 +1187,6 @@ public class CitationEditor extends Activity {
 	        		    	photoButton.setVisibility(View.GONE);
 	        		    	
 	        		    }
-	        	        
-	        	       
-	        	     /*  param = new LinearLayout.LayoutParams(
-	                             LayoutParams.WRAP_CONTENT,
-	                             LayoutParams.WRAP_CONTENT, 1.0f);
-	        	       
-	        	       tvFieldValue.setLayoutParams(param);*/
-
 	       					   
 				   }
 				   //has no linked photo
@@ -1237,12 +1229,10 @@ public class CitationEditor extends Activity {
 			   else if(fieldType.equals("polygon")){
 				   
 				   String pred=sC.getFieldValue(citationId,att.getId());			   
-				   String altitudes=citSLCnt.getMultiPhotosValues(pred);				   
 				   
 				   polygonField = new PolygonField(this, id, att, llField, PolygonField.EDIT_MODE);
-				   polygonField.setSecondLevelId(pred);
-				 
-				   
+				   polygonField.loadPoints(pred);
+			   
 				   elementsList.add(new ListView(this));
 				   
 				   formValues.add(pred);
