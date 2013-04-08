@@ -979,8 +979,6 @@ public class CitationControler {
 			while(!citationFieldValue.isAfterLast()){
 				
 				if(j==m-1) cExporter.setLast(true); 
-					
-				Log.i("Export","Proves -> "+citationFieldValue.getLong(2));
 
 				ProjectField projField=projectFields.get(citationFieldValue.getLong(2));
 				Log.i("Export",projField.toString() +" -> "+citationFieldValue.getString(3));

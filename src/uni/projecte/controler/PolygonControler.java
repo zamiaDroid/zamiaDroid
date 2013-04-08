@@ -3,6 +3,7 @@ package uni.projecte.controler;
 import java.util.ArrayList;
 
 import uni.projecte.dataTypes.ProjectField;
+import uni.projecte.dataTypes.Utilities;
 import uni.projecte.maps.utils.LatLon;
 import uni.projecte.ui.polygon.PolygonField;
 import android.content.Context;
@@ -54,6 +55,8 @@ public class PolygonControler {
 	        	citSLCnt.addCitationField(polygonField.getFieldId(),citationId,subFieldId,projField.getName(),(int)point.altitude+"");
 	    	citSLCnt.EndTransaction();
 
+	    	Utilities.showToast("Alçada: "+(int)point.altitude, baseContext);
+	    	
 			Log.i("Citation","Action-> created citation[Polygon]Value : Label: polygonAltitude Value: "+point.altitude);
 
     	}

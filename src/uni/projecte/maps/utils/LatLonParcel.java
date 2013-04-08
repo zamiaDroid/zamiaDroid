@@ -22,6 +22,7 @@ public class LatLonParcel implements Parcelable {
 	     public void writeToParcel(Parcel out, int flags) {
 	         out.writeDouble(geoPoint.latitude);
 	         out.writeDouble(geoPoint.longitude);
+	         out.writeDouble(geoPoint.altitude);
 	     }
 
 	     public static final Parcelable.Creator<LatLonParcel> CREATOR
@@ -38,7 +39,8 @@ public class LatLonParcel implements Parcelable {
 	     private LatLonParcel(Parcel in) {
 	         double lat = in.readDouble();
 	         double lon = in.readDouble();
-	         geoPoint = new LatLon(lat, lon,0.0);
+	         double altitude = in.readDouble();
+	         geoPoint = new LatLon(lat, lon,altitude);
 	     }
 
 	
