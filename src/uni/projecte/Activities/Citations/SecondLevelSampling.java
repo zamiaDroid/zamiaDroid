@@ -1072,7 +1072,7 @@ public class SecondLevelSampling extends Activity {
 
         		
     	// Sample Creation with lat,long, comment and rsId		
-       long idSample=sampleCntr.createCitation(subLevelTag, latPoint, longPoint, "");
+       long idSample=sampleCntr.createCitation(subLevelTag, latPoint, longPoint, "",projId,"secondLevel");
         
 	    Log.d("SecondLevelCitations","CreateCitation");
 

@@ -620,7 +620,7 @@ public class CitationEditor extends Activity {
 				
 				long subFieldId=multiProjCnt.getMultiPhotoSubFieldId(((MultiPhotoFieldForm) tmpField).getFieldId());
 				
-				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId);				
+				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId,projId);				
 				
 			}						
 		}
@@ -630,7 +630,7 @@ public class CitationEditor extends Activity {
 		
 			PolygonControler polygonCnt= new PolygonControler(this);
 	
-			polygonCnt.updatePolygonList(polygonField);
+			polygonCnt.updatePolygonList(polygonField,projId);
 	
 		}
 

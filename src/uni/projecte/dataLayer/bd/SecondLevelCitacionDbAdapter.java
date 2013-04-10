@@ -36,7 +36,11 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
 	/* citacion main fields */
 	public static final String KEY_ROWID = "_id";
     public static final String FIELD_ID = "fieldId";
-
+    
+    //new fields to improve performance 
+    public static final String PROJ_ID ="projId";
+    public static final String FIELD_TYPE="subFieldType";
+    
 
 	/* filled fields */
     
@@ -61,7 +65,9 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
             + FIELD_ID + " TEXT,"
             + LATITUDE + " DOUBLE,"
             + LONGITUDE + " DOUBLE,"
-            + DATE + " TEXT"
+            + DATE + " TEXT,"
+            + PROJ_ID + " INTEGER,"
+            + FIELD_TYPE + " TEXT"
             + ");";
     
     
@@ -76,8 +82,14 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
 
     
     private static final String DATABASE_NAME= "SecondLevelCitation";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
+    /*
+     * Version 2: original version
+     * Version 3: projId and subFieldType added
+     * 
+     */
+    
     private final Context mCtx;
     
 
@@ -97,10 +109,27 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
 
         @Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-                    + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS notes");
-            onCreate(db);
+         
+        	if (oldVersion < 3) {
+
+                final String ALTER_TBL = 
+                        "ALTER TABLE " + DATABASE_TABLE_CITATION + 
+                        " ADD COLUMN " + PROJ_ID + " INTEGER "
+                        + ";";
+                
+                db.execSQL(ALTER_TBL);
+            	
+                
+                final String ALTER_TBL_2 = 
+                        "ALTER TABLE " + DATABASE_TABLE_CITATION + 
+                        " ADD COLUMN " + FIELD_TYPE + " TEXT "
+                        + ";";
+                
+                db.execSQL(ALTER_TBL_2);
+                
+            }
+        	
+        	
         }
     }
 
@@ -152,14 +181,19 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
      * @param comment the comment of the Sample
      * @return rowId or -1 if failed
      */
-    public long createCitation(String secondLevelFieldId, double latitude, double longitude) {
+    public long createCitation(String secondLevelFieldId, double latitude, double longitude, long projId, String subFieldType) {
         
     	ContentValues initialValues = new ContentValues();
         
     	initialValues.put(FIELD_ID, secondLevelFieldId);
         initialValues.put(LATITUDE , latitude);
         initialValues.put(LONGITUDE , longitude);
-
+        
+        /** New fields will improve **/
+        	initialValues.put(PROJ_ID, projId);
+        	initialValues.put(FIELD_TYPE, subFieldType);
+        /** **/
+        
         Date date = new Date();
         date.getDate();
  
@@ -287,6 +321,22 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
     	
     }
 
+    public Cursor getPolygonPointByProjectId(long projId) {
+
+    	Cursor mCursor =
+
+                mDb.query(true, DATABASE_TABLE_CITATION, new String[] {KEY_ROWID,FIELD_ID,
+                        LATITUDE,LONGITUDE,DATE,PROJ_ID,FIELD_TYPE}, PROJ_ID + "=" +projId+" and "+FIELD_TYPE + "=\"polygon\"", null,
+                        null, null, null, null);
+        
+    	if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+    	
+    	return mCursor;
+	}
+
+    
 	public Cursor fetchCitationsFromSecondLevel(String projName) {
 
        	Cursor mCursor=mDb.rawQuery("SELECT * FROM " + DATABASE_TABLE_CITATION

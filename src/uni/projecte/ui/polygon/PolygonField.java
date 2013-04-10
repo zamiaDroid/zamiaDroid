@@ -332,7 +332,7 @@ public class PolygonField {
 		
 		public void onClick(View v) {
 
-			path= new ArrayList<LatLon>();
+			path.clear();
 			updateUI();
 			
 			modified=true;
@@ -379,9 +379,11 @@ public class PolygonField {
 		public void onClick(View v) {
 
 			path.remove(path.size()-1);
+			
+			modified=true;
+
 			updateUI();	
 
-			modified=true;
 
 		}
 	};

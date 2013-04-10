@@ -6,11 +6,16 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class GoogleReverseGeocodeXmlHandler extends DefaultHandler 
 {
-	private boolean inLocalityName = false;
+	private boolean inAddress_component = false;
 	private boolean finished = false;
 	private StringBuilder builder;
 	private String localityName;
 	private String country;
+	
+	private String tmpType;
+	private String tmpShortName;
+	private String tmpLongName;
+	
 	
 	public String getLocalityName()
 	{
@@ -25,7 +30,7 @@ public class GoogleReverseGeocodeXmlHandler extends DefaultHandler
 	public void characters(char[] ch, int start, int length)
 	       throws SAXException {
 	    super.characters(ch, start, length);
-	    if (this.inLocalityName && !this.finished)
+	    if (this.inAddress_component && !this.finished)
 	    {
 	    	if ((ch[start] != '\n') && (ch[start] != ' '))
 	    	{
@@ -39,26 +44,39 @@ public class GoogleReverseGeocodeXmlHandler extends DefaultHandler
 	        throws SAXException 
 	{
 	    super.endElement(uri, localName, name);
-	    
-	    if (!this.finished)
-	    {
-	    	if (localName.equalsIgnoreCase("LocalityName"))
+	
+	    	if (localName.equalsIgnoreCase("long_name"))
 	    	{
-	    		this.localityName = builder.toString();
-	    		this.finished = true;
+	    		this.tmpLongName = builder.toString();
 	    	}
-	    	else if (localName.equalsIgnoreCase("CountryNameCode"))
+	    	else if (localName.equalsIgnoreCase("short_name"))
 	    	{
-	    		this.country = builder.toString();
+	    		this.tmpShortName = builder.toString();
 	    		//this.finished = true;
+	    	}
+	    	else if (localName.equalsIgnoreCase("type"))
+	    	{
+	    		
+	    		String tmp=builder.toString();
+	    			
+	    		if(!tmp.equals("political")) this.tmpType=tmp;
+	    				
+	    		
+	    		//this.finished = true;
+	    	}
+	    	else if(localName.equalsIgnoreCase("address_component")){
+
+	    		if(tmpType.equals("locality")) localityName=tmpLongName;
+	    		else if(tmpType.equals("country")) country=tmpShortName;
+	    		
 	    	}
 	    	
 	    	if (builder != null)
 	    	{
 	    		builder.setLength(0);
 	    	}
-	    }
-    }
+	    
+    	}
 
     @Override
     public void startDocument() throws SAXException 
@@ -72,14 +90,10 @@ public class GoogleReverseGeocodeXmlHandler extends DefaultHandler
     {
     	super.startElement(uri, localName, name, attributes);
     	
-    	if (localName.equalsIgnoreCase("LocalityName"))
+    	if (localName.equalsIgnoreCase("address_component"))
     	{
-    		this.inLocalityName = true;
+    		this.inAddress_component = true;
     	}
-    	else if(localName.equalsIgnoreCase("CountryNameCode")){
-    		
-    		this.inLocalityName = true;
-    		
-    	}
+    
     }
 }

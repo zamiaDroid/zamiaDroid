@@ -13,6 +13,9 @@ import android.widget.SlidingDrawer;
 
 public class PolygonControler {
 
+	public final String FIELD_NAME="polygon";
+	
+	
 	private Context baseContext;
 	
 	private ProjectSecondLevelControler projSLCnt;
@@ -40,7 +43,7 @@ public class PolygonControler {
 	}
 	
 
-	public void addPolygonList(PolygonField polygonField) {
+	public void addPolygonList(PolygonField polygonField,long projId) {
 
 		ArrayList<LatLon> path=polygonField.getPolygonPath();
         
@@ -49,7 +52,7 @@ public class PolygonControler {
     	for(LatLon point: path){
    		
 			// subProjId (0) || fieldId inside subproject (1)				
-	        long citationId=citSLCnt.createCitation(polygonField.getSecondLevelId(), point.latitude,point.longitude, "");
+	        long citationId=citSLCnt.createCitation(polygonField.getSecondLevelId(), point.latitude,point.longitude, "",projId,FIELD_NAME);
 
 	        citSLCnt.startTransaction();
 	        	citSLCnt.addCitationField(polygonField.getFieldId(),citationId,subFieldId,projField.getName(),(int)point.altitude+"");
@@ -61,11 +64,11 @@ public class PolygonControler {
 		
 	}
 	
-	public void updatePolygonList(PolygonField polygonField) {
+	public void updatePolygonList(PolygonField polygonField,long projId) {
 
 		citSLCnt.removeCitationsBySLId(polygonField.getSecondLevelId());
 
-		addPolygonList(polygonField);
+		addPolygonList(polygonField,projId);
 		
 	}
 
@@ -123,7 +126,49 @@ public class PolygonControler {
 	}
 
 
+	public ArrayList<ArrayList<LatLon>> getPolygonList(long projId) {
 
-	
+		ArrayList<ArrayList<LatLon>> polygon_list= new ArrayList<ArrayList<LatLon>>();
+		
+		Cursor polygons=citSLCnt.getPolygonPoints(projId);
+		
+		if(polygons!=null){
+			
+			polygons.moveToFirst();
+			String lastPolygonId="";
+			ArrayList<LatLon> tmpPolygon=null;
+			
+			while(!polygons.isAfterLast()){
+				
+				String polygonId=polygons.getString(1);
+				
+				Log.i("Map","PolygonId: "+polygonId);
+				
+				if(!polygonId.equals(lastPolygonId)){
+					
+					if(tmpPolygon!=null) polygon_list.add(tmpPolygon);
+					
+					tmpPolygon=new ArrayList<LatLon>();
+					
+				}
+				
+				tmpPolygon.add(new LatLon(polygons.getDouble(2), polygons.getDouble(3), 0.0));
+				
+				lastPolygonId=polygonId;
+				
+				polygons.moveToNext();
+				
+			}
+			
+			if(tmpPolygon!=null) polygon_list.add(tmpPolygon);
+			
+			polygons.close();
+			
+		}
+		
+		return polygon_list;
+		
+	}
+
 
 }

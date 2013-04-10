@@ -1196,7 +1196,7 @@ public class Sampling extends Activity {
 				
 				long subFieldId=multiProjCnt.getMultiPhotoSubFieldId(((MultiPhotoFieldForm) tmpField).getFieldId());
 				
-				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId);				
+				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId,projId);				
 				
 			}						
 		}
@@ -1206,7 +1206,7 @@ public class Sampling extends Activity {
 		
 			PolygonControler polygonCnt= new PolygonControler(this);
 	
-			polygonCnt.addPolygonList(polygonField);
+			polygonCnt.addPolygonList(polygonField,projId);
 	
 		}
 		

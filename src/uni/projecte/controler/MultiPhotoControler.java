@@ -12,11 +12,15 @@ import android.util.Log;
 
 public class MultiPhotoControler{
 	
+	public static String FIELD_NAME="multiPhoto";
+
+	
 	private Context baseContext;
 	private ProjectField projField;
 	private ProjectSecondLevelControler projSLCnt;
 	private CitationControler citCnt;
 	private CitationSecondLevelControler citSLCnt;
+	
 	
 
 	public MultiPhotoControler(Context baseContext) {
@@ -75,7 +79,7 @@ public class MultiPhotoControler{
 	} 
 
 
-	public void addPhotosList(MultiPhotoFieldForm photoFieldForm, long subFieldId) {
+	public void addPhotosList(MultiPhotoFieldForm photoFieldForm, long subFieldId, long projId) {
    			
         	citSLCnt=new CitationSecondLevelControler(baseContext);
 			        
@@ -87,7 +91,7 @@ public class MultiPhotoControler{
 	    		String photoValue=photoIt.next();
 	    		
 				// subProjId (0) || fieldId inside subproject (1)				
-		        long citationId=citSLCnt.createCitation(photoFieldForm.getSecondLevelId(), 100, 190, "");
+		        long citationId=citSLCnt.createCitation(photoFieldForm.getSecondLevelId(), 100, 190, "",projId,FIELD_NAME);
 
 		        citSLCnt.startTransaction();
 		        	citSLCnt.addCitationField(photoFieldForm.getFieldId(),citationId,subFieldId,projField.getName(),photoValue);

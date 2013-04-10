@@ -28,6 +28,7 @@ import uni.projecte.Activities.Citations.Sampling;
 import uni.projecte.Activities.RemoteDBs.RemoteDBConfig;
 import uni.projecte.Activities.RemoteDBs.TaxonListExplorer;
 import uni.projecte.R.drawable;
+import uni.projecte.controler.PolygonControler;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.CitationControler;
@@ -42,9 +43,11 @@ import uni.projecte.maps.MapLocation;
 import uni.projecte.maps.MyTracksService;
 import uni.projecte.maps.UTMDisplay;
 import uni.projecte.maps.overlays.MyTracksOverlay;
+import uni.projecte.maps.overlays.PolygonLayerOverlay;
 import uni.projecte.maps.overlays.PolygonOverlay;
 import uni.projecte.maps.overlays.UTMOverlay;
 import uni.projecte.maps.overlays.UserLocationOverlay;
+import uni.projecte.maps.utils.LatLon;
 import uni.projecte.maps.utils.LatLonParcel;
 import uni.projecte.ui.TransparentPanel;
 import uni.projecte.ui.polygon.PolygonField;
@@ -314,7 +317,6 @@ public class CitationMap extends MapActivity implements LocationListener {
                 
         	// User location overlay (green marker)
             myLocationOverlay = new UserLocationOverlay(this, mapView,lastKnownLocation);
-            
             myLocation = new MyLocationOverlay(getApplicationContext(), mapView);
             mapView.getOverlays().add(myLocation);
         	
@@ -326,6 +328,9 @@ public class CitationMap extends MapActivity implements LocationListener {
 	        
 	        loadCitations();
 	          
+	        PolygonLayerOverlay polygons=new PolygonLayerOverlay(mapView, loadPolygons());
+	        listOfOverlays.add(polygons);
+	        
 	        loadUTMGrid();
 	        
 	        utmPrec=pC.getUTMDisplayPrec();
@@ -417,7 +422,6 @@ public class CitationMap extends MapActivity implements LocationListener {
 	protected void onPause() {
      
     	super.onPause();
-
     	
     	 if(map_mode!=VIEW_POLYGON){
 
@@ -1626,6 +1630,16 @@ public class CitationMap extends MapActivity implements LocationListener {
 		return coordinates;
 	}
 	
+	private ArrayList<ArrayList<LatLon>> loadPolygons(){
+		
+		PolygonControler polygonCnt= new PolygonControler(this);
+		
+		ArrayList<ArrayList<LatLon>> polygons= polygonCnt.getPolygonList(projId);
+				
+		return polygons;
+		
+	} 
+	
 	
 	
 
@@ -1707,11 +1721,7 @@ public class CitationMap extends MapActivity implements LocationListener {
          case MAP_MARKERS_UPDATED :
         	       	 
         	 listOfOverlays.remove(mapOverlay);
-        	 //mapView.invalidate();
-        	 
              loadCitations();
-
-
              
              break;
              
@@ -2018,10 +2028,9 @@ public class CitationMap extends MapActivity implements LocationListener {
 	    };
 	    
 	    
-	    private OnClickListener moveCitationListener = new OnClickListener()
-	    {
-	        public void onClick(View v)
-	        {                        
+	    private OnClickListener moveCitationListener = new OnClickListener(){
+	    	
+	        public void onClick(View v){                        
 	         	
 	        	if(mapState.movCitationEnabled){ 
 	        		
@@ -2047,7 +2056,7 @@ public class CitationMap extends MapActivity implements LocationListener {
 			CitationControler sC= new CitationControler(getBaseContext());
 			
 			sC.startTransaction();
-			sC.updateCitationLocation(point.getCitationId(), latitudeE6/1e6, longitudeE6/1e6);
+				sC.updateCitationLocation(point.getCitationId(), latitudeE6/1e6, longitudeE6/1e6);
 			sC.EndTransaction();
 			
 		}
