@@ -209,10 +209,10 @@ public class CitationSecondLevelControler extends CitationControler {
 		mDbSample.open();
 			
 			Cursor list=  mDbSample.fetchMultiPhotoValues(secondLevelFieldId);
-			list.moveToFirst();
 			
-			if(list!=null || list.getCount()>0){
-				
+			if(list!=null && list.getCount()>0){
+
+				list.moveToFirst();								
 				multiPhotoValue=list.getString(3);
 				
 			}

@@ -29,8 +29,9 @@ public class Geocoder
 	    {
 	        // build the URL using the latitude & longitude you want to lookup
 	        // NOTE: I chose XML return format here but you can choose something else
-	        serverAddress = new URL("http://maps.google.com/maps/geo?q=" + Double.toString(latitude) + "," + Double.toString(longitude) +
-		        		"&output=xml&oe=utf8&sensor=true");
+	    	serverAddress = new URL("http://maps.googleapis.com/maps/api/geocode/xml?latlng=" + Double.toString(latitude) + "," + Double.toString(longitude) +
+	    			"&sensor=true");
+	    	
 	        //set up out communications stuff
 	        connection = null;
 		      

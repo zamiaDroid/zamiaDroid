@@ -4,82 +4,83 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class GoogleReverseGeocodeXmlHandler extends DefaultHandler 
-{
-	private boolean inLocalityName = false;
+public class GoogleReverseGeocodeXmlHandler extends DefaultHandler {
+	private boolean inAddress_component = false;
 	private boolean finished = false;
 	private StringBuilder builder;
 	private String localityName;
 	private String country;
-	
-	public String getLocalityName()
-	{
+
+	private String tmpType;
+	private String tmpShortName;
+	private String tmpLongName;
+
+	public String getLocalityName() {
 		return this.localityName;
 	}
-	public String getCountry()
-	{
+
+	public String getCountry() {
 		return this.country;
 	}
-	
+
 	@Override
 	public void characters(char[] ch, int start, int length)
-	       throws SAXException {
-	    super.characters(ch, start, length);
-	    if (this.inLocalityName && !this.finished)
-	    {
-	    	if ((ch[start] != '\n') && (ch[start] != ' '))
-	    	{
-	    		builder.append(ch, start, length);
-	    	}
-	    }
+			throws SAXException {
+		super.characters(ch, start, length);
+		if (this.inAddress_component && !this.finished) {
+			if ((ch[start] != '\n') && (ch[start] != ' ')) {
+				builder.append(ch, start, length);
+			}
+		}
 	}
 
 	@Override
 	public void endElement(String uri, String localName, String name)
-	        throws SAXException 
-	{
-	    super.endElement(uri, localName, name);
-	    
-	    if (!this.finished)
-	    {
-	    	if (localName.equalsIgnoreCase("LocalityName"))
-	    	{
-	    		this.localityName = builder.toString();
-	    		this.finished = true;
-	    	}
-	    	else if (localName.equalsIgnoreCase("CountryNameCode"))
-	    	{
-	    		this.country = builder.toString();
-	    		//this.finished = true;
-	    	}
-	    	
-	    	if (builder != null)
-	    	{
-	    		builder.setLength(0);
-	    	}
-	    }
-    }
+			throws SAXException {
+		super.endElement(uri, localName, name);
 
-    @Override
-    public void startDocument() throws SAXException 
-    {
-        super.startDocument();
-        builder = new StringBuilder();
-    }
+		if (localName.equalsIgnoreCase("long_name")) {
+			this.tmpLongName = builder.toString();
+		} else if (localName.equalsIgnoreCase("short_name")) {
+			this.tmpShortName = builder.toString();
+			// this.finished = true;
+		} else if (localName.equalsIgnoreCase("type")) {
 
-    @Override
-    public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException
-    {
-    	super.startElement(uri, localName, name, attributes);
-    	
-    	if (localName.equalsIgnoreCase("LocalityName"))
-    	{
-    		this.inLocalityName = true;
-    	}
-    	else if(localName.equalsIgnoreCase("CountryNameCode")){
-    		
-    		this.inLocalityName = true;
-    		
-    	}
-    }
+			String tmp = builder.toString();
+
+			if (!tmp.equals("political"))
+				this.tmpType = tmp;
+
+			// this.finished = true;
+		} else if (localName.equalsIgnoreCase("address_component")) {
+
+			if (tmpType.equals("locality"))
+				localityName = tmpLongName;
+			else if (tmpType.equals("country"))
+				country = tmpShortName;
+
+		}
+
+		if (builder != null) {
+			builder.setLength(0);
+		}
+
+	}
+
+	@Override
+	public void startDocument() throws SAXException {
+		super.startDocument();
+		builder = new StringBuilder();
+	}
+
+	@Override
+	public void startElement(String uri, String localName, String name,
+			Attributes attributes) throws SAXException {
+		super.startElement(uri, localName, name, attributes);
+
+		if (localName.equalsIgnoreCase("address_component")) {
+			this.inAddress_component = true;
+		}
+
+	}
 }
