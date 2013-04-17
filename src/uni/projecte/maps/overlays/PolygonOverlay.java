@@ -30,7 +30,7 @@ public class PolygonOverlay extends Overlay {
 		this.mapView = mapView;
 
 		// centrer to lastPoint
-		if (route.size() > 0)
+		if (route != null && route.size() > 0)
 			mapView.getController().animateTo(
 					new LatLonPoint(route.get(route.size() - 1)));
 
@@ -42,29 +42,39 @@ public class PolygonOverlay extends Overlay {
 
 		if (route != null && route.size() > 0) {
 
-			drawPolygon(canvas, mapv,route);
+			drawPolygon(canvas, mapv,route,isPolygon(route));
 
 		}
 	}
+	
+	protected boolean isPolygon(ArrayList<LatLon> route){
+		
+		return route.get(0).equals(route.get(route.size()-1));
+		
+	}
 
-	protected void drawPolygon(Canvas canvas, MapView mapv,ArrayList<LatLon> route) {
+	protected void drawPolygon(Canvas canvas, MapView mapv,ArrayList<LatLon> route, boolean closed) {
 
 		
 		Paint verPaint = new Paint();
 		verPaint.setColor(Color.rgb(208, 221, 154));
-		verPaint.setStrokeWidth(5);
+		verPaint.setStrokeWidth(4);
 		verPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 		verPaint.setStrokeJoin(Paint.Join.ROUND);
 		verPaint.setStrokeCap(Paint.Cap.ROUND);
 
 		Path path = new Path();
-
+	    path.setFillType(Path.FillType.EVEN_ODD);
+	    
+	    
 		GeoPoint start = new LatLonPoint(route.get(0));
 		firstPoint = new Point();
 
 		Projection projection = mapv.getProjection();
 		projection.toPixels(start, firstPoint);
 
+		path.moveTo(firstPoint.x,firstPoint.y);
+		
 		for (int i = 1; i < route.size(); ++i) {
 
 			Point p1 = new Point();
@@ -73,31 +83,38 @@ public class PolygonOverlay extends Overlay {
 			projection.toPixels(start, p1);
 			projection.toPixels(new LatLonPoint(route.get(i)), p2);
 
-			path.moveTo(p2.x, p2.y);
 			path.lineTo(p1.x, p1.y);
 
-			canvas.drawCircle((float) p2.x, (float) p2.y, (float) 4.5, verPaint);
+			if(!closed) canvas.drawCircle((float) p2.x, (float) p2.y, (float) 4.5, verPaint);
 
 			start = new LatLonPoint(route.get(i));
 		}
 
+		path.close();
+		
 		Paint mPaint = new Paint();
-		mPaint.setDither(true);
-		mPaint.setAntiAlias(true);
-		mPaint.setAlpha(100);
-		mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-		mPaint.setStrokeJoin(Paint.Join.ROUND);
-		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		mPaint.setStrokeWidth(5);
-
-		mPaint.setColor(Color.rgb(208, 221, 154));
+		
+		if(closed){
+			
+			mPaint.setAlpha(200);
+			mPaint.setStyle(Paint.Style.FILL);
+			mPaint.setColor(Color.rgb(208, 221, 154));
+			mPaint.setAntiAlias(true);
+			
+			canvas.drawPath(path, mPaint);
+		
+		}
+		
+		mPaint.setColor(Color.rgb(136, 170, 0));
+		mPaint.setStyle(Paint.Style.STROKE);
+		mPaint.setStrokeWidth(3);
 
 		canvas.drawPath(path, mPaint);
 
 		// drawing firstPoint
 		verPaint.setColor(Color.rgb(136, 170, 0));
-		canvas.drawCircle((float) firstPoint.x, (float) firstPoint.y,
-				(float) 4.5, verPaint);
+		canvas.drawCircle((float) firstPoint.x, (float) firstPoint.y,(float) 4.5, verPaint);
+
 
 	}
 

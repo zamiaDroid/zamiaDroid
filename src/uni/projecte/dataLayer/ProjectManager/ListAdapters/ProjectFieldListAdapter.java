@@ -271,7 +271,7 @@ public class ProjectFieldListAdapter extends BaseAdapter  {
             		
             		 
     	        	   String attName=tv.getText().toString();
-            	   	   removeField(attName,position);
+            	   	   removeField(projFields.get(position).getName(),position);
 
             	
              } }
