@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp" >
+
+            <ImageButton
+                android:id="@+id/marker_butterfly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/marker_butterfly"
+                android:onClick="markerClick" />
+
+            <ImageButton
+                android:id="@+id/marker_snake"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/marker_snake"
+                android:onClick="markerClick" />
+
+            <ImageButton
+                android:id="@+id/marker_bee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/marker_bee"
+                android:onClick="markerClick" />
+
+            <ImageButton
+                android:id="@+id/marker_wetland"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/marker_wetland"
+                android:onClick="markerClick" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp" >
+
+            <ImageButton
+                android:id="@+id/marker_turtle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/marker_turtle" />
+
+            <ImageButton
+                android:id="@+id/marker_algae"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/marker_algae" />
+
+            <ImageButton
+                android:id="@+id/marker_spider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/marker_spider" />
+
+            <ImageButton
+                android:id="@+id/marker_selected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/marker_selected" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp" >
+
+            <ImageButton
+                android:id="@+id/marker_birds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/marker_birds" />
+               <ImageButton
+                android:id="@+id/marker_plant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/marker_plant" />
+
+            <ImageButton
+                android:id="@+id/marker_fungus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/marker_fungus" />
+            
+            <ImageButton
+                android:id="@+id/marker_mammal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/marker_mammal" />
+
+        </TableRow>
+
+
+    </TableLayout>
+
+</LinearLayout>

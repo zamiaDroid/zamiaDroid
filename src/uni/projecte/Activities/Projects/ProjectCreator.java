@@ -226,19 +226,19 @@ public class ProjectCreator extends Activity{
 	        	        	fc.createComplexFieldDialog(messageHandler);
 	        	        	
 	        	        }
-	        	        else if(items[item].equals(items[2])){
+	        	        /*else if(items[item].equals(items[2])){
 	        	        	
 	        	        	//camp fotografia
 	        	        	fc.createPredFieldDialog("photo",messageHandler);
 
-	        	        }
-	        	        else if(items[item].equals(items[3])){
+	        	        }*/
+	        	        else if(items[item].equals(items[2])){
 	        	        	
 	        	        	//camp fotografia
 	        	        	fc.createPredFieldDialog("multiPhoto",messageHandler);
 
 	        	        }
-	        	        else if(items[item].equals(items[4])){
+	        	        else if(items[item].equals(items[3])){
 	        	        	
 	        	        	//camp fotografia
 	        	        	fc.createPredFieldDialog("polygon",messageHandler);

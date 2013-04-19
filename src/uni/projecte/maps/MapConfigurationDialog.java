@@ -40,7 +40,8 @@ public class MapConfigurationDialog {
 		  CheckBox cbShowCompass = (CheckBox)mapConfigDialog.findViewById(R.id.cbShowCompass);
 		  CheckBox cbShowMyTracks = (CheckBox)mapConfigDialog.findViewById(R.id.cbShowMyTracks);
 		  CheckBox cbShowElevation = (CheckBox)mapConfigDialog.findViewById(R.id.cbShowAltitude);
-
+		  CheckBox cbChangeMarker = (CheckBox)mapConfigDialog.findViewById(R.id.cbChangeMapMarkers);
+		  
 		  cbShowCompass.setChecked(compassEnabled);
 		  cbShowElevation.setChecked(pC.isMapElevationShown());
 		  
@@ -126,6 +127,18 @@ public class MapConfigurationDialog {
 				
       	  }); 
 
+          cbChangeMarker.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+ 				public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+ 	
+ 					handlerUpdateConf.sendEmptyMessage(5);
+ 	               
+ 	               mapConfigDialog.dismiss();
+ 					
+ 				}
+ 				
+ 				
+       	  });
 		  
 	  }
 

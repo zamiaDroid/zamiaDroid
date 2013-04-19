@@ -30,7 +30,7 @@ public class FieldTypeTranslator {
 		photo=baseContext.getString(R.string.fieldTypePhoto);
 		subProject=baseContext.getString(R.string.fieldTypeSubProject);
 		predefined=baseContext.getString(R.string.fieldTypePredefined);
-		multiPhoto=baseContext.getString(R.string.fieldTypeMultiPhoto);
+		multiPhoto=baseContext.getString(R.string.fieldTypePhoto);
 		polygon=baseContext.getString(R.string.fieldTypePolygon);
 		
 	}

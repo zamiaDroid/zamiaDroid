@@ -257,17 +257,17 @@ public class ProjectInfo extends Activity{
 	        	        	fc.createComplexFieldDialog(messageHandler);
 	        	        	
 	        	        }
-	        	        else if(items[item].equals(items[2])){
+	        	       /* else if(items[item].equals(items[2])){
 	        	        	
 	        	        	fc.createPredFieldDialog("photo",messageHandler);
 	        	        	
-	        	        }
-	        	        else if(items[item].equals(items[3])){
+	        	        }*/
+	        	        else if(items[item].equals(items[2])){
 	        	        	
 	        	        	fc.createPredFieldDialog("multiPhoto",messageHandler);
 	        	        	
 	        	        }
-	        	        else if(items[item].equals(items[4])){
+	        	        else if(items[item].equals(items[3])){
 	        	        	
 	        	        	fc.createPredFieldDialog("polygon",messageHandler);
 	        	        	

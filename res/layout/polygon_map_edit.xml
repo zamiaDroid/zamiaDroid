@@ -36,7 +36,29 @@
                 android:layout_marginRight="5dp"
                 android:text="Afegir punt" />
         </LinearLayout>
+          <LinearLayout
+            android:id="@+id/llgpsWaiting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="5dp"
+            android:visibility="gone"
+             >
 
+            <ImageButton
+                android:id="@+id/ibAddPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/polygon_gps" />
+
+            <TextView
+                android:id="@+id/tvAddPoint"
+                style="@style/ZamiaSmallTextAppereance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Esperant GPS" />
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/llVertexCount"
             android:layout_width="wrap_content"

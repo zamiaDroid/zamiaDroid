@@ -67,7 +67,7 @@
 				    android:background="@drawable/appwidget_button_disabled" android:layout_margin="5dp"/>
 			  			
 			  				<ImageButton 
-						android:id="@+id/myShowLabels"
+						android:id="@+id/viewMode"
 				android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 					android:background="@drawable/info_icon_off" android:layout_margin="5dp"/>
@@ -184,6 +184,13 @@
 				    	android:paddingRight="4dp"
 				    
 				    >
+
+			     		<ImageButton
+			     		    android:id="@+id/showLabels"
+			     		    android:layout_width="wrap_content"
+			     		    android:layout_height="wrap_content"
+			     		    android:layout_margin="5dp"
+			     		    android:background="@drawable/info_icon_off" />
 			   			  			
 						  				<ImageButton 
 									android:id="@+id/myCreateCitationCenter"
@@ -200,6 +207,16 @@
 				android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 					android:background="@drawable/db_icon" 
+				    android:layout_margin="7dp"
+
+			  			
+			  			/>
+						  						
+						  									<ImageButton 
+						android:id="@+id/showPolygons"
+				android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+					android:background="@drawable/polygon_view" 
 				    android:layout_margin="7dp"
 
 			  			

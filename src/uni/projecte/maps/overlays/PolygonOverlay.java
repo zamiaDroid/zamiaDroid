@@ -74,7 +74,8 @@ public class PolygonOverlay extends Overlay {
 		projection.toPixels(start, firstPoint);
 
 		path.moveTo(firstPoint.x,firstPoint.y);
-		
+		path.lineTo(firstPoint.x, firstPoint.y);
+
 		for (int i = 1; i < route.size(); ++i) {
 
 			Point p1 = new Point();
@@ -83,22 +84,24 @@ public class PolygonOverlay extends Overlay {
 			projection.toPixels(start, p1);
 			projection.toPixels(new LatLonPoint(route.get(i)), p2);
 
-			path.lineTo(p1.x, p1.y);
+			path.lineTo(p2.x, p2.y);
 
 			if(!closed) canvas.drawCircle((float) p2.x, (float) p2.y, (float) 4.5, verPaint);
 
 			start = new LatLonPoint(route.get(i));
 		}
 
-		path.close();
 		
 		Paint mPaint = new Paint();
 		
 		if(closed){
 			
-			mPaint.setAlpha(200);
-			mPaint.setStyle(Paint.Style.FILL);
+			path.close();
+			
 			mPaint.setColor(Color.rgb(208, 221, 154));
+			mPaint.setAlpha(120);
+			
+			mPaint.setStyle(Paint.Style.FILL);
 			mPaint.setAntiAlias(true);
 			
 			canvas.drawPath(path, mPaint);

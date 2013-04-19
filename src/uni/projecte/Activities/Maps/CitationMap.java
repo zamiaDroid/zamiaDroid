@@ -40,6 +40,7 @@ import uni.projecte.maps.CitationMapState;
 import uni.projecte.maps.MapDrawUtils;
 import uni.projecte.maps.MapConfigurationDialog;
 import uni.projecte.maps.MapLocation;
+import uni.projecte.maps.MarkerConfigurationDialog;
 import uni.projecte.maps.MyTracksService;
 import uni.projecte.maps.UTMDisplay;
 import uni.projecte.maps.overlays.MyTracksOverlay;
@@ -149,7 +150,7 @@ public class CitationMap extends MapActivity implements LocationListener {
 	 private MyLocationOverlay myLocation;
 	 private CitationsOverlay mapOverlay;
 	 private UTMOverlay utmOverlay;
-
+	 private PolygonLayerOverlay polygonsOverlay;
 	 
 	 /* ImageButtons  */
 	 private ImageButton connectDBButton;
@@ -161,6 +162,9 @@ public class CitationMap extends MapActivity implements LocationListener {
 	 private ImageButton editCitation;
 	 private ImageButton moveCitation;
 	 private ImageButton photoCitation;
+	 private ImageButton showPolygonButton;
+	 private ImageButton viewModeButton;
+	 private ImageButton showLabelsButton;
 
 	 /* Info Layer: TextViews  */
 	 private TextView tvCenteredLocation;
@@ -202,7 +206,7 @@ public class CitationMap extends MapActivity implements LocationListener {
 	 
 	 /* State Class */
 	 private CitationMapState mapState = new CitationMapState(false, false, false,
-			false, false, false, false, false, false, false, true,false,false);
+			false, false, false, false, false, false, false, true,false,false,false,false);
 	 
 	 
 	private String utmPrec="10km";
@@ -245,7 +249,7 @@ public class CitationMap extends MapActivity implements LocationListener {
     	llPolygon=(TransparentPanel)findViewById(R.id.llPolygonMapMenu);
     	
         
-        ImageButton showLabelsButton = (ImageButton)findViewById(R.id.myShowLabels);
+        showLabelsButton = (ImageButton)findViewById(R.id.showLabels);
         showLabelsButton.setOnClickListener(showLabelsListener);
         
         connectDBButton = (ImageButton)findViewById(R.id.myShowDBInfo);
@@ -265,8 +269,14 @@ public class CitationMap extends MapActivity implements LocationListener {
         gridModeButton = (ImageButton)findViewById(R.id.myShowGrid);
         gridModeButton.setOnClickListener(showGridListener);
         
+        showPolygonButton = (ImageButton)findViewById(R.id.showPolygons);
+        showPolygonButton.setOnClickListener(showPolygonListener);
+        
         moveCitation=(ImageButton)findViewById(R.id.ibMoveCit);
         photoCitation=(ImageButton)findViewById(R.id.ibCitMapPhoto);
+        
+        viewModeButton=(ImageButton)findViewById(R.id.viewMode);
+        viewModeButton.setOnClickListener(viewModeListener);
         
         tvCenteredLocation = (TextView)findViewById(R.id.locationTV);  
         tvInfoTrackName= (TextView)findViewById(R.id.tvInfoTrackName);
@@ -328,8 +338,10 @@ public class CitationMap extends MapActivity implements LocationListener {
 	        
 	        loadCitations();
 	          
-	        PolygonLayerOverlay polygons=new PolygonLayerOverlay(mapView, loadPolygons());
-	        listOfOverlays.add(polygons);
+	        polygonsOverlay=new PolygonLayerOverlay(mapView, loadPolygons());
+	        listOfOverlays.add(polygonsOverlay);
+	        
+	        mapState.polygonsOn=true;
 	        
 	        loadUTMGrid();
 	        
@@ -468,7 +480,6 @@ public class CitationMap extends MapActivity implements LocationListener {
 	   	else{
 		   	
 	   		llCitationInfo.setVisibility(View.GONE);
-
 	   		llPolygon.setVisibility(View.GONE);
 
 	    	//Location bar Info
@@ -484,8 +495,7 @@ public class CitationMap extends MapActivity implements LocationListener {
 	    			
 	    			if(lastKnownLocation==null) tvCenteredLocation.setText(getString(R.string.waitingGPS));
 	    			myTracksButton.setVisibility(View.GONE);
-	    			
-	  
+  
 	    			
 	    		}
 	    		else{
@@ -521,13 +531,24 @@ public class CitationMap extends MapActivity implements LocationListener {
 	    		
 	    		trLocation.setVisibility(View.VISIBLE);
 	    		ivLocation.setImageResource(R.drawable.mini_location);
+	    		
 	    		connectDBButton.setVisibility(View.VISIBLE);
 			   	editModeButton.setVisibility(View.VISIBLE);
-	    		
-	
+			   	
+			   	connectDBButton.setVisibility(View.GONE);
+	    		createCitationButton.setVisibility(View.GONE);
 			   	
 	    		if(mapState.editModeOn) createCitationButton.setVisibility(View.VISIBLE);
 	    		else  createCitationButton.setVisibility(View.GONE);
+	    		
+	    	}
+	    	//view mode
+	    	else if(mapState.viewMode){
+    		
+			   	showPolygonButton.setVisibility(View.VISIBLE);
+			   	showLabelsButton.setVisibility(View.VISIBLE);
+			   	connectDBButton.setVisibility(View.GONE);
+	    		createCitationButton.setVisibility(View.GONE);
 	    		
 	    	}
 	    	//Nothing chosen mode
@@ -540,6 +561,9 @@ public class CitationMap extends MapActivity implements LocationListener {
 	    		connectDBButton.setVisibility(View.GONE);
 			   	editModeButton.setVisibility(View.VISIBLE);
 	    		createCitationButton.setVisibility(View.GONE);
+	    		
+	    	 	showPolygonButton.setVisibility(View.GONE);
+			   	showLabelsButton.setVisibility(View.GONE);
 	    		
 				if(mapState.myTracksWorking) myTracksButton.setVisibility(View.VISIBLE);
 	
@@ -819,10 +843,28 @@ public class CitationMap extends MapActivity implements LocationListener {
 		        	handleInfoDialog();
 
 			   }
+			   else if(msg.what==5){
+				   	
+				   //choose 
+				   
+				   blablabla();
+		        	//pC.setMapElevationShown(false);
+		        	//mapState.elevationEnabled=false;
+		        	//handleInfoDialog();
+
+			   }
 	        
         }
     };
     
+    private void blablabla(){
+    	
+		   //MarkerConfigurationDialog.initDialog(this,projId);
+
+    	MarkerConfigurationDialog dialog=new MarkerConfigurationDialog(this);
+    	dialog.show();
+    	
+    }
 
     private Handler myTracksResultHandler = new Handler() {
 
@@ -924,7 +966,29 @@ public class CitationMap extends MapActivity implements LocationListener {
         
     };
     
-   
+    private OnClickListener showPolygonListener = new OnClickListener()
+    {
+        public void onClick(View v){
+        	
+        	
+	        	if(mapState.polygonsOn) {
+	        		
+	        		mapState.polygonsOn=false;
+	    	        listOfOverlays.remove(polygonsOverlay);
+	
+	        	}
+	        	else{ 
+	
+	        		mapState.polygonsOn=true;
+	        		listOfOverlays.add(polygonsOverlay);
+
+	        }
+     
+       		mapView.invalidate();
+
+      }
+        
+    };
     
 	
 	private void startTraking(){
@@ -1174,6 +1238,34 @@ public class CitationMap extends MapActivity implements LocationListener {
         	
         	mapView.invalidate();
         	
+        }
+    };
+    
+    private OnClickListener viewModeListener = new OnClickListener()
+    {
+        public void onClick(View v)
+        {       
+        	
+            ((Vibrator)getSystemService(VIBRATOR_SERVICE)).vibrate(30);
+
+         
+        	if(mapState.viewMode) {
+        		
+        		mapState.viewMode=false;
+        		v.setBackgroundResource(drawable.info_icon_off);
+        		v.invalidate();
+
+        	}
+        	else { 
+        		
+        		mapState.viewMode=true;
+        		
+        		v.setBackgroundResource(drawable.info_icon);
+        		v.invalidate();
+        	}
+        	
+            handleInfoDialog();
+
         }
     };
     
@@ -1810,8 +1902,12 @@ public class CitationMap extends MapActivity implements LocationListener {
 		   llCitationInfo.setVisibility(View.GONE);
 		   selectedMapLocation=null;
 		   
-		   bubbleIcon = BitmapFactory.decodeResource(getResources(),R.drawable.bubble);
-		   bubbleIconExt = BitmapFactory.decodeResource(getResources(),R.drawable.bubble_point);
+		   //bubbleIcon = BitmapFactory.decodeResource(getResources(),R.drawable.bubble);		   
+		   bubbleIcon = BitmapFactory.decodeResource(getResources(),R.drawable.marker_mammal);
+		   
+		   //bubbleIconExt = BitmapFactory.decodeResource(getResources(),R.drawable.bubble_point);
+		   bubbleIconExt = BitmapFactory.decodeResource(getResources(),R.drawable.marker_selected);
+
 		   shadowIcon = BitmapFactory.decodeResource(getResources(),R.drawable.shadoww);
 		   greenIcon = BitmapFactory.decodeResource(getResources(),R.drawable.bubble_verd);
 		   

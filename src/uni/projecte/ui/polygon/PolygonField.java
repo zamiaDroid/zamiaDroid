@@ -63,6 +63,8 @@ public class PolygonField {
 	private ImageButton btClosePolygon;
 	private ImageButton ibQuitEdit;
 	
+	private LinearLayout llWaitingGPS;
+	
 	private TextView tvAddPoint;
 
 	
@@ -162,6 +164,7 @@ public class PolygonField {
 		btRemovePolygon=(ImageButton) llPolygon.findViewById(R.id.ibPolygonRemove);
 		btRemovePolygon.setOnClickListener(removePolygonListener);
 		
+		llWaitingGPS=(LinearLayout) llPolygon.findViewById(R.id.llgpsWaiting);
 		
 		tvAddPoint=(TextView) llPolygon.findViewById(R.id.tvAddPoint);		
 		
@@ -192,7 +195,9 @@ public class PolygonField {
 		
 		waitingGPS=false;
 		
-		ibAddPoint.setVisibility(View.VISIBLE);
+		((LinearLayout) ibAddPoint.getParent()).setVisibility(View.VISIBLE);
+		llWaitingGPS.setVisibility(View.GONE);
+		
 		tvAddPoint.setText("Afegir punt");
 		
 		updateUI();
@@ -420,9 +425,9 @@ public class PolygonField {
 		
 		if(waitingGPS) {
 			
-			ibAddPoint.setVisibility(View.GONE);
-			tvAddPoint.setText(baseContext.getText(R.string.waitingGPS));
-			
+			((LinearLayout) ibAddPoint.getParent()).setVisibility(View.GONE);
+			llWaitingGPS.setVisibility(View.VISIBLE);
+						
 		}
 		
 	}
