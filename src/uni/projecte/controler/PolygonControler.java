@@ -2,6 +2,7 @@ package uni.projecte.controler;
 
 import java.util.ArrayList;
 
+import uni.projecte.dataTypes.LocationCoord;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
 import uni.projecte.maps.utils.LatLon;
@@ -43,7 +44,7 @@ public class PolygonControler {
 	}
 	
 
-	public void addPolygonList(PolygonField polygonField,long projId) {
+	public void addPolygonList(PolygonField polygonField,long projId,long parentId) {
 
 		ArrayList<LatLon> path=polygonField.getPolygonPath();
         
@@ -52,7 +53,7 @@ public class PolygonControler {
     	for(LatLon point: path){
    		
 			// subProjId (0) || fieldId inside subproject (1)				
-	        long citationId=citSLCnt.createCitation(polygonField.getSecondLevelId(), point.latitude,point.longitude, "",projId,FIELD_NAME);
+	        long citationId=citSLCnt.createCitation(polygonField.getSecondLevelId(), point.latitude,point.longitude, "",projId,FIELD_NAME,parentId);
 
 	        citSLCnt.startTransaction();
 	        	citSLCnt.addCitationField(polygonField.getFieldId(),citationId,subFieldId,projField.getName(),(int)point.altitude+"");
@@ -64,11 +65,11 @@ public class PolygonControler {
 		
 	}
 	
-	public void updatePolygonList(PolygonField polygonField,long projId) {
+	public void updatePolygonList(PolygonField polygonField,long projId,long parentId) {
 
 		citSLCnt.removeCitationsBySLId(polygonField.getSecondLevelId());
 
-		addPolygonList(polygonField,projId);
+		addPolygonList(polygonField,projId,parentId);
 		
 	}
 
@@ -136,6 +137,8 @@ public class PolygonControler {
 			
 			polygons.moveToFirst();
 			String lastPolygonId="";
+			
+			//Single Polygon
 			ArrayList<LatLon> tmpPolygon=null;
 			
 			while(!polygons.isAfterLast()){
@@ -168,6 +171,45 @@ public class PolygonControler {
 		
 		return polygon_list;
 		
+	}
+
+
+	public ArrayList<ArrayList<LatLon>> getPolygonList(long projId,
+			String preSettedLoc) {
+
+		ArrayList<ArrayList<LatLon>> polygon_list= new ArrayList<ArrayList<LatLon>>();	
+		String[] ids=preSettedLoc.split(":");
+		
+		for(int i=1;i<ids.length;i++){
+			
+			Cursor polygonPoints=citSLCnt.getPolygonPoints(projId,Long.valueOf(ids[i]));
+			
+			if(polygonPoints!=null){
+				
+				polygonPoints.moveToFirst();
+				
+				//Single Polygon
+				ArrayList<LatLon> tmpPolygon=new ArrayList<LatLon>();
+				
+				while(!polygonPoints.isAfterLast()){
+					
+					tmpPolygon.add(new LatLon(polygonPoints.getDouble(2), polygonPoints.getDouble(3), 0.0));
+					polygonPoints.moveToNext();
+					
+				}
+				
+				polygon_list.add(tmpPolygon);
+				polygonPoints.close();
+				
+			}
+			
+			
+			
+		}		
+    	
+		
+		
+		return polygon_list;
 	}
 
 

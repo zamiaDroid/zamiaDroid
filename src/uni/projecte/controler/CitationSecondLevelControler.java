@@ -70,12 +70,12 @@ public class CitationSecondLevelControler extends CitationControler {
 	 */
 	
 	
-	public long createCitation(String secondLevelFieldId, double latPoint, double longPoint, String comment,long projId, String subFieldType){
+	public long createCitation(String secondLevelFieldId, double latPoint, double longPoint, String comment,long projId, String subFieldType,long parentCitationId){
 		
 		SecondLevelCitacionDbAdapter mDbSample=new SecondLevelCitacionDbAdapter(baseContext);
 		mDbSample.open();
 			
-		long idSample=  mDbSample.createCitation(secondLevelFieldId, latPoint, longPoint,projId,subFieldType);
+		long idSample=  mDbSample.createCitation(secondLevelFieldId, latPoint, longPoint,projId,subFieldType,parentCitationId);
 			
 		mDbSample.close();
 		
@@ -1118,6 +1118,22 @@ public class CitationSecondLevelControler extends CitationControler {
 		mDbAttributes.close();
 		
 		return polygons;
+		
+	}
+
+	public Cursor getPolygonPoints(long projId, Long parentId) {
+		
+		mDbAttributes = new SecondLevelCitacionDbAdapter(baseContext);
+		mDbAttributes.open();
+		
+		Cursor polygons=mDbAttributes.getPolygonPointByParentId(projId,parentId);
+		
+		mDbAttributes.close();
+		
+		return polygons;
+		
+		
+		
 		
 	}
 

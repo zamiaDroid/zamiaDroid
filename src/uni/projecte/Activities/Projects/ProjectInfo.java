@@ -31,6 +31,7 @@ import uni.projecte.dataLayer.ProjectManager.FieldCreator;
 import uni.projecte.dataLayer.ProjectManager.ListAdapters.ProjectFieldListAdapter;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
+import uni.projecte.maps.MarkerConfigurationDialog;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -68,6 +69,7 @@ public class ProjectInfo extends Activity{
 	   private static final int ADD_FIELD=Menu.FIRST;
 	   private static final int CHANGE_TH=Menu.FIRST+1;
 	   private static final int ALLOW_SEC_EXTERNAL_STORAGE=Menu.FIRST+2;
+	   private static final int CHANGE_MARKER=Menu.FIRST+3;
 
 	
 		
@@ -189,7 +191,8 @@ public class ProjectInfo extends Activity{
 
 	    	menu.add(0, ADD_FIELD, 0,R.string.mAddField).setIcon(android.R.drawable.ic_menu_add);
 	    	menu.add(0, CHANGE_TH, 0,R.string.mChangeTh).setIcon(android.R.drawable.ic_menu_agenda);
-	    	
+	    	menu.add(0, CHANGE_MARKER, 0,R.string.changeMapMarker).setIcon(android.R.drawable.ic_menu_myplaces);
+
 	    	if(photoCnt.hasSecondaryStorage()) {
 	    		
 	    		if(photoCnt.isSecondaryExternalStorageDefault(projId)){
@@ -304,7 +307,13 @@ public class ProjectInfo extends Activity{
 				 			 
 				break;
 				
+			case CHANGE_MARKER:
 				
+				changeMapMarker();
+
+				
+				break;
+								
 			case ALLOW_SEC_EXTERNAL_STORAGE:
 
 				if(photoCnt.isSecondaryExternalStorageDefault(projId)){
@@ -328,7 +337,13 @@ public class ProjectInfo extends Activity{
 	
 	    
 	    
-	 
+	 private void changeMapMarker(){
+		 
+		MarkerConfigurationDialog dialog=new MarkerConfigurationDialog(this, projId, null,MarkerConfigurationDialog.UPDATE_PROJECT_MARKER);
+		dialog.show();
+			 
+		 
+	 }
 	    
 	 
 	   private void changeTh(){

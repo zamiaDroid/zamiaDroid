@@ -28,8 +28,10 @@ import uni.projecte.Activities.Citations.Sampling;
 import uni.projecte.Activities.RemoteDBs.RemoteDBConfig;
 import uni.projecte.Activities.RemoteDBs.TaxonListExplorer;
 import uni.projecte.R.drawable;
+import uni.projecte.controler.MapConfigControler;
 import uni.projecte.controler.PolygonControler;
 import uni.projecte.controler.PreferencesControler;
+import uni.projecte.controler.ProjectConfigControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.CitationControler;
 import uni.projecte.controler.ThesaurusControler;
@@ -58,6 +60,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -161,6 +164,7 @@ public class CitationMap extends MapActivity implements LocationListener {
 	 private ImageButton editModeButton;
 	 private ImageButton editCitation;
 	 private ImageButton moveCitation;
+	 private ImageButton changeCitationMarker;
 	 private ImageButton photoCitation;
 	 private ImageButton showPolygonButton;
 	 private ImageButton viewModeButton;
@@ -208,15 +212,14 @@ public class CitationMap extends MapActivity implements LocationListener {
 	 private CitationMapState mapState = new CitationMapState(false, false, false,
 			false, false, false, false, false, false, false, true,false,false,false,false);
 	 
-	 
 	private String utmPrec="10km";
-
 	 
 	 // Data Providers
 	 private PreferencesControler pC;
 	 private CitationControler sC;
 	 private ProjectControler projCnt;
-
+	 private ProjectConfigControler projCnf;
+	 
 	 // Data Storage
 	 private ArrayList<MapLocation> mapLocations;
 
@@ -284,7 +287,7 @@ public class CitationMap extends MapActivity implements LocationListener {
         tvCitationInfo=(TextView)findViewById(R.id.tvCitMapInfoExtended);
 		   
         editCitation=(ImageButton)findViewById(R.id.ibCitMapEditCit);
-        
+        changeCitationMarker=(ImageButton)findViewById(R.id.ibChangeMarker);
         
         mapView =(MapView)findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(true);
@@ -299,6 +302,7 @@ public class CitationMap extends MapActivity implements LocationListener {
         sC=new CitationControler(this);
         pC=new PreferencesControler(this);
         projCnt=new ProjectControler(this);
+        projCnf=new ProjectConfigControler(this);
         
         listOfOverlays = mapView.getOverlays();
 
@@ -845,27 +849,35 @@ public class CitationMap extends MapActivity implements LocationListener {
 			   }
 			   else if(msg.what==5){
 				   	
-				   //choose 
-				   
-				   blablabla();
-		        	//pC.setMapElevationShown(false);
-		        	//mapState.elevationEnabled=false;
-		        	//handleInfoDialog();
+				   showMarkerDialog();
 
 			   }
 	        
         }
     };
     
-    private void blablabla(){
-    	
-		   //MarkerConfigurationDialog.initDialog(this,projId);
+    private void showMarkerDialog(){
 
-    	MarkerConfigurationDialog dialog=new MarkerConfigurationDialog(this);
+    	MarkerConfigurationDialog dialog=new MarkerConfigurationDialog(this,projId,updateMarkersHandler,MarkerConfigurationDialog.UPDATE_PROJECT_MARKER);
     	dialog.show();
     	
     }
 
+    
+    private Handler updateMarkersHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            
+        	//marker_id = (String)msg.obj;
+        	
+        	 listOfOverlays.remove(mapOverlay);
+             loadCitations();
+	        
+        }
+    };
+    
+    
     private Handler myTracksResultHandler = new Handler() {
 
         @Override
@@ -1725,8 +1737,19 @@ public class CitationMap extends MapActivity implements LocationListener {
 	private ArrayList<ArrayList<LatLon>> loadPolygons(){
 		
 		PolygonControler polygonCnt= new PolygonControler(this);
+		ArrayList<ArrayList<LatLon>> polygons=null;
 		
-		ArrayList<ArrayList<LatLon>> polygons= polygonCnt.getPolygonList(projId);
+		   if(preSettedLoc!=null){
+	        	
+			   polygons= polygonCnt.getPolygonList(projId,preSettedLoc);
+			   
+	        }
+	 
+	        else{
+	        	
+	        	polygons= polygonCnt.getPolygonList(projId);
+	        	
+	        }
 				
 		return polygons;
 		
@@ -1814,6 +1837,10 @@ public class CitationMap extends MapActivity implements LocationListener {
         	       	 
         	 listOfOverlays.remove(mapOverlay);
              loadCitations();
+
+             listOfOverlays.remove(polygonsOverlay);
+             polygonsOverlay=new PolygonLayerOverlay(mapView, loadPolygons());
+ 	         listOfOverlays.add(polygonsOverlay);
              
              break;
              
@@ -1890,6 +1917,9 @@ public class CitationMap extends MapActivity implements LocationListener {
 		
 		private String citationFieldName;
 		
+		private HashMap<String, Bitmap> availableMarkers;
+		
+		private MapConfigControler mapConfig;
 		
 
 	   public CitationsOverlay(ArrayList<MapLocation> mapLocations,CitationControler sC, long projId, Context context) {
@@ -1902,9 +1932,14 @@ public class CitationMap extends MapActivity implements LocationListener {
 		   llCitationInfo.setVisibility(View.GONE);
 		   selectedMapLocation=null;
 		   
-		   //bubbleIcon = BitmapFactory.decodeResource(getResources(),R.drawable.bubble);		   
-		   bubbleIcon = BitmapFactory.decodeResource(getResources(),R.drawable.marker_mammal);
+		   mapConfig=new MapConfigControler(baseContext);
+		   availableMarkers=new HashMap<String, Bitmap>();
+
 		   
+		   String marker_id=mapConfig.getProjectMapMarker(projId);
+		   
+		   bubbleIcon = getMarker(marker_id);
+
 		   //bubbleIconExt = BitmapFactory.decodeResource(getResources(),R.drawable.bubble_point);
 		   bubbleIconExt = BitmapFactory.decodeResource(getResources(),R.drawable.marker_selected);
 
@@ -2099,6 +2134,17 @@ public class CitationMap extends MapActivity implements LocationListener {
 	 		
 	 			
 	 		   ((Activity) c).startActivityForResult(intent,MAP_MARKERS_UPDATED);   	        	
+	        }
+	    };
+	    
+	    private OnClickListener changeCitationMarkerListener = new OnClickListener()
+	    {
+	        public void onClick(View v){                        
+	       	
+	        	long citationId=(Long) v.getTag();
+	        	
+	        	MarkerConfigurationDialog dialog=new MarkerConfigurationDialog(v.getContext(),citationId,updateMarkersHandler,MarkerConfigurationDialog.UPDATE_CITATION_MARKER);
+	        	dialog.show();	        	
 	        }
 	    };
 	    
@@ -2309,9 +2355,6 @@ public class CitationMap extends MapActivity implements LocationListener {
 			}
 	   		
 	    }
-		
-	
-	    
 	
 		private void drawMapLocations(Canvas canvas, MapView mapView, boolean shadow) {
 	    	
@@ -2323,6 +2366,13 @@ public class CitationMap extends MapActivity implements LocationListener {
 	    		
 	    		MapLocation location = iterator.next();
 	    		mapView.getProjection().toPixels(location.getPoint(), screenCoords);
+	    		
+	    		String marker_id=location.getMarker_id();
+	    		
+	    		Bitmap marker=null;
+	    		
+	    		if(marker_id.equals("")) marker=bubbleIcon;		
+	    		else marker=getMarker(marker_id);
 				
 		    	if (shadow) {
 		    		
@@ -2340,7 +2390,7 @@ public class CitationMap extends MapActivity implements LocationListener {
 		    		}
 		    		else{
 		    		
-		    			canvas.drawBitmap(bubbleIcon, screenCoords.x - bubbleIcon.getWidth()/2, screenCoords.y - bubbleIcon.getHeight(),null);
+		    			canvas.drawBitmap(marker, screenCoords.x - marker.getWidth()/2, screenCoords.y - marker.getHeight(),null);
 		    		
 		    		}
 		    		
@@ -2355,6 +2405,25 @@ public class CitationMap extends MapActivity implements LocationListener {
 	    }
 	    
 
+
+
+		private Bitmap getMarker(String marker_id) {
+
+			Bitmap marker=availableMarkers.get(marker_id);
+    		
+    		if(marker==null) {
+    			
+    			Resources mRes = baseContext.getResources();
+    			int resID = mRes.getIdentifier(marker_id, "drawable", baseContext.getPackageName()); 
+    			
+    			marker = BitmapFactory.decodeResource(mRes,resID);
+    			
+    			availableMarkers.put(marker_id, marker);
+    			    		
+    		}
+    		
+			return marker;
+		}
 
 
 		private void drawBubbles(Canvas canvas, MapLocation point){
@@ -2444,7 +2513,8 @@ public class CitationMap extends MapActivity implements LocationListener {
 								
 						   editCitation.setId((int) citationId);
 						   editCitation.setOnClickListener(editCitationListener);
-								
+						   changeCitationMarker.setTag(citationId);
+						   changeCitationMarker.setOnClickListener(changeCitationMarkerListener);	
 						   moveCitation.setOnClickListener(moveCitationListener);
 							
 					   	}

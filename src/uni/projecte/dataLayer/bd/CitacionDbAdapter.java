@@ -44,6 +44,10 @@ public class CitacionDbAdapter {
     public static final String COMMENT = "comment";
     public static final String SINCRONIZED="sincronized";
 
+    /* CitationMap fields */
+    public static final String MARKER_ID="markerId";
+    
+    
 	/* filled fields */
     
 	public static final String KEY_SAMPLE_ID = "idSample";
@@ -71,7 +75,8 @@ public class CitacionDbAdapter {
             + LONGITUDE + " DOUBLE,"
             + COMMENT + " TEXT,"
             + DATE + " TEXT,"
-            + SINCRONIZED + " BOOLEAN"
+            + SINCRONIZED + " BOOLEAN,"
+            + MARKER_ID + " TEXT"
             + ");";
     
     
@@ -88,8 +93,14 @@ public class CitacionDbAdapter {
     protected static final String DATABASE_TABLE_CITATION = "CitationTable";
     
     private static final String DATABASE_NAME= "Citation";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
+    /*
+     * Version 2: original version
+     * Version 3: added markerId, fillColor, alpha and lineColor   
+     * 
+     */
+    
     private final Context mCtx;
     
 
@@ -107,10 +118,17 @@ public class CitacionDbAdapter {
         }
 
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-                    + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS notes");
-            onCreate(db);
+         
+        	if (oldVersion < 3) {
+
+                final String ALTER_TBL = 
+                        "ALTER TABLE " + DATABASE_TABLE_CITATION + 
+                        " ADD COLUMN " + MARKER_ID + " TEXT "
+                        + ";";
+                
+                db.execSQL(ALTER_TBL);
+                
+            }
         }
     }
 
@@ -172,7 +190,7 @@ public class CitacionDbAdapter {
        	ContentValues vals = new ContentValues();
 		vals.put(DATE,date);
 		
-      return mDb.update(DATABASE_TABLE_CITATION, vals, KEY_ROWID + "=" + sampleId, null) > 0;
+		return mDb.update(DATABASE_TABLE_CITATION, vals, KEY_ROWID + "=" + sampleId, null) > 0;
     	
     }
 
@@ -390,7 +408,7 @@ public class CitacionDbAdapter {
     public Cursor fetchSampleBySampleIdWithFirstField(long citationId) throws SQLException {
 
         Cursor 
-    		c=mDb.rawQuery("SELECT CitationTable._id as _id,value, date,CitationFieldTable._id as idField, latitude,longitude FROM " + DATABASE_TABLE_FIELD+","+DATABASE_TABLE_CITATION
+    		c=mDb.rawQuery("SELECT CitationTable._id as _id,value, date,CitationFieldTable._id as idField, latitude,longitude,markerId FROM " + DATABASE_TABLE_FIELD+","+DATABASE_TABLE_CITATION
 				+ " WHERE CitationTable._id="+citationId+" and CitationTable._id="+CitacionDbAdapter.KEY_SAMPLE_ID+ " GROUP BY CitationTable._id;",null);
 
   
@@ -541,7 +559,7 @@ public class CitacionDbAdapter {
     	Cursor c;
 
     	
-    		c=mDb.rawQuery("SELECT CitationTable._id as _id,value,date,CitationFieldTable._id as idField,latitude,longitude FROM " + DATABASE_TABLE_FIELD+","+DATABASE_TABLE_CITATION
+    		c=mDb.rawQuery("SELECT CitationTable._id as _id,value,date,CitationFieldTable._id as idField,latitude,longitude,markerId FROM " + DATABASE_TABLE_FIELD+","+DATABASE_TABLE_CITATION
 				+ " WHERE CitationTable._id="+citationId+" and idRs="+projId+" and CitationTable._id="+CitacionDbAdapter.KEY_SAMPLE_ID+ " and fieldName=\""+field+"\" GROUP BY CitationTable._id ORDER BY idField;",null);
 
   
@@ -561,7 +579,7 @@ public class CitacionDbAdapter {
    	
    	if(asc) orderBy="ASC";
    	
-   	Cursor c=mDb.rawQuery("SELECT CitationTable._id as _id,value,date,CitationFieldTable._id as idField,latitude,longitude FROM " + DATABASE_TABLE_FIELD+","+DATABASE_TABLE_CITATION
+   	Cursor c=mDb.rawQuery("SELECT CitationTable._id as _id,value,date,CitationFieldTable._id as idField,latitude,longitude,markerId FROM " + DATABASE_TABLE_FIELD+","+DATABASE_TABLE_CITATION
 				+ " WHERE idRs="+projId+" and CitationTable._id="+CitacionDbAdapter.KEY_SAMPLE_ID+ " and fieldName=\""+field+"\" GROUP BY CitationTable._id ORDER BY date "+orderBy+";",null);
 
  
@@ -829,6 +847,21 @@ public class CitacionDbAdapter {
                   +citationFieldId , null) > 0;
                   
     }
+   
+   public boolean updateCitationMapMarker(long citationId, String map_marker) {
+	   
+	   ContentValues vals = new ContentValues();
+	   vals.put(MARKER_ID,map_marker);
+
+       return mDb.update(DATABASE_TABLE_CITATION, vals,  KEY_ROWID + "=" + citationId, null) > 0;	   
+	   
+	}
+   
+   public Cursor getCitationMapMarker(long citationId) {
+
+   	   return mDb.query(DATABASE_TABLE_CITATION, new String[] {KEY_ROWID,MARKER_ID}, KEY_ROWID + "=" + citationId, null, null, null, null);
+	
+	}
     
     public Cursor fetchCitationIdByPhotoField(String photo) throws SQLException {
     	
@@ -904,6 +937,10 @@ public class CitacionDbAdapter {
                 VALUE}, KEY_TIPUS_ATRIB + " = " +fieldId+" and " + KEY_SAMPLE_ID + " = " +citationId, null, null, null, null);
 		
 	}
+
+	
+
+	
 
 
 

@@ -42,8 +42,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/marker_wetland"
                 android:onClick="markerClick" />
-
-
         </TableRow>
 
         <TableRow
@@ -71,11 +69,10 @@
                 android:background="@drawable/marker_spider" />
 
             <ImageButton
-                android:id="@+id/marker_selected"
+                android:id="@+id/marker_clear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/marker_selected" />
-
+                android:background="@drawable/marker_clear" />
         </TableRow>
 
         <TableRow
@@ -89,7 +86,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/marker_birds" />
-               <ImageButton
+
+            <ImageButton
                 android:id="@+id/marker_plant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,16 +98,41 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/marker_fungus" />
-            
+
             <ImageButton
                 android:id="@+id/marker_mammal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/marker_mammal" />
-
         </TableRow>
 
-
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </TableRow>
     </TableLayout>
+
+    <LinearLayout
+        android:id="@+id/llChosenMarker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_margin="10dp" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Marcador escollit:"
+            android:layout_marginRight="4dp" />
+
+        <ImageButton
+            android:id="@+id/ibMarkerChosen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bubble" />
+    </LinearLayout>
 
 </LinearLayout>

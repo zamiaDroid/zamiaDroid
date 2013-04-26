@@ -61,7 +61,7 @@ import edu.ub.bio.biogeolib.CoordinateUTM;
 public class CitationControler {
 	
 	protected Context baseContext;
-	private CitacionDbAdapter mDbSample;
+	protected CitacionDbAdapter mDbSample;
 	private CitacionDbAdapter mDbAttributes;
 	protected CitationControler sC;
 	protected CitationExporter cExporter;
@@ -325,11 +325,14 @@ public class CitationControler {
 			
 			Double lat=cursor.getDouble(4);
 			Double longitude=cursor.getDouble(5);
+			String marker_id=cursor.getString(6);
+			
+			if(marker_id==null) marker_id="";
 			
 		 	if(lat<=90 && longitude<=180){
 		 		
 		 		coordinates.add(new LocationCoord(lat,longitude));
-		 		mapLocations.add(new MapLocation(cursor.getLong(0),cursor.getString(1),cursor.getDouble(4),cursor.getDouble(5)));
+		 		mapLocations.add(new MapLocation(cursor.getLong(0),cursor.getString(1),cursor.getDouble(4),cursor.getDouble(5),marker_id));
 			
 		 	}
 			cursor.moveToNext();
@@ -381,11 +384,14 @@ public class CitationControler {
 			
 			Double lat=cursor.getDouble(4);
 			Double longitude=cursor.getDouble(5);
+			String marker_id=cursor.getString(6);
+			
+			if(marker_id==null) marker_id="";
 			
 		 	if(lat<=90 && longitude<=180){
 		 		
 		 		coordinates.add(new LocationCoord(lat,longitude));
-		 		mapLocations.add(new MapLocation(cursor.getLong(0),cursor.getString(1),cursor.getDouble(4),cursor.getDouble(5)));
+		 		mapLocations.add(new MapLocation(cursor.getLong(0),cursor.getString(1),cursor.getDouble(4),cursor.getDouble(5),marker_id));
 			
 		 	}
 

@@ -354,4 +354,5 @@
    <string name="thChangeInfo">El tesaure carregat al sistema ha estat actualitzat. Es baixarà el nou tesaure i serà substituït per l\'actual.</string>
    <string formatted="false" name="thChangeTitle">El tesaure %1s s\'ha d\'actualitzar! El tesaure va ser carregat %2s.</string>
     
+   <string name="changeMapMarker">Canvia marcador</string>
 </resources>

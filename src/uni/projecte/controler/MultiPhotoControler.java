@@ -79,7 +79,7 @@ public class MultiPhotoControler{
 	} 
 
 
-	public void addPhotosList(MultiPhotoFieldForm photoFieldForm, long subFieldId, long projId) {
+	public void addPhotosList(MultiPhotoFieldForm photoFieldForm, long subFieldId, long projId, long parentId) {
    			
         	citSLCnt=new CitationSecondLevelControler(baseContext);
 			        
@@ -91,7 +91,7 @@ public class MultiPhotoControler{
 	    		String photoValue=photoIt.next();
 	    		
 				// subProjId (0) || fieldId inside subproject (1)				
-		        long citationId=citSLCnt.createCitation(photoFieldForm.getSecondLevelId(), 100, 190, "",projId,FIELD_NAME);
+		        long citationId=citSLCnt.createCitation(photoFieldForm.getSecondLevelId(), 100, 190, "",projId,FIELD_NAME,parentId);
 
 		        citSLCnt.startTransaction();
 		        	citSLCnt.addCitationField(photoFieldForm.getFieldId(),citationId,subFieldId,projField.getName(),photoValue);

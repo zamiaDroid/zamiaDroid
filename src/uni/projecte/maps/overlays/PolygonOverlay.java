@@ -21,8 +21,8 @@ public class PolygonOverlay extends Overlay {
 	private MapView mapView;
 	private Point firstPoint;
 
-	//protected int baseColor = Color.rgb(208, 221, 154);
-	//protected int emphasisColor = Color.rgb(136, 170, 0);
+	protected int baseColor = Color.rgb(208, 221, 154);
+	protected int emphasisColor = Color.rgb(136, 170, 0);
 
 	public PolygonOverlay(MapView mapView, ArrayList<LatLon> polygonPath) {
 
@@ -57,7 +57,7 @@ public class PolygonOverlay extends Overlay {
 
 		
 		Paint verPaint = new Paint();
-		verPaint.setColor(Color.rgb(208, 221, 154));
+		verPaint.setColor(baseColor);
 		verPaint.setStrokeWidth(4);
 		verPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 		verPaint.setStrokeJoin(Paint.Join.ROUND);
@@ -98,7 +98,7 @@ public class PolygonOverlay extends Overlay {
 			
 			path.close();
 			
-			mPaint.setColor(Color.rgb(208, 221, 154));
+			mPaint.setColor(baseColor);
 			mPaint.setAlpha(120);
 			
 			mPaint.setStyle(Paint.Style.FILL);
@@ -108,7 +108,7 @@ public class PolygonOverlay extends Overlay {
 		
 		}
 		
-		mPaint.setColor(Color.rgb(136, 170, 0));
+		mPaint.setColor(emphasisColor);
 		mPaint.setStyle(Paint.Style.STROKE);
 		mPaint.setStrokeWidth(3);
 

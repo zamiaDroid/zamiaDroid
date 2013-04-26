@@ -1,78 +1,142 @@
 package uni.projecte.maps;
 
 import uni.projecte.R;
-import uni.projecte.controler.PreferencesControler;
-import uni.projecte.dataTypes.Utilities;
+import uni.projecte.controler.MapConfigControler;
+import uni.projecte.controler.ProjectConfigControler;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
-
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 
 public class MarkerConfigurationDialog extends Dialog{
 
-	//Ensure this Dialog has a Context we can use
-	Context mContext ;
+	public static final int UPDATE_PROJECT_MARKER=1;
+	public static final int UPDATE_CITATION_MARKER=2;
+	
+	
+	private Context mContext ;
+	private LinearLayout ll;
+	
+	private long id;
+	private String marker_id;
+	private int mode;
+	
+	//private ProjectConfigControler projCnf;
+	private MapConfigControler mapConfig;
+	
+	private Handler handler;
+	
+	private String[] idOfButtons = { 
+			  "marker_butterfly", "marker_snake", "marker_bee", "marker_wetland",
+			  "marker_turtle", "marker_algae", "marker_spider", "marker_clear",
+			  "marker_birds", "marker_plant", "marker_fungus", "marker_mammal"
+	};
+	
 
-	public MarkerConfigurationDialog(Context context) {
+	public MarkerConfigurationDialog(Context context,long id, Handler updateMarkers,int mode) {
+		
 	    super(context);
-	    mContext=context; //Store the Context as provided from caller
+	    
+	    mContext=context; 
+	    this.id=id;
+	    this.handler=updateMarkers;
+	    this.mode=mode;	    
+	    
 	}
+	
 
 	@Override
 	 protected void onCreate(final Bundle savedInstanceState){
 		
 	  super.onCreate(savedInstanceState);
-	  RelativeLayout ll=(RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.mapchangemarker, null);
+	  
+	  mapConfig = new MapConfigControler(mContext);
+	  
+	  ll=(LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.mapchangemarker, null);
 	  setContentView(ll);
 	  
-	  
+	  bindOnClickEvents();
+
+	  loadSelectedMarker();
+	  	
+	  if(!marker_id.equals("marker")) setSelectedMarker();
 	  
 	 }
 
+	private void loadSelectedMarker() {
+  
+		if(mode == UPDATE_CITATION_MARKER) marker_id=mapConfig.getCitationMapMarker(id);
+		else marker_id=mapConfig.getProjectMapMarker(id);
+		
+	}
+
+
+	private void bindOnClickEvents() {
+
+		Resources mRes = mContext.getResources();
+		  
+		  for (int pos = 0; pos < idOfButtons.length; pos++) {
+			  
+		     Integer btnId = mRes.getIdentifier(idOfButtons[pos], "id",mContext.getPackageName());
+		      
+		     ImageButton ib = (ImageButton) ll.findViewById(btnId);
+		     ib.setTag(idOfButtons[pos]);
+		     
+		     ib.setOnClickListener(markerClick);
+		     
+		  }
+		
+	}
+
+
+	private void setSelectedMarker(){
+		
+  	  Resources mRes = mContext.getResources();
+		
+  	  ImageButton ib=(ImageButton)ll.findViewById(R.id.ibMarkerChosen);
+		
+  	  int resID = mRes.getIdentifier(marker_id, "drawable", mContext.getPackageName());      
+		
+  	  ib.setBackgroundResource(resID);
+  	  
+  	  updateMarkerId();
+		
+	}
+
 	
-/*	  public static Dialog initDialog(Context context, long projId) {
-		  
-		    markerConfigDialog  = new Dialog(context);
-		    markerConfigDialog.setCancelable(true);
-		    markerConfigDialog.setTitle("Escull un marcador");
-		 
-		    markerConfigDialog.setContentView(R.layout.mapchangemarker);
-		    markerConfigDialog.show();
-		    
-		    		    
-		    //handleEvents(context,pC,compassEnabled,handlerUpdateConf);
+	private void updateMarkerId() {
 
-		    return markerConfigDialog;
-		    
-		  }*/
-	  
-	 /* private static void handleEvents(final Context context, final PreferencesControler pC, boolean compassEnabled, final Handler handlerUpdateConf) {
-		  
-		  RadioGroup rdgCategory = (RadioGroup)markerConfigDialog.findViewById(R.id.radioGroupUTMPrec);
-		  CheckBox cbShowCompass = (CheckBox)markerConfigDialog.findViewById(R.id.cbShowCompass);
+		if(mode == UPDATE_CITATION_MARKER) mapConfig.setCitationMapMarker(id,marker_id);
+		else mapConfig.setProjectMapMarker(id,marker_id);
+
+	}
+
+	public android.view.View.OnClickListener markerClick = new android.view.View.OnClickListener() {
 		
-	  }*/
-
-	  public OnClickListener markerClick = new OnClickListener() {
-		
-
-		public void onClick(DialogInterface dialog, int which) {
-
-			Utilities.showToast("Marcador ",mContext);
+		public void onClick(View v) {
+			
+			marker_id=(String)v.getTag();
+			
+			setSelectedMarker();
+			
+			if(handler!=null){
+				
+				Message msg = Message.obtain();
+				msg.what = 0;
+				msg.obj = marker_id;		
+				handler.sendMessage(msg);
+				
+			}
 			
 		}
 	};
+
 
 }

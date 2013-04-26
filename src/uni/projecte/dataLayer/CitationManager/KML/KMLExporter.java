@@ -91,6 +91,8 @@ public class KMLExporter extends CitationExporter {
 	
 		lastValue=value;
 		
+		fc.createCitationField(label, attName, value, category);
+		
 	}
 	
 	@Override

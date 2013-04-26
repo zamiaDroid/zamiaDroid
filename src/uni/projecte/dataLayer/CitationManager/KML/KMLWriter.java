@@ -241,6 +241,9 @@ public class KMLWriter {
 		try {
 			
 			serializer.startTag("","Placemark");
+			//serializer.startTag("", "name");
+			
+			serializer.startTag("", "ExtendedData");
 
 			
 		} catch (IllegalArgumentException e) {
@@ -257,17 +260,19 @@ public class KMLWriter {
 		
         try {
         	
+        	
+
 			serializer.startTag("", "name");
 			
 				serializer.text(title);
             
 			serializer.endTag("", "name");
 			
-			serializer.startTag("","description");
+			/*serializer.startTag("","description");
         	
         		serializer.text("<![CDATA["+description+"]]>");
         	
-			serializer.endTag("","description");
+			serializer.endTag("","description");*/
 
 			serializer.endTag("","Placemark");
 
@@ -290,16 +295,27 @@ public class KMLWriter {
 		
 		try{
 		
-		serializer.startTag("","CitationField");
-
-		serializer.attribute("", "label", label);
+			
+		//<Data name="holeNumber">
+	    //    <value>1</value>
+	    // </Data>
+			
+		serializer.startTag("","Data");
 		serializer.attribute("", "name", name);
-		serializer.attribute("", "category", category);
+
+		serializer.startTag("","displayName");
+			serializer.text(label);
+		serializer.endTag("","displayName");
+
+			serializer.startTag("","value");
+
+				if(value!=null) serializer.text(value);
+				else  serializer.text("");
+				
+			serializer.endTag("","value");
+
 			
-			if(value!=null) serializer.text(value);
-			else  serializer.text("");
-			
-		serializer.endTag("","CitationField");
+		serializer.endTag("","Data");
 
 			
 		} catch (IllegalArgumentException e) {
@@ -318,9 +334,7 @@ public class KMLWriter {
 
 		        	
 		try {
-		            	
-		//	serializer.attribute("", "origin", origin);
-			            
+		            				            
 	        serializer.startTag("", "biological_record_type");
 				serializer.text(bio_type);
 			serializer.endTag("", "biological_record_type");
@@ -354,7 +368,10 @@ public class KMLWriter {
 	public void writeCitationCoordinatePoint(String code){
     	
 		try {
-		            	
+		          
+			serializer.endTag("", "ExtendedData");
+
+			
 	        serializer.startTag("", "Point");
 	        
 	        	serializer.startTag("", "coordinates");
@@ -398,6 +415,8 @@ public class KMLWriter {
 	public void writeCitationCoordinatePolygon(String coords){
     	
 		try {
+			
+			serializer.endTag("", "ExtendedData");
 		      		
 	        serializer.startTag("", "styleUrl");
 				serializer.text("#style_polygon");

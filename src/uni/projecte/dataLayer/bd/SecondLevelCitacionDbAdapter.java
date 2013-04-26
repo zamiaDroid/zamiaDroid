@@ -40,7 +40,7 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
     //new fields to improve performance 
     public static final String PROJ_ID ="projId";
     public static final String FIELD_TYPE="subFieldType";
-    
+    public static final String PARENT_CITATION_ID="parentCitationId";
 
 	/* filled fields */
     
@@ -67,7 +67,8 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
             + LONGITUDE + " DOUBLE,"
             + DATE + " TEXT,"
             + PROJ_ID + " INTEGER,"
-            + FIELD_TYPE + " TEXT"
+            + FIELD_TYPE + " TEXT,"
+            + PARENT_CITATION_ID + " INTEGER"
             + ");";
     
     
@@ -127,6 +128,13 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
                 
                 db.execSQL(ALTER_TBL_2);
                 
+                final String ALTER_TBL_3 = 
+                        "ALTER TABLE " + DATABASE_TABLE_CITATION + 
+                        " ADD COLUMN " + PARENT_CITATION_ID + " INTEGER "
+                        + ";";
+                
+                db.execSQL(ALTER_TBL_3);
+                
             }
         	
         	
@@ -181,7 +189,7 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
      * @param comment the comment of the Sample
      * @return rowId or -1 if failed
      */
-    public long createCitation(String secondLevelFieldId, double latitude, double longitude, long projId, String subFieldType) {
+    public long createCitation(String secondLevelFieldId, double latitude, double longitude, long projId, String subFieldType,long parentId) {
         
     	ContentValues initialValues = new ContentValues();
         
@@ -189,9 +197,11 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
         initialValues.put(LATITUDE , latitude);
         initialValues.put(LONGITUDE , longitude);
         
-        /** New fields will improve **/
+        /** New fields will improve performance **/
         	initialValues.put(PROJ_ID, projId);
         	initialValues.put(FIELD_TYPE, subFieldType);
+        	initialValues.put(PARENT_CITATION_ID, parentId);
+
         /** **/
         
         Date date = new Date();
@@ -337,6 +347,22 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
 	}
 
     
+	public Cursor getPolygonPointByParentId(long projId, long parentId) {
+
+		Cursor mCursor =
+
+                mDb.query(true, DATABASE_TABLE_CITATION, new String[] {KEY_ROWID,FIELD_ID,
+                        LATITUDE,LONGITUDE,DATE,PROJ_ID,FIELD_TYPE,PARENT_CITATION_ID}, PROJ_ID + "=" +projId+" and "+PARENT_CITATION_ID + "=" +parentId, null,
+                        null, null, null, null);
+        
+    	if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+    	
+    	return mCursor;
+		
+	}
+    
 	public Cursor fetchCitationsFromSecondLevel(String projName) {
 
        	Cursor mCursor=mDb.rawQuery("SELECT * FROM " + DATABASE_TABLE_CITATION
@@ -374,6 +400,8 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
 	  return mDb.insert(DATABASE_TABLE_CITATION, null, initialValues);
 	   
 	}
+
+
  
 
     

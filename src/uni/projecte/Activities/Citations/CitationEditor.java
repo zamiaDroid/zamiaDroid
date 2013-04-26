@@ -583,7 +583,7 @@ public class CitationEditor extends Activity {
         	    		
         	    		updateFieldValues(citationId, sC);
         	    		
-        	    		addCitationSubFields();
+        	    		addCitationSubFields(citationId);
         	    		
         	    	      String toastText=v.getContext().getString(R.string.tModifiedCitation);
 	    	                 
@@ -604,7 +604,7 @@ public class CitationEditor extends Activity {
         	
     };
     
-    private void addCitationSubFields() {
+    private void addCitationSubFields(long parentId) {
     	
     	//Adding MultiPhoto: photoList
     	
@@ -620,7 +620,7 @@ public class CitationEditor extends Activity {
 				
 				long subFieldId=multiProjCnt.getMultiPhotoSubFieldId(((MultiPhotoFieldForm) tmpField).getFieldId());
 				
-				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId,projId);				
+				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId,projId,parentId);				
 				
 			}						
 		}
@@ -630,7 +630,7 @@ public class CitationEditor extends Activity {
 		
 			PolygonControler polygonCnt= new PolygonControler(this);
 	
-			polygonCnt.updatePolygonList(polygonField,projId);
+			polygonCnt.updatePolygonList(polygonField,projId,citationId);
 	
 		}
 

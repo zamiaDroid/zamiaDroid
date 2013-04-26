@@ -1180,7 +1180,7 @@ public class Sampling extends Activity {
     }
 	
     
-    private void addCitationSubFields() {
+    private void addCitationSubFields(long parentId) {
     	
     	//Adding MultiPhoto: photoList
     	
@@ -1196,7 +1196,7 @@ public class Sampling extends Activity {
 				
 				long subFieldId=multiProjCnt.getMultiPhotoSubFieldId(((MultiPhotoFieldForm) tmpField).getFieldId());
 				
-				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId,projId);				
+				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId,projId,parentId);				
 				
 			}						
 		}
@@ -1206,7 +1206,7 @@ public class Sampling extends Activity {
 		
 			PolygonControler polygonCnt= new PolygonControler(this);
 	
-			polygonCnt.addPolygonList(polygonField,projId);
+			polygonCnt.addPolygonList(polygonField,projId,parentId);
 	
 		}
 		
@@ -1242,7 +1242,7 @@ public class Sampling extends Activity {
           
 	    Log.d("Citation","Action -> Fields Added");
 	    
-		addCitationSubFields();
+		addCitationSubFields(idSample);
 	    
 		Log.d("Citation","Action -> MutliFields Added");
 
