@@ -296,7 +296,66 @@ public class ZamiaCitationWriter {
 		    
 		}
 	
+
 	
+	public void openPolygon() {
+
+		  try {
+				serializer.startTag("", "Polygon");
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+	}
+	
+	public void closePolygon() {
+
+		  try {
+				serializer.endTag("", "Polygon");
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+	}
+	
+	public void createPolygonPoint(double latitude, double longitude,String date,String altitude) {
+		
+		try {
+	    
+			serializer.startTag("", "PolygonPoint");
+			
+			serializer.startTag("", "CitationCoordinate");
+				serializer.attribute("", "code",latitude+", "+longitude);
+				serializer.attribute("", "precision","1.0");
+				serializer.attribute("", "type","UTM alphanum");
+				serializer.attribute("", "units","1m");
+			serializer.endTag("", "CitationCoordinate");
+			
+			addDate(date);
+
+			createCitationField("altitude", "altitude", altitude, "ECO");
+			closeCitationField();
+			
+			serializer.endTag("", "PolygonPoint");
+
+			
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	public void openSecondLevelCitations() {
 		
@@ -463,6 +522,10 @@ public class ZamiaCitationWriter {
 	
 	
 }
+
+	
+
+	
 
 
 

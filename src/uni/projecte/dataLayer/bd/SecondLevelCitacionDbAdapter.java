@@ -213,6 +213,21 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
         return mDb.insert(DATABASE_TABLE_CITATION, null, initialValues);
     }
     
+	public long createEmptyCitation(String secondFieldId,long projId, String subFieldType,long parentId) {
+
+	    ContentValues initialValues = new ContentValues();
+	    initialValues.put(FIELD_ID, secondFieldId);        
+	        
+
+        /** New fields will improve performance **/
+    	initialValues.put(PROJ_ID, projId);
+    	initialValues.put(FIELD_TYPE, subFieldType);
+    	initialValues.put(PARENT_CITATION_ID, parentId);
+	    
+	  return mDb.insert(DATABASE_TABLE_CITATION, null, initialValues);
+	   
+	}
+
     
     
     
@@ -391,15 +406,6 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
   
     }
 
-	public long createEmptyCitation(String secondFieldId) {
-
-	    ContentValues initialValues = new ContentValues();
-	    initialValues.put(FIELD_ID, secondFieldId);        
-	        
-
-	  return mDb.insert(DATABASE_TABLE_CITATION, null, initialValues);
-	   
-	}
 
 
  

@@ -989,7 +989,7 @@ public class CitationControler {
 				ProjectField projField=projectFields.get(citationFieldValue.getLong(2));
 				Log.i("Export",projField.toString() +" -> "+citationFieldValue.getString(3));
 				
-				if(projField.isSubFieldExport()){ 
+				if(projField.isSubFieldExport() && !(cExporter instanceof ZamiaCitationExporter) ){ 
 					
 					cExporter.createCitationField(projField.getName(), projField.getLabel(), getSubCitationValue(citationFieldValue.getString(3),projField,cExporter instanceof KMLExporter), projField.getDesc());
 					cExporter.setFieldType(projField.getId(),projField.getType(),baseContext);

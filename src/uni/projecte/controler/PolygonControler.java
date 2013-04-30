@@ -2,6 +2,8 @@ package uni.projecte.controler;
 
 import java.util.ArrayList;
 
+import uni.projecte.dataLayer.CitationManager.CitationExporter;
+import uni.projecte.dataLayer.CitationManager.Zamia.ZamiaCitationExporter;
 import uni.projecte.dataTypes.LocationCoord;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
@@ -210,6 +212,30 @@ public class PolygonControler {
 		
 		
 		return polygon_list;
+	}
+
+
+	public void exportSubCitationsZamia(long fieldId, String citationValue,ZamiaCitationExporter zamiaCitExp) {
+
+		Cursor polyPoints=citSLCnt.getFieldValuesBySLId(citationValue);
+		
+		zamiaCitExp.createPolygon();
+		
+		if(polyPoints!=null) {
+			
+			polyPoints.moveToFirst();
+			
+			while(!polyPoints.isAfterLast()){
+				
+				zamiaCitExp.createPolygonPoint(polyPoints.getDouble(2),polyPoints.getDouble(3),polyPoints.getString(4),polyPoints.getString(5));
+				polyPoints.moveToNext();
+			}		
+			
+			polyPoints.close();
+		} 
+		zamiaCitExp.closePolygon();
+		
+		
 	}
 
 

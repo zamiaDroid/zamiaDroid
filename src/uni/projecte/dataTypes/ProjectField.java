@@ -69,10 +69,7 @@ public class ProjectField{
 		this.visible=visible;
 		predValues=new ArrayList<String>();
 
-		
 	}
-
-
 	
 	public ProjectField (String nom, String desc, String label,String value,String type){
 		
@@ -136,7 +133,6 @@ public class ProjectField{
 		this.value=value;
 		this.type=type;
 		predValues=new ArrayList<String>();
-
 		
 	}
 
@@ -165,8 +161,6 @@ public class ProjectField{
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-
-
 
 	public void setName(String nom) {
 		this.name = nom;

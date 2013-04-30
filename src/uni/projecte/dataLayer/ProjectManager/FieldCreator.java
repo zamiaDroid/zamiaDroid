@@ -312,6 +312,33 @@ public class FieldCreator {
 	    }
 
 	   
+	public void repeatedToast(String fieldType){
+			 
+			 String fieldTypeName="";
+			 
+			 if(fieldType.equals("multiPhoto")) fieldTypeName=baseContext.getString(R.string.fieldTypePhoto);
+			 else if(fieldType.equals("polygon")) fieldTypeName=baseContext.getString(R.string.fieldTypePolygon);
+			 else fieldTypeName=baseContext.getString(R.string.fieldTypeSubProject);
+			 
+			String text=String.format(baseContext.getString(R.string.uniqueField), fieldTypeName);	
+	 	    
+			Utilities.showToast(text, baseContext);
+	 	    
+	} 
+	
+	 public boolean repeatedFieldType(String fieldType){
+		 
+		 for(ProjectField field: objFieldList){
+			 
+			 if(field.getType().equals(fieldType)) return true;
+			 			 
+		 }
+		 
+		 return false;
+		 
+	 }
+	 
+	   
 	   
 	 private void createMultiPhotoField(long fieldId) {
 		   

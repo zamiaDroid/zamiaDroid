@@ -987,13 +987,14 @@ public class CitationMap extends MapActivity implements LocationListener {
 	        		
 	        		mapState.polygonsOn=false;
 	    	        listOfOverlays.remove(polygonsOverlay);
+	    	        v.setBackgroundResource(drawable.map_polygon_off);
 	
 	        	}
 	        	else{ 
 	
 	        		mapState.polygonsOn=true;
 	        		listOfOverlays.add(polygonsOverlay);
-
+	        		v.setBackgroundResource(drawable.map_polygon);
 	        }
      
        		mapView.invalidate();

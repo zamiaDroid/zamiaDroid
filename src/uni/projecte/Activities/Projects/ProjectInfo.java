@@ -39,6 +39,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.renderscript.ProgramFragmentFixedFunction.Builder.Format;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -71,10 +72,10 @@ public class ProjectInfo extends Activity{
 	   private static final int ALLOW_SEC_EXTERNAL_STORAGE=Menu.FIRST+2;
 	   private static final int CHANGE_MARKER=Menu.FIRST+3;
 
-	
+	   private ArrayList<ProjectField> cFields;
 		
 
-	   @Override
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        
@@ -128,7 +129,7 @@ public class ProjectInfo extends Activity{
    
 	   public void fillFieldList(){
 	
-		   ArrayList<ProjectField> cFields=projCnt.getProjectFields(projId);	   
+		   cFields=projCnt.getProjectFields(projId);	   
 	       
 		   // Now create an array adapter and set it to display using our row
 	       ProjectFieldListAdapter fieldsAdapter = new ProjectFieldListAdapter(this, cFields,projCnt);
@@ -267,17 +268,20 @@ public class ProjectInfo extends Activity{
 	        	        }*/
 	        	        else if(items[item].equals(items[2])){
 	        	        	
-	        	        	fc.createPredFieldDialog("multiPhoto",messageHandler);
+	        	        	if(repeatedFieldType("multiPhoto")) fc.repeatedToast("multiPhoto");
+	        	        	else fc.createPredFieldDialog("multiPhoto",messageHandler);
 	        	        	
 	        	        }
 	        	        else if(items[item].equals(items[3])){
 	        	        	
-	        	        	fc.createPredFieldDialog("polygon",messageHandler);
+	        	        	if(repeatedFieldType("polygon")) fc.repeatedToast("polygon");
+	        	        	else fc.createPredFieldDialog("polygon",messageHandler);
 	        	        	
 	        	        }
 	        	        else{
-
-	        	        	fc.createPredFieldDialog("secondLevel",messageHandler);
+	        	        	
+	        	        	if(repeatedFieldType("secondLevel")) fc.repeatedToast("secondLevel");
+	        	        	else fc.createPredFieldDialog("secondLevel",messageHandler);
 	        	        	
 	        	        }
         	    	 
@@ -344,6 +348,20 @@ public class ProjectInfo extends Activity{
 			 
 		 
 	 }
+	 
+	 private boolean repeatedFieldType(String fieldType){
+		 
+		 for(ProjectField field: cFields){
+			 
+			 if(field.getType().equals(fieldType)) return true;
+			 			 
+		 }
+		 
+		 return false;
+		 
+	 }
+	 
+
 	    
 	 
 	   private void changeTh(){

@@ -234,22 +234,24 @@ public class ProjectCreator extends Activity{
 	        	        }*/
 	        	        else if(items[item].equals(items[2])){
 	        	        	
-	        	        	//camp fotografia
-	        	        	fc.createPredFieldDialog("multiPhoto",messageHandler);
+	        	        	//Photo field
+	        	        	if(fc.repeatedFieldType("multiPhoto")) fc.repeatedToast("multiPhoto");
+	        	        	else fc.createPredFieldDialog("multiPhoto",messageHandler);
 
 	        	        }
 	        	        else if(items[item].equals(items[3])){
 	        	        	
-	        	        	//camp fotografia
-	        	        	fc.createPredFieldDialog("polygon",messageHandler);
+	        	        	//camp polygon
+	        	        	if(fc.repeatedFieldType("polygon")) fc.repeatedToast("polygon");
+	        	        	else fc.createPredFieldDialog("polygon",messageHandler);
 
 	        	        }
 	        	        else{
 	        	        	
 	        	        	//camps de dos nivells
 	        	        	//fc.createPredFieldDialog("secondLevel");
-	        	        	
-	        	        	fc.createPredFieldDialog("secondLevel",messageHandler);
+	        	        	if(fc.repeatedFieldType("secondLevel")) fc.repeatedToast("secondLevel");
+	        	        	else fc.createPredFieldDialog("secondLevel",messageHandler);
 
 	        	        }
 	        	    }
@@ -281,6 +283,7 @@ public class ProjectCreator extends Activity{
 			
 			return false;
 		}
+		
 		
 		/*
 		 * This Method gets the project name and the created Attributes or Fields and creates a new Project in the system

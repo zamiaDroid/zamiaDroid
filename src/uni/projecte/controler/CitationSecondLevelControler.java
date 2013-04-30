@@ -160,7 +160,7 @@ public class CitationSecondLevelControler extends CitationControler {
 		} 
 		
 		att.close();		
-	aTypes.close();
+		aTypes.close();
 	
 		return citationValueId;
 		
@@ -905,10 +905,10 @@ public class CitationSecondLevelControler extends CitationControler {
 	
 	/** Methods invocated by Fagus Reader **/
 	
-	public long createEmptyCitation(String secondFieldId){
+	public long createEmptyCitation(String secondFieldId,long projId, String subFieldType,long parentId){
 		
 		
-		this.sampleId= mDbAttributes.createEmptyCitation(secondFieldId);
+		this.sampleId= mDbAttributes.createEmptyCitation(secondFieldId,projId, subFieldType,parentId);
 		
 		return sampleId;		
 		

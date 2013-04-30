@@ -58,6 +58,7 @@ public class ZamiaExportCitationReader extends ZamiaCitationReader {
 	}
 	
 	
+
 	@Override
 	public void createDatumFields(String tempVal, String name, String label,String category) {
 	
@@ -81,7 +82,11 @@ public class ZamiaExportCitationReader extends ZamiaCitationReader {
 		else{
 					
 			//obtenir identificador camp
-			long fieldId=slPC.getSLId(projectId, lastFieldValue);
+			
+			long fieldId=-1;
+			
+			if(secondLevelType.equals("polygon")) fieldId=slPC.getSLId(projectId, "polygonAltitude");		
+			else fieldId=slPC.getSLId(projectId, lastFieldValue);
 			
 			Log.i("Cit","Create SL "+name+" "+tempVal+" with field: "+fieldId);
 

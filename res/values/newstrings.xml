@@ -355,4 +355,7 @@
    <string formatted="false" name="thChangeTitle">El tesaure %1s s\'ha d\'actualitzar! El tesaure va ser carregat %2s.</string>
     
    <string name="changeMapMarker">Canvia marcador</string>
+   
+   <string name="uniqueField">No hi pot haver més d\'un camp %1s</string>
+   
 </resources>
