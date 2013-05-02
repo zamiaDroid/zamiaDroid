@@ -67,11 +67,7 @@ public class ZamiaExportCitationReader extends ZamiaCitationReader {
 		
 		if(!secondLevelFields){
 
-//			Log.i("Cit","Create Datum Fields "+name+" "+tempVal+" ");
-//    		super.createDatumFields(tempVal, name, label, category);
-//	 		Log.i("Cit","Sample: "+this.sampleId+":"+name+" "+tempVal+" ");
 	
-			
 			long fieldId= projCnt.getFieldIdByName(projectId,name);
 
 			if(fieldId>0) citCnt.addCitationField(projectId,this.sampleId, this.projectId, name, tempVal);

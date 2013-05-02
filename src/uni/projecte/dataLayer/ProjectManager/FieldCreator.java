@@ -358,7 +358,7 @@ public class FieldCreator {
 		 
 		 
 		 ProjectSecondLevelControler projSLCnt= new ProjectSecondLevelControler(baseContext);
-		 projSLCnt.createField(secLevId, "Photo", "photo", "", "", "ECO");
+		 projSLCnt.createField(secLevId, "Photo", "photo", "", "", "text");
 		   
 	}
 	 
@@ -380,7 +380,7 @@ public class FieldCreator {
 		 
 		 
 		 ProjectSecondLevelControler projSLCnt= new ProjectSecondLevelControler(baseContext);
-		 projSLCnt.createField(secLevId, "polygonAltitude", "text", "", "", "ECO");
+		 projSLCnt.createField(secLevId, "polygonAltitude", "polygonAltitude", "", "", "text");
 		   
 	}
 

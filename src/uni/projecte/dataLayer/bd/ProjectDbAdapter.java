@@ -638,6 +638,22 @@ public class ProjectDbAdapter {
     
     }
       
+      public Cursor fetchSecondLevelFieldFromProjectByProjectId(long projId, String attName) throws SQLException {
+
+  	 	Cursor mCursor=mDb.rawQuery("" +
+  	 			"SELECT projFieldId,SecondLevelFieldTable._id, SecondLevelFieldTable.name " +
+  	 			"FROM FieldTable, ProjectTable,SecondLevelFieldTable " +
+  	 			"where projId="+projId+" and projId=ProjectTable._id  and projFieldId=FieldTable._id" +
+  	 			" and SecondLevelFieldTable.name=\""+attName+"\"",null);
+  	 	
+  	    if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+  	 	
+   	  return mCursor;
+   	  
+   }
+      
 
   	public boolean setSecondLevelFieldVisibilty(long idRs, String attName, boolean visible) {
 

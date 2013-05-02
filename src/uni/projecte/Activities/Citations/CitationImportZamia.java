@@ -451,14 +451,14 @@ public class CitationImportZamia extends Activity {
 		if(projectField.isPolygon()){
 			
 			 ProjectSecondLevelControler projSLCnt= new ProjectSecondLevelControler(this);
-			 projSLCnt.createField(fieldId, "polygonAltitude", "text", "", "", "ECO");
+			 projSLCnt.createField(fieldId, "polygonAltitude", "polygonAltitude", "", "", "text");
 			
 		}
 		
 		if(projectField.isMultiPhoto()){
 			
 			 ProjectSecondLevelControler projSLCnt= new ProjectSecondLevelControler(this);
-			 projSLCnt.createField(fieldId, "Photo", "photo", "", "", "ECO");
+			 projSLCnt.createField(fieldId, "Photo", "photo", "", "", "text");
 		}
 			
 	}
