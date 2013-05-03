@@ -415,8 +415,10 @@ public class FagusReader {
 	public void createDatumFields(String tempVal, String name, String label,String category) {
 		
 		//fixing whitespaces etc...fieldValue need to have chars or numbers
-		if(tempVal.matches(".[a-zA-Z0-9]+.")){
-		
+		//if(tempVal.matches(".[a-zA-Z0-9]+.")){
+
+			name=name.trim();
+			
 			if(createdFields.get(name)==null) {
 					
 				long fieldId=-1;
@@ -439,8 +441,7 @@ public class FagusReader {
 			}
 
 			citCnt.addCitationFieldNoCheck(projectId,this.sampleId, createdFields.get(name), name, tempVal.trim());
-		
-		}
+	
 		
 		
 	}

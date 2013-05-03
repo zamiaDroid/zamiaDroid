@@ -987,7 +987,7 @@ public class CitationControler {
 				if(j==m-1) cExporter.setLast(true); 
 
 				ProjectField projField=projectFields.get(citationFieldValue.getLong(2));
-				Log.i("Export",projField.toString() +" -> "+citationFieldValue.getString(3));
+				Log.i("Export",citationFieldValue.getLong(2)+" -> "+citationFieldValue.getString(3));
 				
 				if(projField.isSubFieldExport() && !(cExporter instanceof ZamiaCitationExporter) ){ 
 					

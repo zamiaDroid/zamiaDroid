@@ -1146,7 +1146,7 @@ public class Sampling extends Activity {
 					
 					else{
 						
-						Log.i("Citation","Action-> created citationValue : Label: "+label+" Value: "+value);
+						Log.i("Citation","Action-> created citationValue("+idSample+") : Label: "+label+" Value: "+value+" FieldId: "+et.getId());
 						citationValueId=smplCntr.addCitationField(projId,idSample,et.getId(),label, value);
 							
 						if(isMultiPhotoField){

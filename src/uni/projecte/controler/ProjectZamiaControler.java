@@ -39,6 +39,11 @@ public class ProjectZamiaControler {
 	private long projId;
 	private long fieldId;
 	
+	private long polygonFieldId=-1;
+	private long multiPhotoFieldId=-1;
+
+	/* -------- */
+	
 	private ArrayList<ProjectField> subFieldsList;
 		
 	private Context baseContext;
@@ -92,9 +97,12 @@ public class ProjectZamiaControler {
 		ZamiaProjectXMLparser zpP=new ZamiaProjectXMLparser(this);
 		
 		if(remote){
+			
 			zpP.readXML(baseContext,repositoryURL+"&proj_id="+projName, remote);
+			
 		}
 		else{			
+			
 			zpP.readXML(baseContext,projName, remote);
 		}
 		
@@ -117,12 +125,24 @@ public class ProjectZamiaControler {
 		if(fieldType.equals("text")){
 
 			fieldId=pC.addProjectField(projId, fieldName, fieldLabel, fieldDesc, value, "simple", cat);
-
 			
 		}
 		else if(fieldType.equals("thesaurus")){
 			
 			fieldId=pC.addProjectField(projId, fieldName, fieldLabel, fieldDesc, value, fieldType, cat);
+			
+		}
+		else if(fieldType.equals("polygon")){
+			
+			fieldId=pC.addProjectField(projId, fieldName, fieldLabel, fieldDesc, value, fieldType, cat);
+			polygonFieldId=fieldId;
+			
+		}
+		else if(fieldType.equals("multiPhoto")){
+			
+			fieldId=pC.addProjectField(projId, fieldName, fieldLabel, fieldDesc, value, fieldType, cat);
+			multiPhotoFieldId=fieldId;
+
 			
 		}
 		else if(fieldType.equals("photo")){
@@ -142,8 +162,28 @@ public class ProjectZamiaControler {
 	
 	public void createSecondLevelFields() {
 
+		createSubProjectFields();
+		createPolygonField();
+		createMultiPhotoField();
+		
+	}
+	
+	private void createPolygonField() {
+
+		if(polygonFieldId>=0) pC.createField(polygonFieldId, "polygonAltitude", "polygonAltitude", "", "", "text");
+		
+	}
+	
+	private void createMultiPhotoField() {
+
+		if(multiPhotoFieldId>=0) pC.createField(multiPhotoFieldId,  "Photo", "photo", "", "", "text");
+		
+	}
+
+	public void createSubProjectFields(){
+		
 		Iterator<ProjectField> itr = subFieldsList.iterator();
-				
+		
 		while(itr.hasNext()){
 		
 			ProjectField pF=itr.next();
@@ -157,7 +197,6 @@ public class ProjectZamiaControler {
 				while(itratorItems.hasNext()){
 					
 					pC.addSecondLevelFieldItem(subFieldId, itratorItems.next());
-					
 				
 				}
 				
@@ -165,19 +204,17 @@ public class ProjectZamiaControler {
 				pC.updateSecondLevelComplexType(subFieldId);
 				pC.endTransaction();
 				
-				
 			}
 
 		}
 		
+		
 	}
-	
 	
 	public void addSecondLevelFieldList(ArrayList<String> subFieldItems){
 		
 		subFieldsList.get(subFieldsList.size()-1).setPredValues(subFieldItems);
 
-		
 	}
 
 	public void addSecondLevelProjectField(String fieldName, String fieldLabel, String fieldDesc, String fieldType, String value) {
@@ -185,30 +222,8 @@ public class ProjectZamiaControler {
 		Log.e("ZPparser"," SL: "+fieldName+" : "+fieldLabel+" : "+value);
 	
 		ProjectField pF=new ProjectField(fieldId,fieldName,fieldDesc,fieldLabel,value,fieldType);
-		
 		subFieldsList.add(pF);
-		
-	/*	if(fieldType.equals("text")){
-			
-			fieldId=pC.createField(fieldId, fieldName, fieldLabel, fieldDesc, value, "simple");
-			
-		}
-		else if(fieldType.equals("thesaurus")){
-			
-			fieldId=pC.createField(fieldId, fieldName, fieldLabel, fieldDesc, value, fieldType);
-			
-		}
-		else if(fieldType.equals("photo")){
-			
-			fieldId=pC.createField(fieldId, fieldName, fieldLabel, fieldDesc, value, fieldType);
-
-			
-		}
-		else{
-			
-			
-		}
-		*/
+	
 	}
 	
 	public void startFieldTransaction(){

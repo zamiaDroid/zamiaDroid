@@ -130,12 +130,22 @@ public class ZamiaCitationHandlerXML extends DefaultHandler{
          	 fReader.setSecondLevelType("polygon");
         	  
           }
+          else if(localName.equals("PhotoList")){
+        	  
+          	 fReader.setSecondLevelFields(true);
+          	 fReader.setSecondLevelType("multiPhoto");
+         	  
+           }
           else if(localName.equals("PolygonPoint")){
         	  
           	 fReader.createNewSample();
          	  
            }
-             
+          else if(localName.equals("Photo")){
+        	  
+           	 fReader.createNewSample();
+          	  
+            }  
           else{
         	  
         	  ///no fem res...
@@ -205,6 +215,11 @@ public class ZamiaCitationHandlerXML extends DefaultHandler{
           else if(localName.equals("Polygon")){
         	  
           	 fReader.setSecondLevelFields(false);       	 
+        	  
+          }
+          else if(localName.equals("PhotoList")){
+
+           	 fReader.setSecondLevelFields(false);       	 
         	  
           }
           else{

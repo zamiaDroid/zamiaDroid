@@ -127,6 +127,42 @@ public class ZamiaCitationReader extends FagusReader {
 		
 	}
 	
+	@Override
+	public void createDatumFields(String tempVal, String name, String label,String category) {
+	
+
+		lastFieldValue=tempVal;
+		
+		if(!secondLevelFields){
+
+	
+			long fieldId= projCnt.getFieldIdByName(projectId,name);
+
+			if(fieldId>0) citCnt.addCitationField(projectId,this.sampleId, this.projectId, name, tempVal);
+			
+
+				
+		}
+		else{
+					
+			//obtenir identificador camp
+			
+			long fieldId=-1;
+			
+			if(secondLevelType.equals("polygon")) fieldId=slPC.getSLId(projectId, "polygonAltitude");
+			else if(secondLevelType.equals("multiPhoto")) fieldId=slPC.getSLId(projectId, "photo");
+			else fieldId=slPC.getSLId(projectId, lastFieldValue);
+			
+			Log.i("Cit","Create SL "+name+" "+tempVal+" with field: "+fieldId);
+
+			slSC.addCitationField(fieldId,this.secondLevelSampleId, this.projectId, name, tempVal);
+			
+			
+		}
+		
+	
+	}
+	
 	public String getSecondLevelType() {
 		return secondLevelType;
 	}

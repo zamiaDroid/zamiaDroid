@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import uni.projecte.dataLayer.CitationManager.Zamia.ZamiaCitationExporter;
 import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.ui.multiphoto.MultiPhotoFieldForm;
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 public class MultiPhotoControler{
@@ -111,6 +113,29 @@ public class MultiPhotoControler{
     			
 		
 	}
-
 	
+	public void exportSubCitationsZamia(long fieldId, String citationValue,ZamiaCitationExporter zamiaCitExp) {
+
+		citSLCnt = new CitationSecondLevelControler(baseContext);
+
+		zamiaCitExp.createPhotoList();
+		
+		String multiPhotoValues= citSLCnt.getMultiPhotosValues(citationValue);
+
+		if(multiPhotoValues!=null) {
+
+			String[] splitted= multiPhotoValues.split("; ");
+
+			for(int i=0; i<splitted.length; i++){
+
+				zamiaCitExp.addPhoto(splitted[i]);
+
+			}
+			
+		}
+		
+		zamiaCitExp.closePhotoList();
+		
+	}
+
 }

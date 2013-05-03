@@ -104,19 +104,16 @@ public class ZamiaProjectHandlerXML extends DefaultHandler{
     	 
     	if (localName.equals("field")) {
 
-
                fieldName=atts.getValue("name");
                fieldLabel=atts.getValue("label");
                fieldDesc=atts.getValue("description");
                fieldType=atts.getValue("type");
                fieldCat=atts.getValue("cat");
-
                            
           }
     	else if (localName.equals("field_list")) {
         	  
         	  zpControler.startFieldTransaction();
-        	  
                
          }
          else if (localName.equals("default_value")) {
@@ -132,7 +129,6 @@ public class ZamiaProjectHandlerXML extends DefaultHandler{
          else if (localName.equals("CitationCoordinate")) {
         	  
               zpControler.setHasLocation(true);
-            
                           
          }
          else if (localName.equals("thesaurus")) {
@@ -141,21 +137,17 @@ public class ZamiaProjectHandlerXML extends DefaultHandler{
              thServer=atts.getValue("server");
              thSourceId=atts.getValue("sourceId");
              thSourceType=atts.getValue("sourceType");
-            
                          
         }
           else if (localName.equals("project_type")) {
         	  
         	  this.in_mytag = true; 
-             
                           
          }
           else if (localName.equals("zamia_project")) {
         	  
         	  zpControler.setLanguage(atts.getValue("language"));
         	  zpControler.setProjectName(atts.getValue("name"));
-        	  
-        	//  zpControler.createProject();
                           
          }
           
@@ -180,8 +172,6 @@ public class ZamiaProjectHandlerXML extends DefaultHandler{
         		 zpControler.addPredefinedValue(tempVal);
     			 
     		 }
-    		 
-             
        
        	  }else if (localName.equals("default_value")) {
         	  
@@ -250,14 +240,10 @@ public class ZamiaProjectHandlerXML extends DefaultHandler{
   				}
   				
   				else{
-  					
   					//zpControler.setLocalTh(tempVal,thSourceId,thSource);
-  					
   				}
   				
   			}
- 
-        	  
          	  
            }
           else if (localName.equals("project_type")) {
@@ -269,9 +255,7 @@ public class ZamiaProjectHandlerXML extends DefaultHandler{
           else if (localName.equals("description")) {
           
          	  
-           }
-    	
-          
+          }
           else if (localName.equals("zamia_project")) {
         	 
         	  zpControler.createSecondLevelFields();

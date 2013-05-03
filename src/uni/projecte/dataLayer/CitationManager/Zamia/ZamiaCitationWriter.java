@@ -296,7 +296,34 @@ public class ZamiaCitationWriter {
 		    
 		}
 	
+	public void openPhoto() {
 
+		  try {
+				serializer.startTag("", "PhotoList");
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+	}
+	
+	public void closePhoto() {
+
+		  try {
+				serializer.endTag("", "PhotoList");
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+	}
+	
 	
 	public void openPolygon() {
 
@@ -341,7 +368,7 @@ public class ZamiaCitationWriter {
 			
 			addDate(date);
 
-			createCitationField("altitude", "altitude", altitude, "ECO");
+			createCitationField("polygonAltitude", "polygonAltitude", altitude, "ECO");
 			closeCitationField();
 			
 			serializer.endTag("", "PolygonPoint");
@@ -357,6 +384,35 @@ public class ZamiaCitationWriter {
 
 	}
 
+	public void addPhoto(String photoPath) {
+		
+		try {
+	    
+			serializer.startTag("", "Photo");
+			
+			serializer.startTag("", "CitationCoordinate");
+				serializer.attribute("", "code","");
+				serializer.attribute("", "precision","1.0");
+				serializer.attribute("", "type","UTM alphanum");
+				serializer.attribute("", "units","1m");
+			serializer.endTag("", "CitationCoordinate");
+
+			createCitationField("Photo", "photo", photoPath, "ECO");
+			closeCitationField();
+			
+			serializer.endTag("", "Photo");
+
+			
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	public void openSecondLevelCitations() {
 		
         try {
