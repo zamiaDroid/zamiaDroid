@@ -34,7 +34,7 @@ public class MarkerConfigurationDialog extends Dialog{
 	private Handler handler;
 	
 	private String[] idOfButtons = { 
-			  "marker_butterfly", "marker_snake", "marker_bee", "marker_wetland",
+			   "marker_bubble","marker_butterfly", "marker_snake", "marker_bee", 
 			  "marker_turtle", "marker_algae", "marker_spider", "marker_clear",
 			  "marker_birds", "marker_plant", "marker_fungus", "marker_mammal"
 	};

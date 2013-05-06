@@ -234,7 +234,7 @@
     <string name="trackProjectDescription">Track del programa ZamiaDroid del projecte</string>
     <string name="trackProjectNameDialog">nom per defecte:</string>
     <string name="trackRemoveDialog">Vols esborrar el track</string>
-    <string name="waitingGPS">Esperant GPS &#8230;</string>
+    <string name="waitingGPS">Esperant GPS</string>
     <string name="mMapsOptions">Opcions del mapa</string>
     <string name="mLoadTrack">Carregar track</string>
    	<string name="trackRegistering">Enregistrant track</string>
@@ -357,5 +357,17 @@
    <string name="changeMapMarker">Canvia marcador</string>
    
    <string name="uniqueField">No hi pot haver més d\'un camp %1s</string>
+   <string name="polAddPoint">Afegir punt</string>
+   <string name="polIsClosed">El polígon ja està tancat</string>
+  <string name="polClose">Tanca polígon</string>
    
+   <string name="polCantClose">Es necessiten més de 2 punts per a tancar el polígon</string>
+   <string name="polPoints">Punts</string>
+   <string name="polEdit">Edició sobre mapa</string>
+   <string name="polRemove">Esborrar polígon</string>
+   <string name="polRemoveLastPoint">Esborrar darrer punt</string>
+   <string name="polExit">Surt edició polígon</string>
+   <string name="secondShowList">Veure llistat</string>
+   <string name="tracksInfo">Informació - Tracks</string>
+    
 </resources>

@@ -12,6 +12,7 @@
         <item>Free field</item>
         <item>Predefined field</item>
         <item>Photo</item>
+        <item>Polygon</item>
         <item>Sub-project</item>
     </string-array>
     

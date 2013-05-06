@@ -169,46 +169,47 @@ public final class R {
         public static final int marker_algae=0x7f02004a;
         public static final int marker_bee=0x7f02004b;
         public static final int marker_birds=0x7f02004c;
-        public static final int marker_butterfly=0x7f02004d;
-        public static final int marker_clear=0x7f02004e;
-        public static final int marker_fungus=0x7f02004f;
-        public static final int marker_mammal=0x7f020050;
-        public static final int marker_options=0x7f020051;
-        public static final int marker_plant=0x7f020052;
-        public static final int marker_selected=0x7f020053;
-        public static final int marker_snake=0x7f020054;
-        public static final int marker_spider=0x7f020055;
-        public static final int marker_turtle=0x7f020056;
-        public static final int marker_up=0x7f020057;
-        public static final int marker_wetland=0x7f020058;
-        public static final int menu_standard=0x7f020059;
-        public static final int mini_gps=0x7f02005a;
-        public static final int mini_location=0x7f02005b;
-        public static final int mini_track=0x7f02005c;
-        public static final int move_cit=0x7f02005d;
-        public static final int move_cit_on=0x7f02005e;
-        public static final int my_tracks_icon=0x7f02005f;
-        public static final int order_alpha=0x7f020060;
-        public static final int order_alpha_des=0x7f020061;
-        public static final int ordre_cron=0x7f020062;
-        public static final int ordre_cron_asc=0x7f020063;
-        public static final int pet=0x7f020064;
-        public static final int piechart=0x7f020065;
-        public static final int polygon_add_point=0x7f020066;
-        public static final int polygon_close=0x7f020067;
-        public static final int polygon_gps=0x7f020068;
-        public static final int polygon_remove=0x7f020069;
-        public static final int polygon_remove_last=0x7f02006a;
-        public static final int polygon_view=0x7f02006b;
-        public static final int popup=0x7f02006c;
-        public static final int position_icon=0x7f02006d;
-        public static final int position_icon_off=0x7f02006e;
-        public static final int preferences=0x7f02006f;
-        public static final int project=0x7f020070;
-        public static final int right_arrow=0x7f020071;
-        public static final int shadoww=0x7f020072;
-        public static final int tick=0x7f020073;
-        public static final int tick_new=0x7f020074;
+        public static final int marker_bubble=0x7f02004d;
+        public static final int marker_butterfly=0x7f02004e;
+        public static final int marker_clear=0x7f02004f;
+        public static final int marker_fungus=0x7f020050;
+        public static final int marker_mammal=0x7f020051;
+        public static final int marker_options=0x7f020052;
+        public static final int marker_plant=0x7f020053;
+        public static final int marker_selected=0x7f020054;
+        public static final int marker_snake=0x7f020055;
+        public static final int marker_spider=0x7f020056;
+        public static final int marker_turtle=0x7f020057;
+        public static final int marker_up=0x7f020058;
+        public static final int marker_wetland=0x7f020059;
+        public static final int menu_standard=0x7f02005a;
+        public static final int mini_gps=0x7f02005b;
+        public static final int mini_location=0x7f02005c;
+        public static final int mini_track=0x7f02005d;
+        public static final int move_cit=0x7f02005e;
+        public static final int move_cit_on=0x7f02005f;
+        public static final int my_tracks_icon=0x7f020060;
+        public static final int order_alpha=0x7f020061;
+        public static final int order_alpha_des=0x7f020062;
+        public static final int ordre_cron=0x7f020063;
+        public static final int ordre_cron_asc=0x7f020064;
+        public static final int pet=0x7f020065;
+        public static final int piechart=0x7f020066;
+        public static final int polygon_add_point=0x7f020067;
+        public static final int polygon_close=0x7f020068;
+        public static final int polygon_gps=0x7f020069;
+        public static final int polygon_remove=0x7f02006a;
+        public static final int polygon_remove_last=0x7f02006b;
+        public static final int polygon_view=0x7f02006c;
+        public static final int popup=0x7f02006d;
+        public static final int position_icon=0x7f02006e;
+        public static final int position_icon_off=0x7f02006f;
+        public static final int preferences=0x7f020070;
+        public static final int project=0x7f020071;
+        public static final int right_arrow=0x7f020072;
+        public static final int shadoww=0x7f020073;
+        public static final int tick=0x7f020074;
+        public static final int tick_new=0x7f020075;
     }
     public static final class id {
         public static final int LinearLayout01=0x7f0c001d;
@@ -479,17 +480,17 @@ public final class R {
         public static final int mapControlPanel=0x7f0c00a1;
         public static final int mapview=0x7f0c014d;
         public static final int marker_algae=0x7f0c00c2;
-        public static final int marker_bee=0x7f0c00be;
+        public static final int marker_bee=0x7f0c00bf;
         public static final int marker_birds=0x7f0c00c6;
-        public static final int marker_butterfly=0x7f0c00bc;
+        public static final int marker_bubble=0x7f0c00bc;
+        public static final int marker_butterfly=0x7f0c00bd;
         public static final int marker_clear=0x7f0c00c4;
         public static final int marker_fungus=0x7f0c00c8;
         public static final int marker_mammal=0x7f0c00c9;
         public static final int marker_plant=0x7f0c00c7;
-        public static final int marker_snake=0x7f0c00bd;
+        public static final int marker_snake=0x7f0c00be;
         public static final int marker_spider=0x7f0c00c3;
         public static final int marker_turtle=0x7f0c00c1;
-        public static final int marker_wetland=0x7f0c00bf;
         public static final int myCreateCitationCenter=0x7f0c015e;
         public static final int myEditMode=0x7f0c0152;
         public static final int myLocationButton=0x7f0c014f;
@@ -833,7 +834,7 @@ public final class R {
         public static final int Accepted=0x7f060077;
         public static final int CitationNotes=0x7f06007b;
         public static final int CorrectedTaxonName=0x7f060080;
-        public static final int GOOGLE_MAPS_API_KEY=0x7f060196;
+        public static final int GOOGLE_MAPS_API_KEY=0x7f0601a1;
         public static final int InformatisationDate=0x7f06007f;
         public static final int Informatiser=0x7f060078;
         public static final int LifeCycleStatus=0x7f060075;
@@ -857,17 +858,17 @@ public final class R {
         public static final int actionShowMap=0x7f0600f5;
         public static final int alertWrongCoordinates=0x7f0600f2;
         public static final int allTracks=0x7f06012f;
-        public static final int altitudeLabel=0x7f0601cc;
+        public static final int altitudeLabel=0x7f0601d7;
         public static final int appVersion=0x7f06012d;
-        public static final int app_name=0x7f0601ed;
-        public static final int appliedFilter=0x7f06019f;
-        public static final int bAddNewField=0x7f0601eb;
-        public static final int bAddPredField=0x7f0601e9;
+        public static final int app_name=0x7f0601f8;
+        public static final int appliedFilter=0x7f0601aa;
+        public static final int bAddNewField=0x7f0601f6;
+        public static final int bAddPredField=0x7f0601f4;
         /**  Change Thesaurus 
  Change Thesaurus 
  Change Thesaurus 
          */
-        public static final int bChangeTh=0x7f060219;
+        public static final int bChangeTh=0x7f060224;
         public static final int bChlanguage=0x7f060092;
         public static final int bChooseProjectButton=0x7f06009c;
         /**  Thesaurus Actions 
@@ -879,11 +880,11 @@ public final class R {
  Thesaurus Actions 
  View 
          */
-        public static final int bChooseTh=0x7f0601f3;
+        public static final int bChooseTh=0x7f0601fe;
         public static final int bCitationExport=0x7f06002f;
         public static final int bConfiguration=0x7f06009b;
-        public static final int bCreateField=0x7f0601c9;
-        public static final int bCreateProject=0x7f0601cf;
+        public static final int bCreateField=0x7f0601d4;
+        public static final int bCreateProject=0x7f0601da;
         public static final int bCreateSample=0x7f06000d;
         /**  Main submenus 
  Main submenus 
@@ -892,8 +893,8 @@ public final class R {
         public static final int bDataType=0x7f06009a;
         public static final int bFagusFileExported=0x7f060023;
         public static final int bFagusImport=0x7f060030;
-        public static final int bImportProject=0x7f0601ce;
-        public static final int bImportTh=0x7f06021a;
+        public static final int bImportProject=0x7f0601d9;
+        public static final int bImportTh=0x7f060225;
         /**  Citation Editor 
  Citation Editor 
  Citation Editor 
@@ -907,13 +908,13 @@ public final class R {
  Project Creation 
  Project Creation 
          */
-        public static final int bProjectCreate=0x7f0601b0;
+        public static final int bProjectCreate=0x7f0601bb;
         public static final int bRemoveAll=0x7f060031;
         /**  Removal 
  Removal 
  Removal 
          */
-        public static final int bRemoveTh=0x7f060218;
+        public static final int bRemoveTh=0x7f060223;
         public static final int bResearchMangement=0x7f06008d;
         /**  Main menu string values 
  Main menu string values 
@@ -923,23 +924,23 @@ public final class R {
          */
         public static final int bSampleCreation=0x7f06008c;
         public static final int bSampleManagement=0x7f06008e;
-        public static final int bShowFields=0x7f0601ec;
+        public static final int bShowFields=0x7f0601f7;
         public static final int bShowMap=0x7f060032;
         public static final int bSuccessCitationCreation=0x7f06000e;
         public static final int bUpdateLocation=0x7f06000f;
         public static final int backFromCitationEditor=0x7f060021;
         public static final int backFromCitationMessage=0x7f060010;
-        public static final int backFromProjectCreation=0x7f0601be;
-        public static final int backupCreateTitle=0x7f0601de;
+        public static final int backFromProjectCreation=0x7f0601c9;
+        public static final int backupCreateTitle=0x7f0601e9;
         /**  Backup Project 
  Backup Project 
  Backup Project 
  Backup Project 
  Backup Project 
          */
-        public static final int backupEmptyName=0x7f0601db;
-        public static final int backupInfo=0x7f0601dc;
-        public static final int backupInfoPhotos=0x7f0601dd;
+        public static final int backupEmptyName=0x7f0601e6;
+        public static final int backupInfo=0x7f0601e7;
+        public static final int backupInfoPhotos=0x7f0601e8;
         public static final int backupLoading=0x7f0600da;
         public static final int backupLoadingTxt=0x7f0600db;
         public static final int backupProjectExists=0x7f0600d5;
@@ -948,7 +949,7 @@ public final class R {
  Permissions, need to be in sync with the permissions in AndroidManifest.xml 
          */
         public static final int broadcast_notifications_permission=0x7f060001;
-        public static final int brsAddField=0x7f0601b3;
+        public static final int brsAddField=0x7f0601be;
         public static final int btApplyFilter=0x7f0600fb;
         public static final int btBackupCreate=0x7f060176;
         public static final int btBackupImport=0x7f0600d8;
@@ -958,7 +959,7 @@ public final class R {
         public static final int btExportPresences=0x7f060159;
         public static final int btFilterTaxon=0x7f06011f;
         public static final int btOk=0x7f060124;
-        public static final int btRsImport=0x7f0601c2;
+        public static final int btRsImport=0x7f0601cd;
         /**  SubProject 
  SubProject 
  SubProject 
@@ -970,33 +971,33 @@ public final class R {
         public static final int btStorageSec=0x7f06018b;
         public static final int btThAddLocal=0x7f06011d;
         public static final int btThAddRemote=0x7f06011e;
-        public static final int btThEpSpecRed=0x7f060211;
+        public static final int btThEpSpecRed=0x7f06021c;
         public static final int btThImport=0x7f060118;
-        public static final int btThInfraEpSpec=0x7f060210;
-        public static final int btThUnlink=0x7f060216;
-        public static final int cBLocal=0x7f0601c4;
-        public static final int cBurl=0x7f0601c3;
+        public static final int btThInfraEpSpec=0x7f06021b;
+        public static final int btThUnlink=0x7f060221;
+        public static final int cBLocal=0x7f0601cf;
+        public static final int cBurl=0x7f0601ce;
         public static final int cLprojectName=0x7f060024;
         public static final int cLthName=0x7f060025;
-        public static final int cancelar=0x7f0601e5;
+        public static final int cancelar=0x7f0601f0;
         public static final int cbBackupAddPhotos=0x7f060175;
         public static final int cbFieldBoolean=0x7f0600b0;
         public static final int cbFieldText=0x7f0600af;
         public static final int cbGalleryCopyPhotos=0x7f060178;
         public static final int cbMyTracksInfoDialog=0x7f060123;
-        public static final int cbNoTh=0x7f06021b;
+        public static final int cbNoTh=0x7f060226;
         public static final int cbNumField=0x7f0600ae;
         public static final int cbRemoteTabByDefault=0x7f060071;
         public static final int cbSendByMail=0x7f06017f;
         public static final int cbThModeLocal=0x7f0600d1;
-        public static final int cbThModeNone=0x7f06019d;
+        public static final int cbThModeNone=0x7f0601a8;
         public static final int cbThModeRemote=0x7f0600d0;
         public static final int changeMapMarker=0x7f060193;
         public static final int checkSynomyms=0x7f0600d4;
         public static final int checkSynomymsTitle=0x7f0600d3;
         public static final int chooseExportFormat=0x7f0600a1;
         public static final int chooseField=0x7f060034;
-        public static final int chooseFile=0x7f0601d1;
+        public static final int chooseFile=0x7f0601dc;
         public static final int chooseImportFormatCit=0x7f0600a2;
         public static final int chooseImportFormatProj=0x7f0600a3;
         public static final int chooseItem=0x7f060012;
@@ -1006,14 +1007,14 @@ public final class R {
  Project Import 
  Project Import 
          */
-        public static final int chooseProject=0x7f0601d0;
+        public static final int chooseProject=0x7f0601db;
         /**  Change thesaurus 
  Change thesaurus 
  Change thesaurus 
  Change thesaurus 
  Change thesaurus 
          */
-        public static final int chooseTh=0x7f0601da;
+        public static final int chooseTh=0x7f0601e5;
         public static final int choosevalue=0x7f060017;
         public static final int citAltitude=0x7f0600b2;
         public static final int citCoord=0x7f0600b1;
@@ -1034,8 +1035,8 @@ public final class R {
  Citation Project Import 
  Citation Project Import 
          */
-        public static final int citationLoading=0x7f0601d2;
-        public static final int citationLoadingTxt=0x7f0601d3;
+        public static final int citationLoading=0x7f0601dd;
+        public static final int citationLoadingTxt=0x7f0601de;
         public static final int citationWithoutLocation=0x7f06014d;
         public static final int citationWrongFileFormat=0x7f06018f;
         public static final int citationsAtDir=0x7f060153;
@@ -1074,7 +1075,7 @@ public final class R {
  Choose project 
  Choose project 
          */
-        public static final int createProject=0x7f0601cd;
+        public static final int createProject=0x7f0601d8;
         /**   Database's territories 
   Database's territories 
   Database's territories 
@@ -1104,15 +1105,15 @@ public final class R {
         public static final int dbNameSivim=0x7f060055;
         public static final int dbPPCC=0x7f060060;
         public static final int deleteCitationQuestion=0x7f06001e;
-        public static final int deleteProjQuestion=0x7f0601a9;
+        public static final int deleteProjQuestion=0x7f0601b4;
         /**  Removal 
  Removal 
          */
-        public static final int deleteThQuestion=0x7f0601fb;
+        public static final int deleteThQuestion=0x7f060206;
         public static final int determiningDatabase=0x7f060069;
         public static final int dialogGalleryMovingPhotos=0x7f06016c;
         public static final int downloadingTh=0x7f0600cd;
-        public static final int emptyThList=0x7f0601fa;
+        public static final int emptyThList=0x7f060205;
         public static final int enableGPS=0x7f060088;
         public static final int enableGPSQuestion=0x7f060087;
         public static final int errorCitationFile=0x7f0600aa;
@@ -1120,15 +1121,15 @@ public final class R {
         public static final int etBackupProjectName=0x7f060174;
         public static final int etHintThGender=0x7f060101;
         public static final int etHintThPrimKey=0x7f060104;
-        public static final int etHintThRange=0x7f0601a1;
+        public static final int etHintThRange=0x7f0601ac;
         public static final int etHintThSecKey=0x7f060105;
         public static final int etHintThSpEp=0x7f060102;
-        public static final int etHintThSpEpAut=0x7f0601a0;
+        public static final int etHintThSpEpAut=0x7f0601ab;
         public static final int etHintThSpInfraEp=0x7f060103;
-        public static final int etHintThSpInfraEpAut=0x7f0601a2;
+        public static final int etHintThSpInfraEpAut=0x7f0601ad;
         public static final int etReport=0x7f060166;
         public static final int exportRemoteToTab=0x7f060158;
-        public static final int fieldLabel=0x7f0601bb;
+        public static final int fieldLabel=0x7f0601c6;
         /**  Citation Creation 
  Citation Creation 
  Citation Creation 
@@ -1136,9 +1137,9 @@ public final class R {
  Citation Creation 
          */
         public static final int fieldMissing=0x7f06000c;
-        public static final int fieldName=0x7f0601ba;
+        public static final int fieldName=0x7f0601c5;
         public static final int fieldTypeBool=0x7f060182;
-        public static final int fieldTypeMessage=0x7f0601b7;
+        public static final int fieldTypeMessage=0x7f0601c2;
         public static final int fieldTypeMultiPhoto=0x7f060187;
         public static final int fieldTypeNum=0x7f060181;
         public static final int fieldTypePhoto=0x7f060184;
@@ -1197,18 +1198,18 @@ public final class R {
          */
         public static final int mActivateGPS=0x7f060013;
         public static final int mAddCitation=0x7f06018c;
-        public static final int mAddField=0x7f0601d8;
+        public static final int mAddField=0x7f0601e3;
         public static final int mCenterLocation=0x7f060139;
         public static final int mChangeExternalStoragePrim=0x7f060161;
         public static final int mChangeExternalStorageSec=0x7f060162;
-        public static final int mChangeTh=0x7f0601d9;
+        public static final int mChangeTh=0x7f0601e4;
         public static final int mCheckTaxonTh=0x7f060189;
         public static final int mChooseFilteredField=0x7f060039;
         public static final int mChooseProject=0x7f060099;
         public static final int mCitationExport=0x7f06003a;
         public static final int mCitationImport=0x7f06002e;
         public static final int mCleanTrackLoaded=0x7f06013a;
-        public static final int mConfGeneralInfo=0x7f0601a3;
+        public static final int mConfGeneralInfo=0x7f0601ae;
         public static final int mConfigDB=0x7f060144;
         /**  Menu options 
  Menu options 
@@ -1218,14 +1219,14 @@ public final class R {
          */
         public static final int mConfiguration=0x7f060097;
         public static final int mCreateBackup=0x7f0600dd;
-        public static final int mCreateDefProj=0x7f060195;
+        public static final int mCreateDefProj=0x7f0601a0;
         public static final int mCreateReport=0x7f060164;
         public static final int mDesactivateGPS=0x7f060014;
         public static final int mGalleryMovePhotos=0x7f060169;
         public static final int mGalleryShowPrimaryStorage=0x7f06016a;
         public static final int mGalleryShowSecondaryStorage=0x7f06016b;
-        public static final int mImportFagus=0x7f0601e7;
-        public static final int mImportProjectFromCitations=0x7f0601e8;
+        public static final int mImportFagus=0x7f0601f2;
+        public static final int mImportProjectFromCitations=0x7f0601f3;
         public static final int mLoadBackup=0x7f0600de;
         public static final int mLoadTrack=0x7f060137;
         public static final int mMapsOptions=0x7f060136;
@@ -1266,7 +1267,7 @@ public final class R {
         public static final int mapMoveCitation=0x7f06011a;
         public static final int mapShowNormalView=0x7f06011c;
         public static final int mapShowTransitView=0x7f06011b;
-        public static final int mapYouAreHere=0x7f06019b;
+        public static final int mapYouAreHere=0x7f0601a6;
         public static final int movePhotosInfo=0x7f060163;
         public static final int myTracksInternalError=0x7f060151;
         public static final int myTracksThirdPartyAccessDisabled=0x7f060150;
@@ -1275,28 +1276,28 @@ public final class R {
         public static final int mytracks_service_class=0x7f06000a;
         public static final int mytracks_service_package=0x7f06000b;
         public static final int newCreatedField=0x7f0600a8;
-        public static final int newProjectTabName=0x7f0601a7;
-        public static final int no=0x7f0601ab;
+        public static final int newProjectTabName=0x7f0601b2;
+        public static final int no=0x7f0601b6;
         public static final int noCitations=0x7f060035;
         public static final int noCitationsSelected=0x7f0600f3;
         /**  Project Chooser 
  Project Chooser 
  Project Chooser 
          */
-        public static final int noFiles=0x7f0601e2;
+        public static final int noFiles=0x7f0601ed;
         public static final int noFilumDataBase=0x7f060064;
         public static final int noGPS=0x7f060089;
         public static final int noLocationsCitations=0x7f06002a;
         public static final int noPhotoInProject=0x7f0600c9;
-        public static final int noProjectChosen=0x7f0601cb;
+        public static final int noProjectChosen=0x7f0601d6;
         public static final int noProjectNeedCreate=0x7f0600ad;
-        public static final int noSdAlert=0x7f0601ee;
+        public static final int noSdAlert=0x7f0601f9;
         public static final int noTaxonTab=0x7f060067;
         public static final int noThConnection=0x7f0600cf;
-        public static final int noThQuestion=0x7f06021c;
+        public static final int noThQuestion=0x7f060227;
         public static final int noUserName=0x7f060096;
-        public static final int no_directorio=0x7f0601e4;
-        public static final int no_fields_added=0x7f0601b8;
+        public static final int no_directorio=0x7f0601ef;
+        public static final int no_fields_added=0x7f0601c3;
         public static final int numCitationsImported=0x7f06001d;
         public static final int origin=0x7f06007e;
         public static final int outDated=0x7f060033;
@@ -1311,7 +1312,7 @@ public final class R {
  Project Import 
  Project Import 
          */
-        public static final int pImportIntroText=0x7f0601e6;
+        public static final int pImportIntroText=0x7f0601f1;
         public static final int pdBackupCreating=0x7f0600df;
         public static final int pdCheckingCitFile=0x7f060190;
         public static final int pdCreateReportTitle=0x7f060168;
@@ -1333,16 +1334,25 @@ public final class R {
         public static final int photoPathSecStorageTitle=0x7f06004f;
         public static final int photoPathWrong=0x7f060050;
         public static final int photoWithoutInfo=0x7f0600e7;
-        public static final int predFieldRepeated=0x7f0601bd;
-        public static final int prefAutoFieldLocality=0x7f060199;
-        public static final int prefAutoFieldLocalitySum=0x7f06019a;
+        public static final int polAddPoint=0x7f060195;
+        public static final int polCantClose=0x7f060198;
+        public static final int polClose=0x7f060197;
+        public static final int polEdit=0x7f06019a;
+        public static final int polExit=0x7f06019d;
+        public static final int polIsClosed=0x7f060196;
+        public static final int polPoints=0x7f060199;
+        public static final int polRemove=0x7f06019b;
+        public static final int polRemoveLastPoint=0x7f06019c;
+        public static final int predFieldRepeated=0x7f0601c8;
+        public static final int prefAutoFieldLocality=0x7f0601a4;
+        public static final int prefAutoFieldLocalitySum=0x7f0601a5;
         /**     <string name="projCreationLoading">Creando proyecto...</string>
     <string name="projCreationTxt">Por favor, no cierre esta ventana. Según el número de campos el proyecto puede tardar algunos minutos.</string>
     
  
          */
-        public static final int prefAutoFields=0x7f060197;
-        public static final int prefAutoFieldsSum=0x7f060198;
+        public static final int prefAutoFields=0x7f0601a2;
+        public static final int prefAutoFieldsSum=0x7f0601a3;
         public static final int presenceFileExists=0x7f06015e;
         public static final int presenceLocalDB=0x7f06015c;
         public static final int presenceRemoteDB=0x7f06015b;
@@ -1353,36 +1363,36 @@ public final class R {
         public static final int projCreationCit=0x7f0600c6;
         public static final int projCreationFagus=0x7f0600c7;
         public static final int projCreationFree=0x7f0600c4;
-        public static final int projCreationLoading=0x7f0601bf;
+        public static final int projCreationLoading=0x7f0601ca;
         public static final int projCreationRep=0x7f0600c5;
-        public static final int projCreationTitle=0x7f0601d7;
-        public static final int projCreationTxt=0x7f0601c0;
-        public static final int projDescription=0x7f0601e0;
-        public static final int projFieldList=0x7f0601e1;
-        public static final int projFieldsMissing=0x7f0601b6;
+        public static final int projCreationTitle=0x7f0601e2;
+        public static final int projCreationTxt=0x7f0601cb;
+        public static final int projDescription=0x7f0601eb;
+        public static final int projFieldList=0x7f0601ec;
+        public static final int projFieldsMissing=0x7f0601c1;
         public static final int projLoading=0x7f0600a4;
         public static final int projLoadingTxt=0x7f0600a5;
-        public static final int projName=0x7f0601b1;
-        public static final int projNameMissing=0x7f0601b5;
+        public static final int projName=0x7f0601bc;
+        public static final int projNameMissing=0x7f0601c0;
         public static final int projSettings=0x7f0600c0;
         public static final int projSuccesCreated=0x7f0600a6;
         public static final int projSuccesCreatedWithCitations=0x7f0600a9;
         public static final int projWithoutTh=0x7f060145;
-        public static final int projectFieldList=0x7f0601b2;
+        public static final int projectFieldList=0x7f0601bd;
         /**  Tabs and activity names 
  Tabs and activity names 
  Tabs and activity names 
  Tabs and activity names 
  Tabs and activity names 
          */
-        public static final int projectListTabName=0x7f0601a6;
+        public static final int projectListTabName=0x7f0601b1;
         /**  Project  list 
  Project  list 
  Project  list 
  Project  list 
  Project  list 
          */
-        public static final int projectName=0x7f0601d4;
+        public static final int projectName=0x7f0601df;
         public static final int rBbackupImportCitOnly=0x7f0600d6;
         public static final int rbCreateNewProject=0x7f0600d7;
         public static final int rbFilterByDate=0x7f060171;
@@ -1406,21 +1416,21 @@ public final class R {
         public static final int remoteThDescription=0x7f0600ce;
         public static final int removeAllCitationsQuestion=0x7f060029;
         public static final int removeCitationPhoto=0x7f060142;
-        public static final int removeFieldQuestion=0x7f0601ad;
-        public static final int removeFieldQuestionNoCit=0x7f0601ae;
+        public static final int removeFieldQuestion=0x7f0601b8;
+        public static final int removeFieldQuestionNoCit=0x7f0601b9;
         public static final int repLocalTitle=0x7f0600bf;
         public static final int repRemoteTitle=0x7f0600be;
-        public static final int repeatedFieldName=0x7f0601bc;
+        public static final int repeatedFieldName=0x7f0601c7;
         public static final int repeatedFieldTitle=0x7f0600e2;
         public static final int reset_values=0x7f060047;
         public static final int rmFile=0x7f0600e1;
-        public static final int root=0x7f0601ef;
+        public static final int root=0x7f0601fa;
         /**  Project Import 
  Project Chooser 
  Project Import 
          */
-        public static final int sameNameProject=0x7f0601af;
-        public static final int sameThName=0x7f060204;
+        public static final int sameNameProject=0x7f0601ba;
+        public static final int sameThName=0x7f06020f;
         public static final int sampleProjectDesc=0x7f0600b6;
         public static final int sampleProjectId=0x7f0600b3;
         public static final int sampleProjectName=0x7f0600b4;
@@ -1429,6 +1439,7 @@ public final class R {
         public static final int search_signal_gps=0x7f060085;
         public static final int searchingTaxonsOwnLocation=0x7f060072;
         public static final int searchingTaxonsUTM=0x7f06006a;
+        public static final int secondShowList=0x7f06019e;
         /**  Main submenus 
  Main submenus 
          */
@@ -1441,10 +1452,10 @@ public final class R {
         public static final int start=0x7f060094;
         /**  SubProject 
          */
-        public static final int subProjectTitle=0x7f0601df;
+        public static final int subProjectTitle=0x7f0601ea;
         public static final int sureness=0x7f06007d;
         public static final int synonymQuestion=0x7f0600d2;
-        public static final int tFieldValuesMissing=0x7f0601ca;
+        public static final int tFieldValuesMissing=0x7f0601d5;
         public static final int tModifiedCitation=0x7f06001c;
         /**  Tabs 
  Tabs 
@@ -1455,30 +1466,30 @@ public final class R {
         public static final int tabLocalTaxons=0x7f06006c;
         public static final int tabRemoteTaxons=0x7f06006d;
         public static final int tabTotalTaxons=0x7f06006e;
-        public static final int taxonHint=0x7f0601f8;
+        public static final int taxonHint=0x7f060203;
         /**  Register adding 
  Register adding 
  Register adding 
  Register adding 
  Register adding 
          */
-        public static final int thAddNewItem=0x7f060209;
-        public static final int thAuthor=0x7f06020e;
+        public static final int thAddNewItem=0x7f060214;
+        public static final int thAuthor=0x7f060219;
         public static final int thChangeInfo=0x7f060191;
         public static final int thChangeTitle=0x7f060192;
-        public static final int thChangedShort=0x7f060200;
+        public static final int thChangedShort=0x7f06020b;
         /**  Change Thesaurus 
  Change Thesaurus 
          */
-        public static final int thChangedText=0x7f0601ff;
-        public static final int thChooseIntro=0x7f0601f7;
-        public static final int thDeleteItemThQuestion=0x7f0601fe;
+        public static final int thChangedText=0x7f06020a;
+        public static final int thChooseIntro=0x7f060202;
+        public static final int thDeleteItemThQuestion=0x7f060209;
         public static final int thFieldsSeparator=0x7f060100;
-        public static final int thGenus=0x7f06020d;
-        public static final int thHint=0x7f0601f9;
+        public static final int thGenus=0x7f060218;
+        public static final int thHint=0x7f060204;
         public static final int thImportPlainFirstColumnLabel=0x7f060116;
         public static final int thImportPlainRemoveCommas=0x7f060117;
-        public static final int thImportRepDesc=0x7f060205;
+        public static final int thImportRepDesc=0x7f060210;
         public static final int thInfoAuthors=0x7f06010f;
         public static final int thInfoFieldAuthorEpEsp=0x7f060113;
         public static final int thInfoFieldAuthorInfraEpEsp=0x7f060114;
@@ -1493,34 +1504,34 @@ public final class R {
         public static final int thInfoOriginType=0x7f06010d;
         public static final int thInfoSearchField=0x7f060107;
         public static final int thInfoTitle=0x7f060106;
-        public static final int thKeys=0x7f06020f;
-        public static final int thListTab=0x7f0601f1;
-        public static final int thLoading=0x7f060202;
-        public static final int thLoadingTxt=0x7f060203;
+        public static final int thKeys=0x7f06021a;
+        public static final int thListTab=0x7f0601fc;
+        public static final int thLoading=0x7f06020d;
+        public static final int thLoadingTxt=0x7f06020e;
         /**  Import Thesaurus 
  Import Thesaurus 
  Import Thesaurus 
  Import Thesaurus 
  Import Thesaurus 
          */
-        public static final int thName=0x7f060201;
-        public static final int thNewItemAdded=0x7f06020a;
-        public static final int thNewItemExists=0x7f06020b;
-        public static final int thNewItemGenusEpMissing=0x7f06020c;
-        public static final int thRemoteNotUpdated=0x7f060207;
-        public static final int thRemoteUpdated=0x7f060206;
+        public static final int thName=0x7f06020c;
+        public static final int thNewItemAdded=0x7f060215;
+        public static final int thNewItemExists=0x7f060216;
+        public static final int thNewItemGenusEpMissing=0x7f060217;
+        public static final int thRemoteNotUpdated=0x7f060212;
+        public static final int thRemoteUpdated=0x7f060211;
         public static final int thSourceLocalBVegana=0x7f060108;
         public static final int thSourceLocalPlain=0x7f06010a;
         public static final int thSourceRemote=0x7f060109;
         public static final int thTitleImportPlain=0x7f0600ff;
-        public static final int thUsedByOneProj=0x7f0601fc;
-        public static final int thUsedBySeveralProj=0x7f0601fd;
+        public static final int thUsedByOneProj=0x7f060207;
+        public static final int thUsedBySeveralProj=0x7f060208;
         public static final int thWrongFile=0x7f060115;
         public static final int titleBdbc=0x7f0600dc;
-        public static final int titulo_no_directorio=0x7f0601e3;
+        public static final int titulo_no_directorio=0x7f0601ee;
         public static final int toastGPSWorking=0x7f0600ec;
         public static final int toastNotThesarus=0x7f0600eb;
-        public static final int toastShowLocation=0x7f06019e;
+        public static final int toastShowLocation=0x7f0601a9;
         public static final int toastTaxonNotExists=0x7f0600ea;
         public static final int toastWrongFile=0x7f0600ed;
         public static final int trackProjectDescription=0x7f060132;
@@ -1537,10 +1548,11 @@ public final class R {
         public static final int track_started_broadcast_action=0x7f060007;
         public static final int track_stopped_broadcast_action=0x7f060008;
         public static final int track_update_broadcast_action=0x7f060009;
+        public static final int tracksInfo=0x7f06019f;
         public static final int tvAboutUsVersion=0x7f06016e;
-        public static final int tvAccepted=0x7f0601f4;
-        public static final int tvChooseTh=0x7f0601b4;
-        public static final int tvChoosenTh=0x7f060217;
+        public static final int tvAccepted=0x7f0601ff;
+        public static final int tvChooseTh=0x7f0601bf;
+        public static final int tvChoosenTh=0x7f060222;
         public static final int tvCreateReportLabel=0x7f060167;
         /**  Thesaurus relations with projects
  Thesaurus relations with projects
@@ -1548,23 +1560,23 @@ public final class R {
  Thesaurus relations with projects
  Thesaurus relations with projects
          */
-        public static final int tvDefaultTh=0x7f060208;
+        public static final int tvDefaultTh=0x7f060213;
         public static final int tvExportDialogFileName=0x7f0600cc;
-        public static final int tvExportDialogTitle=0x7f06019c;
-        public static final int tvFieldDesc=0x7f0601c7;
-        public static final int tvFieldLabel=0x7f0601c6;
+        public static final int tvExportDialogTitle=0x7f0601a7;
+        public static final int tvFieldDesc=0x7f0601d2;
+        public static final int tvFieldLabel=0x7f0601d1;
         /**  Field Creator 
  Field Creator 
  Field Creator 
  Field Creator 
  Field Creator 
          */
-        public static final int tvFieldName=0x7f0601c5;
-        public static final int tvFieldPredValue=0x7f0601ea;
+        public static final int tvFieldName=0x7f0601d0;
+        public static final int tvFieldPredValue=0x7f0601f5;
         public static final int tvFilteredCitations=0x7f060026;
         public static final int tvFilteredField=0x7f060027;
         public static final int tvGalleryCitationWithoutInfo=0x7f060177;
-        public static final int tvIcodeMissing=0x7f0601f6;
+        public static final int tvIcodeMissing=0x7f060201;
         public static final int tvImportCitationsAchtung=0x7f06017c;
         public static final int tvImportCitationsProjAchtung=0x7f06018e;
         public static final int tvImportCitationsTitle=0x7f06017b;
@@ -1574,24 +1586,24 @@ public final class R {
  Project List 
  Project List 
          */
-        public static final int tvInfoListProj=0x7f0601a8;
+        public static final int tvInfoListProj=0x7f0601b3;
         /**  Intro text thesaurus 
  Intro text thesaurus 
  Intro text thesaurus 
  Intro text thesaurus 
  Intro text thesaurus 
          */
-        public static final int tvInfoListTh=0x7f0601f0;
+        public static final int tvInfoListTh=0x7f0601fb;
         public static final int tvLanguage=0x7f060095;
         public static final int tvMyTracksInstalled=0x7f060125;
         public static final int tvMyTracksNotInstalled=0x7f060126;
         public static final int tvNoThTaxonsInfo=0x7f06017e;
         public static final int tvNumCitations=0x7f060022;
-        public static final int tvPredFields=0x7f0601b9;
-        public static final int tvPredValues=0x7f0601c8;
+        public static final int tvPredFields=0x7f0601c4;
+        public static final int tvPredValues=0x7f0601d3;
         public static final int tvPresenceInfo=0x7f06015a;
         public static final int tvProjType=0x7f0600d9;
-        public static final int tvProjectName=0x7f0601ac;
+        public static final int tvProjectName=0x7f0601b7;
         public static final int tvRemoteBiologicalTabs=0x7f060070;
         /**  Research Import 
  Research Import 
@@ -1599,39 +1611,39 @@ public final class R {
  Research Import 
  Research Import 
          */
-        public static final int tvRsImport=0x7f0601c1;
+        public static final int tvRsImport=0x7f0601cc;
         public static final int tvShowMap=0x7f06008f;
-        public static final int tvSynonymous=0x7f0601f5;
-        public static final int tvThAddNewItem=0x7f060212;
-        public static final int tvThChooseTaxaGroup=0x7f060213;
-        public static final int tvThImportRemote=0x7f060214;
+        public static final int tvSynonymous=0x7f060200;
+        public static final int tvThAddNewItem=0x7f06021d;
+        public static final int tvThChooseTaxaGroup=0x7f06021e;
+        public static final int tvThImportRemote=0x7f06021f;
         /**  Thesaurus Actions 
  View 
          */
-        public static final int tvThName=0x7f0601f2;
+        public static final int tvThName=0x7f0601fd;
         public static final int tvThNameHit=0x7f060119;
         public static final int tvThType=0x7f0600e9;
         public static final int tvTrackList=0x7f06017d;
-        public static final int tvUnlinkThInfo=0x7f060215;
-        public static final int tvVisible=0x7f0601d6;
-        public static final int tvlFields=0x7f0601d5;
+        public static final int tvUnlinkThInfo=0x7f060220;
+        public static final int tvVisible=0x7f0601e1;
+        public static final int tvlFields=0x7f0601e0;
         public static final int uniqueField=0x7f060194;
         public static final int updateGPSWhenTaxon=0x7f060049;
         public static final int updateGPSWhenTaxonSummary=0x7f06004a;
         public static final int userName=0x7f060093;
         public static final int utm10km=0x7f060140;
         public static final int utm1km=0x7f060141;
-        public static final int utm1m=0x7f0601a4;
+        public static final int utm1m=0x7f0601af;
         public static final int waitForLocation=0x7f0600e6;
         public static final int waitingForGPS=0x7f0600e4;
         public static final int waitingGPS=0x7f060135;
         public static final int write_track_data_permission=0x7f060003;
         public static final int wrongTaxon=0x7f060066;
-        public static final int yes=0x7f0601aa;
+        public static final int yes=0x7f0601b5;
         public static final int zamiaImportAddFields=0x7f06014a;
         public static final int zamiaImportCitationsCount=0x7f060149;
         public static final int zamiaImportError=0x7f06014b;
-        public static final int zamiaImportProgress=0x7f0601a5;
+        public static final int zamiaImportProgress=0x7f0601b0;
         public static final int zamiaImportProjAddFields=0x7f06018d;
         /**  ZamiaImport 
  ZamiaImport 

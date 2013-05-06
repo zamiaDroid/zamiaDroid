@@ -160,7 +160,22 @@
          
          
      <string name="aboutUsExtended">
-         <![CDATA[
+         <![CDATA[    
+   <string name="changeMapMarker">Canvia marcador</string>
+   
+   <string name="uniqueField">No hi pot haver més d\'un camp %1s</string>
+   <string name="polAddPoint">Afegir punt</string>
+   <string name="polIsClosed">El polígon ja està tancat</string>
+  <string name="polClose">Tanca polígon</string>
+   
+   <string name="polCantClose">Es necessiten més de 2 punts per a tancar el polígon</string>
+   <string name="polPoints">Punts</string>
+   <string name="polEdit">Edició sobre mapa</string>
+   <string name="polRemove">Esborrar polígon</string>
+   <string name="polRemoveLastPoint">Esborrar darrer punt</string>
+   <string name="polExit">Surt edició polígon</string>
+   <string name="secondShowList">Veure llistat</string>
+   <string name="tracksInfo">Informació - Tracks</string>
         <b>Dirección: </b> Xavier Font<br/>
      	<b>Idea original: </b> David Martí Pino y Xavier Font<br/>
     	<b>Programación: </b> David Martí Pino<br/>
@@ -256,7 +271,7 @@
     <string name="trackProjectDescription">Track creado por ZamiaDroid en el proyecto</string>
     <string name="trackProjectNameDialog">nombre por defecto:</string>
     <string name="trackRemoveDialog">Quiéres borrar el track</string>
-    <string name="waitingGPS">Esperando GPS&#8230;</string>
+    <string name="waitingGPS">Esperando GPS</string>
     <string name="mMapsOptions">Opciones de el mapa</string>
     <string name="mLoadTrack">Cargar track</string>
    	<string name="trackRegistering">Registrando track</string>
@@ -368,4 +383,21 @@
     <string name="thChangeInfo">El tesauro cargado en el sistema se ha actualizado. Se descargará el nuevo tesauro y será sustituido por el actual.</string>
     <string formatted="false" name="thChangeTitle">Es necesario actualizar el tesauro %1s ! La última acutalización se realizó en %2s.</string>
   
+        
+   <string name="changeMapMarker">Cambia marcador</string>
+   
+   <string name="uniqueField">No puede existir más de un campo %1s</string>
+   <string name="polAddPoint">Añadir punto</string>
+   <string name="polIsClosed">El polígono ya está cerrado</string>
+  <string name="polClose">Cirra polígono</string>
+   
+   <string name="polCantClose">Se necesitan más de 2 puntos para cerrar el polígono</string>
+   <string name="polPoints">Puntos</string>
+   <string name="polEdit">Edición sobre mapa</string>
+   <string name="polRemove">Borrar polígono</string>
+   <string name="polRemoveLastPoint">Borrar último punto</string>
+   <string name="polExit">Salir edición polígono</string>
+   <string name="secondShowList">Ver listado</string>
+   <string name="tracksInfo">Información - Tracks</string>
+    
 </resources>

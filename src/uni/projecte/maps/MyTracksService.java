@@ -292,7 +292,7 @@ public class MyTracksService {
 			    String lang=pC.getLang();
 
 				dialog.setContentView(R.layout.mytracksdialog);
-				dialog.setTitle("Informació - Tracks");
+				dialog.setTitle(baseContext.getString(R.string.tracksInfo));
 
 				dialog.show();
 					

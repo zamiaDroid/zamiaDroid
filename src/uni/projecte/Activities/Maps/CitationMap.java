@@ -742,7 +742,7 @@ public class CitationMap extends MapActivity implements LocationListener {
         	}
         	else{
         		
-        		Utilities.showToast("El polígon ja està tancat", v.getContext());
+        		Utilities.showToast(v.getContext().getString(R.string.polIsClosed), v.getContext());
         		
         	}
         	

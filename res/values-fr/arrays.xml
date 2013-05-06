@@ -11,6 +11,7 @@
         <item>Champ libre</item>
         <item>Champ prédéfini</item>
         <item>Photo</item>
+        <item>Polygon</item>
         <item>Sub-project</item>
     </string-array>    
    <string-array name="gpsCapture">

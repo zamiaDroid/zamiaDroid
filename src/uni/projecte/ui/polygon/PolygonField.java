@@ -198,7 +198,7 @@ public class PolygonField {
 		((LinearLayout) ibAddPoint.getParent()).setVisibility(View.VISIBLE);
 		llWaitingGPS.setVisibility(View.GONE);
 		
-		tvAddPoint.setText("Afegir punt");
+		tvAddPoint.setText(baseContext.getString(R.string.polAddPoint));
 		
 		updateUI();
 		
@@ -356,7 +356,7 @@ public class PolygonField {
 				
 				if(firstLatLon.equals(lastLatLon)){
 					
-					Utilities.showToast("El polígon ja està tancat", baseContext);
+					Utilities.showToast(baseContext.getString(R.string.polIsClosed), baseContext);
 					
 				}
 				else {
@@ -369,7 +369,7 @@ public class PolygonField {
 			}
 			else{
 				
-				Utilities.showToast("Es necessiten més de 2 punts per a tancar el polígon", baseContext);
+				Utilities.showToast(baseContext.getString(R.string.polCantClose), baseContext);
 				
 			}
 

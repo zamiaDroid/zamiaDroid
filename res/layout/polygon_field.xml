@@ -31,7 +31,7 @@
                 style="@style/ZamiaSmallTextAppereance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Afegir punt" />
+                android:text="@string/polAddPoint" />
         </LinearLayout>
 
              <LinearLayout
@@ -55,7 +55,7 @@
                 style="@style/ZamiaSmallTextAppereance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Esperant GPS" />
+                android:text="@string/waitingGPS" />
         </LinearLayout>
         
         <LinearLayout
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Punts" />
+                android:text="@string/polPoints" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/llShowPolygon"
@@ -112,7 +112,7 @@
                 style="@style/ZamiaSmallTextAppereance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edició sobre mapa" />
+                android:text="@string/polEdit" />
         </LinearLayout>
 
         <LinearLayout
@@ -135,7 +135,7 @@
                 style="@style/ZamiaSmallTextAppereance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Esborrar polígon" />
+                android:text="@string/polRemove" />
         </LinearLayout>
 
     </LinearLayout>

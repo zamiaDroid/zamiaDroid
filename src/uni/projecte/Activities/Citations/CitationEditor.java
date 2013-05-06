@@ -1242,7 +1242,7 @@ public class CitationEditor extends Activity {
 			   else if(fieldType.equals("secondLevel")){
 				   
 				   Button showList=new Button(getBaseContext());
-				   showList.setText("Veure Llistat");
+				   showList.setText(getBaseContext().getString(R.string.slShowElem));
 			   
 				   TextView e=new TextView(getBaseContext());	   
 				   

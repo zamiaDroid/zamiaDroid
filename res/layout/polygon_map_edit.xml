@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="Afegir punt" />
+                android:text="@string/polAddPoint" />
         </LinearLayout>
           <LinearLayout
             android:id="@+id/llgpsWaiting"
@@ -57,7 +57,7 @@
                 style="@style/ZamiaSmallTextAppereance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Esperant GPS" />
+                android:text="@string/waitingGPS" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/llVertexCount"
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Punts" />
+                android:text="@string/polPoints" />
 
             <TextView
                 android:id="@+id/tvPolygonCount"
@@ -104,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="Tancar polígon" />
+                android:text="@string/polClose" />
         </LinearLayout>
 
         <LinearLayout
@@ -126,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="Esborrar polígon" />
+                android:text="@string/polRemove" />
         </LinearLayout>
 
         <LinearLayout
@@ -148,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="Esborrar darrer punt" />
+                android:text="@string/polRemoveLastPoint" />
         </LinearLayout>
     </LinearLayout>
 
@@ -172,7 +172,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Surt edició polígon"
+            android:text="@string/polExit"
             android:textColor="@color/secondaryGreen"
             android:layout_marginRight="5dp" />
 

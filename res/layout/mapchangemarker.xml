@@ -16,32 +16,30 @@
             android:padding="4dp" >
 
             <ImageButton
+                android:id="@+id/marker_bubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/marker_bubble"
+                />
+
+            <ImageButton
                 android:id="@+id/marker_butterfly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/marker_butterfly"
-                android:onClick="markerClick" />
+                 />
 
             <ImageButton
                 android:id="@+id/marker_snake"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/marker_snake"
-                android:onClick="markerClick" />
+                android:background="@drawable/marker_snake" />
 
             <ImageButton
                 android:id="@+id/marker_bee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/marker_bee"
-                android:onClick="markerClick" />
-
-            <ImageButton
-                android:id="@+id/marker_wetland"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/marker_wetland"
-                android:onClick="markerClick" />
+                android:background="@drawable/marker_bee"/>
         </TableRow>
 
         <TableRow
@@ -110,6 +108,7 @@
             android:id="@+id/tableRow4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
+
         </TableRow>
     </TableLayout>
 

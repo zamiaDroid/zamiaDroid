@@ -357,5 +357,25 @@
        
     <string name="mCheckTaxonTh">Excluded from thesaurus</string>
     <string name="mAddCitation">Add citation</string>
+    
+    <string name="thChangeInfo">The loaded Thesaurus has been updated. The new thesaurus will be donwloaded and it will overwrite the old one.</string>
+    <string formatted="false" name="thChangeTitle">It is necessary to update the %1s thesaurus! Last update was done: %2s.</string>
+   
+    
+   <string name="changeMapMarker">Change marker</string>
+   
+   <string name="uniqueField">Can\'t exist more than one field %1s</string>
+   <string name="polAddPoint">Add point</string>
+   <string name="polIsClosed">Polygon is already closed</string>
+  <string name="polClose">Close polygon</string>
+   
+   <string name="polCantClose">It\'s necessary to have more than 2 points when closing the polygon</string>
+   <string name="polPoints">Points</string>
+   <string name="polEdit">Edition over map</string>
+   <string name="polRemove">Remove polygon</string>
+   <string name="polRemoveLastPoint">Remove last point</string>
+   <string name="polExit">Exit polygon edit</string>
+   <string name="secondShowList">Show list</string>
+   <string name="tracksInfo">Information - Tracks</string>
     	
 </resources>

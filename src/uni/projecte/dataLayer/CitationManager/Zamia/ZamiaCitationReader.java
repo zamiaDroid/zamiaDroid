@@ -137,10 +137,7 @@ public class ZamiaCitationReader extends FagusReader {
 
 	
 			long fieldId= projCnt.getFieldIdByName(projectId,name);
-
 			if(fieldId>0) citCnt.addCitationField(projectId,this.sampleId, this.projectId, name, tempVal);
-			
-
 				
 		}
 		else{
