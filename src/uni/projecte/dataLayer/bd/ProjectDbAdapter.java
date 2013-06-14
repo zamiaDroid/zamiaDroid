@@ -576,6 +576,15 @@ public class ProjectDbAdapter {
 		return mDb.update(DATABASE_TABLE_FIELD, vals, PROJ_ID + "=" + idRs +" and "+ KEY_ROWID +"="+fieldId, null) > 0;
 		
 	}
+	
+	public boolean setFieldLabel(long projId, long fieldId, String fieldLabel) {
+		
+		ContentValues vals = new ContentValues();
+		vals.put(LABEL,fieldLabel);
+		
+		return mDb.update(DATABASE_TABLE_FIELD, vals, PROJ_ID + "=" + projId +" and "+ KEY_ROWID +"="+fieldId, null) > 0;
+		
+	}
 
 	public int removeProjectField(long idField) {
 

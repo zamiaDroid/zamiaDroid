@@ -37,7 +37,7 @@ public class FileExporter {
 	public boolean createFile(String format, String fileName){
 		
 		
-		if(format.equals("Fagus") || format.equals("Zamia")){
+		if(format.equals("Fagus") || format.equals("Zamia") || format.equals("Quercus")){
 			
 	        file = new File(Environment.getExternalStorageDirectory()+"/"+pC.getDefaultPath()+"/Citations/", fileName+".xml");
 	        exportMimeType=MimeTypes.xmlMimeType;

@@ -3,27 +3,34 @@ package uni.projecte.Activities.Miscelaneous;
 import java.util.HashMap;
 
 import uni.projecte.R;
-import uni.projecte.controler.CitationControler;
+import uni.projecte.controler.MultiPhotoControler;
 import uni.projecte.controler.ProjectControler;
+import uni.projecte.dataLayer.utils.PhotoUtils;
+import uni.projecte.dataTypes.CitationPhoto;
 import uni.projecte.dataTypes.Utilities;
 import uni.projecte.ui.zoomImage.TouchImageView;
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 public class ImageView extends Activity {
-	
-	private String photoPath;
-    double IMAGE_MAX_SIZE= 800;
-    private CitationControler citCnt;
-    private ProjectControler projCnt;
-	private HashMap<String, String> fieldsLabelNames;
-	private long projId=-1;
 
+	
+    private ProjectControler projCnt;	
+    private MultiPhotoControler photoCnt;
+        
+	private long projId=-1;
+	private String photoPath;
+	private String photoLabel;
+
+	private HashMap<String, String> fieldsLabelNames;
+
+	private static int inSampleSize=4;
+	
+	
 	public void onCreate(Bundle savedInstanceState) {
     	
     	super.onCreate(savedInstanceState);
@@ -37,26 +44,31 @@ public class ImageView extends Activity {
     	/* Activity Intents */
         photoPath=getIntent().getExtras().getString("photoPath");
         projId=getIntent().getExtras().getLong("projId");
+        photoLabel=getIntent().getExtras().getString("photoLabel");
 
-        /* Data controlers */
-        citCnt=new CitationControler(this);
+        /* Data Controllers */
         projCnt=new ProjectControler(this);
+        photoCnt= new MultiPhotoControler(this);
         
         projCnt.loadProjectInfoById(projId);
         fieldsLabelNames=projCnt.getProjectFieldsPair(projId);
-        
-        
-      	BitmapFactory.Options options = new BitmapFactory.Options();
-   	   	options.inSampleSize = 3;
-
-		Bitmap bm = BitmapFactory.decodeFile(photoPath,options);
+  	   	
+		Bitmap bm = PhotoUtils.decodeAndResizeBitmap(photoPath, inSampleSize, true);
 		
 		if(photoPath!=null && bm!=null){
 			
-			String[] citationId=citCnt.getCitationInfoByPhoto(photoPath	,fieldsLabelNames);
-			if(citationId!=null) thPhoto.setText(citationId[0]);
+			if(photoLabel==null){
+			
+				CitationPhoto citationPhoto=photoCnt.getCitationByPhotoPath(photoPath, true, fieldsLabelNames);
+			
+				if(citationPhoto!=null) photoLabel=citationPhoto.getLabel();
+				else photoLabel=getString(R.string.photoNotLinked);
+			
+			}
+			
+			thPhoto.setText(photoLabel);
+			
 			tIv.setImageBitmap(bm);
-	    	
 	    	ll.addView(tIv);
 
 		}
@@ -67,9 +79,6 @@ public class ImageView extends Activity {
 			
 		}
 		
-        	
-
 	}
-	
 	
 }

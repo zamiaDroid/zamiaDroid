@@ -150,61 +150,7 @@ public class DataTypeControler {
 	}
 	
 	
-	
-	
-	/*public void loadDataTypesFromDB(){
-		
-		DataTypesDbAdapter dtHnd= new DataTypesDbAdapter(c);
-		
-		dtHnd.open();
-		
-		ItemsDTDbAdapter itemsHnd= new ItemsDTDbAdapter(c);
-		
-		itemsHnd.open();
-		
-		Cursor dataTyesC=dtHnd.fetchAllDTs();
-		
-		dataTyesC.moveToFirst();
-		
-		int n=dataTyesC.getCount();
-		
-		for (int i=0;i<n;i++){
-			
-			String dtName=dataTyesC.getString(2);
-			DataType dt=new DataType(dtName, dataTyesC.getString(3));
-					
-				Cursor items=itemsHnd.fetchDtItembyType(dataTyesC.getInt(0));
-				items.moveToFirst();
-				
-				int m=items.getCount();
-				
-				ArrayList<String> itemsArray=new ArrayList<String>();
-				
-				for(int j=0;j<m;j++){
-					
-					itemsArray.add(items.getString(2));
-					items.moveToNext();
-					
-				}
-				
-				
-			dt.setItems(itemsArray);
-			
-			
-			dataTyesC.moveToNext();
-			
-		}
-		
-		dtHnd.close();
-		itemsHnd.close();
-
-
-		
-	}*/
-
-
-    
-    
+	    
 	public List<CharSequence> getItemsArrayListbyFieldId(long fieldId){
 		
 		FieldItemAdapter itemsHnd= new FieldItemAdapter(c);
@@ -259,6 +205,22 @@ public class DataTypeControler {
 		return itemList;
 	
 }
+	
+	public boolean removeItemsFromField(long fieldId){
+		
+		FieldItemAdapter itemsHnd= new FieldItemAdapter(c);
+		
+		itemsHnd.open();
+		
+		boolean success=itemsHnd.deleteItemsFromField(fieldId);
+		
+		itemsHnd.close();
+		
+		return success;
+		
+	}
+	
+	
 	
 	public String[] getItemsbySecondLevelFieldId(long fieldId){
 		

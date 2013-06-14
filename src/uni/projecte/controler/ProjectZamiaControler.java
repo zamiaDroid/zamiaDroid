@@ -249,6 +249,12 @@ public class ProjectZamiaControler {
 		return projId;
 		
 	}
+	
+	public boolean removeProject(long projId){
+		
+		return pC.removeProject(projId)>0;
+		
+	}
 
 	public void addPredefinedValue(String predValue) {
 

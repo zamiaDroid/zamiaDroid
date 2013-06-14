@@ -360,6 +360,20 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
     	
     	return mCursor;
 	}
+    
+    public Cursor getMultiPhotoByValue(String value) {
+
+    	Cursor mCursor=mDb.rawQuery("SELECT idSample,fieldId,parentCitationId,value FROM " + DATABASE_TABLE_CITATION +","+DATABASE_TABLE_FIELD
+				+ " WHERE value=\""+value+"\" and CitationTable._id="+CitacionDbAdapter.KEY_SAMPLE_ID,null);
+        
+    	if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+    	
+    	return mCursor;
+    	
+	}
+
 
     
 	public Cursor getPolygonPointByParentId(long projId, long parentId) {

@@ -72,6 +72,7 @@
      <string name="projCreationRep">Desde repositorio</string>
      <string name="projCreationCit">Desde archivo de citas</string>
      <string name="projCreationFagus">Desde proyecto Fagus (B-VegAna)</string>
+         <string name="projCreationProj">Desde archivo de proyecto (B-VegAna)</string>
      
  
     <string name="aboutUs">Sobre nosotros</string>
@@ -376,10 +377,21 @@
     <string name="fieldTypePhoto">fotografía</string>
     <string name="fieldTypePredefined">predefinido</string>
     <string name="fieldTypeSubProject">sub-proyecto</string>
-       
+   	<string name="fieldTypeMultiPhoto">multi-fotografía</string>
+    <string name="fieldTypePolygon">polígono</string>
+           
     <string name="mCheckTaxonTh">Excluidos del tesauro</string>
+        <string name="btStoragePrim">Emm. Primari</string>
+    <string name="btStorageSec">Emm. Secundari</string>
+
     <string name="mAddCitation">Añadir cita</string>
-  
+      
+    <string formatted="false" name="zamiaImportProjAddFields">El archivo tiene &lt;b> %1d campos.&lt;/b> Selecciona los que quieras añadir al nuevo proyecto.</string>
+   	<string name="tvImportCitationsProjAchtung">Alerta! No se importaran los datos referentes a los campos que se añadan el proyecto.</string>
+	
+	<string name="citationWrongFileFormat">El archivo no tiene un formato %1s correcto</string>
+    <string name="pdCheckingCitFile">Comprobando archivo de citas&#8230;</string>
+    
     <string name="thChangeInfo">El tesauro cargado en el sistema se ha actualizado. Se descargará el nuevo tesauro y será sustituido por el actual.</string>
     <string formatted="false" name="thChangeTitle">Es necesario actualizar el tesauro %1s ! La última acutalización se realizó en %2s.</string>
   
@@ -400,4 +412,7 @@
    <string name="secondShowList">Ver listado</string>
    <string name="tracksInfo">Información - Tracks</string>
     
+   <string name="alertItemRemoved">Alerta! El valor %1s de este campo se ha sido borrado de la lista!</string>
+   <string name="wrongProjectFile">El archivos seleccionado no define un proyecto %1s correcto</string>
+   
 </resources>

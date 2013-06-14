@@ -30,5 +30,8 @@
 	<string name="photoPathSecStorageTitle">External storage directory</string>
 	
 	<string name="photoPathWrong">Directory doesn\'t exist</string>
+	
+	<string name="confTitleResetGeoid">Reset Geoid to default value</string>
+    <string name="confTitleResetGeoidSummary">Back to default geoid value to 49 (m)</string>
 
 </resources>

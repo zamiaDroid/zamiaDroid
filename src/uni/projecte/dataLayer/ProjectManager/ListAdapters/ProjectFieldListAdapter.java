@@ -7,6 +7,7 @@ import uni.projecte.Activities.Projects.SubProjectInfo;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.CitationControler;
 
+import uni.projecte.dataLayer.ProjectManager.FieldModifyDialog;
 import uni.projecte.dataLayer.ProjectManager.tools.FieldTypeTranslator;
 import uni.projecte.dataTypes.ProjectField;
 import android.app.Activity;
@@ -205,6 +206,21 @@ public class ProjectFieldListAdapter extends BaseAdapter  {
             	}
             	
             		
+            
+            );
+            
+            
+            holder.tvListLabel.setOnClickListener(new OnClickListener() {  
+            	
+            	public void onClick(View v) { 
+            		           		
+            		FieldModifyDialog modifyDialog=new FieldModifyDialog(parentContext, projId,projFields.get(position),projCnt);
+            		modifyDialog.setTitle(R.string.btModifyField);
+            		modifyDialog.show();
+            	
+            	}
+            	
+            }
             
             );
             

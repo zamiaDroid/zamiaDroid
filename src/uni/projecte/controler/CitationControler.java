@@ -41,6 +41,7 @@ import uni.projecte.dataLayer.bd.ProjectDbAdapter;
 import uni.projecte.dataLayer.bd.SampleAttributeDbAdapter;
 import uni.projecte.dataLayer.bd.SampleDbAdapter;
 import uni.projecte.dataLayer.utils.StringUtils;
+import uni.projecte.dataTypes.CitationPhoto;
 import uni.projecte.dataTypes.LocalTaxonSet;
 import uni.projecte.dataTypes.LocationCoord;
 import uni.projecte.dataTypes.ProjectField;
@@ -1468,6 +1469,33 @@ public class CitationControler {
 		sa.close();
 		
 		return citationId;
+		
+	}
+	
+	public CitationPhoto getCitationPhoto(String photoPath){
+		
+		CitationPhoto citPhoto=null;
+		
+		CitacionDbAdapter sa=new CitacionDbAdapter(baseContext);
+		sa.open();
+		
+		Cursor cursor=sa.fetchCitationIdByPhotoField(photoPath);
+		cursor.moveToFirst();
+			
+		if(cursor.getCount()>0) {
+				
+			long citationId=cursor.getLong(1);
+			long fieldId=cursor.getLong(2);
+
+			citPhoto= new CitationPhoto(photoPath, citationId,fieldId, "photo");
+				
+		}
+			
+		cursor.close();
+		
+		sa.close();
+		
+		return citPhoto;
 		
 	}
 	

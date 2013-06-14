@@ -42,6 +42,7 @@ public class GalleryGrid extends Activity{
 	private static final int SECONDARY_STORAGE=Menu.FIRST;
 	private static final int ALLOW_SEC_EXTERNAL_STORAGE=Menu.FIRST+1;
 	private static final int MOVE_PHOTOS=Menu.FIRST+2;   
+	private static final int REMOVE_PHOTOS_CACHE=Menu.FIRST+3;   
 
 	public final static int REFRESH_IMAGE_LIST = 2;
 	
@@ -159,9 +160,6 @@ public class GalleryGrid extends Activity{
 			
 			progBar.setVisibility(View.GONE);
 			
-		
-		
-			
 		}
 	};
 
@@ -218,6 +216,8 @@ public class GalleryGrid extends Activity{
 			try {
 
 				thWidth = (getResources().getDisplayMetrics().widthPixels-10)/GRID_COLUMNS;
+				
+				Log.i("Photo","Size: "+getResources().getDisplayMetrics().widthPixels+" GRID_COLUMNS"+GRID_COLUMNS+" Photo: "+thWidth);
 
 				lLazyAdapter = new LazyImageAdapter(getApplicationContext(),loadImageSlideListener,storagePath,projectName.replace(" ", "_"),selectedPhotos,thWidth-5);		
 
@@ -327,6 +327,9 @@ public class GalleryGrid extends Activity{
 				
 				
 			}
+			
+			menu.add(0, REMOVE_PHOTOS_CACHE, 0,"Esborrar cache de fotografies").setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+
 	    	
 	    	return super.onCreateOptionsMenu(menu);
 	    }
@@ -376,7 +379,14 @@ public class GalleryGrid extends Activity{
 				movePhotosDialog();
 				break;
 				
+			case REMOVE_PHOTOS_CACHE:
 				
+				int removed=photoCnt.removeProjectThumbs(projId, projectName);
+				
+				Utilities.showToast("S'han esborrat "+removed+" fotos", this);
+				
+				break;
+						
 			case ALLOW_SEC_EXTERNAL_STORAGE:
 
 				if(photoCnt.isSecondaryExternalStorageDefault(projId)){

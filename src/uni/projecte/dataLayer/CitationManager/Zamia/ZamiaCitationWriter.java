@@ -166,11 +166,6 @@ public class ZamiaCitationWriter {
 		}
 		
 		
-		
-
-		
-		
-		
 	}
 	
 	

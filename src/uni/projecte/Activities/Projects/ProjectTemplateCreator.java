@@ -166,6 +166,12 @@ public class ProjectTemplateCreator extends Activity{
 				           
 				    	dialog.dismiss();
 				   		Intent myIntent = new Intent(getBaseContext(), ProjectImport.class);
+				   		
+				   		Bundle b= new Bundle();
+				   		b.putString("format", formats[item]);
+				   		
+				   		myIntent.putExtras(b);
+				   		
 			            startActivityForResult(myIntent,1);
 			            
 				    	   

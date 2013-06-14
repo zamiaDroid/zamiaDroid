@@ -115,15 +115,11 @@ public class ProjectInfo extends Activity{
 	        llista.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 	        llista.setItemsCanFocus(true);
 
-
 	        fillFieldList();
-	        
 	          
-
 	        //listener for item cliked more than 3 seconds
-	       llista.setOnItemLongClickListener(theListLongListener);
+	        llista.setOnItemLongClickListener(theListLongListener);
 
-	        
 	        
 	   }
    

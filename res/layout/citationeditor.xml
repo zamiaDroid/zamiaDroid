@@ -76,7 +76,7 @@ android:background="#ff333333"
 	
 	>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -165,8 +165,8 @@ android:layout_height="wrap_content"
 android:padding="3dp"
 >    
 
- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+ <LinearLayout 
+      android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
         android:padding="5dp"
@@ -190,7 +190,7 @@ android:padding="3dp"
  ></TextView>
  </LinearLayout>
  
- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ <LinearLayout
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"

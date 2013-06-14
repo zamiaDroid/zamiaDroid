@@ -171,7 +171,10 @@ public class ProjectField{
 		this.value = value;
 	}
 
-
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	
 	public String getType() {
 		return type;
 	}
@@ -216,6 +219,12 @@ public class ProjectField{
 	public boolean isSecondLevel(){
 		
 		return type.equals("secondLevel");		
+	}
+	
+	public boolean isPredefined(){
+		
+		return type.equals("complex");
+		
 	}
 
 	public String getCategory() {

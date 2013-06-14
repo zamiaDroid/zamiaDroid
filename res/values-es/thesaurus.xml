@@ -9,6 +9,7 @@
     <!-- Thesaurus Actions -->
 
         <!-- View -->
+        <string name="tvThName">Nombre del tesauro</string>
         <string name="bChooseTh">Escoger Tesauro taxonómico</string>
         <string name="tvChoosenTh"><b>Tesauro taxonómico escogido:</b></string>
         <string name="tvAccepted"><b>Nombre acceptado</b></string>
@@ -26,6 +27,7 @@
         <string name="deleteThQuestion">Quieres borrar el tesauro taxonómico?</string>
         <string name="thUsedByOneProj">Tesauro taxonómico en uso por el proyecto %1s, no se puede borrar.</string>
         <string name="thUsedBySeveralProj">Tesauro taxonómico en uso por %1d proyectos, no se puede borrar.</string>
+        <string name="thDeleteItemThQuestion">Quieres borrar el elemento %1s  del tesauro?</string>
         
         
         <!-- Change Thesaurus -->

@@ -30,5 +30,7 @@
 	<string name="photoPathSecStorageTitle">Directorio almacenamiento externo</string>
 	
 	<string name="photoPathWrong">La carpeta no existe</string>
-	
+		
+	<string name="confTitleResetGeoid">Reiniciar Geoide al valor por defecto</string>
+    <string name="confTitleResetGeoidSummary">Volver al valor del geoide por defecto de 49 (m)</string>
 </resources>

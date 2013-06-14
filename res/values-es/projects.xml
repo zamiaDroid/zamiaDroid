@@ -87,7 +87,7 @@
     <!-- Project Import -->
 
 	<string name="chooseProject"><b>Proyectos del sistema</b></string>
-	<string name="chooseFile"><b>Escoge un proyecto predefinido en formato Fagus</b></string>
+	<string name="chooseFile"><b>Escoge un proyecto predefinido en formato %1s</b></string>
 	
 	<!-- Citation Project Import -->
 	
@@ -116,5 +116,15 @@
 	<string name="backupInfoPhotos">Según la cantidad de fotografías, el tamaño del backup que resulte puede ser muy grande!</string>
 	<string name="backupCreateTitle">Backup: %1s</string>
 
-
+	<!-- SubProject -->
+	<string name="subProjectTitle">Nombre del sub-proyecto</string>
+	
+	<!-- ExportProject -->
+	<string name="btExportProject">Exportar proyecto</string>
+	<string name="dialogProjectExport">Exportar estructura del proyecto</string>
+	<string name="projFileExists">Ya existe el archivo de proyecto. Lo quieres sustituir?</string>
+	<string name="projExportSuccess">Proyecto exportado correctamente en la carpeta: /zamiaDroid/Projects/</string>
+	
+	<string name="btModifyField">Modifica el campo</string>
+	<string name="fieldLabelChanged">La etiqueta del campo ha sido modificada</string>
 </resources>

@@ -436,6 +436,28 @@ public class PhotoControler {
 		
 		return photoPath;
 	}
+	
+	public int removeProjectThumbs(long projId, String projectTag){
+		
+		String path=getWorkingPhotoPath(projId);
+		
+		File thumbsDir = new File(path+"thumbs/");
+		
+		int delettedFiles=0;
+		
+		for(File file : thumbsDir.listFiles()) {
+		    if(file.getName().startsWith(projectTag.replace(" ", "_"))){
+		    	
+		    	file.delete();
+		    	delettedFiles++;
+		    	
+		    }
+		}
+		
+		return delettedFiles;
+		
+	} 
+	
 
 
 	

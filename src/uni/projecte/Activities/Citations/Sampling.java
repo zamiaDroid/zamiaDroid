@@ -26,7 +26,9 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import uni.projecte.Main;
 import uni.projecte.R;
+import uni.projecte.Activities.Projects.ProjectManagement;
 import uni.projecte.Activities.RemoteDBs.TaxonRemoteTab;
 import uni.projecte.controler.CitationControler;
 import uni.projecte.controler.CitationSecondLevelControler;
@@ -57,6 +59,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.MutableContextWrapper;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.location.LocationListener;
@@ -109,6 +112,7 @@ public class Sampling extends Activity {
 	   public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 3;
 	   public static final int LOAD_REMOTE_TAB = 6;
 	   public static final int POLYGON_EDIT = 7;
+	   public static final int NEW_PROJECT = 8;
 
 
 	   public static final int ENABLE_GPS=Menu.FIRST;
@@ -222,6 +226,7 @@ public class Sampling extends Activity {
         projCnt.loadProjectInfoById(projId);
         	
         tvProjectName.setText(projCnt.getName());
+        tvProjectName.setOnClickListener(changeProject);
 
         lat=getIntent().getExtras().getDouble("latitude");
         longitude=getIntent().getExtras().getDouble("longitude");
@@ -283,6 +288,7 @@ public class Sampling extends Activity {
 
         
     }
+    
 
     
     @Override
@@ -577,6 +583,7 @@ public class Sampling extends Activity {
         	if(!filledFields()){
         		
         		endActivity();
+        		finish();
         		
         		
         	} 
@@ -590,6 +597,7 @@ public class Sampling extends Activity {
 		    	           public void onClick(DialogInterface dialog, int id) {
 		    
 		    	        	   endActivity();
+		    	        	   finish();
 	        	   
 		    	           }
 	
@@ -644,8 +652,6 @@ public class Sampling extends Activity {
 			}
     	   
     	   tC.closeThReader();
-    	   
-    	   finish();
 		
 	}
     
@@ -859,24 +865,7 @@ public class Sampling extends Activity {
         }
     }; 
     
-    
-    /*
-     * Method called when finish button is pressed.
-     * It only finishes the Activity
-     * 
-     */
-    
-    private void finishActivity(){
-    	
-    	
-        Intent intent = new Intent();
-        setResult(0, intent);
-   			
-        finish();
-    	
-    	
-    }
-    
+      
     private OnClickListener bUpdateLocationListener = new OnClickListener()
     {
         public void onClick(View v)
@@ -887,49 +876,6 @@ public class Sampling extends Activity {
             	callGPS();
             
             }
-        	
-        }
-    };
-    
-    
-    /*
-     * 
-     * This listener is similar to BCreateCitationListener.
-     * There is only one difference. When the citation is stored the activity is finished.
-     * 
-     */
-    
-    @SuppressWarnings("unused")
-	private OnClickListener bFinishListener = new OnClickListener()
-    {
-        public void onClick(View v)
-        {                        
-            
-        	if (!emptyThesaurus()){
-        	    	
-        	    	 Toast.makeText(getBaseContext(), 
-        	                R.string.fieldMissing, 
-        	                 Toast.LENGTH_SHORT).show();
-        	    	
-        	    }
-        	  
-        	  else{
-        		 
-        			if(tvProjectName.length()==0){
-        	    		
-        	    		Toast.makeText(getBaseContext(), 
-        	                    R.string.projNameMissing, 
-        	                    Toast.LENGTH_SHORT).show();
-        	    	}
-        	    	
-        	    	else  {
-
-        	    			 createSample(lat, longitude);
-        	        		 finishActivity();
- 	    	
-        	    	}
-
-        	  }
         	
         }
     };
@@ -1384,7 +1330,7 @@ public class Sampling extends Activity {
 		   
 		   //main layout that will include the form
 		   LinearLayout l= (LinearLayout)findViewById(R.id.fieldsLay);
-
+		   if(l.getChildCount()>0) l.removeAllViews();
 		   
 		   ProjectControler rsC=new ProjectControler(this);
 		   citCnt.startTransaction();
@@ -1800,6 +1746,64 @@ public class Sampling extends Activity {
     
     
     
+    
+    
+	
+    
+    private OnClickListener changeProject = new OnClickListener() {
+
+        public void onClick(View v) {
+
+        	
+        	if(!filledFields()){
+        		
+        		endActivity();
+        		Intent projActivity = new Intent(getBaseContext(),ProjectManagement.class);
+	       		projActivity.putExtra("tab", 0);
+	       		projActivity.putExtra("changeProject",true);
+	       		startActivityForResult(projActivity,NEW_PROJECT);
+        		
+        	} 
+        	else{
+    	
+	        	AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+		    	
+		    	builder.setMessage(R.string.backFromCitationMessage)
+		    	       .setCancelable(false)
+		    	       .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+		    	           public void onClick(DialogInterface dialog, int id) {
+		    
+		    	        	   endActivity();
+		    	        	   
+		    	        	   Intent projActivity = new Intent(getBaseContext(),ProjectManagement.class);
+		    	       		   projActivity.putExtra("tab", 0);
+		    	       		   projActivity.putExtra("changeProject",true);
+		    	       		   startActivityForResult(projActivity,NEW_PROJECT);
+	        	   
+		    	           }
+	
+						
+		    	       })
+		    	       .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+		    	           public void onClick(DialogInterface dialog, int id) {
+		    	                
+		    	        	   
+		    	        	   dialog.dismiss();
+	 
+		    	           }
+		    	       });
+		    	
+		    	AlertDialog alert = builder.create();
+		    	
+		    	alert.show();
+        		
+        	}
+        	  
+        	        	
+        }
+    };
+    
+	
     private OnClickListener removePicture = new OnClickListener() {
 
         public void onClick(View v) {
@@ -1915,7 +1919,19 @@ public class Sampling extends Activity {
 	
 	
 	    		break;
-	
+	    	
+	    	case NEW_PROJECT :
+	    		
+	    		SharedPreferences preferences= getSharedPreferences(Main.PREF_FILE_NAME, MODE_PRIVATE);
+			    projId = preferences.getLong("predProjectId", -1);
+			     
+	    		projCnt.loadProjectInfoById(projId);
+		        tvProjectName.setText(projCnt.getName());
+		        createFieldForm(projId);
+		        updateDisplay();
+	            
+	    		
+	    		break;
 	
 	    	case 2 :
 	

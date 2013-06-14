@@ -7,6 +7,8 @@ public class CitationPhoto {
 	private long citationId;
 	private long citationFieldId;
 	private long fieldType;
+	private String label;
+	private String photoType;
 	
 	
 	public CitationPhoto(String photoPath, long citationId, long citationFieldId, long fieldType) {
@@ -16,6 +18,15 @@ public class CitationPhoto {
 		this.citationId = citationId;
 		this.citationFieldId = citationFieldId;
 		this.fieldType=fieldType;
+		
+	}
+	
+	public CitationPhoto(String photoPath, long citationId, long citationFieldId, String photoType) {
+				
+		this.photoPath = photoPath;
+		this.citationId = citationId;
+		this.citationFieldId = citationFieldId;
+		this.photoType=photoType;
 		
 	}
 	
@@ -44,6 +55,22 @@ public class CitationPhoto {
 
 	public void setFieldType(long fieldType) {
 		this.fieldType = fieldType;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public String getPhotoType() {
+		return photoType;
+	}
+
+	public void setPhotoType(String photoType) {
+		this.photoType = photoType;
 	}	
 
 }

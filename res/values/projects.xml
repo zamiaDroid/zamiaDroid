@@ -71,7 +71,7 @@
     <!-- Project Import -->
 
 	<string name="chooseProject"><b>Projectes del sistema</b></string>
-	<string name="chooseFile"><b>Escull un projecte predefinit en format Fagus</b></string>
+	<string name="chooseFile"><b>Escull un projecte predefinit en format %1s</b></string>
 	
 	<!-- Citation Project Import -->
 	
@@ -103,6 +103,13 @@
 	<!-- SubProject -->
 	<string name="subProjectTitle">Nom del sub-projecte</string>
 	
+	<!-- ExportProject -->
+	<string name="btExportProject">Exportar projecte</string>
+	<string name="dialogProjectExport">Exportar estructura del projecte</string>
+	<string name="projFileExists">Ja existeix l\'arxiu de projecte. El vols substituir?</string>
+	<string name="projExportSuccess">Projecte exportat correctament a la carpeta: /zamiaDroid/Projects/</string>
 	
+	<string name="btModifyField">Modifica camp</string>
+	<string name="fieldLabelChanged">S\'ha canviat l\'etiqueta del camp</string>
 	
 </resources>

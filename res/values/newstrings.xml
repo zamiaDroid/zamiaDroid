@@ -57,7 +57,8 @@
      <string name="projCreationRep">Des de repositori</string>
      <string name="projCreationCit">Des de fitxer de citacions</string>
      <string name="projCreationFagus">Des de projecte Fagus (B-VegAna)</string>
-  
+     <string name="projCreationProj">Des de fitxer de projecte (B-VegAna)</string>
+     
      <string name="aboutUs">Sobre nosaltres</string>
     
     <string name="noPhotoInProject">No hi ha citacions amb fotografia</string>
@@ -369,5 +370,7 @@
    <string name="polExit">Surt edició polígon</string>
    <string name="secondShowList">Veure llistat</string>
    <string name="tracksInfo">Informació - Tracks</string>
-    
+   
+   <string name="alertItemRemoved">Compte! El valor %1s d\'aquest camp ha estat esborrat de la llista!</string>
+   <string name="wrongProjectFile">El fitxer seleccionat no defineix un projecte %1s correcte</string>
 </resources>

@@ -55,6 +55,7 @@
      <string name="projCreationRep">Des de repositori</string>
      <string name="projCreationCit">Des de fitxer de citacions</string>
      <string name="projCreationFagus">Des de projecte Fagus (B-VegAna)</string>
+     <string name="projCreationProj">Des de fitxer de projecte (B-VegAna)</string>
   
      <string name="aboutUs">Sobre nosaltres</string>
     
@@ -335,9 +336,20 @@
     <string name="fieldTypePhoto">fotografia</string>
     <string name="fieldTypePredefined">predefinit</string>
     <string name="fieldTypeSubProject">sub-projecte</string>
-       
+   <string name="fieldTypeMultiPhoto">multi-fotografia</string>
+    <string name="fieldTypePolygon">polígon</string>
+    
+    
     <string name="mCheckTaxonTh">Exclosos del tesaure</string>
+    <string name="btStoragePrim">Emm. Primari</string>
+    <string name="btStorageSec">Emm. Secundari</string>
     <string name="mAddCitation">Afegir citació</string>
+    
+    <string formatted="false" name="zamiaImportProjAddFields">El fitxer té &lt;b> %1d camps.&lt;/b> Selecciona els que vols afegir al nou projecte.</string>
+   	<string name="tvImportCitationsProjAchtung">Atenció! No s\'importaran les dades referents als camps que s\'afegeixin al projecte.</string>
+	
+	<string name="citationWrongFileFormat">El fitxer no té un format %1s correcte</string>
+    <string name="pdCheckingCitFile">Comprovant fitxer de citacions&#8230;</string>
     
     <string name="thChangeInfo">El tesaure carregat al sistema ha estat actualitzat. Es baixarà el nou tesaure i serà substituït per l\'actual.</string>
   	<string formatted="false" name="thChangeTitle">El tesaure %1s s\'ha d\'actualitzar! El tesaure va ser carregat %2s.</string>
@@ -359,4 +371,6 @@
    <string name="secondShowList">Veure llistat</string>
    <string name="tracksInfo">Informació - Tracks</string>
     
+   <string name="alertItemRemoved">Compte! El valor %1s d\'aquest camp ha estat esborrat de la llista!</string>
+   <string name="wrongProjectFile">El fitxer seleccionat no defineix un projecte %1s correcte</string>
 </resources>

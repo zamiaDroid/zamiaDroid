@@ -31,6 +31,8 @@
     <string name="prefAutoFieldLocalitySum">Locality field will be determined using your location.</string>
     
     <string name="cbNumField">Numeric field</string>
+    <string name="cbFieldText">Text field</string>
+    <string name="cbFieldBoolean">Boolean field</string>
     
     <string name="citCoord"><b>Coord:</b></string>
     <string name="citAltitude"><b>Altitude:</b></string>
@@ -63,7 +65,8 @@
      <string name="projCreationRep">From repository</string>
      <string name="projCreationCit">From citations file</string>
      <string name="projCreationFagus">From Fagus project (B-VegAna)</string>
-  
+     <string name="projCreationProj">From project file (B-VegAna)</string>
+     
      <string name="aboutUs">About Us</string>
     
     <string name="noPhotoInProject">There is no citations with photo</string>
@@ -351,10 +354,22 @@
     <string name="fieldTypePhoto">photo</string>
     <string name="fieldTypePredefined">predefined</string>
     <string name="fieldTypeSubProject">sub-project</string>
+   	<string name="fieldTypeMultiPhoto">multi-photo</string>
+    <string name="fieldTypePolygon">polygon</string>
        
     <string name="mCheckTaxonTh">Excluded from thesaurus</string>
+    <string name="btStoragePrim">Prim. Storage</string>
+    <string name="btStorageSec">Sec. Storage</string>
+    
     <string name="mAddCitation">Add citation</string>
     	
+    <string formatted="false" name="zamiaImportProjAddFields">The file has &lt;b> %1d fields.&lt;/b> Choose the fields to be added.</string>
+   	<string name="tvImportCitationsProjAchtung">Caution! Data referred to fields not added to the project won\'t be added.</string>
+	
+	<string name="citationWrongFileFormat">File\'s format is wrong</string>
+    <string name="pdCheckingCitFile">Checking citations\' file&#8230;</string>
+    
+    
     <string name="thChangeInfo">The loaded Thesaurus has been updated. The new thesaurus will be donwloaded and it will overwrite the old one.</string>
     <string formatted="false" name="thChangeTitle">It is necessary to update the %1s thesaurus! Last update was done: %2s.</string>
         
@@ -374,4 +389,7 @@
    <string name="secondShowList">Show list</string>
    <string name="tracksInfo">Information - Tracks</string>
     
+   <string name="alertItemRemoved">Alert! Field\'s value %1s has been removed from the list!</string>
+   <string name="wrongProjectFile">Chosen file doesn\'t define a %1s project</string>
+   
 </resources>

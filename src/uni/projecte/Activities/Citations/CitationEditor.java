@@ -914,6 +914,8 @@ public class CitationEditor extends Activity {
 		   secLevFields = new Hashtable<Integer, String>();
 		   photoFieldsList = new Hashtable<String, PhotoFieldForm>();
 
+		   boolean addComment=false;
+		   String commentData="";
 
 		   LinearLayout l= (LinearLayout)findViewById(R.id.atributsS);
 		   LinearLayout lPhoto=null;
@@ -1464,11 +1466,24 @@ public class CitationEditor extends Activity {
 				   e.setAdapter(adapter);
 
 				   String pred=sC.getFieldValue(citationId,att.getId());
-						   
+				  
+				   
 					if(pred!=null && pred.length()>0) {
 						
-						setDefaultSpinnerItem(e,pred,values);
+						int pos=setDefaultSpinnerItem(e,pred,values);
+						
+						if(pos < 0){
+							
+							adapter.insert(pred,0);
+							adapter.notifyDataSetChanged();
+							   
+							addComment=true;
+							commentData=pred;
+							
+						}
+				
 						formValues.add(pred);
+						
 			   		}
 			   		else{
 			   			
@@ -1485,6 +1500,8 @@ public class CitationEditor extends Activity {
 						   e.setId(idD);
 						   
 						  llField.addView(e);
+						  
+				
 						  elementsList.add(e);
 
 			   }
@@ -1516,6 +1533,25 @@ public class CitationEditor extends Activity {
 				  
 				   l.addView(ll);
 
+				   
+			   }
+			   else if (fieldType.equals("complex") && addComment){ 
+				   
+				   TextView myTextView = new TextView(this);
+				   myTextView.setText(String.format(getString(R.string.alertItemRemoved), commentData));
+				   myTextView.setTextColor(Color.RED);
+				   
+				   LinearLayout ll= new LinearLayout(this);
+				   ll.setOrientation(LinearLayout.VERTICAL);
+				   ll.setPadding(3,3,3,3);
+				   
+				   ll.addView(llField);
+				   ll.addView(myTextView);
+				  
+				   l.addView(ll,i);
+				   i++;
+
+				   addComment=false;
 				   
 			   }
 			   else{
@@ -1608,7 +1644,7 @@ public class CitationEditor extends Activity {
 	}
 
 	
-	private void setDefaultSpinnerItem(Spinner e, String defaultValue, List<CharSequence> items){
+	private int setDefaultSpinnerItem(Spinner e, String defaultValue, List<CharSequence> items){
 	    
 		Iterator<CharSequence> it= items.iterator();
 		
@@ -1624,6 +1660,8 @@ public class CitationEditor extends Activity {
     	
         	
     	if(trobat) e.setSelection(pos);    	
+    	
+    	return pos;
     	
     }
     

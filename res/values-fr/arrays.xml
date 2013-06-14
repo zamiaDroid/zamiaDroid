@@ -34,6 +34,7 @@
     
     <string-array name="importProjFormats">
         <item>Fagus</item>
+        <item>Zamia</item>
     </string-array>
     
     
@@ -196,6 +197,33 @@
         <item>Spontaneous</item>
     </string-array>
 
+	<string-array name="phenology">
+	    <item>Pas de données</item>  
+	    <item>Plantule</item>
+	    <item>Végétatif</item>
+	    <item>Début de floraison</item>
+	    <item>Floraison et fructification</item>
+	    <item>Fructification</item>
+	    <item>Involution végétative</item>
+	    <item>Respos</item>
+	    <item>Début de la rénovation floiar</item>
+	    <item>Décrépitude et mort</item>
+     </string-array>    
+     
+     <string-array name="phenologyEnglish">
+        <item>No data</item>  
+   	    <item>Plantule</item>
+	    <item>Vegetative</item>
+	    <item>Begining of flowering</item>
+	    <item>Flowering and fructification</item>
+	    <item>Fructification</item>
+	    <item>Vegetative involution</item>
+	    <item>Rest</item>
+	    <item>Leave renovation</item>
+	    <item>Dead</item> 
+     </string-array> 
+     
+     
      <string-array name="exportDestination">
         <item>Save to the SD card</item>
         <item>Save to the SD card and send by E-mail</item>

@@ -38,6 +38,7 @@ import uni.projecte.dataLayer.bd.CitacionDbAdapter;
 import uni.projecte.dataLayer.bd.ProjectDbAdapter;
 import uni.projecte.dataLayer.bd.SampleDbAdapter;
 import uni.projecte.dataLayer.bd.SecondLevelCitacionDbAdapter;
+import uni.projecte.dataTypes.CitationPhoto;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.maps.utils.CoordinateUtils;
 import android.content.Context;
@@ -213,7 +214,7 @@ public class CitationSecondLevelControler extends CitationControler {
 			
 			if(list!=null || list.getCount()>0){
 				
-				multiPhotoValue=list.getString(3);
+				if(list.getColumnCount()>4) multiPhotoValue=list.getString(3);
 				
 			}
 			
@@ -226,7 +227,30 @@ public class CitationSecondLevelControler extends CitationControler {
 		
 	}
 	
+	public CitationPhoto getMultiPhotoByValue(String photoValue){
+		
+		CitationPhoto citationPhoto=null;
+				
+		SecondLevelCitacionDbAdapter mDbSample=new SecondLevelCitacionDbAdapter(baseContext);
+		mDbSample.open();
+			
+			Cursor list= mDbSample.getMultiPhotoByValue(photoValue);
+			list.moveToFirst();
+			
+			if(list!=null && list.getCount()>0){
+				
+				citationPhoto= new CitationPhoto(photoValue, list.getLong(2), list.getLong(1), "multiPhoto");
+				
+			}
+			
+		list.close();	
+			
+		mDbSample.close();
 
+		return citationPhoto;
+		
+		
+	}
 	
 
 	/*

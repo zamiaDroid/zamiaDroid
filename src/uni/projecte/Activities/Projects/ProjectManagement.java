@@ -56,7 +56,15 @@ public class ProjectManagement extends TabActivity {
         TabHost tabs = getTabHost();
 
         TabHost.TabSpec   tab = tabs.newTabSpec("research list");
-        tab.setContent(new Intent().setClassName("uni.projecte","uni.projecte.Activities.Projects.ProjectList"));
+        
+        
+        Intent projListIntent = new Intent();
+        projListIntent.setClassName("uni.projecte","uni.projecte.Activities.Projects.ProjectList");
+        
+        projListIntent.putExtra("changeProject", getIntent().getExtras().getBoolean("changeProject"));
+        
+        tab.setContent(projListIntent);
+
         str = this.getString(R.string.projectListTabName);
         tab.setIndicator(str);
         tabs.addTab(tab);

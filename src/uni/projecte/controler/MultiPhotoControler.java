@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import uni.projecte.dataLayer.CitationManager.Zamia.ZamiaCitationExporter;
+import uni.projecte.dataLayer.CitationManager.objects.Citation;
+import uni.projecte.dataLayer.bd.CitacionDbAdapter;
 import uni.projecte.dataLayer.utils.PhotoUtils;
+import uni.projecte.dataTypes.CitationPhoto;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.ui.multiphoto.MultiPhotoFieldForm;
 import android.content.Context;
@@ -137,5 +140,41 @@ public class MultiPhotoControler{
 		zamiaCitExp.closePhotoList();
 		
 	}
+
+	public CitationPhoto getCitationByPhotoPath(String fileName, boolean hasMultiPhoto, HashMap<String, String> fieldsLabelNames) {
+		
+		CitationControler citCnt=new CitationControler(baseContext);
+		CitationPhoto citationPhoto=null;
+
+		//trying if multiPhotoValue
+		if(hasMultiPhoto){
+		
+        	citSLCnt=new CitationSecondLevelControler(baseContext);
+        	citationPhoto=citSLCnt.getMultiPhotoByValue(fileName);
+			
+		}
+		
+		//trying simple Photo
+		if(citationPhoto==null){
+			
+			citationPhoto=citCnt.getCitationPhoto(fileName);
+			
+		}
+		
+		
+		if(citationPhoto!=null){
+			
+			String[] citLabel=citCnt.getCitationValues(citationPhoto.getCitationId(), fieldsLabelNames);
+			citationPhoto.setLabel(citLabel[0]);
+						
+		}
+	
+		return citationPhoto;
+		
+	}
+	
+	
+	
+	
 
 }

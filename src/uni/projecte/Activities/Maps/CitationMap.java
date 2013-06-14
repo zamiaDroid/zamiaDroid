@@ -343,7 +343,8 @@ public class CitationMap extends MapActivity implements LocationListener {
 	        loadCitations();
 	          
 	        polygonsOverlay=new PolygonLayerOverlay(mapView, loadPolygons());
-	        listOfOverlays.add(polygonsOverlay);
+	        
+	        if(!polygonsOverlay.isEmpty()) listOfOverlays.add(polygonsOverlay);
 	        
 	        mapState.polygonsOn=true;
 	        
@@ -538,9 +539,7 @@ public class CitationMap extends MapActivity implements LocationListener {
 	    		
 	    		connectDBButton.setVisibility(View.VISIBLE);
 			   	editModeButton.setVisibility(View.VISIBLE);
-			   	
-			   	connectDBButton.setVisibility(View.GONE);
-	    		createCitationButton.setVisibility(View.GONE);
+			   
 			   	
 	    		if(mapState.editModeOn) createCitationButton.setVisibility(View.VISIBLE);
 	    		else  createCitationButton.setVisibility(View.GONE);
@@ -549,7 +548,7 @@ public class CitationMap extends MapActivity implements LocationListener {
 	    	//view mode
 	    	else if(mapState.viewMode){
     		
-			   	showPolygonButton.setVisibility(View.VISIBLE);
+			   	if(!polygonsOverlay.isEmpty()) showPolygonButton.setVisibility(View.VISIBLE);
 			   	showLabelsButton.setVisibility(View.VISIBLE);
 			   	connectDBButton.setVisibility(View.GONE);
 	    		createCitationButton.setVisibility(View.GONE);
@@ -983,21 +982,23 @@ public class CitationMap extends MapActivity implements LocationListener {
         public void onClick(View v){
         	
         	
-	        	if(mapState.polygonsOn) {
-	        		
-	        		mapState.polygonsOn=false;
-	    	        listOfOverlays.remove(polygonsOverlay);
-	    	        v.setBackgroundResource(drawable.map_polygon_off);
-	
-	        	}
-	        	else{ 
-	
-	        		mapState.polygonsOn=true;
-	        		listOfOverlays.add(polygonsOverlay);
-	        		v.setBackgroundResource(drawable.map_polygon);
-	        }
-     
-       		mapView.invalidate();
+	        	
+		        	if(mapState.polygonsOn) {
+		        		
+		        		mapState.polygonsOn=false;
+		    	        listOfOverlays.remove(polygonsOverlay);
+		    	        v.setBackgroundResource(drawable.map_polygon_off);
+		
+		        	}
+		        	else{ 
+		
+		        		mapState.polygonsOn=true;
+		        		listOfOverlays.add(polygonsOverlay);
+		        		v.setBackgroundResource(drawable.map_polygon);
+		        }
+	     
+	       		mapView.invalidate();
+       		
 
       }
         
@@ -1237,7 +1238,7 @@ public class CitationMap extends MapActivity implements LocationListener {
         	if(mapState.labelsOn) {
         		
         		mapState.labelsOn=false;
-        		v.setBackgroundResource(drawable.info_icon_off);
+        		v.setBackgroundResource(drawable.labels_off);
         		v.invalidate();
 
         	}
@@ -1245,7 +1246,7 @@ public class CitationMap extends MapActivity implements LocationListener {
         		
         		mapState.labelsOn=true;
         		
-        		v.setBackgroundResource(drawable.info_icon);
+        		v.setBackgroundResource(drawable.labels);
         		v.invalidate();
         	}
         	

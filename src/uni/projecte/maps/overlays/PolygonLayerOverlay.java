@@ -24,9 +24,20 @@ public class PolygonLayerOverlay extends PolygonOverlay{
 		
 		for(ArrayList<LatLon> polygon : polygon_list ){
 
-			drawPolygon(canvas, mapv,polygon,isPolygon(polygon));
+			if (polygon != null && polygon.size() > 0) {	
+			
+				drawPolygon(canvas, mapv,polygon,isPolygon(polygon));
+			
+			}
 
 		}
+	}
+	
+	public boolean isEmpty(){
+		
+		return polygon_list==null || polygon_list.size()<1;
+		
+		
 	}
 	
 

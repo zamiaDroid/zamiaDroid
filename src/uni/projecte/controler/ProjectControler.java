@@ -80,6 +80,19 @@ public class ProjectControler {
 		
 	}
 	
+	public void changeLabelName(long projId,long fieldId,String fieldLabel){
+		
+		
+		projDbAdapter = new ProjectDbAdapter(baseContext);
+		projDbAdapter.open();
+		
+		projDbAdapter.setFieldLabel(projId, fieldId, fieldLabel);
+
+		projDbAdapter.close();
+
+		
+	}
+	
 	public void setProjectType(long rsId,String projectType){
 		
 		

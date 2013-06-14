@@ -46,6 +46,9 @@ import uni.projecte.dataTypes.ProjectField;
 
 public class BackupControler {
 	
+	private static final String BACKUP_MODE="Backups";
+	private static final String EXPORT_MODE="Projects";
+	
 	private static String photoPath="Backups/photos/";
 	private String zamiaDroidPath;
 	
@@ -237,13 +240,13 @@ public class BackupControler {
 	}
 	
 	
-	public String backupProject(long projId, String fileName){
+	public String backupProject(long projId, String fileName, String exportMode){
 		
 		ZamiaProjectWriter zpW= new ZamiaProjectWriter();	
 		
 			writeZamiaProject(projId, zpW, false);
 	
-		zpW.writeToFile(zpW.convertXML2String(), fileName, baseContext);
+		zpW.writeToFile(zpW.convertXML2String(), fileName,exportMode,baseContext);
 		
 		return zpW.convertXML2String();
 		
@@ -267,6 +270,13 @@ public class BackupControler {
 		
 		return Environment.getExternalStorageDirectory() +"/"+zamiaDroidPath+"/Backups/photos.zip";
 
+	}
+	
+	public String getProjectsPath(){
+		
+		return Environment.getExternalStorageDirectory() +"/"+zamiaDroidPath+"/Projects/";
+
+		
 	}
 	
 	private int backupProjectPhotos(long projId) {
@@ -312,7 +322,7 @@ public class BackupControler {
 	
 	public int exportProject(long projId,String fileName,boolean backupPhotos){
 		
-		backupProject(projId, "zp_"+fileName);
+		backupProject(projId, "zp_"+fileName,BACKUP_MODE);
 		
 		backupProjectCitations(projId, "zc_"+fileName);
 		
@@ -331,8 +341,37 @@ public class BackupControler {
 		
 	}
 	
+	public int exportProjectStructure(long projId, String fileName){
+		
+		return backupProject(projId, fileName,EXPORT_MODE).length();
 	
+	}
+	
+	public long importProjectStructure(String projName, String fileName, String thName){
+		
+		ProjectZamiaControler zpControler= new ProjectZamiaControler(baseContext);
+		
+		long projId=zpControler.createProject(projName,thName, "");
+		zpControler.setAutoFields(false);
+		
+		//Same project doesn't exist
+		if(projId >-1){
+		
+			ZamiaProjectXMLparser zpXM= new ZamiaProjectXMLparser(zpControler);
+			zpXM.readXML(baseContext,fileName,false);
+		
+			if(zpXM.isError()){ 
+				
+				//Wrong file
+				projId=-2;
+				zpControler.removeProject(projId);
+			}
 
+		}
+		
+		return projId;
+
+	}
 
 
 	/*

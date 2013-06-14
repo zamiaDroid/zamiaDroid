@@ -9,6 +9,7 @@
     <!-- Thesaurus Actions -->
 
         <!-- View -->
+       <string name="tvThName">Thesaurus name</string>
         <string name="bChooseTh">Chose taxonomic thesaurus</string>
         <string name="tvChoosenTh"><b>Chosen taxonomic thesaurus:</b></string>
         <string name="tvAccepted"><b>Accepted name</b></string>
@@ -26,7 +27,8 @@
         <string name="deleteThQuestion">Do you want to delete this taxonomic thesaurus?</string>       
         <string name="thUsedByOneProj">Taxonomic thesaurus in use by %1s project, it can not be deleted.</string>
         <string name="thUsedBySeveralProj">Taxonomic thesaurus in use by %1d projects, it can not be deleted.</string>
-
+        <string name="thDeleteItemThQuestion">Do you want to remove the %1s element from the thesaurus?</string>
+        
         <!-- Change Thesaurus -->
         <string name="bChangeTh">Change taxonomic thesaurus</string>
         <string name="thChangedText">Default taxonomic thesaurus changed: </string>
