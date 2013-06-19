@@ -104,8 +104,9 @@ public class Sampling extends Activity {
 	
 	/*dataBase helpers*/
 	   private ProjectControler projCnt;
-	   private  ThesaurusControler tC;
+	   private ThesaurusControler tC;
 	   private CitationControler citCnt;
+	   private MultiPhotoControler multiPhotoCnt;
 
 	   public final static int SUCCESS_RETURN_CODE = 1;
 	   
@@ -178,7 +179,8 @@ public class Sampling extends Activity {
     	
     	private Hashtable<String, PhotoFieldForm> photoFieldsList;
     	
-    	private PolygonField polygonField; 
+    	private PolygonField polygonField;
+    	private ProjectField oldPhotoField;
     	
     	private LocationManager mLocationManager;
     	private MainLocationListener mLocationListener;
@@ -202,6 +204,7 @@ public class Sampling extends Activity {
         tC= new ThesaurusControler(this);
         prefCnt= new PreferencesControler(this);
         citCnt= new CitationControler(this);
+        multiPhotoCnt = new MultiPhotoControler(this);
         
         /* button Listeners*/ 
         
@@ -286,7 +289,8 @@ public class Sampling extends Activity {
         createFieldForm(projId);
         updateDisplay();
 
-        
+		// multiPhotoCnt.updatePhotoField(projId,oldPhotoField);
+
     }
     
 
@@ -1454,9 +1458,14 @@ public class Sampling extends Activity {
 			   //when the field is photo we show photo Interface
 			   else if (fieldType.equals("photo")){
 				   
+				   oldPhotoField=att;
+				   
 				   SimplePhotoFieldForm photoFieldForm = new SimplePhotoFieldForm(this,projId,att,llField);
 				   
 				   elementsList.add(photoFieldForm.getEtPhotoPath());
+				   
+				   
+				   
 
 				   lPhoto=photoFieldForm.getlPhoto();
 				   llField=photoFieldForm.getLlField();

@@ -190,7 +190,6 @@
   <string name="thWrongFile">Fitxer incorrecte</string> 
   
   <string name="thImportPlainFirstColumnLabel">Etiquetes a la 1a fila</string> 
-  <string name="thImportPlainRemoveCommas">Eliminar \"\"</string> 
       
    <string name="btThImport">Importa tesaure</string> 
    <string name="tvThNameHit">nom del tesaure ....</string> 
@@ -336,7 +335,6 @@
     <string name="fieldTypePhoto">fotografia</string>
     <string name="fieldTypePredefined">predefinit</string>
     <string name="fieldTypeSubProject">sub-projecte</string>
-   <string name="fieldTypeMultiPhoto">multi-fotografia</string>
     <string name="fieldTypePolygon">polígon</string>
     
     
@@ -346,7 +344,6 @@
     <string name="mAddCitation">Afegir citació</string>
     
     <string formatted="false" name="zamiaImportProjAddFields">El fitxer té &lt;b> %1d camps.&lt;/b> Selecciona els que vols afegir al nou projecte.</string>
-   	<string name="tvImportCitationsProjAchtung">Atenció! No s\'importaran les dades referents als camps que s\'afegeixin al projecte.</string>
 	
 	<string name="citationWrongFileFormat">El fitxer no té un format %1s correcte</string>
     <string name="pdCheckingCitFile">Comprovant fitxer de citacions&#8230;</string>
@@ -368,9 +365,10 @@
    <string name="polRemove">Esborrar polígon</string>
    <string name="polRemoveLastPoint">Esborrar darrer punt</string>
    <string name="polExit">Surt edició polígon</string>
-   <string name="secondShowList">Veure llistat</string>
    <string name="tracksInfo">Informació - Tracks</string>
     
    <string name="alertItemRemoved">Compte! El valor %1s d\'aquest camp ha estat esborrat de la llista!</string>
    <string name="wrongProjectFile">El fitxer seleccionat no defineix un projecte %1s correcte</string>
+     
+   <string name="thImportPlainRemoveCommas">Eliminar \"\"</string> 
 </resources>

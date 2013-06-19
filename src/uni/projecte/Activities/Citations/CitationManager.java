@@ -615,7 +615,6 @@ public class CitationManager extends Activity{
 	        		
 	        		Utilities.showToast(getString(R.string.noCitationsSelected), this);
 	        		
-	        		
 	        	}
 	        	else{
 	        		

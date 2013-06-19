@@ -7,7 +7,6 @@
 	<string name="bSuccessCitationCreation">Observation successfully saved</string>
 	<string name="bUpdateLocation">GPS</string>
     <string name="backFromCitationMessage">Do you want to leave the observation capture ? Unsaved data will be lost</string>
-    <string name="choosevalue">Select item</string>
 
     <!-- Citation Editor -->
     
@@ -19,9 +18,7 @@
 	<string name="mActivateGPS">Activate GPS</string>
 	<string name="mDesactivateGPS">Deactivate GPS</string>
 	<string name="photoMissing">No added picture</string>
-	
-	<!-- SubProject -->
-	<string name="btShowList">Show list</string>
+
 	
 	<!-- Photo Description -->
 	<string name="photoDescription">Image captured by zamiaDroid within the project: %1s</string>

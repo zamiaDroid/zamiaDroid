@@ -19,16 +19,7 @@
 	<string name="thInfoName"><b>Thesaurus name: </b></string>
 	<string name="thInfoNumItems"><b>Items count: </b></string>
 	
-    <string name="mCreateDefProj">Create sample projects</string>
     <string name="noProjectNeedCreate">There is no projects in the system. You have to create or import a new project.</string>
-    
-    <string name="GOOGLE_MAPS_API_KEY">0iepYHdiW7LP6Jd7SkVZ8sMML5RIGudGFe5rCGA</string>
-    
-    <string name="prefAutoFields">Auto fields</string>
-    <string name="prefAutoFieldsSum">Some fields can be filled in a automatic way.</string>
-    
-    <string name="prefAutoFieldLocality">Locality field</string>
-    <string name="prefAutoFieldLocalitySum">Locality field will be determined using your location.</string>
     
     <string name="cbNumField">Numeric field</string>
     <string name="cbFieldText">Text field</string>
@@ -50,7 +41,6 @@
   	<string name="slSaveModif">Save modifications</string>
   
   
-    <string name="mapYouAreHere">You\'re here</string>
     <string name="mapCreateCitation">Do you want to create a citation in %1$f | %2$f point?</string>
     
     <string name="repRemoteTitle">Remote projects\' repository</string>
@@ -64,7 +54,6 @@
      <string name="projCreationFree">Free project defining each fields</string>
      <string name="projCreationRep">From repository</string>
      <string name="projCreationCit">From citations file</string>
-     <string name="projCreationFagus">From Fagus project (B-VegAna)</string>
      <string name="projCreationProj">From project file (B-VegAna)</string>
      
      <string name="aboutUs">About Us</string>
@@ -74,7 +63,6 @@
     
     <string name="btExportFile">Export File to </string>
     <string name="tvExportDialogFileName">Filename</string>
-    <string name="tvExportDialogTitle">Citations export</string>
      
     <string name="downloadingTh">Downloading thesaurus&#8230;</string>
     <string name="remoteThDescription">It\'s possible to download a thesaurus file from Internet. If you have a limited date fare
@@ -83,7 +71,6 @@
     
     <string name="cbThModeRemote">Download on-line thesaurus</string>
      <string name="cbThModeLocal">Choosing local thesaurus</string>
-     <string name="cbThModeNone">Without thesaurus</string>
   
       <string name="synonymQuestion">Taxon <b>%1$s</b> is a synonymous. Do you want to overwritte it with the accepted name?</string>
     <string name="checkSynomymsTitle">Synonymous checking</string>
@@ -125,14 +112,10 @@
      <string name="toastGPSWorking">The GPS is still searching your location</string>
      
     <string name="toastWrongFile">Wrong file</string>
-        <string name="toastShowLocation">Show location</string>
-        
         
             <!-- New CitationManager -->
     
-    <string name="filterDialogEmptyValue">Empty value</string>
-    <string name="appliedFilter">Filtered data by field <b>%1$s</b> with value %2$s <b>%3$s</b></string>
-        
+    <string name="filterDialogEmptyValue">Empty value</string>       
      <string name="countFiltered"><b>Filtered:</b> %1d | </string>
      <string name="countTotal"><b>Total:</b> %1d </string>
      <string name="countSelected"><b>Chosen:</b> %1d | </string>
@@ -204,7 +187,6 @@
   <string name="thWrongFile">Wrong file format</string> 
   
   <string name="thImportPlainFirstColumnLabel">Labels on first row</string> 
-  <string name="thImportPlainRemoveCommas">Remove ""</string> 
       
    <string name="btThImport">Import thesaurus</string> 
    <string name="tvThNameHit">thesaurus name ....</string> 
@@ -236,7 +218,6 @@
       
     <string name="mapConf1m">1x1 m</string>    
       
-    <string name="mConfGeneralInfo">Main information</string>    
     
     <string name="appVersion">Version: <b>%1$s</b></string>
     
@@ -279,7 +260,6 @@
 
 	<!-- ZamiaImport -->
 	<string name="zamiaImportTitle">Import citations\' file with the format</string>
-   	<string name="zamiaImportProgress">Importing new citations into project %1$s</string>
    	<string name="zamiaImportWrongFormat">File is not Zamia formated or it\'s no citations.</string>
     <string name="zamiaImportCitationsCount">There\'re %1d citations inside the file</string>
 	<string formatted="false" name="zamiaImportAddFields">There are &lt;b> %1d fields &lt;/b> &lt;b> not belonging to the project &lt;/b>. Do you want to add them to the project &lt;b> %2$s &lt;/b> ?</string>
@@ -354,7 +334,6 @@
     <string name="fieldTypePhoto">photo</string>
     <string name="fieldTypePredefined">predefined</string>
     <string name="fieldTypeSubProject">sub-project</string>
-   	<string name="fieldTypeMultiPhoto">multi-photo</string>
     <string name="fieldTypePolygon">polygon</string>
        
     <string name="mCheckTaxonTh">Excluded from thesaurus</string>
@@ -364,7 +343,6 @@
     <string name="mAddCitation">Add citation</string>
     	
     <string formatted="false" name="zamiaImportProjAddFields">The file has &lt;b> %1d fields.&lt;/b> Choose the fields to be added.</string>
-   	<string name="tvImportCitationsProjAchtung">Caution! Data referred to fields not added to the project won\'t be added.</string>
 	
 	<string name="citationWrongFileFormat">File\'s format is wrong</string>
     <string name="pdCheckingCitFile">Checking citations\' file&#8230;</string>
@@ -386,10 +364,9 @@
    <string name="polRemove">Remove polygon</string>
    <string name="polRemoveLastPoint">Remove last point</string>
    <string name="polExit">Exit polygon edit</string>
-   <string name="secondShowList">Show list</string>
    <string name="tracksInfo">Information - Tracks</string>
     
    <string name="alertItemRemoved">Alert! Field\'s value %1s has been removed from the list!</string>
    <string name="wrongProjectFile">Chosen file doesn\'t define a %1s project</string>
-   
+  <string name="thImportPlainRemoveCommas">Remove \"\"</string>    
 </resources>

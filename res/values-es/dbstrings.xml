@@ -37,7 +37,6 @@
         <string name="determiningDatabase">Determinando la base de datos ....</string>
         
         <string name="searchingTaxonsUTM"> para el UTM </string>
-        <string name="searchingTaxonsOwnLocation"> para la localitzación del usuario en el UTM </string>
         
         <!-- Tab (fitxes) viewer -->    
         <string name="loadingTab">Cargando ficha biológica</string>
@@ -50,10 +49,7 @@
         
         
     <!--  Menu options -->    
-        
-        <string name="mTaxonFitxa">Ficha biológica</string>
-        <string name="mTaxonCitations">Citas del taxon al UTM</string>
-        
+                
         <string name="confAvailableDBTitle">Configuración de las Bases de Datos disponibles</string>
         <string name="tvRemoteBiologicalTabs">Fichas biológicas:</string>
         <string name="cbRemoteTabByDefault">Por defecto</string>

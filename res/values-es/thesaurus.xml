@@ -11,7 +11,6 @@
         <!-- View -->
         <string name="tvThName">Nombre del tesauro</string>
         <string name="bChooseTh">Escoger Tesauro taxonómico</string>
-        <string name="tvChoosenTh"><b>Tesauro taxonómico escogido:</b></string>
         <string name="tvAccepted"><b>Nombre acceptado</b></string>
         <string name="tvSynonymous"><b>Es un sinónimo, el nombre acceptado es: </b></string>
         <string name="tvIcodeMissing"><b>No tiene icode añadido</b></string>
@@ -31,7 +30,6 @@
         
         
         <!-- Change Thesaurus -->
-        <string name="bChangeTh">Cambiar tesauro taxonómico</string>
         <string name="thChangedText">Tesauro taxonómico por defecto cambiado: </string>
         <string name="thChangedShort">Tesauro cambiado</string>
         
@@ -49,9 +47,6 @@
 
     <!-- Thesaurus relations with projects-->
 	<string name="tvDefaultTh">Tesauro taxonómico: </string>
-	<string name="cbNoTh">Sin tesauro taxonómico</string>
-    <string name="noThQuestion">No hay tesauro seleccionado. Escoge uno o selecciona no usar tesauro taxonómico</string>
-    
     
         	<!-- Register adding -->
 

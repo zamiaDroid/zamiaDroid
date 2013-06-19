@@ -24,6 +24,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -161,6 +162,8 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 
 	public void addPhoto(String imageFilePath) {
 
+		Log.i("Photo","Intentant obrir: "+imageFilePath);
+		
 		File photos = new File(imageFilePath);
         Bitmap b = decodeFile(photos);
          
@@ -253,6 +256,8 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 
 	private Bitmap decodeFile(File f) {
 	    try {
+	    	
+	    	
 	        // decode image size
 	        BitmapFactory.Options o = new BitmapFactory.Options();
 	        o.inJustDecodeBounds = true;

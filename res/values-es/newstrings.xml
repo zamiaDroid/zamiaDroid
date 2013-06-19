@@ -19,22 +19,8 @@
 	<string name="thInfoName"><b>Nombre de el tesaurio: </b></string>
 	<string name="thInfoNumItems"><b>Número de elementos: </b></string>
 	
-    <string name="mCreateDefProj">Crear proyecto de ejemplo</string>
     <string name="noProjectNeedCreate">No hay proyectos en el sistema. Debes crear uno o importarlo.</string>
-    
-        <string name="GOOGLE_MAPS_API_KEY">0iepYHdiW7LP6Jd7SkVZ8sMML5RIGudGFe5rCGA</string>
-    
-        
-  <!--    <string name="projCreationLoading">Creando proyecto...</string>
-    <string name="projCreationTxt">Por favor, no cierre esta ventana. Según el número de campos el proyecto puede tardar algunos minutos.</string>
-    
- -->    
-    <string name="prefAutoFields">Camps automáticos</string>
-    <string name="prefAutoFieldsSum">Hay campos que se pueden determinar de forma automática.</string>
-    
-    <string name="prefAutoFieldLocality">Campo localidad</string>
-    <string name="prefAutoFieldLocalitySum">El campo localidad se determinará de forma automática.</string>
-    
+  
     <string name="cbNumField">Campo numérico</string>
     <string name="cbFieldText">Campo textual</string>
     <string name="cbFieldBoolean">Campo booleano</string>
@@ -56,8 +42,6 @@
     <string name="mShowGallery">Ver galería de fotos</string>
   	<string name="slSaveModif">Guardar modificaciones</string>
   
-  
-    <string name="mapYouAreHere">Estás aquí</string>
     <string name="mapCreateCitation">Quieres crear una cita en el punto %1$f | %2$f ?</string>
     
     <string name="repRemoteTitle">Proyectos de repositorio remoto</string>
@@ -71,8 +55,7 @@
      <string name="projCreationFree">Libre definiendo los campos</string>
      <string name="projCreationRep">Desde repositorio</string>
      <string name="projCreationCit">Desde archivo de citas</string>
-     <string name="projCreationFagus">Desde proyecto Fagus (B-VegAna)</string>
-         <string name="projCreationProj">Desde archivo de proyecto (B-VegAna)</string>
+     <string name="projCreationProj">Desde archivo de proyecto (B-VegAna)</string>
      
  
     <string name="aboutUs">Sobre nosotros</string>
@@ -81,7 +64,6 @@
     
       <string name="btExportFile">Exportar archivo a </string>
     <string name="tvExportDialogFileName">Nombre del archivo</string>
-    <string name="tvExportDialogTitle">Exportación de citas</string>
     
      <string name="downloadingTh">Descargando tesauro&#8230;</string>
     <string name="remoteThDescription">Puedes descargar de Internet un tesauro taxonómico. Si tienes tarifa de datos con límites de descarga
@@ -90,7 +72,6 @@
     
      <string name="cbThModeRemote">Descargar tesauro on-line</string>
      <string name="cbThModeLocal">Escojer tesauro local</string>
-     <string name="cbThModeNone">No usar tesauro</string>
      
     <string name="synonymQuestion">El taxon <b>%1$s</b> es un sinónimo. Quiere sobrescribirlo con el nombre aceptado?</string>
     <string name="checkSynomymsTitle">Comprobación de sinónimos</string>
@@ -133,13 +114,10 @@
      <string name="toastGPSWorking">El GPS está buscando la posición</string>
      
     <string name="toastWrongFile">Archivo incorrecto</string>
-    <string name="toastShowLocation">Ver localitzación</string>
         
             <!-- New CitationManager -->
     
-    <string name="filterDialogEmptyValue">No hay valor</string>
-    <string name="appliedFilter">Datos filtrados por el campo <b>%1$s</b> con el valor %2$s <b>%3$s</b></string>
-        
+    <string name="filterDialogEmptyValue">No hay valor</string>       
      <string name="countFiltered"><b>Filtradas:</b> %1d | </string>
      <string name="countTotal"><b>Totales:</b> %1d </string>
      <string name="countSelected"><b>Seleccionadas:</b> %1d | </string>
@@ -157,26 +135,11 @@
      <string name="filterTypeDate">fecha</string>
      
      <string name="btApplyFilter">Aplicar filtro</string>
-     
-         
+        
          
      <string name="aboutUsExtended">
          <![CDATA[    
-   <string name="changeMapMarker">Canvia marcador</string>
    
-   <string name="uniqueField">No hi pot haver més d\'un camp %1s</string>
-   <string name="polAddPoint">Afegir punt</string>
-   <string name="polIsClosed">El polígon ja està tancat</string>
-  <string name="polClose">Tanca polígon</string>
-   
-   <string name="polCantClose">Es necessiten més de 2 punts per a tancar el polígon</string>
-   <string name="polPoints">Punts</string>
-   <string name="polEdit">Edició sobre mapa</string>
-   <string name="polRemove">Esborrar polígon</string>
-   <string name="polRemoveLastPoint">Esborrar darrer punt</string>
-   <string name="polExit">Surt edició polígon</string>
-   <string name="secondShowList">Veure llistat</string>
-   <string name="tracksInfo">Informació - Tracks</string>
         <b>Dirección: </b> Xavier Font<br/>
      	<b>Idea original: </b> David Martí Pino y Xavier Font<br/>
     	<b>Programación: </b> David Martí Pino<br/>
@@ -227,7 +190,6 @@
   <string name="thWrongFile">Archivo incorrecto</string> 
   
   <string name="thImportPlainFirstColumnLabel">Etiquetas en la 1a fila</string> 
-  <string name="thImportPlainRemoveCommas">Eliminar \"\"</string> 
       
    <string name="btThImport">Importa tesauro</string> 
    <string name="tvThNameHit">nombre del tesauro ....</string> 
@@ -258,9 +220,7 @@
     <string name="mapConf1km">1x1 km</string>    
       
     <string name="mapConf1m">1x1 m</string>    
-      
-    <string name="mConfGeneralInfo">Información General</string>    
-    
+          
     <string name="appVersion">Versión: <b>%1$s</b></string>
     
     <string name="citationCloneQuestion">Quiéres crear una cita consecutiva a la seleccionada en la misma localización?</string>
@@ -302,7 +262,6 @@
 
 	<!-- ZamiaImport -->
 	<string name="zamiaImportTitle">Importar archivo de citas en formato</string>
-   	<string name="zamiaImportProgress">Importando nuevas citas al proyecto %1$s</string>
    	<string name="zamiaImportWrongFormat">El archivo no tiene format Zamia correcto o no hay citas.</string>
     <string name="zamiaImportCitationsCount">Hay %1d citas en el archivo</string>
 	<string formatted="false" name="zamiaImportAddFields">Hay &lt;b> %1d campos &lt;/b> &lt;b> que no están en el proyecto &lt;/b>. Los quieres añadir al proyecto &lt;b> %2$s &lt;/b> ?</string>
@@ -377,7 +336,6 @@
     <string name="fieldTypePhoto">fotografía</string>
     <string name="fieldTypePredefined">predefinido</string>
     <string name="fieldTypeSubProject">sub-proyecto</string>
-   	<string name="fieldTypeMultiPhoto">multi-fotografía</string>
     <string name="fieldTypePolygon">polígono</string>
            
     <string name="mCheckTaxonTh">Excluidos del tesauro</string>
@@ -387,7 +345,6 @@
     <string name="mAddCitation">Añadir cita</string>
       
     <string formatted="false" name="zamiaImportProjAddFields">El archivo tiene &lt;b> %1d campos.&lt;/b> Selecciona los que quieras añadir al nuevo proyecto.</string>
-   	<string name="tvImportCitationsProjAchtung">Alerta! No se importaran los datos referentes a los campos que se añadan el proyecto.</string>
 	
 	<string name="citationWrongFileFormat">El archivo no tiene un formato %1s correcto</string>
     <string name="pdCheckingCitFile">Comprobando archivo de citas&#8230;</string>
@@ -409,10 +366,10 @@
    <string name="polRemove">Borrar polígono</string>
    <string name="polRemoveLastPoint">Borrar último punto</string>
    <string name="polExit">Salir edición polígono</string>
-   <string name="secondShowList">Ver listado</string>
    <string name="tracksInfo">Información - Tracks</string>
     
    <string name="alertItemRemoved">Alerta! El valor %1s de este campo se ha sido borrado de la lista!</string>
    <string name="wrongProjectFile">El archivos seleccionado no define un proyecto %1s correcto</string>
    
+     <string name="thImportPlainRemoveCommas">Eliminar \"\"</string> 
 </resources>

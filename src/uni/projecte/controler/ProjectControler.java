@@ -93,6 +93,20 @@ public class ProjectControler {
 		
 	}
 	
+	public void updatePhotoField(long projId,long fieldId) {
+		
+		projDbAdapter = new ProjectDbAdapter(baseContext);
+		projDbAdapter.open();
+		
+		projDbAdapter.updatePhotoType(projId, fieldId);
+
+		projDbAdapter.close();
+		
+		
+	}
+
+
+	
 	public void setProjectType(long rsId,String projectType){
 		
 		
@@ -1132,6 +1146,33 @@ public String createSecondLevelIdentifier(String fieldName){
 		
 	}
 	
+	
+	public ProjectField getOldPhotoField(long projId){
+		
+		ProjectField projField=null;
+		
+		projDbAdapter = new ProjectDbAdapter(baseContext);
+		projDbAdapter.open();
+		
+			Cursor list=projDbAdapter.getPhotoFieldsFromProject(projId);
+			list.moveToFirst();
+		
+			if(list!=null && list.getCount()>0){
+				
+				//KEY_ROWID, PROJ_ID,PROJ_NAME,TYPE,LABEL,PREVALUE,CAT,VISIBLE
+				projField=new ProjectField(list.getLong(0),list.getString(2),"photo",list.getString(4),"");
+			
+				list.close();
+			}
+			
+			
+		projDbAdapter.close();
+		
+		return projField;
+		
+	} 
+	
+	
 	public Cursor getMultiPhotoFieldsFromProject(long projId){
 		
 		projDbAdapter = new ProjectDbAdapter(baseContext);
@@ -1210,7 +1251,7 @@ public String createSecondLevelIdentifier(String fieldName){
 		this.filum = filum;
 	}
 
-
+	
 	
 	
 

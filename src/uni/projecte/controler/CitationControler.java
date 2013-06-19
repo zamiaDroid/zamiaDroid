@@ -1290,6 +1290,7 @@ public class CitationControler {
 		return fields;
 		
 	}
+
 	
 
 	public Cursor getCitationFromFieldAndCitationId(long citationId, long fieldId){
@@ -1306,6 +1307,20 @@ public class CitationControler {
 		return citationFields;
 	}
 	
+
+	public Cursor getPhotoValuesByProjectId(long projectId, long fieldId){
+		
+		mDbAttributes = new CitacionDbAdapter(baseContext);
+		mDbAttributes.open();
+		
+		Cursor citationFields=mDbAttributes.fetchCitationsByOldPhoto(projectId,fieldId);
+
+		citationFields.moveToFirst();
+		
+		mDbAttributes.close();
+
+		return citationFields;
+	}
 
 
 	public void startTransaction() {

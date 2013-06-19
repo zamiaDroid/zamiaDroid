@@ -11,7 +11,6 @@
         <!-- View -->
        <string name="tvThName">Thesaurus name</string>
         <string name="bChooseTh">Chose taxonomic thesaurus</string>
-        <string name="tvChoosenTh"><b>Chosen taxonomic thesaurus:</b></string>
         <string name="tvAccepted"><b>Accepted name</b></string>
         <string name="tvSynonymous"><b>It is a synonym, the accepted name is: </b></string>
         <string name="tvIcodeMissing"><b>No added Icode</b></string>
@@ -30,7 +29,6 @@
         <string name="thDeleteItemThQuestion">Do you want to remove the %1s element from the thesaurus?</string>
         
         <!-- Change Thesaurus -->
-        <string name="bChangeTh">Change taxonomic thesaurus</string>
         <string name="thChangedText">Default taxonomic thesaurus changed: </string>
         <string name="thChangedShort">Changed thesaurus</string>
         
@@ -47,10 +45,8 @@
 
     	<!-- Thesaurus relations with projects-->
 		<string name="tvDefaultTh">Taxonomical thesaurus: </string>
-		<string name="cbNoTh">Without taxonomic thesaurus</string>
-    	<string name="noThQuestion">No selected thesaurus. Choose one or select not using taxonomic thesaurus</string>
 
-    	    	<!-- Register adding -->
+	   	<!-- Register adding -->
 
 		<string name="thAddNewItem">Add register to thesaurus</string>
 		<string name="thNewItemAdded">New register added to thesaurus</string>

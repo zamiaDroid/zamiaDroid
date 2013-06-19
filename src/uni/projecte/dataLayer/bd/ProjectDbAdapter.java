@@ -585,6 +585,15 @@ public class ProjectDbAdapter {
 		return mDb.update(DATABASE_TABLE_FIELD, vals, PROJ_ID + "=" + projId +" and "+ KEY_ROWID +"="+fieldId, null) > 0;
 		
 	}
+	
+	public boolean updatePhotoType(long projId,long fieldId) {
+		
+		ContentValues vals = new ContentValues();
+		vals.put(TYPE,"multiPhoto");
+		
+		return mDb.update(DATABASE_TABLE_FIELD, vals, PROJ_ID + "=" + projId +" and "+ KEY_ROWID +"="+fieldId, null) > 0;
+		
+	}
 
 	public int removeProjectField(long idField) {
 

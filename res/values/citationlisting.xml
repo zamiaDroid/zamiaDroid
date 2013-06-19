@@ -11,7 +11,7 @@
     
     <string name="tvFilteredField"><b>Visualitzant citacions pel camp: </b></string>
     <string name="insert_data">Introdueixi les dades</string>
-    <string name="removeAllCitationsQuestion">Estàs segur de voler esborrar les %1$d mostres?</string>
+    <string name="removeAllCitationsQuestion">Estàs segur de voler esborrar les %1$d citacions?</string>
     
   	<string name="noLocationsCitations">No hi ha citacions amb localització</string>
     

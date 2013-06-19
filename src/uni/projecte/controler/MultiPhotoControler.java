@@ -7,6 +7,7 @@ import java.util.Iterator;
 import uni.projecte.dataLayer.CitationManager.Zamia.ZamiaCitationExporter;
 import uni.projecte.dataLayer.CitationManager.objects.Citation;
 import uni.projecte.dataLayer.bd.CitacionDbAdapter;
+import uni.projecte.dataLayer.bd.SecondLevelCitacionDbAdapter;
 import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.CitationPhoto;
 import uni.projecte.dataTypes.ProjectField;
@@ -170,6 +171,61 @@ public class MultiPhotoControler{
 		}
 	
 		return citationPhoto;
+		
+	}
+
+	public void updatePhotoField(long projId, ProjectField att) {
+
+
+		ProjectSecondLevelControler projSLCnt= new ProjectSecondLevelControler(baseContext);
+		long subFieldId=projSLCnt.createField(att.getId(), "Photo", "photo", "", "", "text");
+
+		 //for each: create citationFieldValue (newId) & create subCitationFieldValue with photoValue		
+
+		 citCnt= new CitationControler(baseContext);
+		 citSLCnt=new CitationSecondLevelControler(baseContext);
+		 
+		 //citCnt.
+		 Cursor photos=citCnt.getPhotoValuesByProjectId(projId,att.getId());
+		 photos.moveToFirst();
+		 
+		 if(photos!=null){
+		 
+			 //KEY_ROWID,KEY_SAMPLE_ID, KEY_TIPUS_ATRIB,VALUE
+			 while(!photos.isAfterLast()){
+						 
+				 String photoValue=photos.getString(1).trim();
+				 long parentCitationId=photos.getLong(0);
+				 
+				 if(!photoValue.equals("")){ 
+					 
+					 String secondLevelId=PhotoUtils.getFileName(photoValue);
+	
+					 long newCitationId=citSLCnt.createCitation(secondLevelId, 100, 190, "",projId,FIELD_NAME,parentCitationId);
+					 
+					 citSLCnt.startTransaction();
+				     	long lala=citSLCnt.addCitationField(subFieldId,newCitationId,projId,"Photo",photoValue);
+				     citSLCnt.EndTransaction();
+				     
+				     //changing photo id's
+				     citCnt.startTransaction();
+				     citCnt.updateCitationField(parentCitationId, att.getId(), secondLevelId,att.getName());
+				     citCnt.EndTransaction();
+				     
+				 }
+				 
+				 photos.moveToNext();
+				 
+			 }
+			 
+			 photos.close();
+		 
+		 }
+
+		 //updatePhoto2MultiPhoto
+		ProjectControler projCnt=new ProjectControler(baseContext);
+        projCnt.updatePhotoField(projId,att.getId());				
+			
 		
 	}
 	

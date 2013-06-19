@@ -7,7 +7,6 @@
 	<string name="bSuccessCitationCreation">Cita guardada correctamente</string>
 	<string name="bUpdateLocation">GPS</string>
     <string name="backFromCitationMessage">Quieres salir de la captura de citas? Los datos sin guardar se perderán</string>
-    <string name="choosevalue">Escoge ítem</string>
 
     <!-- Citation Editor -->
     
@@ -21,9 +20,7 @@
 	
 	
 	<string name="photoMissing">No se ha añadido fotografía</string>
-	
-	<!-- SubProject -->
-	<string name="btShowList">Ver lista</string>
+
 
 	<!-- Photo Description -->
 	<string name="photoDescription">Imagen capturada con zamiaDroid en el proyecto: %1s</string>

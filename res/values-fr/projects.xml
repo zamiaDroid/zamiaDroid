@@ -8,30 +8,15 @@
     <!-- Project List -->
 
     <string name="tvInfoListProj"><b>Voici la liste de projets. Vous pouvez accéder aux champs et propriétés de chacun en cliquant sur un nom. </b></string>
-    <string name="projDescription">Description du projet</string>
     <string name="deleteProjQuestion">Souhaitez-vous éliminer le projet?</string>
-    <string name="projFieldList">Liste de champs du projet</string>
     <string name="yes">"Oui"</string>
     <string name="no">"Non"</string>
     <string name="tvProjectName">"Nom du projet:"</string>
    	<string name="removeFieldQuestion">Il y a %1$d citations avec le champ %2$s rempli. Etes-vous sur de vouloir perdre ces données?</string>
    	<string name="removeFieldQuestionNoCit">Il n\'y a aucune citation avec le champ %1$s rempli. Aucune donnée ne sera perdue. Souhaitez-vous éliminer ce champ?</string>
    	
-    
-
-    <!-- Project Chooser -->
-
-    <string name="noFiles">Il n\'y a aucun projet</string>
-    <string name="titulo_no_directorio">Ceci n\'est pas un dossier</string>
-    <string name="no_directorio">Ceci est un fichier. Â¡Pas un dossier!</string>
-    <string name="cancelar">Annuler</string>
-
-
     <!-- Project Import -->
 
-    <string name="pImportIntroText">Choisir un projet Fagus à importer</string>
-    <string name="mImportFagus">Importer un projet</string>
-    <string name="mImportProjectFromCitations">Créer un projet depuis le fichier de citations</string>
     <string name="sameNameProject">Il existe déjà un project nommé ainsi </string>
 
     <!-- Project Creation -->
@@ -39,7 +24,6 @@
     <string name="projName">Nom du projet</string>
     <string name="projectFieldList">Liste des champs</string>
     <string name="brsAddField">Ajouter un champ libre</string>
-    <string name="bAddPredField">Ajouter un champ prédéfini</string>
     <string name="tvChooseTh">Choisir un thesaurus</string>
     <string name="projNameMissing">Il n\'existe pas de nom pour ce projet</string>
     <string name="projFieldsMissing">Il n\'y a pas de champs pour ce projet</string>
@@ -75,7 +59,6 @@
     <string name="bCreateField">Ajouter un champ</string>
     <string name="tFieldValuesMissing">Il manque soit le nom soit l\'étiquette du champ</string>
 
-    <string name="bAddNewField">Ajouter un champ</string>
     <string name="noProjectChosen">Aucun projet n\'a été retenu. Cliquer pour en sélectionner un</string>
     <string name="altitudeLabel">Altitude</string>
     
@@ -100,7 +83,6 @@
 	<string name="tvlFields">Liste des champs</string>
 	<string name="tvVisible">Visible: </string>
 	<string name="projCreationTitle">Introduire les données</string>
-    <string name="bShowFields">Voir les champs du projet</string>
     <string name="mAddField">Ajouter un champ au projet</string>
     <string name="mChangeTh">Changer le thesaurus</string>
 

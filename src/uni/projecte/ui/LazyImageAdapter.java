@@ -163,9 +163,7 @@ public class LazyImageAdapter extends BaseAdapter implements ImageLoadListener {
 	    }
 	    );  
             
-	    
 	    availableImageList= new ArrayList<String>();
-        
  
         for(int i= 0 ; i< imagelist.length; i++){
         	

@@ -646,9 +646,22 @@ public class CitacionDbAdapter {
   	   
   }
 	 
+	 public Cursor fetchCitationsByOldPhoto(long projId, long photoFieldId) throws SQLException {
+
+		  
+		   Cursor c=mDb.rawQuery("SELECT CitationTable._id as _id,value,CitationTable._id FROM " + DATABASE_TABLE_FIELD+","+DATABASE_TABLE_CITATION
+					+ " WHERE idRs="+projId+" and CitationTable._id="+CitacionDbAdapter.KEY_SAMPLE_ID+" and idAttType="+photoFieldId+";",null);
+
+			   	
+		   c.moveToFirst();
+	  	   
+		   return c;
+	  	   
+	  }
+	 
 	 public Cursor fetchCitationsByMultiPhoto(long citationId, long multiPhotoFieldId) throws SQLException {
 		  
-		   Cursor c=mDb.rawQuery("SELECT CitationTable._id as _id,value FROM " + DATABASE_TABLE_FIELD+","+DATABASE_TABLE_CITATION
+		   Cursor c=mDb.rawQuery("SELECT CitationTable._id as _id,value,idSample FROM " + DATABASE_TABLE_FIELD+","+DATABASE_TABLE_CITATION
 					+ " WHERE CitationTable._id="+citationId+" and CitationTable._id="+CitacionDbAdapter.KEY_SAMPLE_ID+" and idAttType="+multiPhotoFieldId+";",null);
 
 			   	

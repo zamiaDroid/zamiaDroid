@@ -179,6 +179,7 @@ public class GalleryGrid extends Activity{
 				  //subset of selected photos
 				  if(preSettedLoc!=null){
 		
+					  /*  */
 																
 						selectedPhotos=new HashMap<String,Long>();
 						
