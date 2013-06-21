@@ -733,7 +733,7 @@ public class CitationManager extends Activity{
 					filterValue=spListValues.getSelectedItem().toString();
 					
 				}
-				else if(chosenFieldType.equals("boolean") || chosenFieldType.equals("photo")){
+				else if(chosenFieldType.equals("boolean") || chosenFieldType.equals("photo") || chosenFieldType.equals("multiPhoto")){
 					
 					if(cbFilter.isChecked()) filterValue="true";
 					else filterValue="false";
@@ -766,7 +766,7 @@ public class CitationManager extends Activity{
 						citHand.loadFilteredCitationsByDate(projId, comparator, filterValue);
 						
 					}
-					else if(chosenFieldType.equals("photo")){
+					else if(chosenFieldType.equals("photo") || chosenFieldType.equals("multiPhoto")){
 						
 						citHand.loadFilteredCitationsByPhoto(projId, chosenFieldId , filterValue);
 						
@@ -1239,7 +1239,7 @@ public class CitationManager extends Activity{
 					
 						
 					}
-					else if(type.equals("photo")){
+					else if(type.equals("photo") || type.equals("multiPhoto")){
 						
 						etValue.setVisibility(View.GONE);
 						cbFilter.setVisibility(View.VISIBLE);

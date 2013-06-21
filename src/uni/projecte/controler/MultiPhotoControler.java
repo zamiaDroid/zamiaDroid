@@ -14,6 +14,7 @@ import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.ui.multiphoto.MultiPhotoFieldForm;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Handler;
 import android.util.Log;
 
 public class MultiPhotoControler{
@@ -174,11 +175,11 @@ public class MultiPhotoControler{
 		
 	}
 
-	public void updatePhotoField(long projId, ProjectField att) {
+	public void updatePhotoField(long projId, ProjectField att, Handler handlerChangePhotos) {
 
 
 		ProjectSecondLevelControler projSLCnt= new ProjectSecondLevelControler(baseContext);
-		long subFieldId=projSLCnt.createField(att.getId(), "Photo", "photo", "", "", "text");
+		projSLCnt.createField(att.getId(), "Photo", "photo", "", "", "text");
 
 		 //for each: create citationFieldValue (newId) & create subCitationFieldValue with photoValue		
 
@@ -190,6 +191,8 @@ public class MultiPhotoControler{
 		 photos.moveToFirst();
 		 
 		 if(photos!=null){
+			 
+		      handlerChangePhotos.sendEmptyMessage(photos.getCount());
 		 
 			 //KEY_ROWID,KEY_SAMPLE_ID, KEY_TIPUS_ATRIB,VALUE
 			 while(!photos.isAfterLast()){
@@ -204,7 +207,7 @@ public class MultiPhotoControler{
 					 long newCitationId=citSLCnt.createCitation(secondLevelId, 100, 190, "",projId,FIELD_NAME,parentCitationId);
 					 
 					 citSLCnt.startTransaction();
-				     	long lala=citSLCnt.addCitationField(subFieldId,newCitationId,projId,"Photo",photoValue);
+				     	long lala=citSLCnt.addCitationField(att.getId(),newCitationId,projId,"Photo",photoValue);
 				     citSLCnt.EndTransaction();
 				     
 				     //changing photo id's
@@ -213,6 +216,9 @@ public class MultiPhotoControler{
 				     citCnt.EndTransaction();
 				     
 				 }
+				 
+				 handlerChangePhotos.sendEmptyMessage(-1);
+
 				 
 				 photos.moveToNext();
 				 
@@ -226,6 +232,7 @@ public class MultiPhotoControler{
 		ProjectControler projCnt=new ProjectControler(baseContext);
         projCnt.updatePhotoField(projId,att.getId());				
 			
+       handlerChangePhotos.sendEmptyMessage(0);
 		
 	}
 	

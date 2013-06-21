@@ -214,7 +214,7 @@ public class CitationSecondLevelControler extends CitationControler {
 			
 			if(list!=null || list.getCount()>0){
 				
-				if(list.getColumnCount()>4) multiPhotoValue=list.getString(3);
+				if(list.getColumnCount()>3) multiPhotoValue=list.getString(3);
 				
 			}
 			

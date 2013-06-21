@@ -227,7 +227,7 @@ public class CitationHandler {
 				filterThMissing(thC, null);
 				
 			}
-			else if(chosenFieldType.equals("photo")){
+			else if(chosenFieldType.equals("photo") || chosenFieldType.equals("multipPhoto")  ){
 				
 				loadFilteredCitationsByPhoto(projId, filterStates.getFieldId(i), filterValue);
 				

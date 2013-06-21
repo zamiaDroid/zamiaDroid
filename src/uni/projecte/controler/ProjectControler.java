@@ -1237,6 +1237,29 @@ public String createSecondLevelIdentifier(String fieldName){
 		return surenessFieldId;
 		
 	}
+	
+	public boolean hasOldPhotoField(long projId){
+		
+		boolean photoField=false;
+		
+		projDbAdapter = new ProjectDbAdapter(baseContext);
+		projDbAdapter.open();
+		
+			Cursor list=projDbAdapter.getPhotoFieldsFromProject(projId);
+			list.moveToFirst();
+
+			if(list!=null && list.getCount()>0){
+				
+				photoField=true;
+				
+				list.close();
+
+			}
+			
+		projDbAdapter.close();
+		
+		return photoField;
+	}
 
 
 	public String getProjType() {

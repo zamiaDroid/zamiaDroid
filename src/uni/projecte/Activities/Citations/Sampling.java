@@ -54,6 +54,7 @@ import uni.projecte.ui.multiphoto.SimplePhotoFieldForm;
 import uni.projecte.ui.polygon.PolygonField;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -185,6 +186,8 @@ public class Sampling extends Activity {
     	private LocationManager mLocationManager;
     	private MainLocationListener mLocationListener;
 
+    	private ProgressDialog pdMovePhotos;
+    	
     	private boolean tempGPS=false;
     	private boolean uniqueCitationEntry;
 
@@ -289,13 +292,22 @@ public class Sampling extends Activity {
         createFieldForm(projId);
         updateDisplay();
 
-		// multiPhotoCnt.updatePhotoField(projId,oldPhotoField);
-
+        
+		if(projCnt.hasOldPhotoField(projId)) {
+			
+			transferPhotosDialog();
+		
+		}
+		else Utilities.showToast("No té camps vells", this);
+		
     }
     
 
     
-    @Override
+ 
+
+
+	@Override
 	protected void onStop(){
 		  
 		  super.onStop();
@@ -390,6 +402,92 @@ public class Sampling extends Activity {
 				   
 
     }
+    
+    
+    private void transferPhotosDialog() {
+
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	
+    	
+    	builder.setMessage(R.string.dialogChangePhotoField)
+    	       .setCancelable(false)
+    	       .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+    	           public void onClick(DialogInterface dialog, int id) {
+    
+    	        	   transferPhotos();
+    	        	 
+    	        		        	   
+    	           }
+
+				
+    	       })
+    	       .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+    	           public void onClick(DialogInterface dialog, int id) {
+    	               
+    	                
+    	           }
+    	       });
+    	
+    	AlertDialog alert = builder.create();
+    	alert.show();
+    	
+    	
+ 	}
+    
+    private void transferPhotos(){
+    	
+    	 pdMovePhotos = new ProgressDialog(this);
+    	 pdMovePhotos.setCancelable(false);
+    	 pdMovePhotos.setMessage(getString(R.string.citRemovalLoading));
+    	 pdMovePhotos.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+    	 pdMovePhotos.setProgress(0);
+			
+                Thread thread = new Thread(){
+			  	        	   
+				                 @Override
+								public void run() {
+				               	  
+				                	  multiPhotoCnt.updatePhotoField(projId,oldPhotoField,handlerChangePhotos);    	        	   
+				    	        	  			               	  
+				                 }
+				           };
+				           
+				           
+			   thread.start();
+    	
+    }
+
+    private Handler handlerChangePhotos = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {	
+
+			if(msg.what==-1){
+				
+				pdMovePhotos.incrementProgressBy(1);
+				
+			}
+			else if(msg.what==0){
+				
+				pdMovePhotos.dismiss();
+	        	Utilities.showToast(getString(R.string.changePhotosFinished), getBaseContext());
+				finish();
+				
+			}
+			else if(msg.what>0){
+				
+				pdMovePhotos.setProgress(msg.what);
+				pdMovePhotos.show();
+
+			}
+			else{
+				
+				
+				
+			}
+
+		}
+	};
     
     
 	public boolean onCreateOptionsMenu(Menu menu) {

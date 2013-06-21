@@ -618,7 +618,7 @@ public class CitacionDbAdapter {
 		Cursor c;
 	   	
 	   	String orderBy="ORDER BY date DESC";
-	   	String like="like '/mnt%'";
+	   	String like="like '%.jpg%'";
 	   	
 	   	if(!containsPhoto) like="not "+like;
    		if(alphaOrder) orderBy="ORDER BY value";
