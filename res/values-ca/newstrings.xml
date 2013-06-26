@@ -371,4 +371,10 @@
    <string name="wrongProjectFile">El fitxer seleccionat no defineix un projecte %1s correcte</string>
      
    <string name="thImportPlainRemoveCommas">Eliminar \"\"</string> 
+   
+    <string name="dialogChangePhotoField">S\'ha actualitzat el camp fotografia. Per a gaudir de les noves funcionalitats i per a no perdre el suport es recomana actualitzar al nou camp fotografia. Vols actualitzar-lo?</string>
+   <string name="changePhotosFinished">S\'han canviat les fotos de forma correcta</string>
+   <string name="dialogUpdatePhotoFieldTitle">Actualitzant citacions amb fotografia</string>
+   <string name="hasPhoto">Conté fotografia</string>
+   <string name="mRemovePhotoCache">Esborrar memòria cau de fotografies</string>
 </resources>

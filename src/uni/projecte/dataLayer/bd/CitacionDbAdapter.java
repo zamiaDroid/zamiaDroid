@@ -618,9 +618,9 @@ public class CitacionDbAdapter {
 		Cursor c;
 	   	
 	   	String orderBy="ORDER BY date DESC";
-	   	String like="like '%.jpg%'";
+	   	String like="like ''";
 	   	
-	   	if(!containsPhoto) like="not "+like;
+	   	if(containsPhoto) like="not "+like;
    		if(alphaOrder) orderBy="ORDER BY value";
    				
 	   	c=mDb.rawQuery("SELECT CitationTable._id as _id,value,date,CitationFieldTable._id as idField,latitude,longitude FROM " + DATABASE_TABLE_FIELD+","+DATABASE_TABLE_CITATION

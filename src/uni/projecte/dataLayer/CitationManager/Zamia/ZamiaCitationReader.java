@@ -4,6 +4,7 @@ import uni.projecte.controler.PolygonControler;
 import uni.projecte.controler.ProjectSecondLevelControler;
 import uni.projecte.controler.CitationSecondLevelControler;
 import uni.projecte.dataLayer.CitationManager.Fagus.FagusReader;
+import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataLayer.utils.UTMUtils;
 import uni.projecte.maps.overlays.PolygonOverlay;
 import android.content.Context;
@@ -21,6 +22,10 @@ public class ZamiaCitationReader extends FagusReader {
 	protected long secondLevelSampleId;
 	protected String secondLevelType;
 	
+	private boolean multiPhoto=false;
+	private long multiPhotoFieldId;
+	private boolean hasOldPhotoField=false;
+	
 	
 	public ZamiaCitationReader(Context c, long projectId){
 		
@@ -29,6 +34,11 @@ public class ZamiaCitationReader extends FagusReader {
 		slSC= new CitationSecondLevelControler(c);
 		slPC= new ProjectSecondLevelControler(c);
 		polyCnt= new PolygonControler(c);
+		
+		multiPhoto=projCnt.hasMultiPhotoField(projectId);
+		hasOldPhotoField=projCnt.hasOldPhotoField(projectId);
+		multiPhotoFieldId=projCnt.getMultiPhotoFieldId();
+		
 		slSC.startTransaction();
 
 		
@@ -40,6 +50,9 @@ public class ZamiaCitationReader extends FagusReader {
 	
 		slSC= new CitationSecondLevelControler(c);
 		slPC= new ProjectSecondLevelControler(c);
+		
+		multiPhoto=projCnt.hasOldPhotoField(projectId);
+
 		slSC.startTransaction();
 
 		createFields=false;
@@ -137,7 +150,18 @@ public class ZamiaCitationReader extends FagusReader {
 
 	
 			long fieldId= projCnt.getFieldIdByName(projectId,name);
-			if(fieldId>0) citCnt.addCitationField(projectId,this.sampleId, this.projectId, name, tempVal);
+			
+			if(fieldId>0){ 
+
+				if(fieldId==multiPhotoFieldId && !hasOldPhotoField) {
+				
+					tempVal=photoToMultiPhoto(tempVal,name);
+				
+				}
+				
+				citCnt.addCitationField(projectId,this.sampleId, this.projectId, name, tempVal);
+				
+			}
 				
 		}
 		else{
@@ -160,6 +184,18 @@ public class ZamiaCitationReader extends FagusReader {
 	
 	}
 	
+	private String photoToMultiPhoto(String tempVal, String name) {
+
+		String multiPhotoId=PhotoUtils.getFileName(tempVal);		
+		long fieldId=slPC.getSLId(projectId, "Photo");
+
+		long secondLevelSampleId=slSC.createEmptyCitation(multiPhotoId,projectId,"multiPhoto",sampleId);
+		slSC.addCitationField(fieldId,secondLevelSampleId, this.projectId, "Photo", tempVal);
+
+		
+		return multiPhotoId;
+	}
+
 	public String getSecondLevelType() {
 		return secondLevelType;
 	}

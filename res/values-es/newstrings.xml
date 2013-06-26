@@ -371,5 +371,11 @@
    <string name="alertItemRemoved">Alerta! El valor %1s de este campo se ha sido borrado de la lista!</string>
    <string name="wrongProjectFile">El archivos seleccionado no define un proyecto %1s correcto</string>
    
-     <string name="thImportPlainRemoveCommas">Eliminar \"\"</string> 
+    <string name="thImportPlainRemoveCommas">Eliminar \"\"</string>
+       
+   <string name="dialogChangePhotoField">Se ha actualizado el campo fotografía. Para disfrutar de las nuevas funcionalidades y para no perder el soporte se recomienda actualizar al nuevo campo fotografía. ¿Quieres actualizarlo?</string>
+   <string name="changePhotosFinished">Se han actualizado correctamente las citas con fotografía</string>
+   <string name="dialogUpdatePhotoFieldTitle">Actualizando citas con fotografía</string>
+   <string name="hasPhoto">Contiene fotografía</string>
+   <string name="mRemovePhotoCache">Borrar memoria caché de fotografías</string> 
 </resources>

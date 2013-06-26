@@ -1243,7 +1243,7 @@ public class CitationManager extends Activity{
 						
 						etValue.setVisibility(View.GONE);
 						cbFilter.setVisibility(View.VISIBLE);
-						cbFilter.setText("Conté fotografia");
+						cbFilter.setText(getString(R.string.hasPhoto));
 						
 					}
 					else if(type.equals("boolean")){

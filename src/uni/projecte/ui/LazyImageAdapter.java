@@ -2,6 +2,7 @@ package uni.projecte.ui;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -152,6 +153,10 @@ public class LazyImageAdapter extends BaseAdapter implements ImageLoadListener {
 	private void createImageList(boolean filtered) {
 
 	    File images = new File(storagePath); 
+	    
+	    File thumbs=new File(storagePath+"thumbs/");
+	    
+	    if(!thumbs.exists()) thumbs.mkdirs();
 	    
 	    //List of images at lPath
 	    File[] imagelist = images.listFiles(new FilenameFilter(){  

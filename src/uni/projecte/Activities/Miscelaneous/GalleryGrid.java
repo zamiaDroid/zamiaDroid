@@ -329,7 +329,7 @@ public class GalleryGrid extends Activity{
 				
 			}
 			
-			menu.add(0, REMOVE_PHOTOS_CACHE, 0,"Esborrar cache de fotografies").setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+			menu.add(0, REMOVE_PHOTOS_CACHE, 0,R.string.mRemovePhotoCache).setIcon(android.R.drawable.ic_menu_close_clear_cancel);
 
 	    	
 	    	return super.onCreateOptionsMenu(menu);

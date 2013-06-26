@@ -295,23 +295,17 @@ public class Sampling extends Activity {
         
 		if(projCnt.hasOldPhotoField(projId)) {
 			
-			transferPhotosDialog();
+			updatePhotoField();
 		
 		}
-		else Utilities.showToast("No té camps vells", this);
 		
     }
-    
 
     
- 
-
-
 	@Override
 	protected void onStop(){
 		  
 		  super.onStop();
-		  
 		  tC.closeCursors();
 		  
 	  }
@@ -404,7 +398,7 @@ public class Sampling extends Activity {
     }
     
     
-    private void transferPhotosDialog() {
+    private void updatePhotoField() {
 
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
     	
@@ -414,7 +408,7 @@ public class Sampling extends Activity {
     	       .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
     	           public void onClick(DialogInterface dialog, int id) {
     
-    	        	   transferPhotos();
+    	        	   updatePhotoFieldDialog();
     	        	 
     	        		        	   
     	           }
@@ -434,30 +428,29 @@ public class Sampling extends Activity {
     	
  	}
     
-    private void transferPhotos(){
+    private void updatePhotoFieldDialog(){
     	
     	 pdMovePhotos = new ProgressDialog(this);
     	 pdMovePhotos.setCancelable(false);
-    	 pdMovePhotos.setMessage(getString(R.string.citRemovalLoading));
+    	 pdMovePhotos.setMessage(getString(R.string.dialogUpdatePhotoFieldTitle));
     	 pdMovePhotos.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     	 pdMovePhotos.setProgress(0);
 			
-                Thread thread = new Thread(){
-			  	        	   
-				                 @Override
-								public void run() {
-				               	  
-				                	  multiPhotoCnt.updatePhotoField(projId,oldPhotoField,handlerChangePhotos);    	        	   
-				    	        	  			               	  
-				                 }
-				           };
-				           
-				           
-			   thread.start();
+		Thread thread = new Thread() {
+
+			@Override
+			public void run() {
+
+				multiPhotoCnt.updatePhotoField(projId, oldPhotoField,handlerUpdatePhotoField);
+
+			}
+		};
+
+		thread.start();
     	
     }
 
-    private Handler handlerChangePhotos = new Handler() {
+    private Handler handlerUpdatePhotoField = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {	
@@ -481,8 +474,6 @@ public class Sampling extends Activity {
 
 			}
 			else{
-				
-				
 				
 			}
 
@@ -673,9 +664,6 @@ public class Sampling extends Activity {
      * @see android.app.Activity#onKeyDown(int, android.view.KeyEvent)
      */
 
- 
- 
-
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
     	
     	
@@ -725,8 +713,6 @@ public class Sampling extends Activity {
 	        return true;
 	        
 	        
-	        
-        	
         }
         
         return false;
@@ -1017,17 +1003,16 @@ public class Sampling extends Activity {
     	
     	boolean filled=false;
     	
-    	for (int i=0;i<n&&!filled;i++){
+    	for (int i=0;i<n && !filled;i++){
     		
     		View vi=elementsList.get(i);
 
-    		
     		if((vi instanceof TextView)){
     			
     			if (((TextView)vi).length()!=0) filled=true;	
 
     		}
- 		
+    	
     	}
     	
     	return filled;

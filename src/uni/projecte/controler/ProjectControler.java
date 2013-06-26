@@ -52,7 +52,7 @@ public class ProjectControler {
 	private String projType;
 	private String filum;
 
-	
+	private long multiPhotoFieldId;
 	
 	public ProjectControler (Context c) {
 		
@@ -1260,6 +1260,30 @@ public String createSecondLevelIdentifier(String fieldName){
 		
 		return photoField;
 	}
+	
+	public boolean hasMultiPhotoField(long projId){
+		
+		boolean photoField=false;
+		
+		projDbAdapter = new ProjectDbAdapter(baseContext);
+		projDbAdapter.open();
+		
+			Cursor list=projDbAdapter.getMultiPhotoFieldsFromProject(projId);
+			list.moveToFirst();
+
+			if(list!=null && list.getCount()>0){
+				
+				multiPhotoFieldId=list.getLong(0);
+				photoField=true;
+				
+				list.close();
+
+			}
+			
+		projDbAdapter.close();
+		
+		return photoField;
+	}
 
 
 	public String getProjType() {
@@ -1272,6 +1296,14 @@ public String createSecondLevelIdentifier(String fieldName){
 
 	public void setFilum(String filum) {
 		this.filum = filum;
+	}
+
+	public long getMultiPhotoFieldId() {
+		return multiPhotoFieldId;
+	}
+
+	public void setMultiPhotoFieldId(long multiPhotoFieldId) {
+		this.multiPhotoFieldId = multiPhotoFieldId;
 	}
 
 	

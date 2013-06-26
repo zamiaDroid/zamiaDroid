@@ -371,4 +371,10 @@
    <string name="alertItemRemoved">Alert! Field\'s value %1s has been removed from the list!</string>
    <string name="wrongProjectFile">Chosen file doesn\'t define a %1s project</string> 	
      <string name="thImportPlainRemoveCommas">Remove \"\"</string> 
+     
+   <string name="dialogChangePhotoField">Photo field has been updated. To enjoy new features and mantain support wew recommend to update photo field. Do you want to update it?</string>
+   <string name="changePhotosFinished">Photos have been updated</string>
+   <string name="dialogUpdatePhotoFieldTitle">Updating citations with photo</string>
+   <string name="hasPhoto">Contains photo</string>
+   <string name="mRemovePhotoCache">Clear photos\' cache</string>
 </resources>

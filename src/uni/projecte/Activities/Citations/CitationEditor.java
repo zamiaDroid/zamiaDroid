@@ -328,6 +328,13 @@ public class CitationEditor extends Activity {
 				else value =((Spinner) et).getSelectedItem().toString();
 				
 			}
+			//multiPhoto
+			else if(et instanceof HorizontalScrollView){
+				
+				MultiPhotoFieldForm multiPhoto=(MultiPhotoFieldForm) photoFieldsList.get(et.getTag());
+				value=multiPhoto.getSecondLevelId();
+				
+			}
 			else{
 				
 				
