@@ -949,9 +949,12 @@ public class CitationControler {
 
 			}
 
-		
+			long citationId=citations.getLong(0);
+
+			cExporter.setCitationId(citationId);
+
 			cExporter.openCitation();
-			
+						
 			cExporter.writeCitationCoordinateLatLong(citations.getDouble(2),citations.getDouble(3));
 			
 			if(citations.getDouble(2)>90 || citations.getDouble(3)>180){

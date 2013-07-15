@@ -34,6 +34,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.net.Uri;
@@ -2063,15 +2065,33 @@ public class CitationManager extends Activity{
 				               sendIntent.putExtra(Intent.EXTRA_SUBJECT,exportSubject);
 				               sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"+fExp.getFile().getAbsolutePath()+""));
 				               sendIntent.putExtra(Intent.EXTRA_TEXT, exportSubjectText);
+				               
 				               startActivity(Intent.createChooser(sendIntent, "Email:"));
 				        	   
 				           }
 				           
 				           if(erdapfel){
 				        	   
+				        	   PackageManager pm = getPackageManager();
+				        	   Intent intent = pm.getLaunchIntentForPackage("edu.fib.upc.erdapfel");
+				        	   
+				        	   
+				        	   if (intent == null)
+								try {
+									throw new PackageManager.NameNotFoundException();
+								} catch (NameNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+			        	   
+				        	   intent.putExtra("KMLFile",fExp.getFile().getAbsolutePath());			        	   
+				        	   intent.putExtra("KMLCallBackURL", "uni.projecte.zamiaDroid.Citation.EDIT");
+				        	   
+				        	   startActivity(intent);
+
+				        	   
 				        	   Utilities.showToast("Obrim erdapfel", getBaseContext());				        	   
 				        	   erdapfel=false;
-				        	   
 				        	   
 				           }
 							

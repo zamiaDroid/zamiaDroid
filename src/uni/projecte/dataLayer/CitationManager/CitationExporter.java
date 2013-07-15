@@ -48,6 +48,7 @@ public abstract class CitationExporter {
 
 	protected Context baseContext;
 	protected HashMap<Long, ProjectField> projectFields;
+	protected long citationId;
 
 	public CitationExporter(String projectName, String thesaurusName, String projectType) {
 		
@@ -185,6 +186,12 @@ public abstract class CitationExporter {
 
 		
 		
+	}
+
+
+	public void setCitationId(long citationId) {
+
+		this.citationId=citationId;
 	}
 	
 	

@@ -206,13 +206,14 @@ public class KMLWriter {
 	
 	
 	
-	public void openCitation(){
+	public void openCitation(long citationId){
 		
 		
 		
 		try {
 			
 			serializer.startTag("","Placemark");
+			serializer.attribute("", "id", String.valueOf(citationId));
 
 			
 			

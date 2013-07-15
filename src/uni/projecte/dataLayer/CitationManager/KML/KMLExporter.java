@@ -39,7 +39,7 @@ public class KMLExporter extends CitationExporter {
 	@Override
 	public void openCitation(){
 		
-		fc.openCitation();
+		fc.openCitation(citationId);
 		
 	}
 	
