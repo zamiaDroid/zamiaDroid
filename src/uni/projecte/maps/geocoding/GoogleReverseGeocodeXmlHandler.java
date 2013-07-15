@@ -4,8 +4,10 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+ 
 public class GoogleReverseGeocodeXmlHandler extends DefaultHandler 
 {
+
 	private boolean inAddress_component = false;
 	private boolean finished = false;
 	private StringBuilder builder;
@@ -19,24 +21,24 @@ public class GoogleReverseGeocodeXmlHandler extends DefaultHandler
 	
 	public String getLocalityName()
 	{
+
 		return this.localityName;
 	}
-	public String getCountry()
-	{
+
+	public String getCountry() {
 		return this.country;
 	}
-	
+
 	@Override
 	public void characters(char[] ch, int start, int length)
-	       throws SAXException {
-	    super.characters(ch, start, length);
-	    if (this.inAddress_component && !this.finished)
-	    {
-	    	if ((ch[start] != '\n') && (ch[start] != ' '))
-	    	{
-	    		builder.append(ch, start, length);
-	    	}
-	    }
+
+			throws SAXException {
+		super.characters(ch, start, length);
+		if (this.inAddress_component && !this.finished) {
+			if ((ch[start] != '\n') && (ch[start] != ' ')) {
+				builder.append(ch, start, length);
+			}
+		}
 	}
 
 	@Override
@@ -96,4 +98,5 @@ public class GoogleReverseGeocodeXmlHandler extends DefaultHandler
     	}
     
     }
+
 }

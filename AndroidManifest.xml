@@ -3,6 +3,7 @@
       package="uni.projecte"
       android:versionCode="38"
       android:versionName="2.2"     
+
       >
     
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />

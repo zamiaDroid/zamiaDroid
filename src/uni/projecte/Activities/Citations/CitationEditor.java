@@ -1224,6 +1224,7 @@ public class CitationEditor extends Activity {
 				   MultiPhotoFieldForm multiPhotoFieldForm = new MultiPhotoFieldForm(this, projId, att, llField,MultiPhotoFieldForm.EDIT_MODE);
 				   
 				   multiPhotoFieldForm.setCitationData(Utilities.splitToArrayList(photos),pred);
+				  // else multiPhotoFieldForm.setCitationData(new ArrayList<String>(),pred);
 				   
 				   multiPhotoFieldForm.setAddPhotoEvent(takePicture);
 
