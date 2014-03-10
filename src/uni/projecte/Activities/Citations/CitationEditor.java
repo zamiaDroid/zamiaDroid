@@ -173,7 +173,7 @@ public class CitationEditor extends Activity {
         
         Utilities.setLocale(this);
 
-        setContentView(R.layout.citationeditor);
+        setContentView(R.layout.citation_editor);
         
         /*DB access*/
         

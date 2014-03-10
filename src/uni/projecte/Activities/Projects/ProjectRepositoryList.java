@@ -81,7 +81,7 @@ public class ProjectRepositoryList extends Activity {
 	    super.onCreate(savedInstanceState);
        
         Utilities.setLocale(this);
-	    setContentView(R.layout.projectrepositorylist);	
+	    setContentView(R.layout.project_repository);	
      
 	    //filling list with remote and local projects
 	    lV= (ListView) findViewById(R.id.repProjList);

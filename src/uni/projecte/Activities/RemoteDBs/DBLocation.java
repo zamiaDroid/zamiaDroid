@@ -38,7 +38,7 @@ public class DBLocation extends Activity implements LocationListener {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     
-        setContentView(R.layout.dblocation);
+        setContentView(R.layout.remote_db_location);
         
         /* URL: @from resource  */
         //String url=getIntent().getExtras().getString("url");

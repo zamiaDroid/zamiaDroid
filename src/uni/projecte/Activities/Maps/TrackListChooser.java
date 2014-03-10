@@ -48,7 +48,7 @@ public class TrackListChooser extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		  
 		   super.onCreate(savedInstanceState);
-	       setContentView(R.layout.tracklistchooser);
+	       setContentView(R.layout.map_tracks_list);
 	       
 	       lvTrackList=(ListView)findViewById(R.id.lvTrackList);
 	       allTracks=(Button)findViewById(R.id.btTracksAll);
@@ -230,7 +230,7 @@ public class TrackListChooser extends Activity{
 			 ViewHolder holder;
 			 if (convertView == null) {
 		    	 
-				 convertView = mInflater.inflate(R.layout.trackelementlist, null);
+				 convertView = mInflater.inflate(R.layout.map_track_list_row, null);
 				 
 		    	 holder = new ViewHolder();
 		    	 holder.tvTrackDistance = (TextView) convertView.findViewById(R.id.tvTrackDistance);

@@ -76,7 +76,7 @@ public class ProjectImport extends Activity{
 	        super.onCreate(savedInstanceState);
 	        
 	        Utilities.setLocale(this);
-	        setContentView(R.layout.citation_import);
+	        setContentView(R.layout.project_citation_import);
 	        
 	        pC=new PreferencesControler(this);
 	        

@@ -96,7 +96,7 @@ public class TaxonRemoteCitationList extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     
-        setContentView(R.layout.taxonremotelistexplorer);
+        setContentView(R.layout.remote_list_explorer);
         
         
         /* Getting arguments */

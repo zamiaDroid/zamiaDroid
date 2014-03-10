@@ -96,7 +96,7 @@ public class Main extends Activity {
     	setContentView(R.layout.main);
         
       
-        //we get all 4 buttons and create their listeners
+        //we get all 6 buttons and create their listeners
         //each listener will create an Intent for changing the activity
         
         Button btnSampleCreate = (Button)findViewById(R.id.sampling);
@@ -105,11 +105,9 @@ public class Main extends Activity {
         Button btnSincro = (Button)findViewById(R.id.sincro);
         btnSincro.setOnClickListener(citationManagerListener);
       
-      
-        Button btnRsCreate = (Button)findViewById(R.id.bCrearEstudi);
-        btnRsCreate.setOnClickListener(projectManagerListener);
+        Button btProjCreate = (Button)findViewById(R.id.bCrearEstudi);
+        btProjCreate.setOnClickListener(projectManagerListener);
 
-        
         Button btShowMap = (Button)findViewById(R.id.bShowMapMain);
         btShowMap.setOnClickListener(bShowMapListener);
         
@@ -118,17 +116,16 @@ public class Main extends Activity {
         
         Button btShowConfig = (Button)findViewById(R.id.btConfigMain);
         btShowConfig.setOnClickListener(showConfigListener);
-               
+              
+        
 		configPrefs=PreferenceManager.getDefaultSharedPreferences(this);
    
         createFolderStructure();
         
         if(prefCnt.isFirstRun()) createFistExecutionDialog();
         
-        
     	PreferencesControler pC= new PreferencesControler(getApplicationContext());
 		pC.setAutoField("locality", "");
-		
 		
 		if(pC.isFirstUpdate()){
 		
@@ -494,7 +491,7 @@ public class Main extends Activity {
 	    	    	
 		    	updateFlora = new Dialog(this);
 		    	updateFlora.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		    	updateFlora.setContentView(R.layout.th_update);
+		    	updateFlora.setContentView(R.layout.thesaurus_update_dialog);
 		    	
 		    	TextView tv_info=(TextView) updateFlora.findViewById(R.id.tvThChangeTitle);
 		    	
@@ -549,7 +546,7 @@ public class Main extends Activity {
 	  	final Dialog dialog;
 	  	dialog = new Dialog(this);
     	   	
-    	dialog.setContentView(R.layout.welcomedialog);
+    	dialog.setContentView(R.layout.main_welcome_dialog);
     	dialog.setTitle("ZamiaDroid");
     	
     	final SharedPreferences.Editor editor = configPrefs.edit();
@@ -668,8 +665,8 @@ public class Main extends Activity {
 		}
     
     
+  
     private void createFolderStructure(){
-    	
     	
     	String path= prefCnt.getDefaultPath();
 

@@ -199,7 +199,7 @@ public class Sampling extends Activity {
         super.onCreate(savedInstanceState);
         
         Utilities.setLocale(this);
-        setContentView(R.layout.sampling);
+        setContentView(R.layout.citation_capture);
         
         /*DB access*/
         

@@ -40,7 +40,7 @@ public class ThesaurusManager extends Activity {
         super.onCreate(savedInstanceState);
      
         Utilities.setLocale(this);
-        setContentView(R.layout.thlistnew);
+        setContentView(R.layout.thesaurus_list);
         
         thCnt=new ThesaurusControler(this);
         projCnt=new ProjectControler(this);

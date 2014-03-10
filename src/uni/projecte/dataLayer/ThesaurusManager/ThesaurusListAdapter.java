@@ -71,7 +71,7 @@ public class ThesaurusListAdapter extends BaseAdapter  {
     	 
     	 if (convertView == null) {
 	    	 
-    		 convertView = mInflater.inflate(R.layout.thlistrownew, null);
+    		 convertView = mInflater.inflate(R.layout.thesaurus_list_row, null);
     		 
 	    	 holder = new ViewHolder();
 	    	 holder.tvThName = (TextView)convertView.findViewById(R.id.tvThInfName);

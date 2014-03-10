@@ -73,7 +73,7 @@ public class ThesaurusImport extends Activity {
 	        
 	        Utilities.setLocale(this);
 
-	        setContentView(R.layout.thesaurusimportlocal);
+	        setContentView(R.layout.thesaurus_import_local);
 	
 	        
 	        pC=new PreferencesControler(this);
@@ -272,7 +272,7 @@ public class ThesaurusImport extends Activity {
 	        	//Context mContext = getApplicationContext();
 	    	   	dialog = new Dialog(this);
 	    	   	
-	        	dialog.setContentView(R.layout.thesauruscreation);
+	        	dialog.setContentView(R.layout.thesaurus_creation_dialog);
 	    	   	dialog.setTitle(R.string.thName);
 	    	   	
 	    	   	Button createProject = (Button)dialog.findViewById(R.id.bCreateTh);

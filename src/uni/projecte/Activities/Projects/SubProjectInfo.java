@@ -87,7 +87,7 @@ public class SubProjectInfo extends Activity{
 	        super.onCreate(savedInstanceState);
 	        
 	        Utilities.setLocale(this);
-	        setContentView(R.layout.projectinfo);
+	        setContentView(R.layout.project_info);
 	        
 	        
         	tc= new ThesaurusControler(this);

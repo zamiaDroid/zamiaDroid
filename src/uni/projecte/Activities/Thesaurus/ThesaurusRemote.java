@@ -83,7 +83,7 @@ public class ThesaurusRemote extends Activity {
 	        
 	        Utilities.setLocale(this);
 
-	        setContentView(R.layout.thesaurusimport);
+	        setContentView(R.layout.thesaurus_import);
 	       
 	        exListView= (ExpandableListView) findViewById(R.id.thInternetList);
 	       
@@ -115,7 +115,7 @@ public class ThesaurusRemote extends Activity {
 	        	//Context mContext = getApplicationContext();
 	    	   	dialog = new Dialog(this);
 	    	   	
-	        	dialog.setContentView(R.layout.thesauruscreation);
+	        	dialog.setContentView(R.layout.thesaurus_creation_dialog);
 	    	   	dialog.setTitle(R.string.thName);
 	    	   	
 	    	   	Button createProject = (Button)dialog.findViewById(R.id.bCreateTh);

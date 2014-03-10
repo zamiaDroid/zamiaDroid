@@ -19,7 +19,7 @@ public class RemoteDBConfig extends Activity{
 	  public void onCreate(Bundle savedInstanceState) {
 		  
 		   super.onCreate(savedInstanceState);
-	       setContentView(R.layout.dbconfig);
+	       setContentView(R.layout.remote_db_config);
 	       
 	       
 	       ExpandableListView list= (ExpandableListView)findViewById(R.id.eLVremoteDB);

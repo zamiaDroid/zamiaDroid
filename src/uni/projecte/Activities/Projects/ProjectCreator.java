@@ -74,7 +74,7 @@ public class ProjectCreator extends Activity{
 	        super.onCreate(savedInstanceState);
 	        
 	        Utilities.setLocale(this);
-	        setContentView(R.layout.researchcreation);
+	        setContentView(R.layout.project_creator_free);
 
 	        ThesaurusControler thCont= new ThesaurusControler(this);
 	        

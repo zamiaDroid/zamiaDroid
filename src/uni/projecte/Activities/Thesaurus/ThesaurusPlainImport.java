@@ -63,7 +63,7 @@ public class ThesaurusPlainImport extends Activity{
 		public void onCreate(Bundle savedInstanceState) {
 		    super.onCreate(savedInstanceState);
 		    
-		    setContentView(R.layout.thplainfileimport);
+		    setContentView(R.layout.thesaurus_import_plain);
 		  		    
 	        thTypes = (Spinner) findViewById(R.id.spTaxonomicalKingdoms);
 	        separator = (Spinner) findViewById(R.id.spElementsSeparator);

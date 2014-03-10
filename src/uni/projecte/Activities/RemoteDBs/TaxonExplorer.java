@@ -20,12 +20,12 @@ public class TaxonExplorer extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     
-        setContentView(R.layout.download);
+        setContentView(R.layout.remote_taxon);
         
         /* URL: @from resource  */
         String url=getIntent().getExtras().getString("url");
         
-        Log.i("DB","Connectant a: "+url);        
+        Log.i("DB","Connecting: "+url);        
         
         webView = (WebView) findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);

@@ -146,7 +146,7 @@ public class TaxonListExplorer extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     
-        setContentView(R.layout.taxonlistexplorer);
+        setContentView(R.layout.remote_taxon_explorer);
         
      
         /* Preparing tab interface */

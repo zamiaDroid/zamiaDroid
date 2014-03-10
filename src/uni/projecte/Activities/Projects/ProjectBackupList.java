@@ -64,7 +64,7 @@ public class ProjectBackupList extends Activity {
 	    super.onCreate(savedInstanceState);
        
         Utilities.setLocale(this);
-	    setContentView(R.layout.projectbackuplist);	
+	    setContentView(R.layout.project_backup_list);	
      
 	    //filling list with remote and local projects
 	    lV= (ListView) findViewById(R.id.backupList);

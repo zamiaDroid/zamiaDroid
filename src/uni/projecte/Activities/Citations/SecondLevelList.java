@@ -49,7 +49,7 @@ public class SecondLevelList extends Activity {
 	        super.onCreate(savedInstanceState);
 	       
 	        Utilities.setLocale(this);
-	        setContentView(R.layout.secondfieldlist);
+	        setContentView(R.layout.citation_capture_second_list);
 	        
 	        /*  identificador element segon nivell  */
 	        /* identificador del camp de segon nivell */
