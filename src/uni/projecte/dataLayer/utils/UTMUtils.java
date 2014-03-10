@@ -5,8 +5,8 @@ public class UTMUtils {
 	//41.59711401204716, 1.744415346292667
 	public static boolean isLatLong(String baseString){
 		
-		return baseString.matches("^[0-9]*.[0-9]*, [0-9]*.[0-9]*$");
-
+		return baseString.matches("^(-)*[0-9]*.[0-9]*, (-)*[0-9]*.[0-9]*$");
+		
 	}
 	
 	public static boolean isUTMCoordDigraph(String baseString){

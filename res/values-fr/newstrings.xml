@@ -203,6 +203,8 @@
   <string name="rbFilterTaxonGenus">By Genus</string>    
   <string name="rbFilterWrongTaxon">Taxons not belonging to the thesaurus</string>    
   <string name="cbMyTracksInfoDialog">Don\'t show again the message</string>    
+  <string name="rbFilterNoOk">Taxons not confirmed</string>    
+  
   <string name="btOk">Accept</string>    
       
       

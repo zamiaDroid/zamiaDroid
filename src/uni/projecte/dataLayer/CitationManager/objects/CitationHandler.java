@@ -41,6 +41,8 @@ public class CitationHandler {
 	private ArrayList<Citation> thirdFilteredCitationList;
 	private ArrayList<Citation> thirdFilteredCitationListAlphaOrdered;	
 	
+	private ArrayList<Citation> currentList;
+	
 	private FilterStates filterStates;
 	
 	private int filterLevel=0;
@@ -85,7 +87,6 @@ public class CitationHandler {
 		filteredCitationList=new ArrayList<Citation>();
 		selectionElementsHash= new HashMap<Long, Citation>();
 		selectionList=new ArrayList<Citation>();
-		surenessValues=new HashMap<Long, String>();
 		
 		filterStates=new FilterStates();
 	
@@ -103,7 +104,6 @@ public class CitationHandler {
 		filteredCitationList=new ArrayList<Citation>();
 		selectionElementsHash= new HashMap<Long, Citation>();
 		selectionList=new ArrayList<Citation>();
-		surenessValues=new HashMap<Long, String>();
 		
 		filterStates=new FilterStates();
 		
@@ -112,6 +112,8 @@ public class CitationHandler {
 	}
 	
 	public void loadSurenessValues(){
+		
+		surenessValues=new HashMap<Long, String>();
 		
 		if(surenessField>-1){ 
 			
@@ -179,6 +181,8 @@ public class CitationHandler {
 		
 		if(!alphaAsc) Collections.reverse(mainCitationList);
 		
+		Log.i("Citations","1) Load All Citations [ALPHA active]= "+alphaOrder+" [chrono New->Old]= "+!chronoAsc+" [alpha A->Z]= "+alphaAsc);
+		
 		return mainCitationList.size();
 				
 	}
@@ -225,6 +229,11 @@ public class CitationHandler {
 			else if(chosenFieldType.equals("notExists")){
 				
 				filterThMissing(thC, null);
+				
+			}
+			else if(chosenFieldType.equals("notOk")){
+				
+				filterNotOk(thC, null);
 				
 			}
 			else if(chosenFieldType.equals("photo") || chosenFieldType.equals("multipPhoto")  ){
@@ -446,7 +455,45 @@ public class CitationHandler {
 		
 	}
 
+	/*
+	 * It finds citations with taxon not belonging to current thesaurus
+	 *  
+	 */
 	
+	public int filterNotOk(ThesaurusControler tC, Handler thCheckHandler){
+		
+		thC=tC;
+				
+		filterStates.addTextFilter("notOk", -1, "");
+		
+		ArrayList<String> citationTags = new ArrayList<String>();
+		ArrayList<Citation> filteredCitation=provideNextFilter();
+		
+		Iterator<Citation> it=mainCitationList.iterator();
+		
+		while(it.hasNext()){
+			
+			Citation tmpCitation=it.next();
+			
+			boolean notSure=isNotSure(tmpCitation.getCitationId());
+			
+			if(notSure && citationInPreviousFilter(tmpCitation.getCitationId())){ 
+				
+				citationTags.add(tmpCitation.getTag()+":"+tmpCitation.getCitationId());
+				filteredCitation.add(tmpCitation);
+				tmpCitation.setFilterLevel(filterLevel);
+				
+			}
+			
+		}
+		
+		createAlphaOrderedList(citationTags,getFilteredListAlpha());
+		
+		if(thCheckHandler!=null) thCheckHandler.sendEmptyMessage(0);
+
+		return filteredCitation.size();
+		
+	}
 
 	/*
 	 * This method finds citations with taxon belonging to provided genus
@@ -534,12 +581,16 @@ public class CitationHandler {
 		
 	}
 	
-	public ArrayList<Citation> getCurrentCitationList(){
+	public ArrayList<Citation> calculateCurrentCitationList(){
 		
-		if(filterLevel>0) return getFilteredCitationList();
-		else return getMainCitationList();
+		if(filterLevel>0) currentList= getFilteredCitationList();
+		else currentList= getMainCitationList();
+		
+		return currentList;
 		
 	}
+	
+
 	
 	
 	public ArrayList<Citation> getFilteredCitationList() {
@@ -574,8 +625,25 @@ public class CitationHandler {
 				
 		}
 		
+		if(!alphaAsc && alphaOrder) return getReverseArrayList(tempFilter);
+		
 		return tempFilter;
 		
+	}
+	
+	private ArrayList<Citation> getReverseArrayList(ArrayList<Citation> citationList){
+		
+		ArrayList<Citation> alphaDisorder=new ArrayList<Citation>();
+		
+		int n=citationList.size();
+		
+		for(int i=n-1; i>=0; i--){
+			
+			alphaDisorder.add(citationList.get(i));
+			
+		}
+		
+		return alphaDisorder;
 	}
 	
 	
@@ -610,14 +678,12 @@ public class CitationHandler {
 				tempList=mainCitationList;
 				break;
 		}
-			
 		
+				
 		return tempList;
 		
 		
 	}
-	
-	
 	
 
 	private ArrayList<String> insertCitations(Cursor filteredCitations, ArrayList<Citation> filtered){
@@ -625,7 +691,6 @@ public class CitationHandler {
 		ArrayList<String> citationTags = new ArrayList<String>();
 		
 		filteredCitations.moveToFirst();				
-		int i=0;
 		
 		while(!filteredCitations.isAfterLast()){
 			
@@ -642,12 +707,9 @@ public class CitationHandler {
 				citationTags.add(citationTag);
 				
 				filtered.add(tmpCit);
-				
 			
 			}
 				
-			i++;
-			
 			filteredCitations.moveToNext();
 			
 		}
@@ -677,14 +739,11 @@ public class CitationHandler {
 	private void createAlphaOrderedList(ArrayList<String> citationTags,ArrayList<Citation> filteredCitationsOrdered) {
 		
 		int i=0;
-
-		Collections.sort(citationTags);
-		
-		//if(alphaOrder){
 			
+		 	Collections.sort(citationTags);
+		
 			Iterator<String> itOrder=citationTags.iterator();
 			
-			//filteredCitationListAlphaOrdered= new ArrayList<Citation>();
 			
 			while(itOrder.hasNext()){
 				
@@ -707,7 +766,7 @@ public class CitationHandler {
 					i++;
 				
 			}
-		
+					
 	}
 
 	
@@ -1057,13 +1116,13 @@ public class CitationHandler {
 		this.filterLevel = filterLevel;
 	}
 
-	
+	public ArrayList<Citation> getCurrentList() {
+		return currentList;
+	}
+
+	public void setCurrentList(ArrayList<Citation> currentList) {
+		this.currentList = currentList;
+	}
 
 	
-
-
-
-	
-	
-
 }

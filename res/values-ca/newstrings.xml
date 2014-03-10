@@ -122,7 +122,7 @@
         
      <string name="countFiltered"><b>Filtrades:</b> %1d | </string>
      <string name="countTotal"><b>Total:</b> %1d </string>
-     <string name="countSelected"><b>Seleccionades:</b> %1d | </string>
+     <string name="countSelected"><b>Selecció:</b> %1d | </string>
          
      <string name="alertWrongCoordinates">Coordenades incorrectes</string>
      <string name="noCitationsSelected">No hi ha citacions seleccionades</string>
@@ -204,6 +204,7 @@
   <string name="rbFilterCompleteTaxon">Per taxon complert</string>
   <string name="rbFilterTaxonGenus">Per gènere</string>    
   <string name="rbFilterWrongTaxon">No presents al tesaure</string>    
+  <string name="rbFilterNoOk">Tàxons no confirmats</string>    
   <string name="cbMyTracksInfoDialog">No tornar a veure el missatge</string>    
   <string name="btOk">Acceptar</string>    
       
@@ -244,9 +245,11 @@
     
     <string name="filterTaxonGenus">Taxon per gènere</string>
     <string name="filterNotInThesaurus">no present al tesaure</string>
+    <string name="filterNotOk">Tàxons no OK</string>
     <string name="filterTaxonGenusMessage">Buscant taxons amb gènere</string>
     <string name="filterNotInThesaurusMessage">Descartant tàxons correctes respecte al tesaure</string>
-   
+    <string name="filterNotOkMessage">Descartant tàxons confirmats</string>
+    
     <string name="utm10km">10x10</string>    
       
     <string name="utm1km">1x1</string>    

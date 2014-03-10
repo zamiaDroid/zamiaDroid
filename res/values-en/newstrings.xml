@@ -200,7 +200,9 @@
 	<string name="btFilterTaxon">taxon</string>
   <string name="rbFilterCompleteTaxon">Complete taxon</string>
   <string name="rbFilterTaxonGenus">By Genus</string>    
-  <string name="rbFilterWrongTaxon">Taxons not belonging to the thesaurus</string>    
+  <string name="rbFilterWrongTaxon">Taxons not belonging to the thesaurus</string>   
+    <string name="rbFilterNoOk">Taxons not confirmed</string>    
+  
   <string name="cbMyTracksInfoDialog">Don\'t show again the message</string>    
   <string name="btOk">Accept</string>    
       

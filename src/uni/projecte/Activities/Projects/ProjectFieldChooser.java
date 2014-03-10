@@ -77,14 +77,9 @@ public class ProjectFieldChooser extends Activity{
 	   private CitationControler sC;
 	   private FieldCreator fc;	   
 	   
-	   
 	   private static final int ADD_FIELD=Menu.FIRST;
 	   private static final int CHANGE_TH=Menu.FIRST+1;
 
-		String attributes;
-		
-		private ArrayAdapter<String> m_adapterForSpinner;
-		
 
 	   @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -165,7 +160,7 @@ public class ProjectFieldChooser extends Activity{
 		    	
 		    	builder.setMessage(R.string.deleteProjQuestion)
 		    	       .setCancelable(false)
-		    	       .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+		    	       .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 		    	           public void onClick(DialogInterface dialog, int id) {
 		    
 		    	        	// removeResearch(rsName);
@@ -175,7 +170,7 @@ public class ProjectFieldChooser extends Activity{
 		    	        	   
 		    	           }
 		    	       })
-		    	       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+		    	       .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 		    	           public void onClick(DialogInterface dialog, int id) {
 		    	                
 		    	        	   dialog.cancel();
@@ -404,19 +399,22 @@ public class ProjectFieldChooser extends Activity{
 		   for(int i=0;i<numElem;i++){
 			   
 			   view=llista.getChildAt(i);
-			   TextView tvListText = (TextView)view.findViewById(R.id.tvFieldName);
-			   TextView tvListLabel = (TextView)view.findViewById(R.id.tvFieldLabel);
-			   CheckBox cbListCheck = (CheckBox)view.findViewById(R.id.cBedit);
-
-			   if(cbListCheck.isChecked()) {
-				   
-				   
-				   cloneFieldToSubField(tvListText.getText().toString(),tvListLabel.getText().toString());
-				   
-				   numClonedElements++;
 			   
+			   if(view!=null){
+				   
+				   TextView tvListText = (TextView)view.findViewById(R.id.tvFieldName);
+				   TextView tvListLabel = (TextView)view.findViewById(R.id.tvFieldLabel);
+				   CheckBox cbListCheck = (CheckBox)view.findViewById(R.id.cBedit);
+	
+				   if(cbListCheck.isChecked()) {
+					   
+					   
+					   cloneFieldToSubField(tvListText.getText().toString(),tvListLabel.getText().toString());
+					   
+					   numClonedElements++;
+				   
+				   }
 			   }
-			   
 			   
 		   }
 		  
@@ -429,14 +427,10 @@ public class ProjectFieldChooser extends Activity{
 	 
 	   private void cloneFieldToSubField(String name, String label) {
 
-		   
 		  rsC.cloneFieldToSubField(projId,subProjId,name,label);
 		  
-		  
 		  Intent intent = new Intent();
-	    				
 		  setResult(2, intent);
-		  
 		  
 		  finish();
 		   

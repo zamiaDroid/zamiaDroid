@@ -204,6 +204,7 @@
   <string name="rbFilterCompleteTaxon">Per taxon completo</string>
   <string name="rbFilterTaxonGenus">Por género</string>    
   <string name="rbFilterWrongTaxon">No existentes en el tesauro</string>    
+  <string name="rbFilterNoOk">Taxones no confirmados</string>    
   <string name="cbMyTracksInfoDialog">No volver a ver el mensaje</string>    
   <string name="btOk">Aceptar</string>    
       

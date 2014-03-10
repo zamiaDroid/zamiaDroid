@@ -127,7 +127,7 @@
        
      <string name="countFiltered"><b>Filtrades:</b> %1d | </string>
      <string name="countTotal"><b>Total:</b> %1d </string>
-     <string name="countSelected"><b>Seleccionades:</b> %1d | </string>
+     <string name="countSelected"><b>Selecció:</b> %1d | </string>
          
      <string name="alertWrongCoordinates">Coordenades incorrectes</string>
      <string name="noCitationsSelected">No hi ha citacions seleccionades</string>
@@ -208,7 +208,8 @@
   <string name="btFilterTaxon">taxon</string>
   <string name="rbFilterCompleteTaxon">Per taxon complert</string>
   <string name="rbFilterTaxonGenus">Per gènere</string>    
-  <string name="rbFilterWrongTaxon">No presents al tesaure</string>    
+  <string name="rbFilterWrongTaxon">No presents al tesaure</string>  
+  <string name="rbFilterNoOk">Tàxons no confirmats</string>    
   <string name="cbMyTracksInfoDialog">No tornar a veure el missatge</string>    
   <string name="btOk">Acceptar</string>    
       
@@ -381,6 +382,7 @@
    <string name="dialogUpdatePhotoFieldTitle">Actualitzant citacions amb fotografia</string>
    <string name="hasPhoto">Conté fotografia</string>
    <string name="mRemovePhotoCache">Esborrar memòria cau de fotografies</string>
+   <string name="releveeCode">Codi inventari</string>
    
    
 </resources>

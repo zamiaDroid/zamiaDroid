@@ -208,9 +208,9 @@ public class SecondLevelCitacionDbAdapter extends CitacionDbAdapter {
         date.getDate();
  
         initialValues.put(DATE , (String) DateFormat.format("yyyy-MM-dd kk:mm:ss", date));
-        
 
         return mDb.insert(DATABASE_TABLE_CITATION, null, initialValues);
+        
     }
     
 	public long createEmptyCitation(String secondFieldId,long projId, String subFieldType,long parentId) {
