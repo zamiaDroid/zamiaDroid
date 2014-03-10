@@ -1,9 +1,0 @@
-<TextView android:id="@+id/nomA"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-     android:padding="5dp"
-     android:text="@string/no_fields_added"
-     />
-
-    
