@@ -20,7 +20,7 @@ android:background="#ff333333"
    
     <TextView android:text="" android:id="@+id/projectName" android:layout_width="wrap_content" android:layout_height="wrap_content"     android:textSize="16sp"></TextView>
     
-				 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				 <LinearLayout 
 				    android:orientation="vertical"
 				    android:layout_width="fill_parent"
 				    android:layout_height="wrap_content"
@@ -66,7 +66,7 @@ android:background="#ff333333"
 	android:layout_weight="1"	
 	>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -173,7 +173,7 @@ android:padding="5dp"
 			 </LinearLayout>
 
  
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	<LinearLayout 
 				    android:orientation="horizontal"
 				    android:layout_width="fill_parent"
 				    android:layout_height="wrap_content"

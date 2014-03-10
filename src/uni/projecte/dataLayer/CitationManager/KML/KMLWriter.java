@@ -76,6 +76,37 @@ public class KMLWriter {
 		        serializer.startTag("", "Document");
 		 
 		        
+		        /* style Polygon */
+	            serializer.startTag("", "Style");
+	            serializer.attribute("", "id", "style_polygon");
+
+		            serializer.startTag("", "LineStyle");
+			            
+		            	serializer.startTag("", "width");
+			            serializer.text("1.5");
+			            serializer.endTag("", "width");
+			            
+		            	serializer.startTag("", "color");
+			            serializer.text("ff00aa88");
+			            serializer.endTag("", "color");
+		            
+		            serializer.endTag("", "LineStyle");
+	            
+		            serializer.startTag("", "PolyStyle");
+		            
+	            	serializer.startTag("", "fill");
+		            serializer.text("1");
+		            serializer.endTag("", "fill");
+		            
+	            	serializer.startTag("", "color");
+		            serializer.text("ff9addd0");
+		            serializer.endTag("", "color");
+	            
+	            serializer.endTag("", "PolyStyle");
+	            
+	            serializer.endTag("", "Style");
+
+	            
 		 } catch (Exception e) {
 		        throw new RuntimeException(e);
 		    } 
@@ -205,16 +236,15 @@ public class KMLWriter {
 	}
 	
 	
-	
 	public void openCitation(){
-		
-		
 		
 		try {
 			
 			serializer.startTag("","Placemark");
-
+			//serializer.startTag("", "name");
 			
+			serializer.startTag("", "ExtendedData");
+
 			
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
@@ -230,17 +260,19 @@ public class KMLWriter {
 		
         try {
         	
+        	
+
 			serializer.startTag("", "name");
 			
 				serializer.text(title);
             
 			serializer.endTag("", "name");
 			
-			serializer.startTag("","description");
+			/*serializer.startTag("","description");
         	
         		serializer.text("<![CDATA["+description+"]]>");
         	
-			serializer.endTag("","description");
+			serializer.endTag("","description");*/
 
 			serializer.endTag("","Placemark");
 
@@ -263,16 +295,27 @@ public class KMLWriter {
 		
 		try{
 		
-		serializer.startTag("","CitationField");
-
-		serializer.attribute("", "label", label);
+			
+		//<Data name="holeNumber">
+	    //    <value>1</value>
+	    // </Data>
+			
+		serializer.startTag("","Data");
 		serializer.attribute("", "name", name);
-		serializer.attribute("", "category", category);
+
+		serializer.startTag("","displayName");
+			serializer.text(label);
+		serializer.endTag("","displayName");
+
+			serializer.startTag("","value");
+
+				if(value!=null) serializer.text(value);
+				else  serializer.text("");
+				
+			serializer.endTag("","value");
+
 			
-			if(value!=null) serializer.text(value);
-			else  serializer.text("");
-			
-		serializer.endTag("","CitationField");
+		serializer.endTag("","Data");
 
 			
 		} catch (IllegalArgumentException e) {
@@ -291,9 +334,7 @@ public class KMLWriter {
 
 		        	
 		try {
-		            	
-		//	serializer.attribute("", "origin", origin);
-			            
+		            				            
 	        serializer.startTag("", "biological_record_type");
 				serializer.text(bio_type);
 			serializer.endTag("", "biological_record_type");
@@ -324,11 +365,13 @@ public class KMLWriter {
 	 * 
 	 * */
 	
-	public void writeCitationCoordinate(String code){
-
+	public void writeCitationCoordinatePoint(String code){
     	
 		try {
-		            	
+		          
+			serializer.endTag("", "ExtendedData");
+
+			
 	        serializer.startTag("", "Point");
 	        
 	        	serializer.startTag("", "coordinates");
@@ -350,10 +393,61 @@ public class KMLWriter {
 		} catch (IOException e) {
 						
 			e.printStackTrace();
-		}
-		            
-		      
-		    
+		}	    
+	}
+	
+	/*
+	 * <Polygon> 
+	 * 	<outerBoundaryIs>  
+	 * 		<LinearRing>  
+  	 *  		<coordinates>
+   	 *				135.2,35.4, 0. 
+     *				135.4,35.6, 0.
+   	 *				135.2,35.6, 0.
+   	 *				135.2,35.4, 0. 
+   	 *  		</coordinates>
+ 	 *		</LinearRing> 
+ 	 *	</outerBoundaryIs> 
+ 	 * </Polygon>	  
+	 * 
+	 */
+	
+	public void writeCitationCoordinatePolygon(String coords){
+    	
+		try {
+			
+			serializer.endTag("", "ExtendedData");
+		      		
+	        serializer.startTag("", "styleUrl");
+				serializer.text("#style_polygon");
+			serializer.endTag("", "styleUrl");
+			
+	        serializer.startTag("", "Polygon");
+	        	serializer.startTag("", "outerBoundaryIs");
+	        		serializer.startTag("", "LinearRing");
+
+	        			serializer.startTag("", "coordinates");
+
+	        				serializer.text(coords);
+				
+						serializer.endTag("", "coordinates");
+				
+					serializer.endTag("", "LinearRing");
+				serializer.endTag("", "outerBoundaryIs");
+			serializer.endTag("", "Polygon");
+	        
+		} catch (IllegalArgumentException e) {
+						
+			e.printStackTrace();
+			
+		} catch (IllegalStateException e) {
+						
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+						
+			e.printStackTrace();
+		}	    
 	}
 	
 	public void writeSecondaryCitationCoordinate(String code){

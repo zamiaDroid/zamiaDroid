@@ -456,7 +456,7 @@ public class ProjectSecondLevelControler extends ProjectControler {
 		
 		projDbAdapter.open();
 		
-			Cursor result=projDbAdapter.fetchSecondLevelFieldFromProject(projId,fieldName);
+			Cursor result=projDbAdapter.fetchSecondLevelFieldFromProjectByProjectId(projId,fieldName);
 			result.moveToFirst();
 			
 			if(result.getCount()>0) fieldId=result.getLong(0);

@@ -24,6 +24,26 @@ public class FagusUtils {
 		  
 	  }
 	  
+	  public static String translateFagusPhenology(Context c, String currentValue){
+		  
+		  String[] natureness = c.getResources().getStringArray(R.array.phenology);
+		  int pos=findString(natureness, currentValue);
+		   	
+		  if(pos>-1) {
+			  
+			  String[] naturenessEnglish = c.getResources().getStringArray(R.array.phenologyEnglish);
+			  
+			  return naturenessEnglish[pos];
+			  
+		  }
+		  else return "";
+		  
+			
+		  
+		  
+	  }
+	  
+	  
 	  
 		public static int findString(String[] items, String item){
 		    

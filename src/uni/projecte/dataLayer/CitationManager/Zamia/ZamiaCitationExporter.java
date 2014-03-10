@@ -20,8 +20,11 @@ package uni.projecte.dataLayer.CitationManager.Zamia;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.content.Context;
+import android.content.MutableContextWrapper;
 import uni.projecte.controler.BackupControler;
 import uni.projecte.controler.CitationSecondLevelControler;
+import uni.projecte.controler.MultiPhotoControler;
+import uni.projecte.controler.PolygonControler;
 import uni.projecte.dataLayer.CitationManager.CitationExporter;
 import uni.projecte.dataLayer.CitationManager.Zamia.ZamiaCitationWriter;
 import uni.projecte.dataLayer.ProjectManager.ZamiaProjectWriter;
@@ -102,6 +105,27 @@ public class ZamiaCitationExporter extends CitationExporter {
 		
 	}
 	
+	public void createPolygon(){
+		
+		zcW.openPolygon();
+	}
+	
+	public void closePolygon(){
+		
+		zcW.closePolygon();
+		
+	}
+	
+	public void createPhotoList(){
+		
+		zcW.openPhoto();
+	}
+	
+	public void closePhotoList(){
+		
+		zcW.closePhoto();
+		
+	}
 	
 	@Override
 	public void createCitationField(String attName, String label, String value,String category){
@@ -127,17 +151,39 @@ public class ZamiaCitationExporter extends CitationExporter {
 
 		super.setFieldType(fieldId, type, c);
 
-		CitationSecondLevelControler slC = new CitationSecondLevelControler(baseContext);
-		
 		if(type.equals("secondLevel")){
 			
+			CitationSecondLevelControler slC = new CitationSecondLevelControler(baseContext);
 			slC.exportSubCitationsZamia(fieldId, citationValue, this);
+			
+		}
+		else if(type.equals("polygon")){
+			
+			PolygonControler polygonCnt = new PolygonControler(baseContext);
+			polygonCnt.exportSubCitationsZamia(fieldId, citationValue, this);
+			
+		}
+		else if(type.equals("multiPhoto")){
+			
+			MultiPhotoControler multiPhotoCnt = new MultiPhotoControler(baseContext);
+			multiPhotoCnt.exportSubCitationsZamia(fieldId, citationValue, this);
 			
 		}
 		
 		
 	}
 	
+	public void createPolygonPoint(double latitude, double longitude, String date, String altitude) {
+	
+		zcW.createPolygonPoint(latitude,longitude,date,altitude);
+		
+	}
+	
+	public void addPhoto(String photoPath) {
+		
+		zcW.addPhoto(photoPath);
+		
+	}
 
 
 	@Override
@@ -188,6 +234,8 @@ public class ZamiaCitationExporter extends CitationExporter {
 		setResult(zcW.convertXML2String());
 		
 	}
+
+
 
 
 

@@ -13,6 +13,7 @@ import uni.projecte.Activities.Citations.CitationEditor;
 import uni.projecte.R.id;
 import uni.projecte.R.layout;
 import uni.projecte.R.string;
+import uni.projecte.controler.MultiPhotoControler;
 import uni.projecte.controler.PhotoControler;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
@@ -20,6 +21,7 @@ import uni.projecte.controler.CitationControler;
 import uni.projecte.dataLayer.dataStructures.ImageCache;
 import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.AttributeValue;
+import uni.projecte.dataTypes.CitationPhoto;
 import uni.projecte.dataTypes.Utilities;
 import uni.projecte.maps.overlays.MyTracksOverlay;
 import uni.projecte.ui.CitationGallery;
@@ -67,18 +69,15 @@ public class ImageGallery extends Activity{
 	
 	private ArrayList<String> availableImageList;  
 
-//	private Uri[] availableImageList;  
- //   private String[] mFiles=null;  
-    private String[] photoInfos;
-    private long[] photosIds;
+
+    //private long[] photosIds;
     double IMAGE_MAX_SIZE= 800;
-    private String projectNameWS;
+    private String projectTag;
     private int total;
 
-    private CitationControler citCnt;
     private ProjectControler projCnt;
-    private PreferencesControler prefCnt;
     private PhotoControler photoCnt;
+    private MultiPhotoControler multiPhotoCnt;
     
     private TextView tvInfo;
     private TextView counter;
@@ -90,17 +89,20 @@ public class ImageGallery extends Activity{
     
     private long projId;
     private Long citationId;
-    private String[] citationInfoText;
     private Integer position;
     private String choosedPhotoPath;
     private String preSettedLoc;
     private int lastKnownPosition=-1;
     private boolean secondaryStorage=false;
+    private boolean hasMultiPhotoField=false;
     private String storagePath;
     
 	private HashMap<String, String> fieldsLabelNames;
     private HashMap<String, Long> selectedPhotos;
 
+    private CitationPhoto[] citationPhotoArray;
+
+    
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -109,19 +111,16 @@ public class ImageGallery extends Activity{
         Utilities.setLocale(this);
 	    setContentView(R.layout.gallery);
 
-        prefCnt=new PreferencesControler(this);
-
-        citCnt=new CitationControler(this);
         projCnt=new ProjectControler(this);
         photoCnt=new PhotoControler(this);
+        multiPhotoCnt=new MultiPhotoControler(this);
         
  	   	tvInfo=(TextView)findViewById(R.id.imgValue);
  	   	editButton=(ImageButton)findViewById(R.id.btEditField);
  	   	showInfoButton=(ImageButton)findViewById(R.id.btShowInfo);
  	   	llPhotoInfo=(LinearLayout)findViewById(R.id.llPhotoInfo);
  	   	counter=(TextView)findViewById(R.id.tvGalImageCounter);
- 	   	
-	   
+ 	   		   
 	    g = (CitationGallery) findViewById(R.id.gallery);
         
         
@@ -140,16 +139,18 @@ public class ImageGallery extends Activity{
         projCnt.loadProjectInfoById(projId);
         fieldsLabelNames=projCnt.getProjectFieldsPair(projId);
         	
-        projectNameWS=projCnt.getName();
-        projectNameWS=projectNameWS.replace(" ", "_");
+        projectTag=projCnt.getName();
+        projectTag=projectTag.replace(" ", "_");
+        
+        hasMultiPhotoField=true;
+        
         
         IMAGE_MAX_SIZE = getResources().getDisplayMetrics().widthPixels;
+        
+        Log.i("Photo","Image max size: "+IMAGE_MAX_SIZE);
  
         preSettedLoc=getIntent().getExtras().getString("idSelection");
-        
         storagePath=getIntent().getExtras().getString("storagePath");
-        
-        //secondaryStorage=photoCnt.isSecondaryExternalStorageDefault(projId);
         
         if(preSettedLoc!=null){
         	
@@ -211,6 +212,15 @@ public class ImageGallery extends Activity{
 		 			b = new Bundle();
 		 			b.putLong("projId", projId);
 		 			viewPhIntent.putExtras(b);
+		 			
+		 			
+		 			if(citationPhotoArray[position]!=null){
+		 			
+			 			b = new Bundle();
+			 			b.putString("taxon", citationPhotoArray[position].getLabel());
+			 			viewPhIntent.putExtras(b);
+		 			
+		 			}
 		 							 			
 		 			startActivity(viewPhIntent);  
 				   
@@ -249,8 +259,6 @@ public class ImageGallery extends Activity{
 		
 	}
 
-
-	
 	
     private OnClickListener showInfoListener = new OnClickListener()
     {
@@ -262,7 +270,6 @@ public class ImageGallery extends Activity{
         	
         }
     };
-    
 
 
 	@Override
@@ -347,7 +354,7 @@ public class ImageGallery extends Activity{
 
 		int pos=g.getSelectedItemPosition();
 		
-		long citationId=photosIds[pos];
+		long citationId=citationPhotoArray[pos].getCitationId();
 		String photoPath=availableImageList.get(pos);
 
 		if(citationId>0){
@@ -366,71 +373,62 @@ public class ImageGallery extends Activity{
 				
 	}
 	
-	   private Handler updateTaxonInfoHandler = new Handler() {
+	private Handler updateTaxonInfoHandler = new Handler() {
 
-	        @Override
-	        public void handleMessage(Message msg) {
-	 
-	        	 if(citationInfoText!=null) {	 
-		            
-	        		 	int position=msg.what;
-	        		 
-		            	photoInfos[position]=citationInfoText[0];
-		    			tvInfo.setText(photoInfos[position]);
-		    			
-		            	photosIds[position]=citCnt.getCitationIdByPhoto(availableImageList.get(position));
-		            	
-		            	editButton.setVisibility(View.VISIBLE);
-		            	//editButton.setId((int) photosIds[position]);
-		            	editButton.setTag(availableImageList.get(position));
-		            	
-		            	editButton.setOnClickListener(new OnClickListener() {  
-		 	            	
-		 	            	public void onClick(View v) { 
-		 	            		
+		@Override
+		public void handleMessage(Message msg) {
 
-		 						Intent intent = new Intent(v.getContext(), CitationEditor.class);
-		 			       
-		 					 			Bundle b = new Bundle();
-		 					 			b.putString("rsName", projCnt.getName());
-		 					 			intent.putExtras(b);
-		 					 			
-		 					 			b = new Bundle();
-		 					 			b.putLong("id", projId);
-		 					 			intent.putExtras(b);
-		 					 			
-		 					 			b = new Bundle();
-		 					 			b.putString("rsDescription",projCnt.getThName());
-		 					 			intent.putExtras(b);
-		 					 			
-		 					 			String photoPath=(String)v.getTag();
-		 					 			
-		 					 			b = new Bundle();
-		 					 			b.putLong("idSample", selectedPhotos.get(PhotoUtils.getFileName(photoPath)));
-		 					 			intent.putExtras(b);
-		 					 			
-		 					 		   startActivityForResult(intent, BACK_FROM_EDIT); 
-		 	    	      	   	
-		 	            	
-		 	            	} 
-		 	           	}
-		 	            
-		 	         );
-		            	
-		            }
-		            else{
-		            	
-		            	editButton.setVisibility(View.GONE);
-		            	tvInfo.setText(getString(R.string.photoWithoutInfo));
+			int position = msg.what;
 
-		            }
-	        	 
-	        	 
-	                
-	        	}
-	        	
-		     
-	    };
+			if (citationPhotoArray[position] != null) {
+
+				tvInfo.setText(citationPhotoArray[position].getLabel());
+				editButton.setVisibility(View.VISIBLE);
+
+				editButton.setId(position);
+				editButton.setVisibility(View.VISIBLE);
+
+				editButton.setOnClickListener(new OnClickListener() {
+
+					public void onClick(View v) {
+
+						Intent intent = new Intent(v.getContext(),CitationEditor.class);
+
+						Bundle b = new Bundle();
+						b.putString("rsName", projCnt.getName());
+						intent.putExtras(b);
+
+						b = new Bundle();
+						b.putLong("id", projId);
+						intent.putExtras(b);
+
+						b = new Bundle();
+						b.putString("rsDescription", projCnt.getThName());
+						intent.putExtras(b);
+
+
+						b = new Bundle();
+						b.putLong("idSample", citationPhotoArray[v.getId()].getCitationId());
+						intent.putExtras(b);
+
+						startActivityForResult(intent, BACK_FROM_EDIT);
+
+					}
+				}
+
+				);
+
+			} 
+			else {
+
+				editButton.setVisibility(View.GONE);
+				tvInfo.setText(getString(R.string.photoWithoutInfo));
+
+			}
+
+		}
+
+	};
 	    
 	    private Handler updateCounterHandler = new Handler() {
 
@@ -440,11 +438,8 @@ public class ImageGallery extends Activity{
          		counter.setText((msg.what+1)+" / "+total);
 	               
 	       	}
-	        	
 		     
 	    };
-	    
-	    
 
 
 	private void loadPhotoInfo(final int position){
@@ -452,17 +447,16 @@ public class ImageGallery extends Activity{
 		lastKnownPosition=position;
 
 		/* Info not loaded */
-		if(photoInfos[position]==null){
-			
-			
+		if(citationPhotoArray[position]==null){
 			
 			   new Thread(new Runnable() {
 
 					public void run() {
 						
 						String photoPath=availableImageList.get(position);
+
+						citationPhotoArray[position]=multiPhotoCnt.getCitationByPhotoPath(photoPath,hasMultiPhotoField,fieldsLabelNames);
 						
-						citationInfoText=citCnt.getCitationValues(selectedPhotos.get(PhotoUtils.getFileName(photoPath)),fieldsLabelNames);
 						updateTaxonInfoHandler.sendEmptyMessage(position);
 						updateCounterHandler.sendEmptyMessage(position);
 		
@@ -474,7 +468,7 @@ public class ImageGallery extends Activity{
 		       
 	           
 		}
-		else if(photoInfos[position].equals(getString(R.string.photoWithoutInfo))){
+		else if(citationPhotoArray[position].equals(getString(R.string.photoWithoutInfo))){
 			
 			editButton.setVisibility(View.GONE);
         	tvInfo.setText(getString(R.string.photoWithoutInfo));
@@ -483,14 +477,12 @@ public class ImageGallery extends Activity{
 		}
 		else{
 			
-			tvInfo.setText(photoInfos[position]);
+			tvInfo.setText(citationPhotoArray[position].getLabel());
 			updateCounterHandler.sendEmptyMessage(position);
 
         	editButton.setVisibility(View.VISIBLE);
-        	           	
-        	//editButton.setId((int) photosIds[position]);
         	
-        	editButton.setTag(availableImageList.get(position));
+        	editButton.setId(position);
         	
         	editButton.setOnClickListener(new OnClickListener() {  
 	            	
@@ -511,10 +503,8 @@ public class ImageGallery extends Activity{
 				 			b.putString("rsDescription",projCnt.getThName());
 				 			intent.putExtras(b);
 				 			
-				 			String photoPath=(String)v.getTag();
-				 			
 				 			b = new Bundle();
-				 			b.putLong("idSample", selectedPhotos.get(PhotoUtils.getFileName(photoPath)));
+				 			b.putLong("idSample", citationPhotoArray[position].getCitationId());
 				 			intent.putExtras(b);
 				 			
 				 		   startActivityForResult(intent, 1); 
@@ -537,7 +527,7 @@ public class ImageGallery extends Activity{
 
 		        public boolean accept(File dir, String name){
 		        	
-		            return ((name.endsWith(".jpg")) || (name.endsWith(".png"))) && (name.startsWith(projectNameWS)) ;
+		            return ((name.endsWith(".jpg")) || (name.endsWith(".png"))) && (name.startsWith(projectTag)) ;
 		        }  
 	    
 		    }); 
@@ -554,7 +544,7 @@ public class ImageGallery extends Activity{
 
 	        public boolean accept(File dir, String name){
 	        	
-	            return ((name.endsWith(".jpg")) || (name.endsWith(".png"))) && (name.startsWith(projectNameWS)) ;
+	            return ((name.endsWith(".jpg")) || (name.endsWith(".png"))) && (name.startsWith(projectTag)) ;
 	        }  
     
 	    });  
@@ -573,67 +563,10 @@ public class ImageGallery extends Activity{
 
         }  
         
-        photoInfos=new String[availableImageList.size()];
-        photosIds=new long[availableImageList.size()];
+        citationPhotoArray=new CitationPhoto[availableImageList.size()];        
         total=availableImageList.size();
         
-	   /* mFiles = new String[imagelist.length];  
-	    
-        int filteredFiles=0;
-	    
-        for(int i= 0 ; i< imagelist.length; i++){  
-        	
-            mFiles[i] = imagelist[i].getAbsolutePath();  
-            if(filtered && selectedPhotos.get(mFiles[i])!=null) filteredFiles++;
-
-        }  
         
-        if(!filtered) filteredFiles=mFiles.length;
-        
-        availableImageList = new Uri[filteredFiles];
-        
-        if(availableImageList.length==0){
-        	
-        	Toast.makeText(this,this.getString(R.string.noPhotoInProject), Toast.LENGTH_SHORT).show();
-        	
-        	finish();
-        	
-        }
-        else{
-        	
-            photoInfos=new String[availableImageList.length];
-            photosIds=new long[availableImageList.length];
-            total=availableImageList.length;
-            
-            filteredFiles=0;
-
-		      for(int i=0; i < mFiles.length; i++){
-		    	  
-		    	  if(filtered){
-		    		  
-		    		  if(selectedPhotos.get(mFiles[i])!=null) {
-		    			  
-		    			  availableImageList[filteredFiles] = Uri.parse(mFiles[i]); 
-				    	  filteredFiles++;
-
-		    		  }
-		    		  
-		    	  }
-		    	  else{
-		    		  
-			    	  availableImageList[i] = Uri.parse(mFiles[i]);   
-
-		    	  }
-		    	  
-		    	  
-		      }
-	
-        }*/
-        
-
-    
-	    
-		
 	}
 	
 	
@@ -695,7 +628,8 @@ public class ImageGallery extends Activity{
 	    	  }
 	    	  else{
 	    	  
-		    	  bm = decodeFile(new File(uri));
+	    		  
+	    		  bm= PhotoUtils.decodeBitmap(uri.toString(),(int)IMAGE_MAX_SIZE/2,true);
 		    	  
 		    	  if(bm!=null && bm.getWidth()>0){
 		    		  
@@ -705,17 +639,16 @@ public class ImageGallery extends Activity{
 		    	  }
 		    	  else{
 		    		  
-		    		  bm=createWrongImageBitmap((int) IMAGE_MAX_SIZE/4);
+		    		  if(bm!=null) bm.recycle();
+		    		  
+		    		  bm=createWrongImageBitmap((int) IMAGE_MAX_SIZE);
 		    		  
 		    		  i.setImageBitmap(bm);
 			    	  imageCache.addBitmapToMemoryCache(uri, bm);
 		    		  
 		    	  }
-		    	  
 		    	
-	    	  
 	    	  }
-	        
 	  
 	    	  return layOuter;
 
@@ -743,48 +676,6 @@ public class ImageGallery extends Activity{
 		
 	}
 
-	
-	private Bitmap decodeFile(File f){
-	    Bitmap b = null;
-	    try {
-	        //Decode image size
-	        BitmapFactory.Options o = new BitmapFactory.Options();
-	        o.inJustDecodeBounds = true;
-
-	        FileInputStream fis = new FileInputStream(f);
-	        BitmapFactory.decodeStream(fis, null, o);
-	        try {
-	        	
-				fis.close();
-				
-			} catch (IOException e) {
-
-				e.printStackTrace();
-				
-			}
-
-	        int scale = 1;
-	        if (o.outHeight > IMAGE_MAX_SIZE || o.outWidth > IMAGE_MAX_SIZE) {
-	            scale = (int) Math.pow(2, (int) Math.round(Math.log(IMAGE_MAX_SIZE / Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
-	        }
-
-	        //Decode with inSampleSize
-	        BitmapFactory.Options o2 = new BitmapFactory.Options();
-	        o2.inSampleSize = scale;
-	        fis = new FileInputStream(f);
-	        b = BitmapFactory.decodeStream(fis, null, o2);
-	        try {
-				fis.close();
-			} catch (IOException e) {
-				
-				e.printStackTrace();
-				
-			}
-	    } catch (FileNotFoundException e) {
-	    }
-	    return b;
-	}
-	
 	
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {

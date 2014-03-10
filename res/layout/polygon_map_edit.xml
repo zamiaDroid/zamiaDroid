@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+	android:background="@color/gris"	
+    android:layout_margin="2dp"
+     >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:padding="5dp" >
+
+        <LinearLayout
+            android:id="@+id/llAddPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/ibAddPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/polygon_add_point" />
+
+            <TextView
+                android:id="@+id/tvAddPoint"
+                style="@style/ZamiaSmallTextAppereance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="@string/polAddPoint" />
+        </LinearLayout>
+          <LinearLayout
+            android:id="@+id/llgpsWaiting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="5dp"
+            android:visibility="gone"
+             >
+
+            <ImageButton
+                android:id="@+id/ibAddPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/polygon_gps" />
+
+            <TextView
+                android:id="@+id/tvAddPoint"
+                style="@style/ZamiaSmallTextAppereance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/waitingGPS" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llVertexCount"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tvPolygonCountText"
+                style="@style/ZamiaSmallTextAppereance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/polPoints" />
+
+            <TextView
+                android:id="@+id/tvPolygonCount"
+                style="@style/ZamiaSmallTextAppereance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llClosePolygon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/ibClosePolygon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/polygon_close" />
+
+            <TextView
+                android:id="@+id/textView1"
+                style="@style/ZamiaSmallTextAppereance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="@string/polClose" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPolygonRemove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/ibPolygonRemove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/polygon_remove" />
+
+            <TextView
+                android:id="@+id/textView1"
+                style="@style/ZamiaSmallTextAppereance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="@string/polRemove" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llRemoveLastPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/ibPolygonRemovePoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/polygon_remove_last" />
+
+            <TextView
+                android:id="@+id/textView1"
+                style="@style/ZamiaSmallTextAppereance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="@string/polRemoveLastPoint" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom|center_horizontal" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:background="@color/grisAlpha"	
+         >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/polExit"
+            android:textColor="@color/secondaryGreen"
+            android:layout_marginRight="5dp" />
+
+        <ImageButton
+            android:id="@+id/ibCreatePolygon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tick_new" />
+
+    </LinearLayout>
+
+</LinearLayout>

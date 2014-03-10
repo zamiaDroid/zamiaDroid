@@ -28,7 +28,10 @@ import edu.ub.bio.biogeolib.CoordConverter;
 import edu.ub.bio.biogeolib.CoordinateLatLon;
 import edu.ub.bio.biogeolib.CoordinateUTM;
 
+import uni.projecte.R;
+import uni.projecte.dataLayer.CitationManager.CitationExporter;
 import uni.projecte.dataLayer.CitationManager.Fagus.FagusExporter;
+import uni.projecte.dataLayer.CitationManager.Fagus.FagusWriter;
 import uni.projecte.dataLayer.CitationManager.JSON.JSONExporter;
 import uni.projecte.dataLayer.CitationManager.KML.KMLExporter;
 import uni.projecte.dataLayer.CitationManager.Quercus.QuercusWriter;
@@ -38,6 +41,7 @@ import uni.projecte.dataLayer.bd.CitacionDbAdapter;
 import uni.projecte.dataLayer.bd.ProjectDbAdapter;
 import uni.projecte.dataLayer.bd.SampleDbAdapter;
 import uni.projecte.dataLayer.bd.SecondLevelCitacionDbAdapter;
+import uni.projecte.dataTypes.CitationPhoto;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.maps.utils.CoordinateUtils;
 import android.content.Context;
@@ -70,12 +74,12 @@ public class CitationSecondLevelControler extends CitationControler {
 	 */
 	
 	
-	public long createCitation(String secondLevelFieldId, double latPoint, double longPoint, String comment){
+	public long createCitation(String secondLevelFieldId, double latPoint, double longPoint, String comment,long projId, String subFieldType,long parentCitationId){
 		
 		SecondLevelCitacionDbAdapter mDbSample=new SecondLevelCitacionDbAdapter(baseContext);
 		mDbSample.open();
 			
-		long idSample=  mDbSample.createCitation(secondLevelFieldId, latPoint, longPoint);
+		long idSample=  mDbSample.createCitation(secondLevelFieldId, latPoint, longPoint,projId,subFieldType,parentCitationId);
 			
 		mDbSample.close();
 		
@@ -160,7 +164,7 @@ public class CitationSecondLevelControler extends CitationControler {
 		} 
 		
 		att.close();		
-	aTypes.close();
+		aTypes.close();
 	
 		return citationValueId;
 		
@@ -210,6 +214,7 @@ public class CitationSecondLevelControler extends CitationControler {
 			
 			Cursor list=  mDbSample.fetchMultiPhotoValues(secondLevelFieldId);
 			
+
 			if(list!=null && list.getCount()>0){
 
 				list.moveToFirst();								
@@ -226,7 +231,30 @@ public class CitationSecondLevelControler extends CitationControler {
 		
 	}
 	
+	public CitationPhoto getMultiPhotoByValue(String photoValue){
+		
+		CitationPhoto citationPhoto=null;
+				
+		SecondLevelCitacionDbAdapter mDbSample=new SecondLevelCitacionDbAdapter(baseContext);
+		mDbSample.open();
+			
+			Cursor list= mDbSample.getMultiPhotoByValue(photoValue);
+			list.moveToFirst();
+			
+			if(list!=null && list.getCount()>0){
+				
+				citationPhoto= new CitationPhoto(photoValue, list.getLong(2), list.getLong(1), "multiPhoto");
+				
+			}
+			
+		list.close();	
+			
+		mDbSample.close();
 
+		return citationPhoto;
+		
+		
+	}
 	
 
 	/*
@@ -291,6 +319,7 @@ public class CitationSecondLevelControler extends CitationControler {
 				Cursor secondLevelfieldList=getCitationFromFieldAndCitationId(citationId,secondLevelFieldId);
 					
 				String secLevId=secondLevelfieldList.getString(3);
+				Log.d("Quercus","1) Exporting relevé Code: "+secLevId);
 				
 				sC.loadCitation(citationId);
 				
@@ -318,9 +347,13 @@ public class CitationSecondLevelControler extends CitationControler {
 			  
 			    while(subProjItems.isAfterLast() == false){
 			    
+
+			    	
 			    	String attributes=subProjItems.getString(5);
 			    	String[] splittedFields=attributes.split(":");
 			    	
+			    	Log.d("Quercus","2) Exporting relevé Code: "+secLevId+" taxon: "+splittedFields[0]);
+
 			    	//check fieldNames
 			    	
 			    	createReleveEntry(qW,splittedFields,fieldList);
@@ -329,8 +362,6 @@ public class CitationSecondLevelControler extends CitationControler {
 			    	
 			    	subProjItems.moveToNext();
 			     
-			       
-			    	
 			    }
 			    
 			    addCitationFields(projId,citationId,rC,sC,qW);
@@ -343,17 +374,13 @@ public class CitationSecondLevelControler extends CitationControler {
 				
 			}		
 			
-			
+	    	Log.d("Quercus","Adding TaxonList ["+taxonList.size()+"]");
+
 			addTaxonList(qW);	
 
 			qW.closeDocument();
-			
-			String returnS=qW.convertXML2String();
-			
-			Log.i("Citations","Export "+returnS);
-			
+			qW.convertXML2String();
 			qW.stringToFile(fileName, co);
-			
 			
 		}
 		else{
@@ -372,7 +399,139 @@ public class CitationSecondLevelControler extends CitationControler {
 	}
 	
 	
+	/*
+	 * Fagus exporter for Releveé projects
+	 * 
+	 */
 	
+	public int exportProjectFagus(long projId, Context co,Set<Long> citationSet, String fileName, String exportFormat, Handler handlerExportProcessDialog){
+		
+		Log.d("Citacions","Exportant Citacions Start "+exportFormat);
+		
+		ProjectControler projCnt= new ProjectControler(baseContext);
+		projCnt.loadProjectInfoById(projId);
+
+		cExporter=new FagusExporter(projCnt.getName(),projCnt.getThName(),projCnt.getCitationType());
+		
+		ProjectSecondLevelControler rC= new ProjectSecondLevelControler(co);
+		
+		//checking: only one secondLevelField and secondLevel has a field called OriginalTaxonName
+		long secondLevelFieldId=rC.isQuercusExportable(projId);
+
+		
+		if (secondLevelFieldId>0){
+			
+			// iterate over each field Value
+			
+			cExporter.openDocument();
+			
+			
+			/* iterating over each citation */ 
+			
+			Iterator<Long> itCitations=citationSet.iterator();
+			
+			
+			while (itCitations.hasNext()){
+				
+				handlerExportProcessDialog.sendMessage(handlerExportProcessDialog.obtainMessage());
+				
+				long citationId=itCitations.next();
+				
+				Cursor secondLevelfieldList=getCitationFromFieldAndCitationId(citationId,secondLevelFieldId);
+				String secLevId=secondLevelfieldList.getString(3);
+				Cursor subProjItems=getFieldValuesBySLId(secLevId);
+				
+				
+				//iterating over secondLevelCitationFields
+				Cursor fieldList=rC.getProjectFieldsCursor(secondLevelFieldId);
+				fieldList.moveToFirst();
+		
+				 while(subProjItems.isAfterLast() == false){
+					 
+					cExporter.openCitation();
+					cExporter.writeCitationCoordinateLatLong(subProjItems.getDouble(2), subProjItems.getDouble(3));
+					
+					CoordinateUTM utm = CoordConverter.getInstance().toUTM(new CoordinateLatLon(subProjItems.getDouble(2),subProjItems.getDouble(3)));
+					cExporter.writeCitationCoordinateUTM(utm.getShortForm().replace("_", ""));
+					cExporter.writeCitationDate(subProjItems.getString(4));
+			    	
+				    String attributes=subProjItems.getString(5);
+
+			    	releveeTaxonCitationExport(cExporter,attributes.split(":"),fieldList,secLevId);
+			       
+			    	fieldList.moveToFirst();			    	
+			    	subProjItems.moveToNext();
+			    	
+				    cExporter.closeCitation();
+
+			    }
+			    
+			    
+			    fieldList.close();
+				
+				secondLevelfieldList.moveToNext();
+				
+			}		
+			
+			cExporter.closeDocument();		
+			cExporter.stringToFile(fileName,baseContext);
+			
+		}
+		else{
+			
+			//project can't be exported
+			
+		}
+	
+		
+		Log.d("Citacions","Exportant Citacions End "+exportFormat);
+
+		
+		
+		return 0;
+		
+	}
+	
+	
+	private void releveeTaxonCitationExport(CitationExporter fExp, String[] splittedFields, Cursor fieldList, String releveId) {
+
+		int i=0;
+		
+		while(!fieldList.isAfterLast()){
+			
+			String fieldName=fieldList.getString(2);
+			String labelName=fieldList.getString(4);
+			String category=fieldList.getString(6);
+			
+			if(fieldName.equals("sureness")){
+				
+				if(i < splittedFields.length) fExp.createCitationField("Sureness",labelName, splittedFields[i], category);
+
+				
+			}
+			else if(fieldName.equals("comments")){
+				
+				if(i < splittedFields.length) fExp.createCitationField("CitationNotes",labelName, splittedFields[i], category);
+
+			}
+			else{
+				
+				if(splittedFields[i] != null) {
+					
+					fExp.createCitationField(fieldName,labelName, splittedFields[i], "ADDED");
+					
+				}
+			}
+			
+			fieldList.moveToNext();
+			i++;
+					
+		}
+		
+		fExp.createCitationField("releveCode",baseContext.getString(R.string.releveeCode), releveId, "ADDED");
+
+	}
+		
 	/*  
 	 * Concrete Quercus exporter
 	 * It creates a list of releveés which their entries and a list of taxons
@@ -905,10 +1064,10 @@ public class CitationSecondLevelControler extends CitationControler {
 	
 	/** Methods invocated by Fagus Reader **/
 	
-	public long createEmptyCitation(String secondFieldId){
+	public long createEmptyCitation(String secondFieldId,long projId, String subFieldType,long parentId){
 		
 		
-		this.sampleId= mDbAttributes.createEmptyCitation(secondFieldId);
+		this.sampleId= mDbAttributes.createEmptyCitation(secondFieldId,projId, subFieldType,parentId);
 		
 		return sampleId;		
 		
@@ -1105,6 +1264,35 @@ public class CitationSecondLevelControler extends CitationControler {
 			}
 			
 			
+		
+	}
+
+	public Cursor getPolygonPoints(long projId) {
+
+		mDbAttributes = new SecondLevelCitacionDbAdapter(baseContext);
+		mDbAttributes.open();
+		
+		Cursor polygons=mDbAttributes.getPolygonPointByProjectId(projId);
+		
+		mDbAttributes.close();
+		
+		return polygons;
+		
+	}
+
+	public Cursor getPolygonPoints(long projId, Long parentId) {
+		
+		mDbAttributes = new SecondLevelCitacionDbAdapter(baseContext);
+		mDbAttributes.open();
+		
+		Cursor polygons=mDbAttributes.getPolygonPointByParentId(projId,parentId);
+		
+		mDbAttributes.close();
+		
+		return polygons;
+		
+		
+		
 		
 	}
 

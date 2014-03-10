@@ -26,12 +26,15 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import uni.projecte.Main;
 import uni.projecte.R;
+import uni.projecte.Activities.Projects.ProjectManagement;
 import uni.projecte.Activities.RemoteDBs.TaxonRemoteTab;
 import uni.projecte.controler.CitationControler;
 import uni.projecte.controler.CitationSecondLevelControler;
 import uni.projecte.controler.DataTypeControler;
 import uni.projecte.controler.MultiPhotoControler;
+import uni.projecte.controler.PolygonControler;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.ThesaurusControler;
@@ -43,16 +46,21 @@ import uni.projecte.dataTypes.Utilities;
 import uni.projecte.hardware.gps.MainLocationListener;
 import uni.projecte.maps.GoogleMapsAPI;
 import uni.projecte.maps.UTMDisplay;
+import uni.projecte.maps.utils.LatLon;
+import uni.projecte.maps.utils.LatLonParcel;
 import uni.projecte.ui.multiphoto.MultiPhotoFieldForm;
 import uni.projecte.ui.multiphoto.PhotoFieldForm;
 import uni.projecte.ui.multiphoto.SimplePhotoFieldForm;
+import uni.projecte.ui.polygon.PolygonField;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.MutableContextWrapper;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.location.LocationListener;
@@ -84,6 +92,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -96,13 +105,17 @@ public class Sampling extends Activity {
 	
 	/*dataBase helpers*/
 	   private ProjectControler projCnt;
-	   private  ThesaurusControler tC;
+	   private ThesaurusControler tC;
 	   private CitationControler citCnt;
+	   private MultiPhotoControler multiPhotoCnt;
 
 	   public final static int SUCCESS_RETURN_CODE = 1;
 	   
 	   public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 3;
 	   public static final int LOAD_REMOTE_TAB = 6;
+	   public static final int POLYGON_EDIT = 7;
+	   public static final int NEW_PROJECT = 8;
+
 
 	   public static final int ENABLE_GPS=Menu.FIRST;
 	   public static final int REPEATED_VALUES=Menu.FIRST+1;
@@ -167,9 +180,14 @@ public class Sampling extends Activity {
     	
     	private Hashtable<String, PhotoFieldForm> photoFieldsList;
     	
+    	private PolygonField polygonField;
+    	private ProjectField oldPhotoField;
+    	
     	private LocationManager mLocationManager;
     	private MainLocationListener mLocationListener;
 
+    	private ProgressDialog pdMovePhotos;
+    	
     	private boolean tempGPS=false;
     	private boolean uniqueCitationEntry;
 
@@ -189,6 +207,7 @@ public class Sampling extends Activity {
         tC= new ThesaurusControler(this);
         prefCnt= new PreferencesControler(this);
         citCnt= new CitationControler(this);
+        multiPhotoCnt = new MultiPhotoControler(this);
         
         /* button Listeners*/ 
         
@@ -213,6 +232,7 @@ public class Sampling extends Activity {
         projCnt.loadProjectInfoById(projId);
         	
         tvProjectName.setText(projCnt.getName());
+        tvProjectName.setOnClickListener(changeProject);
 
         lat=getIntent().getExtras().getDouble("latitude");
         longitude=getIntent().getExtras().getDouble("longitude");
@@ -273,14 +293,19 @@ public class Sampling extends Activity {
         updateDisplay();
 
         
+		if(projCnt.hasOldPhotoField(projId)) {
+			
+			updatePhotoField();
+		
+		}
+		
     }
 
     
-    @Override
+	@Override
 	protected void onStop(){
 		  
 		  super.onStop();
-		  
 		  tC.closeCursors();
 		  
 	  }
@@ -308,6 +333,8 @@ public class Sampling extends Activity {
 				mLocationManager.removeUpdates(mLocationListener);
 	    		tempGPS=false;
 	    		 
+				if(polygonField!=null && polygonField.isWaitingGPS()) polygonField.addPoint(lat,longitude,elevation);
+	    		
 		   	    updateDisplay();
 		   	    
 	   	    }
@@ -369,6 +396,89 @@ public class Sampling extends Activity {
 				   
 
     }
+    
+    
+    private void updatePhotoField() {
+
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	
+    	
+    	builder.setMessage(R.string.dialogChangePhotoField)
+    	       .setCancelable(false)
+    	       .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+    	           public void onClick(DialogInterface dialog, int id) {
+    
+    	        	   updatePhotoFieldDialog();
+    	        	 
+    	        		        	   
+    	           }
+
+				
+    	       })
+    	       .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+    	           public void onClick(DialogInterface dialog, int id) {
+    	               
+    	                
+    	           }
+    	       });
+    	
+    	AlertDialog alert = builder.create();
+    	alert.show();
+    	
+    	
+ 	}
+    
+    private void updatePhotoFieldDialog(){
+    	
+    	 pdMovePhotos = new ProgressDialog(this);
+    	 pdMovePhotos.setCancelable(false);
+    	 pdMovePhotos.setMessage(getString(R.string.dialogUpdatePhotoFieldTitle));
+    	 pdMovePhotos.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+    	 pdMovePhotos.setProgress(0);
+			
+		Thread thread = new Thread() {
+
+			@Override
+			public void run() {
+
+				multiPhotoCnt.updatePhotoField(projId, oldPhotoField,handlerUpdatePhotoField);
+
+			}
+		};
+
+		thread.start();
+    	
+    }
+
+    private Handler handlerUpdatePhotoField = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {	
+
+			if(msg.what==-1){
+				
+				pdMovePhotos.incrementProgressBy(1);
+				
+			}
+			else if(msg.what==0){
+				
+				pdMovePhotos.dismiss();
+	        	Utilities.showToast(getString(R.string.changePhotosFinished), getBaseContext());
+				finish();
+				
+			}
+			else if(msg.what>0){
+				
+				pdMovePhotos.setProgress(msg.what);
+				pdMovePhotos.show();
+
+			}
+			else{
+				
+			}
+
+		}
+	};
     
     
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -554,9 +664,6 @@ public class Sampling extends Activity {
      * @see android.app.Activity#onKeyDown(int, android.view.KeyEvent)
      */
 
- 
- 
-
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
     	
     	
@@ -566,6 +673,7 @@ public class Sampling extends Activity {
         	if(!filledFields()){
         		
         		endActivity();
+        		finish();
         		
         		
         	} 
@@ -579,6 +687,7 @@ public class Sampling extends Activity {
 		    	           public void onClick(DialogInterface dialog, int id) {
 		    
 		    	        	   endActivity();
+		    	        	   finish();
 	        	   
 		    	           }
 	
@@ -604,8 +713,6 @@ public class Sampling extends Activity {
 	        return true;
 	        
 	        
-	        
-        	
         }
         
         return false;
@@ -633,8 +740,6 @@ public class Sampling extends Activity {
 			}
     	   
     	   tC.closeThReader();
-    	   
-    	   finish();
 		
 	}
     
@@ -848,24 +953,7 @@ public class Sampling extends Activity {
         }
     }; 
     
-    
-    /*
-     * Method called when finish button is pressed.
-     * It only finishes the Activity
-     * 
-     */
-    
-    private void finishActivity(){
-    	
-    	
-        Intent intent = new Intent();
-        setResult(0, intent);
-   			
-        finish();
-    	
-    	
-    }
-    
+      
     private OnClickListener bUpdateLocationListener = new OnClickListener()
     {
         public void onClick(View v)
@@ -880,49 +968,6 @@ public class Sampling extends Activity {
         }
     };
     
-    
-    /*
-     * 
-     * This listener is similar to BCreateCitationListener.
-     * There is only one difference. When the citation is stored the activity is finished.
-     * 
-     */
-    
-    @SuppressWarnings("unused")
-	private OnClickListener bFinishListener = new OnClickListener()
-    {
-        public void onClick(View v)
-        {                        
-            
-        	if (!emptyThesaurus()){
-        	    	
-        	    	 Toast.makeText(getBaseContext(), 
-        	                R.string.fieldMissing, 
-        	                 Toast.LENGTH_SHORT).show();
-        	    	
-        	    }
-        	  
-        	  else{
-        		 
-        			if(tvProjectName.length()==0){
-        	    		
-        	    		Toast.makeText(getBaseContext(), 
-        	                    R.string.projNameMissing, 
-        	                    Toast.LENGTH_SHORT).show();
-        	    	}
-        	    	
-        	    	else  {
-
-        	    			 createSample(lat, longitude);
-        	        		 finishActivity();
- 	    	
-        	    	}
-
-        	  }
-        	
-        }
-    };
-    
    
     
     /*
@@ -932,9 +977,8 @@ public class Sampling extends Activity {
     
     private boolean emptyThesaurus(){
     	
-    	
+   	
     	boolean notEmpty=true;
-
     	
     	for (int i=0;i<n;i++){
     		
@@ -959,69 +1003,22 @@ public class Sampling extends Activity {
     	
     	boolean filled=false;
     	
-    	for (int i=0;i<n&&!filled;i++){
+    	for (int i=0;i<n && !filled;i++){
     		
     		View vi=elementsList.get(i);
 
-    		
     		if((vi instanceof TextView)){
     			
     			if (((TextView)vi).length()!=0) filled=true;	
 
     		}
-
-    		
+    	
     	}
     	
     	return filled;
     	
-    	
     }
     
-    
-    @SuppressWarnings("unused")
-    
-	private boolean emptyAttributes(){
-    	
-    	boolean notEmpty=true;
-    	
-
-    	//are all the attributes filled?
-    	
-    	for (int i=0;i<n;i++){
-    		
-    		View vi=elementsList.get(i);
-    		
-    		if (vi instanceof EditText){
-				
-    			if (((EditText)vi).length()==0) notEmpty=false;	
-			}
-    		
-    		else if((vi instanceof AutoCompleteTextView)){
-    			
-    			if (((AutoCompleteTextView)vi).length()==0) notEmpty=false;	
-
-    		}
-			
-    		
-    		else if((vi instanceof CheckBox)){
-    			
-    			
-    			//rubish
-    		}
-			
-			else {
-				
-				if (((Spinner)vi).getSelectedItem().toString().length()==0) notEmpty=false;	
-				
-			}
-    		
-    		
-    	}
-
-    	return notEmpty;  
-    	    	
-    }
     
     
     /*
@@ -1061,6 +1058,11 @@ public class Sampling extends Activity {
 					int pos=complexValuesList.get(et.getTag());
 					
 					if(pos>-1) ((Spinner) et).setSelection(pos);
+					
+				}
+				else if(et instanceof ListView){
+					
+					polygonField.clearForm();
 					
 				}
 				else if(et instanceof TextView){
@@ -1103,7 +1105,8 @@ public class Sampling extends Activity {
 	private void addFieldValues(long idSample, CitationControler smplCntr){
     			
 			boolean isMultiPhotoField=false;
-				
+			boolean isPolygon=false;
+			
 			n=elementsList.size();
 			
 			smplCntr.startTransaction();
@@ -1151,6 +1154,12 @@ public class Sampling extends Activity {
 					isMultiPhotoField=true;
 					
 				}
+				else if(et instanceof ListView){
+					
+					value=polygonField.getSecondLevelId();
+					label=polygonField.getFieldLabel();					
+					
+				}
 				else {
 					
 					Spinner sp=(Spinner)et;
@@ -1161,7 +1170,7 @@ public class Sampling extends Activity {
 					label= ((Spinner) et).getTag().toString();
 
 					
-				}
+				}	
 				
 					/*if value is empty we don't add the value into the database*/
 					if(value.compareTo("")==0){
@@ -1170,7 +1179,7 @@ public class Sampling extends Activity {
 					
 					else{
 						
-						Log.i("Citation","Action-> created citationValue : Label: "+label+" Value: "+value);
+						Log.i("Citation","Action-> created citationValue("+idSample+") : Label: "+label+" Value: "+value+" FieldId: "+et.getId());
 						citationValueId=smplCntr.addCitationField(projId,idSample,et.getId(),label, value);
 							
 						if(isMultiPhotoField){
@@ -1180,6 +1189,13 @@ public class Sampling extends Activity {
 							
 							isMultiPhotoField=false;
 						} 
+						
+						if(isPolygon){
+							
+							polygonField.setCitationId(citationValueId);
+							isPolygon=false;
+
+						}
 						
 					}
 					
@@ -1197,7 +1213,7 @@ public class Sampling extends Activity {
     }
 	
     
-    private void addCitationSubFields() {
+    private void addCitationSubFields(long parentId) {
     	
     	//Adding MultiPhoto: photoList
     	
@@ -1213,11 +1229,21 @@ public class Sampling extends Activity {
 				
 				long subFieldId=multiProjCnt.getMultiPhotoSubFieldId(((MultiPhotoFieldForm) tmpField).getFieldId());
 				
-				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId);				
+				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId,projId,parentId);				
 				
 			}						
 		}
-
+		
+		//Adding Polygon
+		if(polygonField!=null){
+		
+			PolygonControler polygonCnt= new PolygonControler(this);
+	
+			polygonCnt.addPolygonList(polygonField,projId,parentId);
+	
+		}
+		
+		
 	}
 
     
@@ -1249,7 +1275,7 @@ public class Sampling extends Activity {
           
 	    Log.d("Citation","Action -> Fields Added");
 	    
-		addCitationSubFields();
+		addCitationSubFields(idSample);
 	    
 		Log.d("Citation","Action -> MutliFields Added");
 
@@ -1352,7 +1378,7 @@ public class Sampling extends Activity {
         }
 
 	
-}; 
+};
 
     
     /*
@@ -1391,7 +1417,7 @@ public class Sampling extends Activity {
 		   
 		   //main layout that will include the form
 		   LinearLayout l= (LinearLayout)findViewById(R.id.fieldsLay);
-
+		   if(l.getChildCount()>0) l.removeAllViews();
 		   
 		   ProjectControler rsC=new ProjectControler(this);
 		   citCnt.startTransaction();
@@ -1515,9 +1541,14 @@ public class Sampling extends Activity {
 			   //when the field is photo we show photo Interface
 			   else if (fieldType.equals("photo")){
 				   
+				   oldPhotoField=att;
+				   
 				   SimplePhotoFieldForm photoFieldForm = new SimplePhotoFieldForm(this,projId,att,llField);
 				   
 				   elementsList.add(photoFieldForm.getEtPhotoPath());
+				   
+				   
+				   
 
 				   lPhoto=photoFieldForm.getlPhoto();
 				   llField=photoFieldForm.getLlField();
@@ -1529,19 +1560,30 @@ public class Sampling extends Activity {
 			
 			   
 			   }
-			   else if(fieldType.equals("multiPhoto")){
-				   
-				   MultiPhotoFieldForm multiPhotoFieldForm = new MultiPhotoFieldForm(this, projId, att, llField,MultiPhotoFieldForm.CREATE_MODE);
-				   
-				   multiPhotoFieldForm.setAddPhotoEvent(takePicture);
+			   else if(fieldType.equals("polygon")){
 				   
 				   
-				   photoFieldsList.put(att.getName(), multiPhotoFieldForm);
-
-				   elementsList.add(multiPhotoFieldForm.getImageScroll());
+				   polygonField= new PolygonField(this, projId, att, llField,PolygonField.CREATE_MODE);
+				   polygonField.setAddPointListener(capturePoint);
+				   
+				   elementsList.add(new ListView(this));
 
 				   
 			   }
+			   else if(fieldType.equals("multiPhoto")){
+				   
+					  MultiPhotoFieldForm multiPhotoFieldForm = new MultiPhotoFieldForm(this, projId, att, llField,MultiPhotoFieldForm.CREATE_MODE);
+					   
+					   multiPhotoFieldForm.setAddPhotoEvent(takePicture);
+					   
+					   
+					   photoFieldsList.put(att.getName(), multiPhotoFieldForm);
+
+					   elementsList.add(multiPhotoFieldForm.getImageScroll());
+					   			
+					   llField.setOrientation(LinearLayout.VERTICAL);
+					   
+				   }
 			   
 			   //when the field is a thesaurus we create an AutoCompleteView and we fill it with the items provided by the ThesaurusControler
 			   
@@ -1796,6 +1838,64 @@ public class Sampling extends Activity {
     
     
     
+    
+    
+	
+    
+    private OnClickListener changeProject = new OnClickListener() {
+
+        public void onClick(View v) {
+
+        	
+        	if(!filledFields()){
+        		
+        		endActivity();
+        		Intent projActivity = new Intent(getBaseContext(),ProjectManagement.class);
+	       		projActivity.putExtra("tab", 0);
+	       		projActivity.putExtra("changeProject",true);
+	       		startActivityForResult(projActivity,NEW_PROJECT);
+        		
+        	} 
+        	else{
+    	
+	        	AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+		    	
+		    	builder.setMessage(R.string.backFromCitationMessage)
+		    	       .setCancelable(false)
+		    	       .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+		    	           public void onClick(DialogInterface dialog, int id) {
+		    
+		    	        	   endActivity();
+		    	        	   
+		    	        	   Intent projActivity = new Intent(getBaseContext(),ProjectManagement.class);
+		    	       		   projActivity.putExtra("tab", 0);
+		    	       		   projActivity.putExtra("changeProject",true);
+		    	       		   startActivityForResult(projActivity,NEW_PROJECT);
+	        	   
+		    	           }
+	
+						
+		    	       })
+		    	       .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+		    	           public void onClick(DialogInterface dialog, int id) {
+		    	                
+		    	        	   
+		    	        	   dialog.dismiss();
+	 
+		    	           }
+		    	       });
+		    	
+		    	AlertDialog alert = builder.create();
+		    	
+		    	alert.show();
+        		
+        	}
+        	  
+        	        	
+        }
+    };
+    
+	
     private OnClickListener removePicture = new OnClickListener() {
 
         public void onClick(View v) {
@@ -1809,7 +1909,16 @@ public class Sampling extends Activity {
         }
     };
     
-    
+    private OnClickListener capturePoint = new OnClickListener() {
+
+        public void onClick(View v) {
+
+        	polygonField.setWaitingGPS(true);
+        	if(!tempGPS) callGPS();
+        	        	
+        }
+    };
+     
     
     private OnClickListener takePicture = new OnClickListener() {
 
@@ -1902,7 +2011,19 @@ public class Sampling extends Activity {
 	
 	
 	    		break;
-	
+	    	
+	    	case NEW_PROJECT :
+	    		
+	    		SharedPreferences preferences= getSharedPreferences(Main.PREF_FILE_NAME, MODE_PRIVATE);
+			    projId = preferences.getLong("predProjectId", -1);
+			     
+	    		projCnt.loadProjectInfoById(projId);
+		        tvProjectName.setText(projCnt.getName());
+		        createFieldForm(projId);
+		        updateDisplay();
+	            
+	    		
+	    		break;
 	
 	    	case 2 :
 	
@@ -2019,6 +2140,19 @@ public class Sampling extends Activity {
 	
 	    		break;
 	
+	    	case POLYGON_EDIT :
+	    		
+	    		
+	    		if(resultCode != RESULT_CANCELED){
+	    			    			
+	            	ArrayList<LatLonParcel> pointsExtra = intent.getParcelableArrayListExtra("polygon_path");
+	            	
+	            	if(polygonField!=null) polygonField.updatePath(pointsExtra);
+            	
+	    		}
+            		
+	    		break;
+	    		
 	    	default:
 
 

@@ -191,5 +191,11 @@ public class Citation {
 		this.filterLevel = filterLevel;
 	}
 	
+	public String toString(){
+		
+		return citationId+":"+tag;
+		
+	}
+	
 	
 }

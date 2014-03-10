@@ -524,7 +524,7 @@ public class ProjectDbAdapter {
 	public Cursor findSecondLevelField(long projId) {
 
 	 	   return mDb.query(DATABASE_TABLE_FIELD, new String[] {KEY_ROWID, PROJ_ID,
-	  			  PROJ_NAME,TYPE,LABEL,PREVALUE,CAT}, PROJ_ID + "=" + projId +" and "+ TYPE + "=\"secondLevel\"", null, null, null, null);		
+	  			  PROJ_NAME,TYPE,LABEL,PREVALUE,CAT}, PROJ_ID + "=" + projId +" and ("+ TYPE + "=\"secondLevel\" or "+ TYPE + "=\"polygon\"  or "+ TYPE + "=\"multiPhoto\")", null, null, null, null);		
 	}
 	
 	public Cursor findThesaurusField(long projId) {
@@ -574,6 +574,24 @@ public class ProjectDbAdapter {
 		
 		
 		return mDb.update(DATABASE_TABLE_FIELD, vals, PROJ_ID + "=" + idRs +" and "+ KEY_ROWID +"="+fieldId, null) > 0;
+		
+	}
+	
+	public boolean setFieldLabel(long projId, long fieldId, String fieldLabel) {
+		
+		ContentValues vals = new ContentValues();
+		vals.put(LABEL,fieldLabel);
+		
+		return mDb.update(DATABASE_TABLE_FIELD, vals, PROJ_ID + "=" + projId +" and "+ KEY_ROWID +"="+fieldId, null) > 0;
+		
+	}
+	
+	public boolean updatePhotoType(long projId,long fieldId) {
+		
+		ContentValues vals = new ContentValues();
+		vals.put(TYPE,"multiPhoto");
+		
+		return mDb.update(DATABASE_TABLE_FIELD, vals, PROJ_ID + "=" + projId +" and "+ KEY_ROWID +"="+fieldId, null) > 0;
 		
 	}
 
@@ -637,6 +655,22 @@ public class ProjectDbAdapter {
     			  PROJ_NAME,TYPE,LABEL,PREVALUE,CAT}, PROJ_FIELD_ID + "=" + rsId+" and "+ PROJ_NAME + "=\"" +attName+"\"", null, null, null, null);
     
     }
+      
+      public Cursor fetchSecondLevelFieldFromProjectByProjectId(long projId, String attName) throws SQLException {
+
+  	 	Cursor mCursor=mDb.rawQuery("" +
+  	 			"SELECT projFieldId,SecondLevelFieldTable._id, SecondLevelFieldTable.name " +
+  	 			"FROM FieldTable, ProjectTable,SecondLevelFieldTable " +
+  	 			"where projId="+projId+" and projId=ProjectTable._id  and projFieldId=FieldTable._id" +
+  	 			" and SecondLevelFieldTable.name=\""+attName+"\"",null);
+  	 	
+  	    if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+  	 	
+   	  return mCursor;
+   	  
+   }
       
 
   	public boolean setSecondLevelFieldVisibilty(long idRs, String attName, boolean visible) {

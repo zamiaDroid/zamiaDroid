@@ -6,32 +6,31 @@ import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import uni.projecte.R;
 import uni.projecte.controler.MultiPhotoControler;
 import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.ProjectField;
-import uni.projecte.dataTypes.Utilities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.PorterDuff;
-import android.os.Bundle;
-import android.os.Environment;
-import android.text.format.DateFormat;
-import android.view.Gravity;
+import android.net.Uri;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class MultiPhotoFieldForm extends PhotoFieldForm {
 
@@ -43,13 +42,15 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 	
 	/* Main container */
 	private LinearLayout llPhotosList;
-	private LinearLayout llActionButtons;
 
 	/* View elements */
 	private ImageButton rmPhotoButton;
 	private ImageButton editOkButton;
 	private ImageButton viewPhotoButton;
-
+	private ImageButton showPathButton;
+	
+	private View llPhotoField;
+	private TextView etPhotoPath;
 	
 	private HorizontalScrollView imageScroll;
 	
@@ -59,6 +60,7 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 	private String secondLevelId;
 	private long citationId;
 	
+	private int selectedPhoto=-1;
 	
 	
 		
@@ -66,24 +68,23 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 		
 		super(baseContext,projId,field,llField);
 		
+		LayoutInflater inflater = (LayoutInflater) baseContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
+		llPhotoField=(View) inflater.inflate(R.layout.photo_field,null);		
+		
 		PHOTO_FIELD_MODE=mode;
 	
 		photoList=new ArrayList<String>();
-		newPhotos=new ArrayList<String>();
-		
+		newPhotos=new ArrayList<String>();		
 
 		/* Layout resources */
-		
-		imageScroll=new HorizontalScrollView(baseContext);
-		llPhotosList= new LinearLayout(baseContext);
+		imageScroll=(HorizontalScrollView) llPhotoField.findViewById(R.id.hsImageScroll);
+		llPhotosList= (LinearLayout) llPhotoField.findViewById(R.id.llPhotosList);
 
-		
-		imageScroll.addView(llPhotosList);
 		imageScroll.setTag(field.getName());
 
 		
 	    createLayoutButtons();
-		llField.addView(imageScroll);
+		llField.addView(llPhotoField);
 		
 		if(PHOTO_FIELD_MODE==CREATE_MODE){
 
@@ -96,46 +97,27 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 	private void createLayoutButtons() {
 		
 		//buttons
-		photoButton=(ImageButton) new ImageButton(baseContext);
-		photoButton.setBackgroundResource(android.R.drawable.ic_menu_camera);
-		   
-		rmPhotoButton=(ImageButton) new ImageButton(baseContext);
-		rmPhotoButton.setBackgroundResource(android.R.drawable.ic_menu_delete);
-				
-		viewPhotoButton=(ImageButton) new ImageButton(baseContext);
-		viewPhotoButton.setBackgroundResource(android.R.drawable.ic_menu_view);
+		photoButton=(ImageButton)llPhotoField.findViewById(R.id.btPhotoButton);		   
+		rmPhotoButton=(ImageButton) llPhotoField.findViewById(R.id.btRmPhoto);
+		viewPhotoButton=(ImageButton) llPhotoField.findViewById(R.id.btViewPhoto);
+		editOkButton=(ImageButton) llPhotoField.findViewById(R.id.btEditOk);
+		showPathButton=(ImageButton) llPhotoField.findViewById(R.id.btShowPath);
+		etPhotoPath=(TextView)llPhotoField.findViewById(R.id.etPhotoPath);
 		
-		editOkButton=(ImageButton) new ImageButton(baseContext);
-		editOkButton.setBackgroundResource(android.R.drawable.ic_menu_close_clear_cancel);
-		   
 		//by default rmButton is gone
 		rmPhotoButton.setVisibility(View.GONE);
 		viewPhotoButton.setVisibility(View.GONE);
 		editOkButton.setVisibility(View.GONE);
+		showPathButton.setVisibility(View.GONE);
+		etPhotoPath.setVisibility(View.GONE);
 		
-				
 		photoButton.setTag(field.getName());
 		
 		viewPhotoButton.setOnClickListener(viewPhoto);
 		editOkButton.setOnClickListener(removePhotoActions);
 		rmPhotoButton.setOnClickListener(removePhoto);
-
-
-		llActionButtons=new LinearLayout(baseContext);
-		llActionButtons.setOrientation(1);
-
-		LayoutParams param = new LinearLayout.LayoutParams(
-				LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT, 0.0f);
-
-		llActionButtons.setLayoutParams(param);
-
-		llActionButtons.addView(photoButton);
-		llActionButtons.addView(rmPhotoButton);
-		llActionButtons.addView(viewPhotoButton);
-		llActionButtons.addView(editOkButton);
-		
-		llField.addView(llActionButtons);
+		showPathButton.setOnClickListener(showPath);
+		etPhotoPath.setOnClickListener(openGallery);
 				
 	}
 	
@@ -162,20 +144,25 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 
 	public void addPhoto(String imageFilePath) {
 
+		Log.i("Photo","Intentant obrir: "+imageFilePath);
+		
 		File photos = new File(imageFilePath);
-        Bitmap b = decodeFile(photos);
+       // Bitmap b = decodeFile(photos);
          
-        if(b!=null){
+       // if(b!=null){
         
-	        b= createScaledBitmap(b);
+	        //b= createScaledBitmap(b);
 	        
+        	Bitmap b=PhotoUtils.decodeBitmap(imageFilePath,(int)(IMAGE_MAX_SIZE*0.70),true);
+        	
 	        ImageView newImage=new ImageView(baseContext);
-	    	LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+	    	LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			llp.setMargins(5, 5, 5, 5);
 	        newImage.setImageBitmap(b);		
 	        newImage.setLayoutParams(llp);
 	
 	        newImage.setTag(imageFilePath);
+	        newImage.setAdjustViewBounds(true);
 	        
 	        newImage.setOnClickListener(showPhotoActions);
 	        
@@ -183,7 +170,7 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 	        
 	        photoList.add(0, imageFilePath);
         
-        }
+       // }
   
 		
 	}
@@ -254,6 +241,8 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 
 	private Bitmap decodeFile(File f) {
 	    try {
+	    	
+	    	
 	        // decode image size
 	        BitmapFactory.Options o = new BitmapFactory.Options();
 	        o.inJustDecodeBounds = true;
@@ -274,6 +263,8 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 	        // decode with inSampleSize
 	        BitmapFactory.Options o2 = new BitmapFactory.Options();
 	        o2.inSampleSize = scale;
+
+	        
 	        return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
 	    }
 	    catch (FileNotFoundException e) {
@@ -282,28 +273,24 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 	}
 	
 	
-	
-	private Bitmap adjustOpacity(Bitmap bitmap, int opacity){
-		
-		Bitmap mutableBitmap = bitmap.isMutable() 
-				? bitmap
-				: bitmap.copy(Bitmap.Config.ARGB_8888, true);
-		
-		Canvas canvas = new Canvas(mutableBitmap);
-		int colour = (opacity & 0xFF) << 24;
-		
-		canvas.drawColor(colour, PorterDuff.Mode.DST_IN);
-		
-		return mutableBitmap;
-	
-	}
-	
 	private OnClickListener showPhotoActions= new OnClickListener() {
 
         public void onClick(View v) {
           		                	
-        	if(rmPhotoButton.getVisibility()==View.VISIBLE) hideButtons();
-        	else showButtons((String) v.getTag());
+        	if(rmPhotoButton.getVisibility()==View.VISIBLE) {
+        		
+        		hideButtons();
+
+            	int position=getImagePosition((String)rmPhotoButton.getTag());
+            	((ImageView) llPhotosList.getChildAt(position)).setAlpha(255);
+            	
+        	}
+        	else {
+        		
+        		showButtons((String) v.getTag());
+        		((ImageView)v).setAlpha(125);
+        	
+        	}
             	
         }
    };
@@ -312,15 +299,17 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 	   
 	 	rmPhotoButton.setVisibility(View.VISIBLE);
     	rmPhotoButton.setTag(photoPath);
-   	
     	      
     	editOkButton.setVisibility(View.VISIBLE);
     	editOkButton.setTag(photoPath);
     	
     	viewPhotoButton.setVisibility(View.VISIBLE);
     	viewPhotoButton.setTag(photoPath);
-	   
-   }
+    	
+		showPathButton.setVisibility(View.VISIBLE);
+		showPathButton.setTag(photoPath);
+		
+	}
    
    private void hideButtons(){
 	   
@@ -329,7 +318,11 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 		editOkButton.setVisibility(View.GONE);
 		
 		viewPhotoButton.setVisibility(View.GONE);
-	   
+		
+		showPathButton.setVisibility(View.GONE);
+    	etPhotoPath.setVisibility(View.GONE);
+    	
+   		   
    }
    
    private int getImagePosition(String imagePath){
@@ -383,12 +376,42 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
         	
         }
    };
+   
+	private OnClickListener showPath= new OnClickListener() {
+
+        public void onClick(View v) {
+          		 
+        	etPhotoPath.setVisibility(View.VISIBLE);
+        	
+        	String imagePath=(String)v.getTag();
+        	etPhotoPath.setText(imagePath);
+        	etPhotoPath.setTag(imagePath);
+    		
+
+        }
+   };
+   
+	private OnClickListener openGallery= new OnClickListener() {
+
+        public void onClick(View v) {
+        	   
+        	   Intent intent = new Intent();
+        	   intent.setAction(android.content.Intent.ACTION_VIEW);
+        	   intent.setDataAndType(Uri.fromFile(new File((String)v.getTag())),"image/jpeg");
+        	   baseContext.startActivity(intent);
+
+        }
+   };
+   
 	
 	private OnClickListener removePhotoActions= new OnClickListener() {
 
         public void onClick(View v) {
           		                	
         	hideButtons();
+        	
+        	int position=getImagePosition((String)rmPhotoButton.getTag());
+        	((ImageView) llPhotosList.getChildAt(position)).setAlpha(255);
             	
         }
    };

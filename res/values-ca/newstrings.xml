@@ -55,6 +55,7 @@
      <string name="projCreationRep">Des de repositori</string>
      <string name="projCreationCit">Des de fitxer de citacions</string>
      <string name="projCreationFagus">Des de projecte Fagus (B-VegAna)</string>
+     <string name="projCreationProj">Des de fitxer de projecte (B-VegAna)</string>
   
      <string name="aboutUs">Sobre nosaltres</string>
     
@@ -121,7 +122,7 @@
         
      <string name="countFiltered"><b>Filtrades:</b> %1d | </string>
      <string name="countTotal"><b>Total:</b> %1d </string>
-     <string name="countSelected"><b>Seleccionades:</b> %1d | </string>
+     <string name="countSelected"><b>Selecció:</b> %1d | </string>
          
      <string name="alertWrongCoordinates">Coordenades incorrectes</string>
      <string name="noCitationsSelected">No hi ha citacions seleccionades</string>
@@ -189,7 +190,6 @@
   <string name="thWrongFile">Fitxer incorrecte</string> 
   
   <string name="thImportPlainFirstColumnLabel">Etiquetes a la 1a fila</string> 
-  <string name="thImportPlainRemoveCommas">Eliminar \"\"</string> 
       
    <string name="btThImport">Importa tesaure</string> 
    <string name="tvThNameHit">nom del tesaure ....</string> 
@@ -204,6 +204,7 @@
   <string name="rbFilterCompleteTaxon">Per taxon complert</string>
   <string name="rbFilterTaxonGenus">Per gènere</string>    
   <string name="rbFilterWrongTaxon">No presents al tesaure</string>    
+  <string name="rbFilterNoOk">Tàxons no confirmats</string>    
   <string name="cbMyTracksInfoDialog">No tornar a veure el missatge</string>    
   <string name="btOk">Acceptar</string>    
       
@@ -233,7 +234,7 @@
     <string name="trackProjectDescription">Track del programa ZamiaDroid del projecte</string>
     <string name="trackProjectNameDialog">nom per defecte:</string>
     <string name="trackRemoveDialog">Vols esborrar el track</string>
-    <string name="waitingGPS">Esperant GPS &#8230;</string>
+    <string name="waitingGPS">Esperant GPS</string>
     <string name="mMapsOptions">Opcions del mapa</string>
     <string name="mLoadTrack">Carregar track</string>
    	<string name="trackRegistering">Enregistrant track</string>
@@ -244,9 +245,11 @@
     
     <string name="filterTaxonGenus">Taxon per gènere</string>
     <string name="filterNotInThesaurus">no present al tesaure</string>
+    <string name="filterNotOk">Tàxons no OK</string>
     <string name="filterTaxonGenusMessage">Buscant taxons amb gènere</string>
     <string name="filterNotInThesaurusMessage">Descartant tàxons correctes respecte al tesaure</string>
-   
+    <string name="filterNotOkMessage">Descartant tàxons confirmats</string>
+    
     <string name="utm10km">10x10</string>    
       
     <string name="utm1km">1x1</string>    
@@ -335,12 +338,46 @@
     <string name="fieldTypePhoto">fotografia</string>
     <string name="fieldTypePredefined">predefinit</string>
     <string name="fieldTypeSubProject">sub-projecte</string>
-       
+    <string name="fieldTypePolygon">polígon</string>
+    
+    
     <string name="mCheckTaxonTh">Exclosos del tesaure</string>
+    <string name="btStoragePrim">Emm. Primari</string>
+    <string name="btStorageSec">Emm. Secundari</string>
     <string name="mAddCitation">Afegir citació</string>
+    
+    <string formatted="false" name="zamiaImportProjAddFields">El fitxer té &lt;b> %1d camps.&lt;/b> Selecciona els que vols afegir al nou projecte.</string>
+	
+	<string name="citationWrongFileFormat">El fitxer no té un format %1s correcte</string>
+    <string name="pdCheckingCitFile">Comprovant fitxer de citacions&#8230;</string>
     
     <string name="thChangeInfo">El tesaure carregat al sistema ha estat actualitzat. Es baixarà el nou tesaure i serà substituït per l\'actual.</string>
   	<string formatted="false" name="thChangeTitle">El tesaure %1s s\'ha d\'actualitzar! El tesaure va ser carregat %2s.</string>
   
+  	    
+   <string name="changeMapMarker">Canvia marcador</string>
+   
+   <string name="uniqueField">No hi pot haver més d\'un camp %1s</string>
+   <string name="polAddPoint">Afegir punt</string>
+   <string name="polIsClosed">El polígon ja està tancat</string>
+  <string name="polClose">Tanca polígon</string>
+   
+   <string name="polCantClose">Es necessiten més de 2 punts per a tancar el polígon</string>
+   <string name="polPoints">Punts</string>
+   <string name="polEdit">Edició sobre mapa</string>
+   <string name="polRemove">Esborrar polígon</string>
+   <string name="polRemoveLastPoint">Esborrar darrer punt</string>
+   <string name="polExit">Surt edició polígon</string>
+   <string name="tracksInfo">Informació - Tracks</string>
     
+   <string name="alertItemRemoved">Compte! El valor %1s d\'aquest camp ha estat esborrat de la llista!</string>
+   <string name="wrongProjectFile">El fitxer seleccionat no defineix un projecte %1s correcte</string>
+     
+   <string name="thImportPlainRemoveCommas">Eliminar \"\"</string> 
+   
+    <string name="dialogChangePhotoField">S\'ha actualitzat el camp fotografia. Per a gaudir de les noves funcionalitats i per a no perdre el suport es recomana actualitzar al nou camp fotografia. Vols actualitzar-lo?</string>
+   <string name="changePhotosFinished">S\'han canviat les fotos de forma correcta</string>
+   <string name="dialogUpdatePhotoFieldTitle">Actualitzant citacions amb fotografia</string>
+   <string name="hasPhoto">Conté fotografia</string>
+   <string name="mRemovePhotoCache">Esborrar memòria cau de fotografies</string>
 </resources>

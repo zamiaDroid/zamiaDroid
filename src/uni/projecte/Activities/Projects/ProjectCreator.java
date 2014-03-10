@@ -19,16 +19,10 @@ package uni.projecte.Activities.Projects;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import uni.projecte.Main;
 import uni.projecte.R;
-import uni.projecte.R.array;
-import uni.projecte.R.id;
-import uni.projecte.R.layout;
-import uni.projecte.R.string;
 import uni.projecte.controler.ProjectSecondLevelControler;
-import uni.projecte.dataLayer.ProjectManager.FieldCreator;
-import uni.projecte.dataLayer.ProjectManager.examples.ExampleProjectCreator;
 import uni.projecte.controler.ThesaurusControler;
+import uni.projecte.dataLayer.ProjectManager.FieldCreator;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
 import android.app.Activity;
@@ -36,7 +30,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -60,7 +53,6 @@ public class ProjectCreator extends Activity{
 	   private Spinner spinnerTh;
 	   private CheckBox checkBox;
 	   private ProjectSecondLevelControler rsCont;
-	   private ExampleProjectCreator epC;
 	   private long projId;
 	   
 	   private long subPojId=0;
@@ -226,24 +218,32 @@ public class ProjectCreator extends Activity{
 	        	        	fc.createComplexFieldDialog(messageHandler);
 	        	        	
 	        	        }
-	        	        else if(items[item].equals(items[2])){
+	        	        /*else if(items[item].equals(items[2])){
 	        	        	
 	        	        	//camp fotografia
 	        	        	fc.createPredFieldDialog("photo",messageHandler);
 
+	        	        }*/
+	        	        else if(items[item].equals(items[2])){
+	        	        	
+	        	        	//Photo field
+	        	        	if(fc.repeatedFieldType("multiPhoto")) fc.repeatedToast("multiPhoto");
+	        	        	else fc.createPredFieldDialog("multiPhoto",messageHandler);
+
 	        	        }
 	        	        else if(items[item].equals(items[3])){
 	        	        	
-	        	        	//camp fotografia
-	        	        	fc.createPredFieldDialog("multiPhoto",messageHandler);
+	        	        	//camp polygon
+	        	        	if(fc.repeatedFieldType("polygon")) fc.repeatedToast("polygon");
+	        	        	else fc.createPredFieldDialog("polygon",messageHandler);
 
 	        	        }
 	        	        else{
 	        	        	
 	        	        	//camps de dos nivells
 	        	        	//fc.createPredFieldDialog("secondLevel");
-	        	        	
-	        	        	fc.createPredFieldDialog("secondLevel",messageHandler);
+	        	        	if(fc.repeatedFieldType("secondLevel")) fc.repeatedToast("secondLevel");
+	        	        	else fc.createPredFieldDialog("secondLevel",messageHandler);
 
 	        	        }
 	        	    }
@@ -275,6 +275,7 @@ public class ProjectCreator extends Activity{
 			
 			return false;
 		}
+		
 		
 		/*
 		 * This Method gets the project name and the created Attributes or Fields and creates a new Project in the system
@@ -419,6 +420,15 @@ public class ProjectCreator extends Activity{
 	    				else if (at.getType().equals("multiPhoto")){
 	    					
 	    					fieldId=rsCont.addProjectField(projId, at.getName(),at.getLabel(), at.getDesc(),at.getValue(),"multiPhoto","ECO");
+	    					
+	    					subPojId++;
+	    					
+	    					rsCont.updateSubFieldId(-subPojId, fieldId);
+	    					
+	    				}
+	    				else if (at.getType().equals("polygon")){
+	    					
+	    					fieldId=rsCont.addProjectField(projId, at.getName(),at.getLabel(), at.getDesc(),at.getValue(),"polygon","ECO");
 	    					
 	    					subPojId++;
 	    					

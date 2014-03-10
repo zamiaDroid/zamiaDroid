@@ -18,9 +18,6 @@
 	<string name="mActivateGPS">Activar GPS</string>
 	<string name="mDesactivateGPS">Desactivar GPS</string>
 
-	<!-- SubProject -->
-	<string name="btShowList">Veure llistat</string>
-
 	<!-- Photo Description -->
 	<string name="photoDescription">Imatge capturada amb el zamiaDroid al projecte: %1s</string>
 	

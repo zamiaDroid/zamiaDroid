@@ -6,16 +6,19 @@ android:layout_height="fill_parent"
 xmlns:android="http://schemas.android.com/apk/res/android"
 android:orientation="vertical"
 >
+
 <LinearLayout
 android:id="@+id/widget29"
 android:layout_width="wrap_content"
-xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="wrap_content" android:orientation="vertical">
+android:layout_height="wrap_content" android:orientation="vertical">
+
+    
     <LinearLayout android:orientation="horizontal" android:layout_height="fill_parent" android:id="@+id/linearLayout2" android:layout_width="wrap_content">
         <RadioGroup android:layout_height="wrap_content" android:orientation="vertical" android:layout_width="fill_parent" android:id="@+id/predProjRG">
             <RadioButton android:checked="true" android:layout_height="wrap_content" android:text="@string/projCreationFree" android:layout_width="wrap_content" android:id="@+id/rbFree"></RadioButton>
             <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/projCreationRep" android:id="@+id/rbRepository"></RadioButton>
             <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/projCreationCit" android:id="@+id/rbCitationsFile"></RadioButton>
-            <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/projCreationFagus" android:id="@+id/rbProject"></RadioButton>
+            <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/projCreationProj" android:id="@+id/rbProject"></RadioButton>
         </RadioGroup>
     </LinearLayout>
 <LinearLayout android:id="@+id/linearLayout3" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_gravity="center" android:orientation="horizontal">

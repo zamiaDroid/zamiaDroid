@@ -51,7 +51,6 @@ public class MainLocationListener implements LocationListener {
 			    
 			   } 
               
-			 
 			updateLocation(loc);  
 			   
             handler.sendEmptyMessage(0);
@@ -62,7 +61,6 @@ public class MainLocationListener implements LocationListener {
     private void updateLocation(Location loc) {
 
     	lastKnownLocation=loc;
-    	
     	
     	if (lastKnownLocation!=null) {
     		

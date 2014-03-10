@@ -55,17 +55,17 @@ public class TouchImageView extends ImageView {
                 case MotionEvent.ACTION_DOWN:
                     savedMatrix.set(matrix);
                     start.set(event.getX(), event.getY());
-                    Log.d(TAG, "mode=DRAG");
+                    //Log.d(TAG, "mode=DRAG");
                     mode = DRAG;
                     break;
                 case MotionEvent.ACTION_POINTER_DOWN:
                     oldDist = spacing(event);
-                    Log.d(TAG, "oldDist=" + oldDist);
+                    //Log.d(TAG, "oldDist=" + oldDist);
                     if (oldDist > 10f) {
                         savedMatrix.set(matrix);
                         midPoint(mid, event);
                         mode = ZOOM;
-                        Log.d(TAG, "mode=ZOOM");
+                        //Log.d(TAG, "mode=ZOOM");
                     }
                     break;
                 case MotionEvent.ACTION_UP:
@@ -76,7 +76,7 @@ public class TouchImageView extends ImageView {
                     }
                 case MotionEvent.ACTION_POINTER_UP:
                     mode = NONE;
-                    Log.d(TAG, "mode=NONE");
+                    //Log.d(TAG, "mode=NONE");
                     break;
                 case MotionEvent.ACTION_MOVE:
                     if (mode == DRAG) {
@@ -85,7 +85,7 @@ public class TouchImageView extends ImageView {
                         matrix.postTranslate(event.getX() - start.x, event.getY() - start.y);
                     } else if (mode == ZOOM) {
                         float newDist = spacing(event);
-                        Log.d(TAG, "newDist=" + newDist);
+                        //Log.d(TAG, "newDist=" + newDist);
                         if (newDist > 10f) {
                             matrix.set(savedMatrix);
                             float scale = newDist / oldDist;

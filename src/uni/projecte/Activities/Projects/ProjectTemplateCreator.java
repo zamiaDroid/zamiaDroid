@@ -3,10 +3,6 @@ package uni.projecte.Activities.Projects;
 import uni.projecte.Main;
 import uni.projecte.R;
 import uni.projecte.Activities.Citations.CitationProjectImport;
-import uni.projecte.R.array;
-import uni.projecte.R.id;
-import uni.projecte.R.layout;
-import uni.projecte.R.string;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.dataLayer.ProjectManager.examples.ExampleProjectCreator;
 import uni.projecte.dataTypes.Utilities;
@@ -166,6 +162,12 @@ public class ProjectTemplateCreator extends Activity{
 				           
 				    	dialog.dismiss();
 				   		Intent myIntent = new Intent(getBaseContext(), ProjectImport.class);
+				   		
+				   		Bundle b= new Bundle();
+				   		b.putString("format", formats[item]);
+				   		
+				   		myIntent.putExtras(b);
+				   		
 			            startActivityForResult(myIntent,1);
 			            
 				    	   

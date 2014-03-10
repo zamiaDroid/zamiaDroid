@@ -26,6 +26,7 @@ import uni.projecte.R.id;
 import uni.projecte.R.layout;
 import uni.projecte.R.string;
 import uni.projecte.controler.ProjectControler;
+import uni.projecte.controler.ProjectSecondLevelControler;
 import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.dataLayer.CitationManager.Zamia.ZamiaCitationXMLparser;
 import uni.projecte.dataLayer.CitationManager.Zamia.ZamiaExportCitationReader;
@@ -440,12 +441,26 @@ public class CitationImportZamia extends Activity {
 	protected void createNewField(ProjectField projectField) {
 
 		Log.i("Import","Format:Zamia | (B) Action: Field Added -> "+projectField.getName()+" : "+projectField.getLabel());
-
+			
 		long fieldId=projCnt.createField(projId, projectField.getName(), projectField.getLabel(),"ECO", projectField.getType(), true);
 		
 		if(projectField.getPredValuesList().size()>0) projCnt.addFieldItemList(projId,fieldId,projectField.getPredValuesList());
-				
+
 		
+		//creating subProjectFields
+		if(projectField.isPolygon()){
+			
+			 ProjectSecondLevelControler projSLCnt= new ProjectSecondLevelControler(this);
+			 projSLCnt.createField(fieldId, "polygonAltitude", "polygonAltitude", "", "", "text");
+			
+		}
+		
+		if(projectField.isMultiPhoto()){
+			
+			 ProjectSecondLevelControler projSLCnt= new ProjectSecondLevelControler(this);
+			 projSLCnt.createField(fieldId, "Photo", "photo", "", "", "text");
+		}
+			
 	}
 	
 }

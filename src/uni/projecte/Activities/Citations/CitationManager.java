@@ -14,15 +14,14 @@ import uni.projecte.Activities.Miscelaneous.GalleryGrid;
 import uni.projecte.Activities.Projects.ProjectInfo;
 import uni.projecte.Activities.Thesaurus.ThesaurusTaxonChecker;
 import uni.projecte.controler.CitationControler;
+import uni.projecte.controler.CitationSecondLevelControler;
 import uni.projecte.controler.DataTypeControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.ProjectSecondLevelControler;
-import uni.projecte.controler.CitationSecondLevelControler;
 import uni.projecte.controler.ReportControler;
 import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.dataLayer.CitationManager.FileExporter;
 import uni.projecte.dataLayer.CitationManager.ListAdapter.CitationListAdapter;
-import uni.projecte.dataLayer.CitationManager.objects.Citation;
 import uni.projecte.dataLayer.CitationManager.objects.CitationHandler;
 import uni.projecte.dataLayer.ThesaurusManager.ListAdapters.ThesaurusAutoCompleteAdapter;
 import uni.projecte.dataLayer.ThesaurusManager.ListAdapters.ThesaurusGenusAutoCompleteAdapter;
@@ -40,10 +39,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Editable;
 import android.text.Html;
 import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -399,7 +396,7 @@ public class CitationManager extends Activity{
 		    	
 		    	if(filter){
 		    	
-			    	tvFilteredFields.setText(Html.fromHtml(String.format(getString(R.string.countFiltered), citHand.getFilteredCitationList().size())));
+			    	tvFilteredFields.setText(Html.fromHtml(String.format(getString(R.string.countFiltered), citHand.getCurrentList().size())));
 
 		    	} 
 		    	else{
@@ -615,7 +612,6 @@ public class CitationManager extends Activity{
 	        		
 	        		Utilities.showToast(getString(R.string.noCitationsSelected), this);
 	        		
-	        		
 	        	}
 	        	else{
 	        		
@@ -734,7 +730,7 @@ public class CitationManager extends Activity{
 					filterValue=spListValues.getSelectedItem().toString();
 					
 				}
-				else if(chosenFieldType.equals("boolean") || chosenFieldType.equals("photo")){
+				else if(chosenFieldType.equals("boolean") || chosenFieldType.equals("photo") || chosenFieldType.equals("multiPhoto")){
 					
 					if(cbFilter.isChecked()) filterValue="true";
 					else filterValue="false";
@@ -767,7 +763,7 @@ public class CitationManager extends Activity{
 						citHand.loadFilteredCitationsByDate(projId, comparator, filterValue);
 						
 					}
-					else if(chosenFieldType.equals("photo")){
+					else if(chosenFieldType.equals("photo") || chosenFieldType.equals("multiPhoto")){
 						
 						citHand.loadFilteredCitationsByPhoto(projId, chosenFieldId , filterValue);
 						
@@ -988,7 +984,9 @@ public class CitationManager extends Activity{
 		 		   	final RadioButton rbTaxonComplete = (RadioButton) taxonFilterdialog.findViewById(R.id.rbFilterCompleteTaxon);
 		 		   	final RadioButton rbTaxonGenus = (RadioButton) taxonFilterdialog.findViewById(R.id.rbFilterTaxonGenus);
 		 		   	final RadioButton rbTaxonNoTh = (RadioButton) taxonFilterdialog.findViewById(R.id.rbFilterWrongNames);
+		 		   	final RadioButton rbTaxonNoOk = (RadioButton) taxonFilterdialog.findViewById(R.id.rbFilterNoOk);
 
+		 		   	
 		 		   	etValueAuto=(AutoCompleteTextView) taxonFilterdialog.findViewById(R.id.tvTaxonName);
 		 		   	
 		 			String thName=projCnt.getThName();				   
@@ -1003,6 +1001,17 @@ public class CitationManager extends Activity{
 		 		   	
 		 		   	
 		 		   rbTaxonNoTh.setOnClickListener(new RadioButton.OnClickListener(){
+			             
+		    	    	public void onClick(View v){
+
+		    	    	        
+		    	    		etValueAuto.setVisibility(View.GONE);
+		    	    		
+		    	    	} 
+		    	    	             
+		    	    });
+		 		   
+		 		   rbTaxonNoOk.setOnClickListener(new RadioButton.OnClickListener(){
 			             
 		    	    	public void onClick(View v){
 
@@ -1074,6 +1083,13 @@ public class CitationManager extends Activity{
 				    			    	
 				    			    	chosenFieldType="thesaurus";
 				    			    	filterThesaurus(chosenFieldType, etValueAuto.getText().toString());
+
+				    			    }
+				    			    /* Common thSearch */
+				    			    else if(rbTaxonNoOk.isChecked()){
+				    			    	
+				    			    	chosenFieldType="notOk";
+				    			    	filterThesaurus(chosenFieldType, "");
 
 				    			    }
 				    			    
@@ -1151,6 +1167,29 @@ public class CitationManager extends Activity{
 			    else if(type.equals("thesaurus")){
 			    	
 			    	applyChosenFilter(taxonFilterdialog);		    	
+			    	
+			    }
+			    else if(type.equals("notOk")){
+			    	
+
+			        pdCheckingTh = new ProgressDialog(this);
+    			    pdCheckingTh.setMessage(getString(R.string.filterNotOkMessage));
+    			    pdCheckingTh.show();
+    				
+
+    				                 Thread thread = new Thread(){
+    				  	        	   
+    					                 @Override
+										public void run() {
+    					               	  
+    						    				citHand.filterNotOk(tC, thCheckHandler);	
+					               	  
+    					                 }
+    					           };
+    					           
+    					           
+    				   thread.start();
+    				   if(taxonFilterdialog.isShowing())  taxonFilterdialog.dismiss();			    	
 			    	
 			    }
 		    	
@@ -1240,11 +1279,11 @@ public class CitationManager extends Activity{
 					
 						
 					}
-					else if(type.equals("photo")){
+					else if(type.equals("photo") || type.equals("multiPhoto")){
 						
 						etValue.setVisibility(View.GONE);
 						cbFilter.setVisibility(View.VISIBLE);
-						cbFilter.setText("Conté fotografia");
+						cbFilter.setText(getString(R.string.hasPhoto));
 						
 					}
 					else if(type.equals("boolean")){
@@ -1360,7 +1399,8 @@ public class CitationManager extends Activity{
 	    					
 		    		    if(chosenFieldType.equals("genus")) updateUIFilterBar(getString(R.string.filterTaxonGenus),"", filterValue);
 		    		    else if(chosenFieldType.equals("notExists")) updateUIFilterBar(getString(R.string.filterNotInThesaurus),"", filterValue);
-		    		    		    		    
+		    		    else if(chosenFieldType.equals("notOk")) updateUIFilterBar(getString(R.string.filterNotOk),"", filterValue);
+		    		    
 		   			 	llFilter.setVisibility(View.VISIBLE);
 	    					
 	    				updateUICounters(true);
@@ -1542,16 +1582,20 @@ public class CitationManager extends Activity{
 			        		btOrderAlpha.getBackground().setColorFilter(new LightingColorFilter(0xFF000000, 0xFF89CC62));
 		        			citHand.setAlphaAsc(false);
 		        			
+		        			
 		        		}
 		        		else{
 		        			
 		        			btOrderAlpha.setBackgroundResource(R.drawable.order_alpha);
 			        		btOrderAlpha.getBackground().setColorFilter(new LightingColorFilter(0xFF000000, 0xFF89CC62));
 		        			citHand.setAlphaAsc(true);
-
+	        			
+		        			
 		        		}
 		        		
-		        		loadMainCitations(true);
+		        		loadMainCitations(false);
+
+		        		
 		        				        		
 		        	}
 		        	
@@ -1579,7 +1623,7 @@ public class CitationManager extends Activity{
 		        		citHand.setAlphaOrder(false);
 			    	    mainCitListView.setTextFilterEnabled(false);
 
-		        		loadMainCitations(false);
+		        		loadMainCitations(true);
 		        		
 		        	} 
 		        	else{
@@ -1954,7 +1998,7 @@ public class CitationManager extends Activity{
 			    	
 		    		
 		    		//when list is ordered alphabetically we set the TextFilter
-			    	if(citHand.isAlphaOrder()) mainCitListView.setTextFilterEnabled(true);
+			    	if(citHand.isAlphaOrder() && citHand.isAlphaAsc()) mainCitListView.setTextFilterEnabled(true);
 			    	else mainCitListView.setTextFilterEnabled(false);
 			    	 
 			    	 
@@ -2044,7 +2088,8 @@ public class CitationManager extends Activity{
 			 Log.i("Export","Format:"+format+" | (A) Info-> projectName:"+projectName+" fileName: "+fileName);	
 
 			 int statusFinal=0;
-			 
+			 ProjectSecondLevelControler slP=new ProjectSecondLevelControler(this);
+
 			 /* When our project is exportable to Quercus we'll use the method implemented in the subclass SecondLevelSampleControler */
 			 
 			 if(format.equals("Quercus")){
@@ -2052,6 +2097,12 @@ public class CitationManager extends Activity{
 				 CitationSecondLevelControler sC=new CitationSecondLevelControler(this);
 				 statusFinal=sC.exportProjectQuercus(projId, this,citHand.getSelectedCitationsId(), fileName, format,handlerExportProcessDialog);
 				 
+			 }
+			 else if(slP.isQuercusExportable(projId)>-1 && format.equals("Fagus")){
+				 
+				 CitationSecondLevelControler sC=new CitationSecondLevelControler(this);
+				 statusFinal=sC.exportProjectFagus(projId, this,citHand.getSelectedCitationsId(), fileName, format,handlerExportProcessDialog);
+ 
 			 }
 			 else if(format.equals("reportDocumentLabel")){
 				 
@@ -2065,28 +2116,22 @@ public class CitationManager extends Activity{
 		
 					CitationControler sC=new CitationControler(this);
 					statusFinal=sC.exportProject(projId,citHand.getSelectedCitationsId(),fileName, format,handlerExportProcessDialog);
-					
-					
-					ProjectSecondLevelControler slP=new ProjectSecondLevelControler(this);
 				
 					if(slP.isQuercusExportable(projId)>-1){
 						
 						CitationSecondLevelControler slC=new CitationSecondLevelControler(this);
-						
 						slC.exportSubCitations(projId,citHand.getSelectedCitationsId());
-						
 					
 				}
 				 
 			 }
 
-			 
+			 handlerExportProcessDialog.sendEmptyMessage(1);
 
-				handlerExportProcessDialog.sendEmptyMessage(1);
-
-				 Log.i("Export","Format:"+format+" | (A) Action: Citations Imported");	
+			 Log.i("Export","Format:"+format+" | (A) Action: Citations Imported");	
 				 
-				 return statusFinal;
+			return statusFinal;
+			
 		 }
 		 
 		 

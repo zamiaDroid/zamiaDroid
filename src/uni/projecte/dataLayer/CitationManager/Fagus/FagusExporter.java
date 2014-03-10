@@ -112,7 +112,11 @@ public class FagusExporter extends CitationExporter {
 			fc.setNatureness(FagusUtils.translateFagusNatures(baseContext, value));
 			
 		}
-		
+		else if(attName.compareTo("Phenology")==0){
+			
+			fc.setNatureness(FagusUtils.translateFagusPhenology(baseContext, value));
+			
+		}
 		else if(attName.compareTo("Sureness")==0){
 			
 			fc.addTaxon(value);

@@ -21,6 +21,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.util.Log;
+
 import uni.projecte.dataTypes.ParsedDataSet;
 
 
@@ -101,6 +103,7 @@ public class ZamiaCitationHandlerXML extends DefaultHandler{
          }else if(localName.equals("SecondaryCitationList")){
         	 
         	 fReader.setSecondLevelFields(true);
+         	 fReader.setSecondLevelType("secondLevel");
        	 
          }
          else if (localName.equals("CitationCoordinate")) {
@@ -119,11 +122,30 @@ public class ZamiaCitationHandlerXML extends DefaultHandler{
         	  
           }
           else if (localName.equals("ObservationDate")) {
-          	
-        	//  fReader.createObservationDate(atts.getValue("day"), atts.getValue("month"), atts.getValue("year"), atts.getValue("hours"), atts.getValue("mins"), atts.getValue("secs"));
         	  
           }
-             
+          else if(localName.equals("Polygon")){
+        	  
+         	 fReader.setSecondLevelFields(true);
+         	 fReader.setSecondLevelType("polygon");
+        	  
+          }
+          else if(localName.equals("PhotoList")){
+        	  
+          	 fReader.setSecondLevelFields(true);
+          	 fReader.setSecondLevelType("multiPhoto");
+         	  
+           }
+          else if(localName.equals("PolygonPoint")){
+        	  
+          	 fReader.createNewSample();
+         	  
+           }
+          else if(localName.equals("Photo")){
+        	  
+           	 fReader.createNewSample();
+          	  
+            }  
           else{
         	  
         	  ///no fem res...
@@ -147,10 +169,14 @@ public class ZamiaCitationHandlerXML extends DefaultHandler{
    			   
           }
           else if(localName.equals("value")){
+       	  
+        	  Log.i("Zamia","Inside: "+insideCitationField+" Repeated: "+repeatedCitation);
         	  
-        	  //Log.i("Cit","V: "+tempVal+" N:"+name);
-        	  
-        	  if(insideCitationField && !repeatedCitation) fReader.createDatumFields(tempVal,name,label,category);       	  
+        	  if(insideCitationField && !repeatedCitation) {
+        		  
+        		  fReader.createDatumFields(tempVal,name,label,category);    
+        		  
+        	  }   	  
         	  tempVal="";
         	  
           }
@@ -185,6 +211,16 @@ public class ZamiaCitationHandlerXML extends DefaultHandler{
               repeatedCitation=fReader.createObservationDate(tempVal);
               tempVal="";
 
+          }
+          else if(localName.equals("Polygon")){
+        	  
+          	 fReader.setSecondLevelFields(false);       	 
+        	  
+          }
+          else if(localName.equals("PhotoList")){
+
+           	 fReader.setSecondLevelFields(false);       	 
+        	  
           }
           else{
 

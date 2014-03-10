@@ -196,6 +196,12 @@ public class FieldCreator {
 
 			    	        	    	
 		    	    				}
+		    	    				else if (selected.equals("polygon")){
+		    	    					
+			    	        	    	a = new ProjectField(fieldName,etDesc.getText().toString(),fieldName,"","polygon");
+
+			    	        	    	
+		    	    				}
 		    	    				else if (selected.equals(predValues[2])){
 		    	    					
 			    	        	    	a = new ProjectField("CitationNotes",etDesc.getText().toString(),fieldName,"","simple");
@@ -261,16 +267,12 @@ public class FieldCreator {
 			    	        	    		
 			    	        	    		long fieldId=createField(a);
 			    	        	    		
-			    	        	    		if(secondField){
-				    	        	    		
-				    	        	    		chooseSecondFieldDialog(name,fieldId);
-				    	        	    		
-				    	        	    	}
+			    	        	    		if(secondField) chooseSecondFieldDialog(name,fieldId);
+				    	        	    				    	        	    		
+			    	        	    		if(a.isMultiPhoto()) createMultiPhotoField(fieldId);
 			    	        	    		
-			    	        	    		if(a.isMultiPhoto()){
-			    	        	    			
-			    	        	    			createMultiPhotoField(fieldId);
-			    	        	    		}
+			    	        	    		if(a.isPolygon()) createPolygonField(fieldId);
+
 			    	        	    		
 			    	        	    	}
 			    	        	    	else{
@@ -279,30 +281,17 @@ public class FieldCreator {
 				    	        	    	fieldNames.put(a.getName(), a);
 				    	        	    	fieldList.add(name+": "+a.getName()+" "+label+": "+a.getType());  	
 
-				    	        	    	//dataAdapter=new ArrayAdapter<String>(baseContext, R.layout.atrib_row, fieldList);
-
 				    	        	    	dataAdapter=new ProjectFieldCreatorListAdapter(baseContext, objFieldList);
 
-				    	        	    	
 				    	        	    	listAttributesPres.setAdapter(dataAdapter);
 				    	        	    	
+				    	        	    	if(secondField) chooseSecondFieldDialog(name,secondLevelId);			    	        	    	
 				    	        	    	
-				    	        	    	if(secondField){
-				    	        	    		
-				    	        	    		chooseSecondFieldDialog(name,secondLevelId);
-				    	        	    		
-				    	        	    		
-				    	        	    	}
-				    	        	    	
-				    	        	    	if(a.isMultiPhoto()){
-			    	        	    			
-				    	        	    		createMultiPhotoField(secondLevelId);
-			    	        	    		}
-				    	        	    	
+				    	        	    	if(a.isMultiPhoto()) createMultiPhotoField(secondLevelId);
 			    	        	    		
+			    	        	    		if(a.isPolygon()) createPolygonField(secondLevelId);
+
 			    	        	    	}
-			    	        	    	
-			    	       
 		    	    				
 			    	        	    	dialog.dismiss();
 			    	        	    	
@@ -323,6 +312,33 @@ public class FieldCreator {
 	    }
 
 	   
+	public void repeatedToast(String fieldType){
+			 
+			 String fieldTypeName="";
+			 
+			 if(fieldType.equals("multiPhoto")) fieldTypeName=baseContext.getString(R.string.fieldTypePhoto);
+			 else if(fieldType.equals("polygon")) fieldTypeName=baseContext.getString(R.string.fieldTypePolygon);
+			 else fieldTypeName=baseContext.getString(R.string.fieldTypeSubProject);
+			 
+			String text=String.format(baseContext.getString(R.string.uniqueField), fieldTypeName);	
+	 	    
+			Utilities.showToast(text, baseContext);
+	 	    
+	} 
+	
+	 public boolean repeatedFieldType(String fieldType){
+		 
+		 for(ProjectField field: objFieldList){
+			 
+			 if(field.getType().equals(fieldType)) return true;
+			 			 
+		 }
+		 
+		 return false;
+		 
+	 }
+	 
+	   
 	   
 	 private void createMultiPhotoField(long fieldId) {
 		   
@@ -342,7 +358,29 @@ public class FieldCreator {
 		 
 		 
 		 ProjectSecondLevelControler projSLCnt= new ProjectSecondLevelControler(baseContext);
-		 projSLCnt.createField(secLevId, "Photo", "photo", "", "", "ECO");
+		 projSLCnt.createField(secLevId, "Photo", "photo", "", "", "text");
+		   
+	}
+	 
+	 private void createPolygonField(long fieldId) {
+		   
+		 long secLevId;
+		 
+		 if(createField) {
+			   
+			   secLevId=fieldId;
+			   
+		   }
+		   else{
+			   
+			   secondLevelId++;
+			   secLevId=-secondLevelId;
+			   
+		   }
+		 
+		 
+		 ProjectSecondLevelControler projSLCnt= new ProjectSecondLevelControler(baseContext);
+		 projSLCnt.createField(secLevId, "polygonAltitude", "polygonAltitude", "", "", "text");
 		   
 	}
 
@@ -722,10 +760,11 @@ public class FieldCreator {
 						
 						attId=rsC.addProjectField(projId, at.getName(),at.getLabel(), at.getDesc(),at.getValue(),"multiPhoto","ECO");
 						
-						//createFakeSubProject(attId);
+					}
+					else if (at.getType().equals("polygon")){
 						
-						//crear subField
-						
+						attId=rsC.addProjectField(projId, at.getName(),at.getLabel(), at.getDesc(),at.getValue(),"polygon","ECO");
+									
 					}
 					else if (at.getType().equals("secondLevel")){
 						

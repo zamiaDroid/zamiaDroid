@@ -32,7 +32,7 @@ public class ThUpdater {
 	private PreferencesControler pC;
 	
 	private static String urlBDBCFlora="http://biodiver.bio.ub.es/biocat/servlet/biocat.ExportaThesaurusServlet?F12.0%25tesa=tax%25downloadthesa=true%25format=XML%25sinonims=true";
-    private static String bdbcFloraUpdated="2013-03-26 12:14:00";
+    private static String bdbcFloraUpdated="2013-03-26 10:14:00";
             	
 	private ProgressDialog pd;
 	private Handler removeUpdateDialog;

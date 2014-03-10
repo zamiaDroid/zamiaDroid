@@ -10,10 +10,7 @@
 
 <!-- Main submenus -->
 
-<string name="bDataType">Gestionnaire de thesaurus</string>
 <string name="set_preferences">Configuration</string>
-<string name="bConfiguration">Configuration</string>
-<string name="bChooseProjectButton">Choisir un projet</string>
 
 <!-- Welcome dialog -->
 
@@ -32,13 +29,5 @@
 
 <string name="mChooseProject">Choisir un projet</string>
 
-
-
-<!-- About Us texts -->
-
-<string name="aboutUsAuthor"><b>Direction: </b> Xavier Font</string>
-<string name="aboutUsSupport"><b>Idée originale: </b> David Martí Pino et Xavier Font</string>
-<string name="aboutUsThanks"><b>Développement: </b> David Martí Pino</string>
-<string name="aboutUsMore"><b>Remerciements à: </b> Josep Vilaplana, Javier Moreno et Gwendolyn Peyre</string>
 
 </resources>

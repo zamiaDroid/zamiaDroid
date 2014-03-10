@@ -9,8 +9,8 @@
         android:id="@+id/rb1km"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="3dp"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:padding="3dp" >
 
         <TextView
             android:id="@+id/textView1"
@@ -28,19 +28,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="@string/mapConf10km" />
+                android:text="@string/mapConf10km"
+                android:textSize="12sp" />
 
             <RadioButton
                 android:id="@+id/rb1km"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mapConf1km" />
+                android:text="@string/mapConf1km"
+                android:textSize="12sp" />
 
             <RadioButton
                 android:id="@+id/rb1m"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mapConf1m" />
+                android:text="@string/mapConf1m"
+                android:textSize="12sp" />
         </RadioGroup>
     </LinearLayout>
 
@@ -48,20 +51,28 @@
         android:id="@+id/cbShowCompass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/mapConfShowCompass" />
-    
-        <CheckBox
+        android:text="@string/mapConfShowCompass"
+        android:textSize="12sp" />
+
+    <CheckBox
         android:id="@+id/cbShowAltitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/mapConfShowConfig" />
-    
+        android:text="@string/mapConfShowConfig"
+        android:textSize="12sp" />
+
     <CheckBox
         android:id="@+id/cbShowMyTracks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/mapConfShowMyTracks" />
+        android:text="@string/mapConfShowMyTracks"
+        android:textSize="12sp" />
 
-
+    <CheckBox
+        android:id="@+id/cbChangeMapMarkers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Canviar marcadors"
+        android:textSize="12sp" />
 
 </LinearLayout>

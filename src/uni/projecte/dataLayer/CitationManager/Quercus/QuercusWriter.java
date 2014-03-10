@@ -31,7 +31,6 @@ import org.xmlpull.v1.XmlSerializer;
 import uni.projecte.controler.PreferencesControler;
 import android.content.Context;
 import android.os.Environment;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.Xml;
 
@@ -52,6 +51,7 @@ public class QuercusWriter {
 	private boolean createdSideData=false;
 	
 	private String lastCategory="";
+	private String plotArea="";
 	
 	String result;
 	
@@ -162,7 +162,6 @@ public class QuercusWriter {
 		
 			
 			today = df.parse(date);           
-			System.out.println("Today = " + DateFormat.format("dd-MM-yyyy hh:mm:ss",today));
 			
 			}
 			
@@ -193,15 +192,8 @@ public class QuercusWriter {
 		}
 		
 		
-		
-
-		
-		
-		
 	}
-	
-
-	
+		
 	private boolean newCategory(String category){
 		
 		
@@ -293,8 +285,9 @@ public class QuercusWriter {
 		
         try {
         	
-        	
 			Log.d("XML", "Releve > ");
+			
+			createReleveArea();
 
 			serializer.endTag("","Releve");
 			lastCategory="";
@@ -342,27 +335,37 @@ public class QuercusWriter {
 	
 	public void addReleveArea(String area){
 		
+		plotArea=area;
+		
+	}
+	
+	private void createReleveArea(){
+		
     	
 		try {
 
 			
-        serializer.startTag("", "PlotArea");
+			if(!plotArea.equals("")) {
+			
+	        serializer.startTag("", "PlotArea");
+	        
+	        	try {
+	        
+	        		float areaF=Float.parseFloat(plotArea);
+	        		serializer.text(areaF+"");
+	        	
+	        	}
+	        	catch (NumberFormatException e) {
+					
+	    			e.printStackTrace();
+	    			
+	    		}
+	        	
+	        serializer.endTag("", "PlotArea");
         
-        	try {
-        
-        		float areaF=Float.parseFloat(area);
-        		serializer.text(areaF+"");
-        	
-        	}
-        	catch (NumberFormatException e) {
-				
-    			e.printStackTrace();
-    			
-    		}
-        	
-        serializer.endTag("", "PlotArea");
-        
-        
+	        plotArea="";
+	        
+		}
 		
 		}catch (IllegalArgumentException e) {
 						
@@ -471,10 +474,7 @@ public class QuercusWriter {
 			e.printStackTrace();
 		}
 		
-		
-		
 	}
-	
 
 	
 	/*
@@ -487,9 +487,7 @@ public class QuercusWriter {
 	
 	public void writeReleveCoordinate(String code){
 
-    	
 		try {
-
 			            
 	        serializer.startTag("", "CitationCoordinate");
 				serializer.attribute("", "code",code);

@@ -7,7 +7,6 @@
 	<string name="bSuccessCitationCreation">Citation sauvegardée correctement</string>
 	<string name="bUpdateLocation">GPS</string>
     <string name="backFromCitationMessage">Voulez-vous quitter la capture de citations ? Les données non sauvegardées seront perdues</string>
-    <string name="choosevalue">Choisir un élément</string>
 
     <!-- Citation Editor -->
     
@@ -19,11 +18,7 @@
 	<string name="mActivateGPS">Activer le GPS</string>
 	<string name="mDesactivateGPS">Désactiver le GPS</string>
 	
-	
 	<string name="photoMissing">Aucune photographie n\'a été ajoutée</string>
-	
-	<!-- SubProject -->
-	<string name="btShowList">Show list</string>
 	
 	<!-- Photo Description -->
 	<string name="photoDescription">Image captured by zamiaDroid within the project: %1s</string>

@@ -69,10 +69,7 @@ public class ProjectField{
 		this.visible=visible;
 		predValues=new ArrayList<String>();
 
-		
 	}
-
-
 	
 	public ProjectField (String nom, String desc, String label,String value,String type){
 		
@@ -136,10 +133,14 @@ public class ProjectField{
 		this.value=value;
 		this.type=type;
 		predValues=new ArrayList<String>();
-
 		
 	}
 
+	public String toString(){
+		
+		return id+" "+name+" ["+type+"]";
+				
+	}
 
 	public String getName() {
 		return name;
@@ -161,8 +162,6 @@ public class ProjectField{
 		this.desc = desc;
 	}
 
-
-
 	public void setName(String nom) {
 		this.name = nom;
 	}
@@ -172,7 +171,10 @@ public class ProjectField{
 		this.value = value;
 	}
 
-
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	
 	public String getType() {
 		return type;
 	}
@@ -200,7 +202,7 @@ public class ProjectField{
 	
 	public boolean isSubFieldExport(){
 		
-		return isMultiPhoto();
+		return isMultiPhoto() || isPolygon();
 		
 	}
 	
@@ -209,9 +211,20 @@ public class ProjectField{
 		return type.equals("multiPhoto");		
 	}
 	
+	public boolean isPolygon(){
+		
+		return type.equals("polygon");		
+	}
+	
 	public boolean isSecondLevel(){
 		
 		return type.equals("secondLevel");		
+	}
+	
+	public boolean isPredefined(){
+		
+		return type.equals("complex");
+		
 	}
 
 	public String getCategory() {

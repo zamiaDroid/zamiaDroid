@@ -8,31 +8,15 @@
     <!-- Project List -->
 
     <string name="tvInfoListProj"><b>This is the project list. Project\'s properties and fields can be displayed by clicking on the project\'s name. </b></string>
-    <string name="projDescription">Project description</string>
     <string name="deleteProjQuestion">"Do you want to delete the project?"</string>
-    <string name="projFieldList">"Project's field list"</string>
     <string name="yes">"Yes"</string>
     <string name="no">"No"</string>
     <string name="tvProjectName">"Project name:"</string>
    	<string name="removeFieldQuestion">There are %1$d observations with the %2$s field filled. Are you sure you want to lose these data?</string>
    	<string name="removeFieldQuestionNoCit">There are no observations with the %1$s field filled. No data will be lost. Do you want to delete this field?</string>
    	
-    
-
-    <!-- Project Chooser -->
-
-    <string name="noFiles">There is no project</string>
-    <string name="titulo_no_directorio">This is not a folder</string>
-    <string name="no_directorio">This is a file. Not a folder!</string>
-   
-    <string name="cancelar">Cancel</string>
-
 
     <!-- Project Import -->
-
-    <string name="pImportIntroText">Choose a project from Fagus to import</string>
-    <string name="mImportFagus">Import Project from File</string>
-    <string name="mImportProjectFromCitations">Create a project from a quote file</string>
     <string name="sameNameProject">There already is an existing project with this name </string>
 
     <!-- Project Creation -->
@@ -40,7 +24,6 @@
     <string name="projName">Project name</string>
     <string name="projectFieldList">Field list</string>
     <string name="brsAddField">Add new field</string>
-    <string name="bAddPredField">Add predefined field</string>
     <string name="tvChooseTh">Choose thesaurus</string>
     <string name="projNameMissing">There is no Project name</string>
     <string name="projFieldsMissing">There is no Project field</string>
@@ -76,7 +59,6 @@
     <string name="bCreateField">Add field</string>
     <string name="tFieldValuesMissing">Field name or label missing</string>
 
-    <string name="bAddNewField">Add field</string>
     <string name="noProjectChosen">No selected project. Click here to select</string>
     <string name="altitudeLabel">Altitude</string>
     
@@ -88,7 +70,7 @@
     <!-- Project Import -->
 
 	<string name="chooseProject"><b>Projects in system</b></string>
-	<string name="chooseFile"><b>Choose a predefines project in Fagus format</b></string>
+	<string name="chooseFile"><b>Choose a predefines project in %1s format</b></string>
 	
 	<!-- Citation Project Import -->
 	
@@ -101,7 +83,6 @@
 	<string name="tvlFields">Field list</string>
 	<string name="tvVisible">Visible: </string>
 	<string name="projCreationTitle">Insert data</string>
-    <string name="bShowFields">View project fields</string>
     <string name="mAddField">Add field to the project</string>
     <string name="mChangeTh">Change thesaurus</string>
 
@@ -117,5 +98,16 @@
 	<string name="backupInfoPhotos">Dependign on the amount of photos the resulting file can be really big!</string>
 	<string name="backupCreateTitle">Backup: %1s</string>
 
+	<!-- SubProject -->
+	<string name="subProjectTitle">Sub-project\'s name</string>
+	
+	<!-- ExportProject -->
+	<string name="btExportProject">Export project</string>
+	<string name="dialogProjectExport">Export project\'s structure</string>
+	<string name="projFileExists">Project\'s file already exists. Do you want to overwrite it?</string>
+	<string name="projExportSuccess">Project successfuly exported into the folder: /zamiaDroid/Projects/</string>
+	
+	<string name="btModifyField">Field modification</string>
+	<string name="fieldLabelChanged">Field label has been modified</string>
 
 </resources>

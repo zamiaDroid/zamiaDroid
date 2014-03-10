@@ -57,45 +57,4 @@ public class ZamiaExportCitationReader extends ZamiaCitationReader {
 		
 	}
 	
-	
-	@Override
-	public void createDatumFields(String tempVal, String name, String label,String category) {
-	
-
-		lastFieldValue=tempVal;
-		
-		if(!secondLevelFields){
-
-//			Log.i("Cit","Create Datum Fields "+name+" "+tempVal+" ");
-//    		super.createDatumFields(tempVal, name, label, category);
-//	 		Log.i("Cit","Sample: "+this.sampleId+":"+name+" "+tempVal+" ");
-	
-			
-			long fieldId= projCnt.getFieldIdByName(projectId,name);
-
-			if(fieldId>0) citCnt.addCitationField(projectId,this.sampleId, this.projectId, name, tempVal);
-			
-
-				
-		}
-		else{
-					
-			//obtenir identificador camp
-			long fieldId=slPC.getSLId(projectId, lastFieldValue);
-			
-			Log.i("Cit","Create SL "+name+" "+tempVal+" with field: "+fieldId);
-
-			slSC.addCitationField(fieldId,this.secondLevelSampleId, this.projectId, name, tempVal);
-			
-			
-		}
-		
-	
-		
-	
-	}
-
-	
-	
-
 }

@@ -33,6 +33,7 @@ import uni.projecte.controler.CitationControler;
 import uni.projecte.controler.CitationSecondLevelControler;
 import uni.projecte.controler.DataTypeControler;
 import uni.projecte.controler.MultiPhotoControler;
+import uni.projecte.controler.PolygonControler;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.ProjectSecondLevelControler;
@@ -43,8 +44,10 @@ import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.AttributeValue;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
+import uni.projecte.maps.utils.LatLonParcel;
 import uni.projecte.ui.multiphoto.MultiPhotoFieldForm;
 import uni.projecte.ui.multiphoto.PhotoFieldForm;
+import uni.projecte.ui.polygon.PolygonField;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -94,6 +97,7 @@ public class CitationEditor extends Activity {
 	   public final static int SUCCESS_RETURN_CODE = 1;
 	   public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
 	   public static final int CAPTURE_IMAGE_MULTI_PHOTO = 3;
+	   public static final int POLYGON_EDIT = 4;
 
 	   private static final int REMOVE_CITATION = Menu.FIRST;
 	   private static final int SHOW_MAP =Menu.FIRST+1;
@@ -122,7 +126,7 @@ public class CitationEditor extends Activity {
 	   private ArrayList<AttributeValue> attValuesList;
 	   private ArrayList<ProjectField> fieldList;
    	   private Hashtable<String, PhotoFieldForm> photoFieldsList;
-
+   	   private PolygonField polygonField;
 	   
 	   private TextView mDateDisplay;
 	   private TextView mLocationDisplay;
@@ -322,6 +326,13 @@ public class CitationEditor extends Activity {
 				
 				if(((Spinner) et).getSelectedItem()==null) value="";
 				else value =((Spinner) et).getSelectedItem().toString();
+				
+			}
+			//multiPhoto
+			else if(et instanceof HorizontalScrollView){
+				
+				MultiPhotoFieldForm multiPhoto=(MultiPhotoFieldForm) photoFieldsList.get(et.getTag());
+				value=multiPhoto.getSecondLevelId();
 				
 			}
 			else{
@@ -579,7 +590,7 @@ public class CitationEditor extends Activity {
         	    		
         	    		updateFieldValues(citationId, sC);
         	    		
-        	    		addCitationSubFields();
+        	    		addCitationSubFields(citationId);
         	    		
         	    	      String toastText=v.getContext().getString(R.string.tModifiedCitation);
 	    	                 
@@ -600,7 +611,7 @@ public class CitationEditor extends Activity {
         	
     };
     
-    private void addCitationSubFields() {
+    private void addCitationSubFields(long parentId) {
     	
     	//Adding MultiPhoto: photoList
     	
@@ -616,9 +627,18 @@ public class CitationEditor extends Activity {
 				
 				long subFieldId=multiProjCnt.getMultiPhotoSubFieldId(((MultiPhotoFieldForm) tmpField).getFieldId());
 				
-				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId);				
+				multiProjCnt.addPhotosList((MultiPhotoFieldForm) tmpField,subFieldId,projId,parentId);				
 				
 			}						
+		}
+		
+		//Updating Polygon
+		if(polygonField!=null){
+		
+			PolygonControler polygonCnt= new PolygonControler(this);
+	
+			polygonCnt.updatePolygonList(polygonField,projId,citationId);
+	
 		}
 
 	}
@@ -663,6 +683,11 @@ public class CitationEditor extends Activity {
 				if(((Spinner) et).getSelectedItem()==null) value="";
 				else value =((Spinner) et).getSelectedItem().toString();
 
+				
+			}
+			else if(et instanceof ListView){
+				
+				value=polygonField.getSecondLevelId();
 				
 			}
 			else{
@@ -896,6 +921,8 @@ public class CitationEditor extends Activity {
 		   secLevFields = new Hashtable<Integer, String>();
 		   photoFieldsList = new Hashtable<String, PhotoFieldForm>();
 
+		   boolean addComment=false;
+		   String commentData="";
 
 		   LinearLayout l= (LinearLayout)findViewById(R.id.atributsS);
 		   LinearLayout lPhoto=null;
@@ -1169,14 +1196,6 @@ public class CitationEditor extends Activity {
 	        		    	photoButton.setVisibility(View.GONE);
 	        		    	
 	        		    }
-	        	        
-	        	       
-	        	     /*  param = new LinearLayout.LayoutParams(
-	                             LayoutParams.WRAP_CONTENT,
-	                             LayoutParams.WRAP_CONTENT, 1.0f);
-	        	       
-	        	       tvFieldValue.setLayoutParams(param);*/
-
 	       					   
 				   }
 				   //has no linked photo
@@ -1208,12 +1227,25 @@ public class CitationEditor extends Activity {
 				  // else multiPhotoFieldForm.setCitationData(new ArrayList<String>(),pred);
 				   
 				   multiPhotoFieldForm.setAddPhotoEvent(takePicture);
-				  // multiPhotoFieldForm.setRemoveEvent(removePicture);
-
 
 				   photoFieldsList.put(att.getName(), multiPhotoFieldForm);
 
 				   elementsList.add(multiPhotoFieldForm.getImageScroll());
+				   
+				   formValues.add(pred);
+
+				   llField.setOrientation(LinearLayout.VERTICAL);
+
+				   
+			   }
+			   else if(fieldType.equals("polygon")){
+				   
+				   String pred=sC.getFieldValue(citationId,att.getId());			   
+				   
+				   polygonField = new PolygonField(this, id, att, llField, PolygonField.EDIT_MODE);
+				   polygonField.loadPoints(pred);
+			   
+				   elementsList.add(new ListView(this));
 				   
 				   formValues.add(pred);
 
@@ -1222,7 +1254,7 @@ public class CitationEditor extends Activity {
 			   else if(fieldType.equals("secondLevel")){
 				   
 				   Button showList=new Button(getBaseContext());
-				   showList.setText("Veure Llistat");
+				   showList.setText(getBaseContext().getString(R.string.slShowElem));
 			   
 				   TextView e=new TextView(getBaseContext());	   
 				   
@@ -1444,11 +1476,24 @@ public class CitationEditor extends Activity {
 				   e.setAdapter(adapter);
 
 				   String pred=sC.getFieldValue(citationId,att.getId());
-						   
+				  
+				   
 					if(pred!=null && pred.length()>0) {
 						
-						setDefaultSpinnerItem(e,pred,values);
+						int pos=setDefaultSpinnerItem(e,pred,values);
+						
+						if(pos < 0){
+							
+							adapter.insert(pred,0);
+							adapter.notifyDataSetChanged();
+							   
+							addComment=true;
+							commentData=pred;
+							
+						}
+				
 						formValues.add(pred);
+						
 			   		}
 			   		else{
 			   			
@@ -1465,6 +1510,8 @@ public class CitationEditor extends Activity {
 						   e.setId(idD);
 						   
 						  llField.addView(e);
+						  
+				
 						  elementsList.add(e);
 
 			   }
@@ -1496,6 +1543,25 @@ public class CitationEditor extends Activity {
 				  
 				   l.addView(ll);
 
+				   
+			   }
+			   else if (fieldType.equals("complex") && addComment){ 
+				   
+				   TextView myTextView = new TextView(this);
+				   myTextView.setText(String.format(getString(R.string.alertItemRemoved), commentData));
+				   myTextView.setTextColor(Color.RED);
+				   
+				   LinearLayout ll= new LinearLayout(this);
+				   ll.setOrientation(LinearLayout.VERTICAL);
+				   ll.setPadding(3,3,3,3);
+				   
+				   ll.addView(llField);
+				   ll.addView(myTextView);
+				  
+				   l.addView(ll,i);
+				   i++;
+
+				   addComment=false;
 				   
 			   }
 			   else{
@@ -1588,7 +1654,7 @@ public class CitationEditor extends Activity {
 	}
 
 	
-	private void setDefaultSpinnerItem(Spinner e, String defaultValue, List<CharSequence> items){
+	private int setDefaultSpinnerItem(Spinner e, String defaultValue, List<CharSequence> items){
 	    
 		Iterator<CharSequence> it= items.iterator();
 		
@@ -1604,6 +1670,8 @@ public class CitationEditor extends Activity {
     	
         	
     	if(trobat) e.setSelection(pos);    	
+    	
+    	return pos;
     	
     }
     
@@ -1765,8 +1833,28 @@ public class CitationEditor extends Activity {
        	
        	break;
        
+    		case Sampling.POLYGON_EDIT :
+    		
+	    		if(resultCode != RESULT_CANCELED){
+	    			    			
+	            	ArrayList<LatLonParcel> pointsExtra = intent.getParcelableArrayListExtra("polygon_path");
+	            	
+	            	boolean modifiedPolygon=intent.getBooleanExtra("polygon_modified", true);
+	            	
+	            	
+	            	if(polygonField!=null && modifiedPolygon) {
+	            		
+	            		polygonField.updatePath(pointsExtra);
+	            		polygonField.setModified(true);
+	            		
+	            	}
+	        	
+	    		}
+        		
+    		break;
      
         }
+
         
     }
     

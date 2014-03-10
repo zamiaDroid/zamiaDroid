@@ -26,6 +26,7 @@ import uni.projecte.R;
 import uni.projecte.R.id;
 import uni.projecte.R.layout;
 import uni.projecte.R.string;
+import uni.projecte.controler.BackupControler;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler_needToBeRenamed;
 import uni.projecte.controler.ThesaurusControler;
@@ -45,6 +46,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -52,20 +54,21 @@ import android.widget.Toast;
 
 public class ProjectImport extends Activity{
 	
-	//   private AutoCompleteTextView txtName;
-	  // private  ResearchControler rsCont;
 	   private List<String> elements = null;
 	   private ListView fileList;
 	   private String url;
 	   private Button createProject;
+	   private TextView tvImportTitle;
 
 	   private PreferencesControler pC;
 	   private ProgressDialog pd;
-	   private String projName;
 	   private Dialog dialog=null;
 
+	   private String projName;
+	   private String format;
 	   
-	static final int DIALOG_PAUSED_ID = 0;
+	   
+	   private static final int DIALOG_PAUSED_ID = 0;
 
 	
 	  @Override
@@ -78,7 +81,12 @@ public class ProjectImport extends Activity{
 	        pC=new PreferencesControler(this);
 	        
 	        fileList = (ListView)findViewById(R.id.projectList);
-
+	        tvImportTitle = (TextView)findViewById(R.id.tvImportCitationsTitle);
+	        
+	        format=getIntent().getExtras().getString("format");
+	        
+	        tvImportTitle.setText(String.format(getString(R.string.chooseFile),format));
+	        
 	        
 	        if(isSdPresent()) fillFileList(new File(Environment.getExternalStorageDirectory()+"/"+pC.getDefaultPath()+"/Projects/").listFiles(new XMLFilter()));
 	        else {
@@ -130,11 +138,13 @@ public class ProjectImport extends Activity{
 		        fileList.setAdapter(listaArchivos);
 		    
 		
-	}
-	   private void rellenarConElRaiz() {
+	  }
+	  
+	  private void rellenarConElRaiz() {
+		   
 	        fillFileList(new File("/").listFiles());
-	    } 
-	   
+	        
+	  } 
 	
 	  
 	  public OnItemClickListener theListListener = new OnItemClickListener() {
@@ -188,7 +198,7 @@ public class ProjectImport extends Activity{
 		    	   	dialog.setTitle(getString(R.string.insert_data));
 		    	   	
 		    	   	createProject = (Button)dialog.findViewById(R.id.bAddItem);
-		    	   	EditText name=(EditText)dialog.findViewById(R.id.etNameItem);
+		    	   	EditText name = (EditText)dialog.findViewById(R.id.etNameItem);
 	
 		    	   	
 		    	   	Spinner thList=(Spinner)dialog.findViewById(R.id.thList);
@@ -255,12 +265,23 @@ public class ProjectImport extends Activity{
 				}	
 			 
 			 
-			 private void importProjectThread(String name, String desc){
+			 private void importProjectThread(String name, String thName){
 				 
-				ProjectControler_needToBeRenamed pC= new ProjectControler_needToBeRenamed(this);
-		    	  
-		    	long id=pC.importProject(name,desc,url);
-				handler.sendEmptyMessage((int)id);
+				 
+				if(format.equals("Fagus")){ 
+				 
+					ProjectControler_needToBeRenamed pC= new ProjectControler_needToBeRenamed(this);
+			    	long id=pC.importProject(name,thName,url);
+					handler.sendEmptyMessage((int)id);
+				
+				}
+				else{
+					
+					BackupControler backCnt=new BackupControler(this);
+					long id = backCnt.importProjectStructure(name, url, thName);
+					handler.sendEmptyMessage((int)id);
+					
+				}
 				 
 			 }
 			 
@@ -277,8 +298,10 @@ public class ProjectImport extends Activity{
 						switch (msg.what) {
 						case -2:
 							
+							String message=String.format(getBaseContext().getString(R.string.wrongProjectFile), format);
+							
 						 	Toast.makeText(getBaseContext(), 
-		    	   		              "Arxiu incorrecteeeee", 
+		    	   		              message, 
 		    	   		              Toast.LENGTH_LONG).show();
 						 	
 						 	dialog.dismiss();
@@ -287,6 +310,7 @@ public class ProjectImport extends Activity{
 						case -1:
 							
 							String sameProject=getBaseContext().getString(R.string.sameNameProject);
+							
     	                	Toast.makeText(getBaseContext(), 
     	   		              sameProject+" "+projName, 
     	   		              Toast.LENGTH_LONG).show();

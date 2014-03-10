@@ -2,11 +2,13 @@ package uni.projecte.ui;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import uni.projecte.R;
 import uni.projecte.dataLayer.dataStructures.ImageCache;
+import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.Utilities;
 import uni.projecte.ui.ImageLoader.ImageLoadListener;
 
@@ -152,6 +154,10 @@ public class LazyImageAdapter extends BaseAdapter implements ImageLoadListener {
 
 	    File images = new File(storagePath); 
 	    
+	    File thumbs=new File(storagePath+"thumbs/");
+	    
+	    if(!thumbs.exists()) thumbs.mkdirs();
+	    
 	    //List of images at lPath
 	    File[] imagelist = images.listFiles(new FilenameFilter(){  
 
@@ -162,9 +168,7 @@ public class LazyImageAdapter extends BaseAdapter implements ImageLoadListener {
 	    }
 	    );  
             
-	    
 	    availableImageList= new ArrayList<String>();
-        
  
         for(int i= 0 ; i< imagelist.length; i++){
         	
@@ -232,18 +236,17 @@ public class LazyImageAdapter extends BaseAdapter implements ImageLoadListener {
 			
 				Bitmap bitmap=imageCache.getBitmapFromMemCache(lPath);
 				
-				Log.i("Images","Cache size: ("+imageCache.getSize()+"/"+imageCache.getMaxSize()+") --- "+(imageCache.getSize()*100)/imageCache.getMaxSize()+"%");
-	
+				String cacheInfo=" ("+imageCache.getSize()+"/"+imageCache.getMaxSize()+") --- "+(imageCache.getSize()*100)/imageCache.getMaxSize()+"%";
 				
 				if(bitmap!=null){
 	
 					mImageLoader.signalUI(lViewSwitcher, lImageView, bitmap);
-					Log.i("Images","OK - HIT cache: "+lPath);
+					Log.i("Images","	OK - HIT cache ("+PhotoUtils.getFileName(lPath)+") : "+cacheInfo);
 					
 				}
 				else{
 				
-					Log.i("Images","KO - MISS cache: "+lPath);
+					Log.i("Images","	KO - MISS cache("+PhotoUtils.getFileName(lPath)+") : "+cacheInfo);
 					
 					if(!mImageLoader.isAlive()) mImageLoader.start();
 					

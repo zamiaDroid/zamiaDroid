@@ -9,6 +9,7 @@
     <!-- Thesaurus Actions -->
 
         <!-- View -->
+        <string name="tvThName">Nom thesaure</string>
         <string name="bChooseTh">Escollir Thesaure taxonòmic</string>
         <string name="tvAccepted"><b>Nom acceptat</b></string>
         <string name="tvSynonymous"><b>És un sinònom el nom acceptat és: </b></string>
@@ -24,7 +25,8 @@
         <string name="deleteThQuestion">Vols esborrar el thesaure taxonòmic?</string>
         <string name="thUsedByOneProj">Thesaure taxonòmic en ús pel projecte %1s, no es pot esborrar.</string>
         <string name="thUsedBySeveralProj">Thesaure taxonòmic en ús per %1d projectes, no es pot esborrar.</string>
-
+        <string name="thDeleteItemThQuestion">Vols esborrar l\'element %1s  del tesaure?</string>
+        
         <!-- Change Thesaurus -->
         <string name="thChangedText">Thesaure taxonòmic per defecte canviat: </string>
         <string name="thChangedShort">Thesaure canviat</string>

@@ -41,6 +41,7 @@ import uni.projecte.dataLayer.bd.ProjectDbAdapter;
 import uni.projecte.dataLayer.bd.SampleAttributeDbAdapter;
 import uni.projecte.dataLayer.bd.SampleDbAdapter;
 import uni.projecte.dataLayer.utils.StringUtils;
+import uni.projecte.dataTypes.CitationPhoto;
 import uni.projecte.dataTypes.LocalTaxonSet;
 import uni.projecte.dataTypes.LocationCoord;
 import uni.projecte.dataTypes.ProjectField;
@@ -61,7 +62,7 @@ import edu.ub.bio.biogeolib.CoordinateUTM;
 public class CitationControler {
 	
 	protected Context baseContext;
-	private CitacionDbAdapter mDbSample;
+	protected CitacionDbAdapter mDbSample;
 	private CitacionDbAdapter mDbAttributes;
 	protected CitationControler sC;
 	protected CitationExporter cExporter;
@@ -325,11 +326,14 @@ public class CitationControler {
 			
 			Double lat=cursor.getDouble(4);
 			Double longitude=cursor.getDouble(5);
+			String marker_id=cursor.getString(6);
+			
+			if(marker_id==null) marker_id="";
 			
 		 	if(lat<=90 && longitude<=180){
 		 		
 		 		coordinates.add(new LocationCoord(lat,longitude));
-		 		mapLocations.add(new MapLocation(cursor.getLong(0),cursor.getString(1),cursor.getDouble(4),cursor.getDouble(5)));
+		 		mapLocations.add(new MapLocation(cursor.getLong(0),cursor.getString(1),cursor.getDouble(4),cursor.getDouble(5),marker_id));
 			
 		 	}
 			cursor.moveToNext();
@@ -381,11 +385,14 @@ public class CitationControler {
 			
 			Double lat=cursor.getDouble(4);
 			Double longitude=cursor.getDouble(5);
+			String marker_id=cursor.getString(6);
+			
+			if(marker_id==null) marker_id="";
 			
 		 	if(lat<=90 && longitude<=180){
 		 		
 		 		coordinates.add(new LocationCoord(lat,longitude));
-		 		mapLocations.add(new MapLocation(cursor.getLong(0),cursor.getString(1),cursor.getDouble(4),cursor.getDouble(5)));
+		 		mapLocations.add(new MapLocation(cursor.getLong(0),cursor.getString(1),cursor.getDouble(4),cursor.getDouble(5),marker_id));
 			
 		 	}
 
@@ -979,14 +986,13 @@ public class CitationControler {
 			while(!citationFieldValue.isAfterLast()){
 				
 				if(j==m-1) cExporter.setLast(true); 
-						
+
 				ProjectField projField=projectFields.get(citationFieldValue.getLong(2));
-						
+				Log.i("Export",citationFieldValue.getLong(2)+" -> "+citationFieldValue.getString(3));
 				
-				
-				if(projField.isSubFieldExport()){ 
+				if(projField.isSubFieldExport() && !(cExporter instanceof ZamiaCitationExporter) ){ 
 					
-					cExporter.createCitationField(projField.getName(), projField.getLabel(), getSubCitationValue(citationFieldValue.getString(3)), projField.getDesc());
+					cExporter.createCitationField(projField.getName(), projField.getLabel(), getSubCitationValue(citationFieldValue.getString(3),projField,cExporter instanceof KMLExporter), projField.getDesc());
 					cExporter.setFieldType(projField.getId(),projField.getType(),baseContext);
 					
 				}
@@ -1014,11 +1020,22 @@ public class CitationControler {
 		
 		
 	
-	private String getSubCitationValue(String subCitId) {
+	private String getSubCitationValue(String subCitId, ProjectField projField, boolean kmlFormat) {
 
-		CitationSecondLevelControler citSLCnt= new CitationSecondLevelControler(baseContext);
-
-		String value=citSLCnt.getMultiPhotosValues(subCitId);
+		String value="";
+		
+		if(projField.isMultiPhoto()){
+		
+			CitationSecondLevelControler citSLCnt= new CitationSecondLevelControler(baseContext);
+			value=citSLCnt.getMultiPhotosValues(subCitId);
+		
+		}
+		else{
+			
+			PolygonControler polyCnt = new PolygonControler(baseContext);
+			value=polyCnt.getPolygonString(subCitId, kmlFormat);			
+			
+		}
 		
 		return value;
 		
@@ -1273,6 +1290,7 @@ public class CitationControler {
 		return fields;
 		
 	}
+
 	
 
 	public Cursor getCitationFromFieldAndCitationId(long citationId, long fieldId){
@@ -1289,6 +1307,20 @@ public class CitationControler {
 		return citationFields;
 	}
 	
+
+	public Cursor getPhotoValuesByProjectId(long projectId, long fieldId){
+		
+		mDbAttributes = new CitacionDbAdapter(baseContext);
+		mDbAttributes.open();
+		
+		Cursor citationFields=mDbAttributes.fetchCitationsByOldPhoto(projectId,fieldId);
+
+		citationFields.moveToFirst();
+		
+		mDbAttributes.close();
+
+		return citationFields;
+	}
 
 
 	public void startTransaction() {
@@ -1452,6 +1484,33 @@ public class CitationControler {
 		sa.close();
 		
 		return citationId;
+		
+	}
+	
+	public CitationPhoto getCitationPhoto(String photoPath){
+		
+		CitationPhoto citPhoto=null;
+		
+		CitacionDbAdapter sa=new CitacionDbAdapter(baseContext);
+		sa.open();
+		
+		Cursor cursor=sa.fetchCitationIdByPhotoField(photoPath);
+		cursor.moveToFirst();
+			
+		if(cursor.getCount()>0) {
+				
+			long citationId=cursor.getLong(1);
+			long fieldId=cursor.getLong(2);
+
+			citPhoto= new CitationPhoto(photoPath, citationId,fieldId, "photo");
+				
+		}
+			
+		cursor.close();
+		
+		sa.close();
+		
+		return citPhoto;
 		
 	}
 	

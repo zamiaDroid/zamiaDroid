@@ -20,6 +20,7 @@ import java.util.HashMap;
 
 import uni.projecte.dataLayer.CitationManager.CitationExporter;
 import uni.projecte.dataTypes.ProjectField;
+import uni.projecte.dataTypes.Utilities;
 
 
 public class TABExporter extends CitationExporter {
@@ -61,7 +62,7 @@ public class TABExporter extends CitationExporter {
 	@Override
 	public void openCitation(){
 		
-		
+		System.out.println("Open Citation");
 		
 	}
 	
@@ -69,6 +70,10 @@ public class TABExporter extends CitationExporter {
 	public void closeCitation(){
 	
 		result=result+citationToString();
+		
+		System.out.println("Close Citation "+citationToString());
+
+		
 		citation=new String[fieldsCount];
 
 	}
@@ -93,7 +98,11 @@ public class TABExporter extends CitationExporter {
 			citation[COORDINATE_POS]=" ";
 
     	}
-		else citation[COORDINATE_POS]=latitude+" "+longitude;
+		else{ 
+			
+			citation[COORDINATE_POS]=latitude+" "+longitude;  
+		
+		}
 
 		
 	}

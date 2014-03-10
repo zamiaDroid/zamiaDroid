@@ -1,12 +1,19 @@
 package uni.projecte.ui;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import uni.projecte.dataLayer.dataStructures.ImageCache;
+import uni.projecte.dataLayer.utils.PhotoUtils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.ExifInterface;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -97,32 +104,55 @@ public class ImageLoader extends Thread {
 					try {
 						
 						synchronized (aImageView){
-							// make sure this thread is the only one performing activities on
-							// this imageview
-					        
-							BitmapFactory.Options lOptions = new BitmapFactory.Options();
-							lOptions.inSampleSize = 8;
+							// make sure this thread is the only one performing activities on this imageview
+													
+							File originalImage=new File(aPath);
 							
-							Log.i("Images","Deconding: "+aPath);
-							Bitmap lBitmap = BitmapFactory.decodeFile(aPath, lOptions);
-							
-							
-							if(lBitmap!=null && lBitmap.getWidth()>0){
+							if(originalImage.exists()){
 								
 								int maxSize;
 								
-								if(lBitmap.getWidth()>lBitmap.getHeight()) maxSize=lBitmap.getHeight();
-								else maxSize=lBitmap.getWidth();
+								File thumb=new File(aPath.replace("/Photos/", "/Photos/thumbs/"));
+								Bitmap squared=null;
 								
-								Bitmap squared=cropBitmap(lBitmap, maxSize, maxSize);
+								if(thumb.exists()){
+									
+									Log.i("Images","Loading thumbnail: "+aPath);
+									squared=BitmapFactory.decodeFile(aPath.replace("/Photos/", "/Photos/thumbs/"), new BitmapFactory.Options());
+
+								}
+								else{
+									
+									Bitmap lBitmap = PhotoUtils.decodeBitmap(aPath, thMaxSize,false);
+																
+									if(lBitmap==null){
+										
+										Log.i("Images","Wrong file: "+aPath);
+										squared=createWrongImageBitmap(thMaxSize);
+										
+									}
+									else{
+									
+										Log.i("Images","Decoding size("+lBitmap.getWidth()+"[w]/"+lBitmap.getHeight()+"[h]): "+aPath);
+
+										if(lBitmap.getWidth()>lBitmap.getHeight()) maxSize=lBitmap.getHeight();
+										else maxSize=lBitmap.getWidth();
+										
+										squared=PhotoUtils.cropBitmap(lBitmap,aPath, maxSize, maxSize);
+										
+										thumb.createNewFile();
+										
+										FileOutputStream out = new FileOutputStream(thumb.getAbsoluteFile());
+								    	squared.compress(Bitmap.CompressFormat.JPEG, 90, out);
+								    
+										lBitmap.recycle();
+
+									}
 								
-								lBitmap.recycle();
-		
-								//aImage.setImageBitmap(lBitmap);
-							
+								}
+								
 								// Load the image here
 								signalUI(aViewSwitcher, aImageView, squared);
-								
 								imageCache.addBitmapToMemoryCache(aPath, squared);
 								
 							}
@@ -150,6 +180,11 @@ public class ImageLoader extends Thread {
 	}
 	
 	
+	
+
+	
+
+	
 	private Bitmap createWrongImageBitmap(int width){
 		
 		Paint paint = new Paint();
@@ -172,31 +207,7 @@ public class ImageLoader extends Thread {
 	}
 
 
-	public static Bitmap cropBitmap(Bitmap original, int height, int width) {
-		
-		
-	    Bitmap croppedImage = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-	    Canvas canvas = new Canvas(croppedImage);
-	 
-	    Rect srcRect = new Rect(0, 0, original.getWidth(), original.getHeight());
-	    Rect dstRect = new Rect(0, 0, width, height);
-	 
-	    int dx = (srcRect.width() - dstRect.width()) / 2;
-	    int dy = (srcRect.height() - dstRect.height()) / 2;
-	 
-	    // If the srcRect is too big, use the center part of it.
-	    srcRect.inset(Math.max(0, dx), Math.max(0, dy));
-	 
-	    // If the dstRect is too big, use the center part of it.
-	    dstRect.inset(Math.max(0, -dx), Math.max(0, -dy));
-	 
-	    // Draw the cropped bitmap in the center
-	    canvas.drawBitmap(original, srcRect, dstRect, null);
-	 
-	    original.recycle();
-	 
-	    return croppedImage;
-	}
+	
 	
 	/**
 	 * Method is called when the bitmap is loaded.  The UI thread adds the bitmap to the imageview.

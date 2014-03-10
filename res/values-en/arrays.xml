@@ -12,7 +12,7 @@
         <item>Free field</item>
         <item>Predefined field</item>
         <item>Photo</item>
-        <item>Multi-photo</item>
+        <item>Polygon</item>
         <item>Sub-project</item>
     </string-array>
     
@@ -66,6 +66,7 @@
     
     <string-array name="importProjFormats">
         <item>Fagus</item>
+        <item>Zamia</item>
     </string-array>
     
     <string-array name="languagesLocales">
@@ -194,7 +195,33 @@
         <item>Cultivated</item>
         <item>Spontaneous</item>
     </string-array>
-         
+    
+     <string-array name="phenology">
+        <item>No data</item>  
+	    <item>Plantule</item>
+	    <item>Vegetative</item>
+	    <item>Begining of flowering</item>
+	    <item>Flowering and fructification</item>
+	    <item>Fructification</item>
+	    <item>Vegetative involution</item>
+	    <item>Rest</item>
+	    <item>Leave renovation</item>
+	    <item>Dead</item> 
+     </string-array>    
+     
+     <string-array name="phenologyEnglish">
+        <item>No data</item>  
+	    <item>Plantule</item>
+	    <item>Vegetative</item>
+	    <item>Begining of flowering</item>
+	    <item>Flowering and fructification</item>
+	    <item>Fructification</item>
+	    <item>Vegetative involution</item>
+	    <item>Rest</item>
+	    <item>Leave renovation</item>
+	    <item>Dead</item> 
+     </string-array> 
+     
      <string-array name="exportDestination">
         <item>Save to the SD card</item>
         <item>Save to the SD card and send by E-mail</item>

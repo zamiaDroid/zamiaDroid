@@ -32,4 +32,7 @@
 	
 	<string name="photoPathWrong">El directori no existeix</string>
 	
+	<string name="confTitleResetGeoid">Reiniciar Geoide al valor per defecte</string>
+    <string name="confTitleResetGeoidSummary">Tornar al valor per defecte del geoide a 49 (m)</string>
+	
 </resources>

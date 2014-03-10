@@ -17,15 +17,19 @@
 
 package uni.projecte.Activities.Projects;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
 import uni.projecte.Main;
 import uni.projecte.R;
+import uni.projecte.Activities.Citations.Sampling;
 import uni.projecte.controler.BackupControler;
 import uni.projecte.controler.PhotoControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.ProjectSecondLevelControler;
+import uni.projecte.controler.ThesaurusControler;
+import uni.projecte.dataLayer.CitationManager.FileExporter;
 import uni.projecte.dataLayer.ProjectManager.ListAdapters.ProjectBaseListAdapter;
 import uni.projecte.dataLayer.ProjectManager.objects.Project;
 import uni.projecte.dataLayer.bd.ProjectDbAdapter;
@@ -42,6 +46,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,6 +57,7 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -61,6 +67,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.ResourceCursorAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,7 +78,8 @@ public class ProjectList extends Activity {
 		private static final int BACKUP_PROJ=Menu.FIRST;
 		private static final int LOAD_BACKUP_PROJ=Menu.FIRST+1;
 		private static final int REMOVE_PROJECT=Menu.FIRST+2;
-		
+		private static final int EXPORT_PROJECT=Menu.FIRST+3;
+
 		private String name;
 		private String desc;
 		
@@ -81,9 +89,11 @@ public class ProjectList extends Activity {
 		private long projId;
 
 		private ProgressDialog pd;
+		private Dialog exportProjdialog;
 		
 		private ProjectBaseListAdapter projectsAdapter;
 
+		private boolean changeProject=false;
 
  
 	    @Override
@@ -102,6 +112,11 @@ public class ProjectList extends Activity {
 	        
 	        loadProjects();
           
+	        if(getIntent().getExtras()!=null){
+	        
+	        	changeProject=getIntent().getExtras().getBoolean("changeProject");
+	        	
+	        }
 	       
 	    }
 	    
@@ -159,6 +174,7 @@ public class ProjectList extends Activity {
 	    	
 	    	menu.add(0, BACKUP_PROJ, 0,R.string.mCreateBackup).setIcon(android.R.drawable.ic_menu_save);
 	    	menu.add(0, LOAD_BACKUP_PROJ, 0,R.string.mLoadBackup).setIcon(android.R.drawable.ic_menu_upload);
+	    	menu.add(0, EXPORT_PROJECT, 0,R.string.dialogProjectExport).setIcon(android.R.drawable.ic_menu_save);
 	    	menu.add(0, REMOVE_PROJECT, 0,R.string.mRemoveProject).setIcon(android.R.drawable.ic_menu_delete);
 
 	    	
@@ -172,6 +188,7 @@ public class ProjectList extends Activity {
 			   
 			   menu.findItem(BACKUP_PROJ).setVisible(false);
 			   menu.findItem(REMOVE_PROJECT).setVisible(false);
+			   menu.findItem(EXPORT_PROJECT).setVisible(false);
 
 		   }
 		   else{
@@ -187,8 +204,7 @@ public class ProjectList extends Activity {
 			   
 			 menu.findItem(REMOVE_PROJECT).setVisible(true);
 			 menu.findItem(REMOVE_PROJECT).setTitle(removeProject+": "+defaultProject);
-			 
-			   
+				   
 		   }
 		   
 		   
@@ -234,6 +250,13 @@ public class ProjectList extends Activity {
 				
 				break;
 				
+			case EXPORT_PROJECT:
+				
+				
+				exportProjectDialog(projectsAdapter.getDefaultProject());
+				
+				break;
+				
 			case REMOVE_PROJECT:
 				
 				removeProject();
@@ -246,6 +269,248 @@ public class ProjectList extends Activity {
 		
 			return super.onOptionsItemSelected(item);
 		}
+	    
+	    
+	    private void exportProjectDialog(String projName){
+	    	
+	    	final BackupControler bc= new BackupControler(this);
+	    	
+	    	exportProjdialog=new Dialog(this);
+	    	exportProjdialog.setContentView(R.layout.projectexportdialog);
+	    	exportProjdialog.setTitle(R.string.dialogProjectExport);
+    	   	
+	    	final EditText etProjName=(EditText) exportProjdialog.findViewById(R.id.etProjectName);
+	    	etProjName.setText("zp_"+projName);	 
+	    	
+	    	Button btExportProject=(Button) exportProjdialog.findViewById(R.id.btExportProject);
+	    	
+	    	btExportProject.setOnClickListener(new OnClickListener() {
+				
+				public void onClick(View v) {
+
+					 if(Utilities.isSdPresent()){ 
+						 
+						 exportProjectCheck(etProjName.getText().toString());						 
+						
+					 }
+
+					else {
+				        	
+				        	Toast.makeText(getBaseContext(), 
+				                    R.string.noSdAlert, 
+				                    Toast.LENGTH_SHORT).show();
+				        	
+				        }
+					
+			
+					
+
+					
+				}
+			});
+	    	
+    	   	
+    	   	exportProjdialog.show();
+	    	
+	    	
+	    }
+	    
+	    private void exportProjectCheck(final String fileName){
+			
+			//checking that file exists
+	    	final BackupControler bc= new BackupControler(this);
+	    	String filePath=bc.getProjectsPath()+fileName+".xml";
+	    	
+	    	File f= new File(filePath);
+	        
+	        if(f.exists()) {
+	        	
+	        	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	        	
+				    builder.setMessage(getString(R.string.projFileExists))
+				           .setCancelable(false)
+				           .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+				               public void onClick(DialogInterface dialog, int id) {
+				   
+					   				dialog.dismiss();
+					   				
+					   				bc.exportProjectStructure(projId,fileName);
+					   				
+					   				exportProjdialog.dismiss();
+					   				
+									Utilities.showToast(getString(R.string.projExportSuccess), getBaseContext());
+
+				               }
+				           })
+				           .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+				               public void onClick(DialogInterface dialog, int id) {
+				            	   	
+					   				dialog.dismiss();
+					
+				               }
+				           });
+				   
+				    
+					 AlertDialog alert = builder.create();
+					 alert.show();
+	        	
+	        }
+	        else{
+	
+				bc.exportProjectStructure(projId,fileName);
+				exportProjdialog.dismiss();
+				Utilities.showToast(getString(R.string.projExportSuccess), this);
+
+	        }
+			
+		}
+	    
+	    private void exportProjectDialog2222(String projName, String thName){
+	    	
+	  		ThesaurusControler thCont= new ThesaurusControler(this);
+
+	    	
+	    	final Dialog dialog=new Dialog(this);
+	    	dialog.setContentView(R.layout.projectcreationremoteth);
+    	   	dialog.setTitle(R.string.insert_data);
+    	   	
+    	   	Button createProject = (Button)dialog.findViewById(R.id.bAddItem);
+    	   	EditText name=(EditText)dialog.findViewById(R.id.etNameItem);
+
+   	   	
+    	   	final Spinner thList=(Spinner)dialog.findViewById(R.id.thList);
+    	   	
+    	   	String[] thArrayList=thCont.getThList();
+    	   	
+    	   	ArrayAdapter<String> dtAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item,thArrayList);
+        
+ 		   dtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+ 		   thList.setAdapter(dtAdapter);
+ 		   thList.setVisibility(View.GONE); 
+
+    	 
+    	   	name.setText(projName);
+    	   	
+    	    final RadioButton rbRemoteTh = (RadioButton) dialog.findViewById(R.id.rbRemoteTh);
+    	    final RadioButton rbLocalTh = (RadioButton) dialog.findViewById(R.id.rbLocalTh);
+
+    	    
+    	    if(thName.equals("")){
+    	    	
+    	    	rbRemoteTh.setVisibility(View.GONE);
+    	    	rbLocalTh.setVisibility(View.GONE);
+    	    	
+    	    }
+    	    else{
+    	    
+    	    	//Linked thesaurus exists on the system
+    	    	int found=Utilities.findString(thArrayList,thName);
+    	    	
+    	    	if(found>=0) {
+    	    		
+    	    		Utilities.setDefaultSpinnerItem(thList, thName, thArrayList);
+        	    	rbRemoteTh.setEnabled(false);
+        	    	rbLocalTh.setChecked(true);
+        	    	thList.setVisibility(View.VISIBLE);
+
+    	    	}
+    	    	else{
+    	    		
+        	    	rbRemoteTh.setText(Html.fromHtml(rbRemoteTh.getText()+" <b>"+thName+"</b> "));
+        	    	
+        	    	if(thList.getChildCount()>0){
+        	    		
+            	    	rbLocalTh.setChecked(true);
+
+        	    	}
+        	    	else{
+        	    		
+            	    	rbRemoteTh.setChecked(true);
+            	    	rbLocalTh.setEnabled(false);
+
+        	    	}
+
+    	    	}
+    	    	
+    	    }
+    	    
+    	    rbRemoteTh.setOnClickListener(new RadioButton.OnClickListener(){
+	             
+    	    	public void onClick(View v){
+
+	    	         thList.setVisibility(View.GONE); 
+
+    	    	                
+    	    	    }
+    	    	             
+    	    });
+    	    
+    	    rbLocalTh.setOnClickListener(new RadioButton.OnClickListener(){
+	             
+    	    	public void onClick(View v){
+
+	    	         thList.setVisibility(View.VISIBLE); 
+
+    	    	                
+    	    	    }
+    	    	             
+    	    });
+    	    
+    
+
+    	    createProject.setOnClickListener(new Button.OnClickListener(){
+    	    	             
+    	    	
+    	    	public void onClick(View v){
+    	    		
+
+    	    	                 EditText et=(EditText)dialog.findViewById(R.id.etNameItem);
+    	    			    	 Spinner thList=(Spinner)dialog.findViewById(R.id.thList);
+
+    	    			    	 String projName=et.getText().toString();
+    	    			    
+    	    			    	 String thNameFinal="";
+    	    			    	 
+    	    			    	// BackupControler bc= new BackupControler(this);
+    	    					//bc.exportProjectStructure(projId, );
+    	    						
+    	    			    	 
+    	    			    	/* if(rbRemoteTh.isChecked()){
+    	    			    		 
+    	    			    		 thNameFinal=thName;projName
+    	    			    		 
+    	    			    		 projNameGlob=projName;
+    	    			    		 prNameGlob=prName;
+    	    			    		 thNameGlob=thNameFinal;
+    	    			    		 
+    	    			    		 //poolId, thId
+    	    			    		 startDownload(thFilum,thName);
+    	    			    		 
+    	    			    	 }
+    	    			    	 else if(rbLocalTh.isChecked()){
+    	    			    	
+    	    			    		 thNameFinal=(String)thList.getSelectedItem();
+    	    			    		 createProject(projName,prName,thNameFinal, remote);
+    	    			    		 
+    	    			    	 }
+    	    			    	 else{
+    	    			    		 
+    	    			    		 createProject(projName,prName,"",remote);
+    	    			    		     	    			    		 
+    	    			    	 }
+    	    			    	 */
+    	    	                
+    	    	              }
+    	    	             
+    	    });
+    	    
+
+    	    
+    	    dialog.show();
+	    	
+	    	
+	    }
 	    
 	    private void createBackupDialog() {
 
@@ -327,6 +592,8 @@ public class ProjectList extends Activity {
            thread.start();
 
 		}
+		
+		
 
 		private void removeProject() {
 
@@ -411,6 +678,12 @@ public class ProjectList extends Activity {
 		        editor.putLong("predProjectId", b.getLong("projId"));
 		        editor.putString("predField", null);
 		        editor.commit();
+		        
+		        if(changeProject) {
+		        	            
+		        	finish();
+		        	
+		        }
 		
 		        if(b.getBoolean("removeProject")){
 		        	

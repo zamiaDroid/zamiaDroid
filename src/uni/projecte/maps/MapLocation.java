@@ -28,12 +28,14 @@ public class MapLocation {
 	private String		name;
 	private boolean		moreInfo;
 	private boolean		chosen;
+	private String marker_id;
 
-	public MapLocation(long citationId,String name,double latitude, double longitude) {
+	public MapLocation(long citationId,String name,double latitude, double longitude, String marker_id) {
 		
 		this.citationId=citationId;
 		this.name = name;
 		this.moreInfo=false;
+		this.marker_id=marker_id;
 		point = new GeoPoint((int)(latitude*1e6),(int)(longitude*1e6));
 		chosen=false;
 		
@@ -90,6 +92,14 @@ public class MapLocation {
 
 	public boolean isChosen() {
 		return chosen;
+	}
+
+	public String getMarker_id() {
+		return marker_id;
+	}
+
+	public void setMarker_id(String marker_id) {
+		this.marker_id = marker_id;
 	}
 	
 }

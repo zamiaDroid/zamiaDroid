@@ -12,7 +12,7 @@
         <item>Camp lliure</item>
         <item>Camp Predefinit</item>
         <item>Fotografia</item>
-        <item>Multi-fotografia</item>
+        <item>Polígon</item>
         <item>Sub-projecte</item>
     </string-array>
 
@@ -50,6 +50,7 @@
     
     <string-array name="importProjFormats">
         <item>Fagus</item>
+        <item>Zamia</item>
     </string-array>
      
     <string-array name="languages">
@@ -184,6 +185,31 @@
         <item>Spontaneous</item>
     </string-array>
     
+     <string-array name="phenology">
+        <item>Sense dada</item> 
+	    <item>Plàntula</item>
+	    <item>Vegetatiu</item>
+	    <item>Inici de floració</item>
+	    <item>Floració i fructificació</item>
+	    <item>Fructificació</item>
+	    <item>Involució vegetativa</item>
+	    <item>Respòs</item>
+	    <item>Inici renovació foliar</item>
+	    <item>Decrepitud i mort</item> 
+     </string-array>    
+     
+     <string-array name="phenologyEnglish">
+        <item>No data</item>  
+	    <item>Plantule</item>
+	    <item>Vegetative</item>
+	    <item>Begining of flowering</item>
+	    <item>Flowering and fructification</item>
+	    <item>Fructification</item>
+	    <item>Vegetative involution</item>
+	    <item>Rest</item>
+	    <item>Leave renovation</item>
+	    <item>Dead</item> 
+     </string-array>
     
     <string-array name="exportDestination">
         <item>Desar a la targeta</item>

@@ -443,25 +443,24 @@ public class ZamiaProjectWriter {
 	}
 	
 
-	public void writeToFile(String mostra, String fileName, Context c){
+	public void writeToFile(String mostra, String fileName, String exportMode, Context c){
 	
-	
-	try {
-	    File root = Environment.getExternalStorageDirectory();
-	    PreferencesControler pC=new PreferencesControler(c);
-	    
-	    if (root.canWrite()){
-	        File gpxfile = new File(Environment.getExternalStorageDirectory()+"/"+pC.getDefaultPath()+"/Backups/",fileName+extension);
-	        FileWriter gpxwriter = new FileWriter(gpxfile);
-	        BufferedWriter out = new BufferedWriter(gpxwriter);
-	        out.write(mostra);
-	        out.close();
-	    }
-	} catch (IOException e) {
-	    Log.e("sample", "Could not write file " + e.getMessage());
-	}
-	
-	
+		try {
+			
+			
+		    File root = Environment.getExternalStorageDirectory();
+		    PreferencesControler pC=new PreferencesControler(c);
+		    
+		    if (root.canWrite()){
+		        File gpxfile = new File(Environment.getExternalStorageDirectory()+"/"+pC.getDefaultPath()+"/"+exportMode+"/",fileName+extension);
+		        FileWriter gpxwriter = new FileWriter(gpxfile);
+		        BufferedWriter out = new BufferedWriter(gpxwriter);
+		        out.write(mostra);
+		        out.close();
+		    }
+		} catch (IOException e) {
+		    Log.e("sample", "Could not write file " + e.getMessage());
+		}
 	
 }
 

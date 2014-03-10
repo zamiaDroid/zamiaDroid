@@ -9,8 +9,8 @@
     <!-- Thesaurus Actions -->
 
         <!-- View -->
+        <string name="tvThName">Thesaurus name</string>
         <string name="bChooseTh">Choisir un thesaurus taxonomique</string>
-        <string name="tvChoosenTh"><b>thesaurus taxonomique choisi:</b></string>
         <string name="tvAccepted"><b>Nom accepté</b></string>
         <string name="tvSynonymous"><b>Il s\'agit d\'un synonyme, le nom accepté est: </b></string>
         <string name="tvIcodeMissing"><b>Aucun icode n\'y a été ajouté</b></string>
@@ -26,9 +26,9 @@
         <string name="deleteThQuestion">Voulez-vous éliminer le thesaurus taxonomique?</string>
 		<string name="thUsedByOneProj">Taxonomic thesaurus in use by %1s project, it can not be deleted.</string>
         <string name="thUsedBySeveralProj">Taxonomic thesaurus in use by %1d projects, it can not be deleted.</string>
-
+        <string name="thDeleteItemThQuestion">Do you want to remove the %1s element from the thesaurus?</string>
+        
         <!-- Change Thesaurus -->
-        <string name="bChangeTh">Changer de thesaurus taxonomique</string>
         <string name="thChangedText">Changed thesaurus</string>
         <string name="thChangedShort">Changed thesaurus</string>
         
@@ -45,8 +45,6 @@
 
     <!-- Thesaurus relations with projects-->
 	<string name="tvDefaultTh">thesaurus taxonomique: </string>
-	<string name="cbNoTh">Sans thesaurus taxonomique</string>
-    <string name="noThQuestion">Aucun thesaurus selectionné. Choisissez-en un ou sélectionnez l\'option Ne pas utiliser de thesaurus taxonomique</string>
 
        	<!-- Register adding -->
 
@@ -62,5 +60,7 @@
 		<string name="tvThAddNewItem">Add new:</string>
 		<string name="tvThChooseTaxaGroup">Choose taxonomical group</string>
 		<string name="tvThImportRemote">Remote thesaurus import</string>
-    
+		<string name="tvUnlinkThInfo">By default is not possible to add new elements to remote thesaurus. If you want to add new elements the thesaurus will be unlinked and remote sincronization will be removed.</string>
+    	<string name="btThUnlink">Unlink Thesaurus</string>
+		
 </resources>
