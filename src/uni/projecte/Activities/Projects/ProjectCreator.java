@@ -19,16 +19,10 @@ package uni.projecte.Activities.Projects;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import uni.projecte.Main;
 import uni.projecte.R;
-import uni.projecte.R.array;
-import uni.projecte.R.id;
-import uni.projecte.R.layout;
-import uni.projecte.R.string;
 import uni.projecte.controler.ProjectSecondLevelControler;
-import uni.projecte.dataLayer.ProjectManager.FieldCreator;
-import uni.projecte.dataLayer.ProjectManager.examples.ExampleProjectCreator;
 import uni.projecte.controler.ThesaurusControler;
+import uni.projecte.dataLayer.ProjectManager.FieldCreator;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
 import android.app.Activity;
@@ -36,7 +30,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -60,7 +53,6 @@ public class ProjectCreator extends Activity{
 	   private Spinner spinnerTh;
 	   private CheckBox checkBox;
 	   private ProjectSecondLevelControler rsCont;
-	   private ExampleProjectCreator epC;
 	   private long projId;
 	   
 	   private long subPojId=0;

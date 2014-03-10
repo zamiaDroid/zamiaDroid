@@ -95,7 +95,6 @@ public class ThesaurusHandlerXML extends DefaultHandler{
       
     	 
     	 if (localName.equals("taxon")) {
-              // this.in_innertag = true;
     		 
                String category=atts.getValue("name");
                level=atts.getValue("level");
@@ -104,7 +103,7 @@ public class ThesaurusHandlerXML extends DefaultHandler{
             	   
             	   iCodeSpec=atts.getValue("icode");;
             	   nameCodeSpec=atts.getValue("namecode");
-            	   
+
                }
                else{
             	   
@@ -113,30 +112,23 @@ public class ThesaurusHandlerXML extends DefaultHandler{
             	   
                }
             
-               
-	         /*   if (level.equals("Class")){ 
-		               
-          		}
-	            
-	            else if (level.equals("Order")){
-	            	
-	            }*/
-	            
+            
 	            
 	            if (level.equals("Species")){
 
 	            	specie=category;
-	            	
+
 	            }
 	            else if(level.equals("Genus")){
 	              	
 	            	genus=category;
 	            	
+	            	
 	            }      
 	            else if (level.equals("Subspecies")){
   	
 	            	subEpitet=category;
-	         
+	            	
 	            } 
 		        else if (level.equals("Variety")){
 		              	
@@ -260,7 +252,7 @@ public class ThesaurusHandlerXML extends DefaultHandler{
         		  if(subEpitet.equals("")){
         			  
         			  if(tempVal.equals("\n") || tempVal.equals("\n")) author="";
-        			  else author=tempVal;
+        			  else author=tempVal.trim();
         			  subAuthor="";
         			  tempVal="";
 
@@ -271,7 +263,7 @@ public class ThesaurusHandlerXML extends DefaultHandler{
         		  else{
         			  
         			  if(tempVal.equals("") || tempVal.equals("\n") ) subAuthor="";
-        			  else subAuthor=tempVal;
+        			  else subAuthor=tempVal.trim();
         			  tempVal="";
 
         		  }

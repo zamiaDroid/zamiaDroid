@@ -1234,6 +1234,8 @@ public class CitationEditor extends Activity {
 				   
 				   formValues.add(pred);
 
+				   llField.setOrientation(LinearLayout.VERTICAL);
+
 				   
 			   }
 			   else if(fieldType.equals("polygon")){

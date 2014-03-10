@@ -1580,8 +1580,8 @@ public class Sampling extends Activity {
 					   photoFieldsList.put(att.getName(), multiPhotoFieldForm);
 
 					   elementsList.add(multiPhotoFieldForm.getImageScroll());
-					   
-			
+					   			
+					   llField.setOrientation(LinearLayout.VERTICAL);
 					   
 				   }
 			   

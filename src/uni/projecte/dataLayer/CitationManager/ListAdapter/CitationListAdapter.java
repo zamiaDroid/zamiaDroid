@@ -18,7 +18,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
@@ -44,7 +43,7 @@ public class CitationListAdapter extends BaseExpandableListAdapter implements Se
 	private ArrayList<Citation> citations;
 	private CitationHandler citationsH;
     HashMap<String, Integer> alphaIndexer;
-    String[] sections;
+    private String[] sections;
     private Context baseContext;
     private String[] childrenText;
     private long projId;
@@ -76,14 +75,14 @@ public class CitationListAdapter extends BaseExpandableListAdapter implements Se
 		 this.surenessField=citationsH.getSurenessField()>-1;
 			 
 			 
-		 this.citations=citationsH.getCurrentCitationList();
+		 this.citations=citationsH.calculateCurrentCitationList();
 		 childrenText=new String[citations.size()];
 	
-		 
+         alphaIndexer = new HashMap<String, Integer>();  	 
+
 		 //when 
-		 if(citationsH.isAlphaOrder()){
+		 if( citationsH.isAlphaOrder() && citationsH.isAlphaAsc()){
 		 
-	         alphaIndexer = new HashMap<String, Integer>();  	 
 			 int size = this.citations.size();
 			  
 	          for (int i = size - 1; i >= 0; i--) {
