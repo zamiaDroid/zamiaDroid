@@ -604,7 +604,7 @@ public class ImageGallery extends Activity{
 	    	  final float density = mContext.getResources().getDisplayMetrics().density;
 
 	    	  LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	    	  View layOuter = inflater.inflate(R.layout.galleryitem, null);
+	    	  View layOuter = inflater.inflate(R.layout.gallery_item, null);
 	    	  View layInner = layOuter.findViewById(R.id.layInner);
 	    	  
 	    	 

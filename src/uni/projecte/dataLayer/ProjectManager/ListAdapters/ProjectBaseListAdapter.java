@@ -81,7 +81,7 @@ public class ProjectBaseListAdapter extends BaseAdapter{
     	 
     	 if (convertView == null) {
 	    	 
-    		 convertView = mInflater.inflate(R.layout.projectlistrow, null);
+    		 convertView = mInflater.inflate(R.layout.project_list_row, null);
     		 
 	    	 holder = new ViewHolder();
 	    	 holder.tvProjName = (TextView)convertView.findViewById(R.id.tvProjectName);

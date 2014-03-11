@@ -79,7 +79,7 @@ public class GalleryGrid extends Activity{
 	    
 	    
         Utilities.setLocale(this);
-	    setContentView(R.layout.gallerygrid);
+	    setContentView(R.layout.gallery_grid);
 
         projCnt=new ProjectControler(this);
 		photoCnt=new PhotoControler(this);
@@ -425,7 +425,7 @@ public class GalleryGrid extends Activity{
 		private void movePhotosDialog() {
 			
 			movePhotosDialog=new Dialog(this);
-			movePhotosDialog.setContentView(R.layout.movephotosdialog);
+			movePhotosDialog.setContentView(R.layout.gallery_movephotos_dialog);
 			movePhotosDialog.setTitle("Moure fotografies");
 				
 			    

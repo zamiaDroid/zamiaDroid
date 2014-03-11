@@ -35,7 +35,7 @@ public class ImageView extends Activity {
     	
     	super.onCreate(savedInstanceState);
     	
-    	setContentView(R.layout.imageview);
+    	setContentView(R.layout.field_imageview);
 
     	LinearLayout ll=(LinearLayout) findViewById(R.id.llTouchImage);
     	TextView thPhoto=(TextView) findViewById(R.id.tvPhotoInfo);

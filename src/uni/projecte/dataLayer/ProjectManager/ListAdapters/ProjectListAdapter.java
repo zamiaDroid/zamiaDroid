@@ -47,7 +47,7 @@ public class ProjectListAdapter extends BaseAdapter{
 		
 		if (convertView == null) {
 
-			convertView = mInflater.inflate(R.layout.projreplistrow, null);
+			convertView = mInflater.inflate(R.layout.project_repository_row, null);
 
 			holder = new ViewHolder();
 

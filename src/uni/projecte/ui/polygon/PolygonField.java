@@ -79,7 +79,7 @@ public class PolygonField {
 		POLYGON_FIELD_MODE=mode;
 		
 		LayoutInflater inflater = (LayoutInflater) baseContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
-		View llPolygon=(View) inflater.inflate(R.layout.polygon_field,null);		
+		View llPolygon=(View) inflater.inflate(R.layout.field_polygon,null);		
 		
 		loadBasicUi((LinearLayout)llPolygon);
 		

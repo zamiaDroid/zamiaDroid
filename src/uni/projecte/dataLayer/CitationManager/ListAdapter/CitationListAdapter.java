@@ -124,7 +124,7 @@ public class CitationListAdapter extends BaseExpandableListAdapter implements Se
 		 
 		 if (convertView == null) {
 	    	 
-			 convertView = mInflater.inflate(R.layout.complexcitationrow, null);
+			 convertView = mInflater.inflate(R.layout.citation_complex_row, null);
 			 
 	    	 holder = new ViewHolder();
 	    	 holder.citationDate = (TextView) convertView.findViewById(R.id.citationDate);
@@ -334,7 +334,7 @@ public class CitationListAdapter extends BaseExpandableListAdapter implements Se
 								AlertDialog.Builder builder = new AlertDialog.Builder(baseContext);
 									    	
 								LayoutInflater cloneInflater = LayoutInflater.from(baseContext);
-					            View eulaLayout = cloneInflater.inflate(R.layout.citationclonedialog, null);
+					            View eulaLayout = cloneInflater.inflate(R.layout.citation_clone_dialog, null);
 					            builder.setView(eulaLayout);
 					            final CheckBox dontShowAgain = (CheckBox)eulaLayout.findViewById(R.id.cbCitationCloneCopyValues);
 

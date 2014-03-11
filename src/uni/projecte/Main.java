@@ -466,7 +466,7 @@ public class Main extends Activity {
     	
     	dialog = new Dialog(this);
  	   	
-    	dialog.setContentView(R.layout.aboutus);
+    	dialog.setContentView(R.layout.main_aboutus);
     	dialog.setTitle(getString(R.string.aboutUs)+": ZamiaDroid");
    	  
     	TextView tvAboutUsExt=(TextView) dialog.findViewById(R.id.tvAboutUsExtended);

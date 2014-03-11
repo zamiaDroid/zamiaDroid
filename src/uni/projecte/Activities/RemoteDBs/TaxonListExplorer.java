@@ -466,7 +466,7 @@ public class TaxonListExplorer extends TabActivity {
 			   
 				dialogPresenceExport = new Dialog(this);
 	        	dialogPresenceExport.requestWindowFeature(Window.FEATURE_NO_TITLE);
-	        	dialogPresenceExport.setContentView(R.layout.exportdialog);
+	        	dialogPresenceExport.setContentView(R.layout.citation_export_dialog);
 	    	   	
 	  	   	  	final Spinner fieldsList=(Spinner)dialogPresenceExport.findViewById(R.id.spFieldsListReport);
 	    	   	final EditText name=(EditText)dialogPresenceExport.findViewById(R.id.fileName);

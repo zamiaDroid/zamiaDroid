@@ -140,7 +140,7 @@ public class FieldCreator {
 	        
 		   dialog = new Dialog(baseContext);
 	    	   	
-		   dialog.setContentView(R.layout.fieldfree);
+		   dialog.setContentView(R.layout.field_free);
 		   dialog.setTitle(R.string.projCreationTitle);
 
 		   Button addField = (Button)dialog.findViewById(R.id.bCreateField);
@@ -546,7 +546,7 @@ public class FieldCreator {
 
 		    	  dialog = new Dialog(baseContext);
 		    	   	
-		    	  dialog.setContentView(R.layout.fieldcreation);
+		    	  dialog.setContentView(R.layout.field_creator);
 		    	  dialog.setTitle(R.string.projCreationTitle);
 		    	   	
 		    	  

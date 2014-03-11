@@ -164,7 +164,7 @@ public class ProjectBackupList extends Activity {
 		    	 ViewHolder holder;
 		    	 if (convertView == null) {
 			    	 
-		    		 convertView = mInflater.inflate(R.layout.projbacklistrow, null);
+		    		 convertView = mInflater.inflate(R.layout.backup_list_row, null);
 		    		 
 			    	 holder = new ViewHolder();
 			
@@ -324,7 +324,7 @@ public class ProjectBackupList extends Activity {
 			  		//b)import only the citations to the project with @projName
 	    	   	dialog = new Dialog(this);
 	    	  
-	        	dialog.setContentView(R.layout.backupimport);
+	        	dialog.setContentView(R.layout.backup_list);
 	    	   	
 	    	   	Button createProject = (Button)dialog.findViewById(R.id.btImportBackup);
 

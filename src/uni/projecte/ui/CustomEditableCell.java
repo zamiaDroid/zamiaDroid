@@ -22,7 +22,7 @@ public class CustomEditableCell extends LinearLayout {
 		super(context);
 		 
 		LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		view=layoutInflater.inflate(R.layout.customedcell,this);
+		view=layoutInflater.inflate(R.layout.field_secondlevel,this);
 		
 		et= ((EditText) view.findViewById(R.id.tvCustomCell));
 		et.setImeOptions(EditorInfo.IME_ACTION_DONE);

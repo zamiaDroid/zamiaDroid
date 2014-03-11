@@ -1730,7 +1730,7 @@ public class CitationEditor extends Activity {
 	            
 	            //fill the list
 	        	
-	        	attListView.setAdapter(new ArrayAdapter<String>(this, R.layout.atrib_row, attList));
+	        	attListView.setAdapter(new ArrayAdapter<String>(this, R.layout.field_row, attList));
 	        
 	            mDbAttributeType.close();
 	            

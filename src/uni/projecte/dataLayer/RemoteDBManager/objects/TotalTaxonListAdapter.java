@@ -92,7 +92,7 @@ public class TotalTaxonListAdapter extends BaseAdapter implements SectionIndexer
 	 
 	 if (convertView == null) {
     	 
-		 convertView = mInflater.inflate(R.layout.taxonrowtotal, null);
+		 convertView = mInflater.inflate(R.layout.remote_taxon_total_row, null);
 		 
     	 holder = new ViewHolder();
     	 holder.text = (TextView) convertView.findViewById(R.id.tvTaxonTotalList);

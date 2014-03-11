@@ -188,7 +188,7 @@ public class ProjectTemplateCreator extends Activity{
 	        	//Context mContext = getApplicationContext();
 	    	   final Dialog dialog = new Dialog(this);
 	    	   	
-	        	dialog.setContentView(R.layout.projectcreationsimple);
+	        	dialog.setContentView(R.layout.project_creator_simple);
 	    	   	dialog.setTitle(getString(R.string.insert_data));
 	    	   	
 	    	   	Button createProject = (Button)dialog.findViewById(R.id.bAddItemS);

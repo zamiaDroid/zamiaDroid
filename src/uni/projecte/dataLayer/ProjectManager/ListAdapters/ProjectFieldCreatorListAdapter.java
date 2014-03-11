@@ -56,7 +56,7 @@ public class ProjectFieldCreatorListAdapter extends BaseAdapter  {
     	 
     	 if (convertView == null) {
 	    	 
-    		 convertView = mInflater.inflate(R.layout.projcreatorfieldrowlist, null);
+    		 convertView = mInflater.inflate(R.layout.project_creator_field_rowlist, null);
     		 
 	    	 holder = new ViewHolder();
 	    	 holder.tvListText = (TextView)convertView.findViewById(R.id.tvFieldName);

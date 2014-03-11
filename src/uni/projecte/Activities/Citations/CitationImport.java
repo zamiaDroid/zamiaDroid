@@ -80,7 +80,7 @@ public class CitationImport extends Activity{
 	        super.onCreate(savedInstanceState);
 
 	        Utilities.setLocale(this);
-	        setContentView(R.layout.citation_import);
+	        setContentView(R.layout.project_citation_import);
 	        
 	        
 	        prefCnt=new PreferencesControler(this);

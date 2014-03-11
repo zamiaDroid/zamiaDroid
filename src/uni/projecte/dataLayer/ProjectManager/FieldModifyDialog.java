@@ -63,7 +63,7 @@ public class FieldModifyDialog extends Dialog{
 
 		super.onCreate(savedInstanceState);
 
-		fieldModDialog=(LinearLayout) LayoutInflater.from(context).inflate(R.layout.fieldmodification, null);
+		fieldModDialog=(LinearLayout) LayoutInflater.from(context).inflate(R.layout.field_edit, null);
 		setContentView(fieldModDialog);
 		
 		dtH=new DataTypeControler(context);

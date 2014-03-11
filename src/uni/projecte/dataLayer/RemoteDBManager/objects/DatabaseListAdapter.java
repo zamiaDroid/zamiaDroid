@@ -54,7 +54,7 @@ public class DatabaseListAdapter extends BaseExpandableListAdapter {
 		 
 		 if (convertView == null) {
 	    	 
-			 convertView = mInflater.inflate(R.layout.remotedbmainrow, null);
+			 convertView = mInflater.inflate(R.layout.remote_db_row, null);
 			 
 	    	 holder = new ViewHolder();
 	    	 holder.dbFilumName = (TextView) convertView.findViewById(R.id.dbFilumName);
@@ -156,7 +156,7 @@ public class DatabaseListAdapter extends BaseExpandableListAdapter {
 		      if (convertView == null){
 		    	  
 		          LayoutInflater inflater = LayoutInflater.from(baseContext);
-		          convertView = inflater.inflate(R.layout.remotedbrow, null);
+		          convertView = inflater.inflate(R.layout.remote_db_row2, null);
 		          
 		          
 		          holder= new ViewChildHolder();

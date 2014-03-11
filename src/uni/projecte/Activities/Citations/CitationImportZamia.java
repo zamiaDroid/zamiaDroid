@@ -106,7 +106,7 @@ public class CitationImportZamia extends Activity {
     	
     	super.onCreate(savedInstanceState);
 
-    	setContentView(R.layout.citation_zamia_import);
+    	setContentView(R.layout.citation_import_zamia);
     	
     	ListView lvNewFields=(ListView)findViewById(R.id.lvNewFields);
     	TextView tvCitationsInfo=(TextView)findViewById(R.id.tvCitations);
@@ -255,7 +255,7 @@ public class CitationImportZamia extends Activity {
 		//Context mContext = getApplicationContext();
 		dialog = new Dialog(this);
 
-		dialog.setContentView(R.layout.projectcreation);
+		dialog.setContentView(R.layout.project_creator_dialog);
 		dialog.setTitle(getString(R.string.insert_data));
 
 		Button createProject = (Button)dialog.findViewById(R.id.bAddItem);

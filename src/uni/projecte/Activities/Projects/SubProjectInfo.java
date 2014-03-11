@@ -190,14 +190,14 @@ public class SubProjectInfo extends Activity{
 	   private class ProjectFieldAdapter extends ResourceCursorAdapter {
 
 	        public ProjectFieldAdapter(Context context, Cursor cur) {
-	            super(context, R.layout.projectfileldsrow, cur);
+	            super(context, R.layout.project_info_field_row, cur);
 	            
 	        }
 
 	        @Override
 	        public View newView(Context context, Cursor cur, ViewGroup parent) {
 	            LayoutInflater li = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	            return li.inflate(R.layout.projectfileldsrow, parent, false);
+	            return li.inflate(R.layout.project_info_field_row, parent, false);
 	        }
 
 	        @Override

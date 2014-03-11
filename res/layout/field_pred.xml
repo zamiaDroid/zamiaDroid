@@ -25,7 +25,7 @@
 <!-- <TextView android:text="@string/tvFieldPredValue" android:id="@+id/TextView03" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView> -->
 
 
-<include layout="@layout/fieldpredvalues"  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+<include layout="@layout/field_predvalues"  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
 <Button android:text="@string/bCreateField" android:id="@+id/bCreateField" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
 

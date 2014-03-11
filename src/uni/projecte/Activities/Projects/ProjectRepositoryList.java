@@ -167,7 +167,7 @@ public class ProjectRepositoryList extends Activity {
 	  		ThesaurusControler thCont= new ThesaurusControler(this);
   		        	
     	   	dialog = new Dialog(this);
-        	dialog.setContentView(R.layout.projectcreationremoteth);
+        	dialog.setContentView(R.layout.project_creator_remoteth);
     	   	dialog.setTitle(R.string.insert_data);
     	   	
     	   	Button createProject = (Button)dialog.findViewById(R.id.bAddItem);

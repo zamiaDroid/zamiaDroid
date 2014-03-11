@@ -250,7 +250,7 @@ public class TaxonRemoteCitationList extends Activity {
     	 ViewHolder holder;
     	 if (convertView == null) {
 	    	 
-    		 convertView = mInflater.inflate(R.layout.remotecitationrow, null);
+    		 convertView = mInflater.inflate(R.layout.remote_citation_row, null);
     		 
 	    	 holder = new ViewHolder();
 	    	 holder.text = (TextView) convertView.findViewById(R.id.tvRemoteCitLocality);

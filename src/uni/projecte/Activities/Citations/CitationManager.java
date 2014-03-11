@@ -1898,7 +1898,7 @@ public class CitationManager extends Activity{
 			dialog = new Dialog(this);
         	dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        	dialog.setContentView(R.layout.exportdialog);
+        	dialog.setContentView(R.layout.citation_export_dialog);
     	   	
     	   	Button bExportFagus = (Button)dialog.findViewById(R.id.bExportFagus);
   	   	  	final Spinner fieldsList=(Spinner)dialog.findViewById(R.id.spFieldsListReport);

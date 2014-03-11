@@ -80,7 +80,7 @@ public class ProjectFieldListAdapter extends BaseAdapter  {
     	 
     	 if (convertView == null) {
 	    	 
-    		 convertView = mInflater.inflate(R.layout.projectfileldsrow, null);
+    		 convertView = mInflater.inflate(R.layout.project_info_field_row, null);
     		 
 	    	 holder = new ViewHolder();
 	    	 holder.tvListText = (TextView)convertView.findViewById(R.id.tvFieldName);

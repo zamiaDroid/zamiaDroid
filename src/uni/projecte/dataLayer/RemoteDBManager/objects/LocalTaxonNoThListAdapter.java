@@ -97,7 +97,7 @@ public class LocalTaxonNoThListAdapter extends BaseAdapter implements SectionInd
 		 ViewHolder holder;
 		 if (convertView == null) {
 	    	 
-			 convertView = mInflater.inflate(R.layout.taxonnothrow, null);
+			 convertView = mInflater.inflate(R.layout.remote_taxon_noth_row, null);
 			 
 	    	 holder = new ViewHolder();
 	    	 holder.text = (TextView) convertView.findViewById(R.id.tvTaxonList);

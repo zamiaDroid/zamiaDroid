@@ -58,7 +58,7 @@ public class ActivityProvadora extends Activity {
 	        
 	       Utilities.setLocale(this);
 		   
-	       setContentView(R.layout.actprovadora);
+	       setContentView(R.layout.a_text_activity);
 	       
 	       llMultiPhoto=(LinearLayout)findViewById(R.id.llMultiPhoto);
 	       userPictureImageView = (ImageView)findViewById(R.id.ivPhotoDownload);

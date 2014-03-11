@@ -276,7 +276,7 @@ public class ProjectList extends Activity {
 	    	final BackupControler bc= new BackupControler(this);
 	    	
 	    	exportProjdialog=new Dialog(this);
-	    	exportProjdialog.setContentView(R.layout.projectexportdialog);
+	    	exportProjdialog.setContentView(R.layout.project_export_dialog);
 	    	exportProjdialog.setTitle(R.string.dialogProjectExport);
     	   	
 	    	final EditText etProjName=(EditText) exportProjdialog.findViewById(R.id.etProjectName);
@@ -371,7 +371,7 @@ public class ProjectList extends Activity {
 
 	    	
 	    	final Dialog dialog=new Dialog(this);
-	    	dialog.setContentView(R.layout.projectcreationremoteth);
+	    	dialog.setContentView(R.layout.project_creator_remoteth);
     	   	dialog.setTitle(R.string.insert_data);
     	   	
     	   	Button createProject = (Button)dialog.findViewById(R.id.bAddItem);
@@ -520,7 +520,7 @@ public class ProjectList extends Activity {
 	    	String dialogTitle=String.format(getString(R.string.backupCreateTitle), defaultProject);
 	    	
 			final Dialog dialog=new Dialog(this);
-			dialog.setContentView(R.layout.createbackup);
+			dialog.setContentView(R.layout.backup_creator);
 			
 			dialog.setTitle(dialogTitle);
 			

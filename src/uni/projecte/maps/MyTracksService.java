@@ -291,7 +291,7 @@ public class MyTracksService {
 			    
 			    String lang=pC.getLang();
 
-				dialog.setContentView(R.layout.mytracksdialog);
+				dialog.setContentView(R.layout.map_mytracks_dialog);
 				dialog.setTitle(baseContext.getString(R.string.tracksInfo));
 
 				dialog.show();

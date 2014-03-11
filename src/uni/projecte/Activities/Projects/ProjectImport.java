@@ -194,7 +194,7 @@ public class ProjectImport extends Activity{
 		        	//Context mContext = getApplicationContext();
 		    	   	dialog = new Dialog(this);
 		    	   	
-		        	dialog.setContentView(R.layout.projectcreation);
+		        	dialog.setContentView(R.layout.project_creator_dialog);
 		    	   	dialog.setTitle(getString(R.string.insert_data));
 		    	   	
 		    	   	createProject = (Button)dialog.findViewById(R.id.bAddItem);

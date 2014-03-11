@@ -60,7 +60,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
  
         public View getView(final int position, View convertView, ViewGroup parent) {
 
-        	convertView = inflater.inflate(R.layout.zamiaimportfield, null);
+        	convertView = inflater.inflate(R.layout.citation_import_zamia_field, null);
         	final ViewHolder holder = new ViewHolder();
         	
         	holder.chkItem = (CheckBox)convertView.findViewById(R.id.cbField);

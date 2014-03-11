@@ -86,7 +86,7 @@ public class ProjectFieldChooser extends Activity{
 	        super.onCreate(savedInstanceState);
 	        
 	        Utilities.setLocale(this);
-	        setContentView(R.layout.subprojectchooser);
+	        setContentView(R.layout.project_chooser_sub);
 	        
 	        
         	tc= new ThesaurusControler(this);
@@ -193,7 +193,7 @@ public class ProjectFieldChooser extends Activity{
 	   private class ProjectFieldChooserAdapter extends ResourceCursorAdapter {
 
 	        public ProjectFieldChooserAdapter(Context context, Cursor cur) {
-	            super(context, R.layout.projectfileldchoosersrow, cur);
+	            super(context, R.layout.project_info_fileld_chooser_row, cur);
 
 	            
 	            
@@ -202,7 +202,7 @@ public class ProjectFieldChooser extends Activity{
 	        @Override
 	        public View newView(Context context, Cursor cur, ViewGroup parent) {
 	            LayoutInflater li = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	            return li.inflate(R.layout.projectfileldchoosersrow, parent, false);
+	            return li.inflate(R.layout.project_info_fileld_chooser_row, parent, false);
 	        }
 
 	        @Override

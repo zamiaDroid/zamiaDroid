@@ -92,7 +92,7 @@ public class RemoteTaxonListAdapter extends BaseAdapter implements SectionIndexe
 	 ViewHolder holder;
 	 if (convertView == null) {
     	 
-		 convertView = mInflater.inflate(R.layout.taxonrow, null);
+		 convertView = mInflater.inflate(R.layout.remote_taxon_row, null);
 		 
     	 holder = new ViewHolder();
     	 holder.text = (TextView) convertView.findViewById(R.id.tvTaxonList);

@@ -39,7 +39,7 @@
                 android:id="@+id/include1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                layout="@layout/citationmapdialog" />
+                layout="@layout/map_citation_dialog" />
 
             <LinearLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
