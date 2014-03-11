@@ -257,7 +257,7 @@ public class CitationListAdapter extends BaseExpandableListAdapter implements Se
 		      if (convertView == null){
 		    	  
 		          LayoutInflater inflater = LayoutInflater.from(baseContext);
-		          convertView = inflater.inflate(R.layout.citationfieldrow, null);
+		          convertView = inflater.inflate(R.layout.citation_field_row, null);
 		          
 		          holder= new ViewChildHolder();
 		          holder.tvCitationName = (TextView)convertView.findViewById(R.id.tvCitationFieldName);

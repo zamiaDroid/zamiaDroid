@@ -814,7 +814,7 @@ public class CitationManager extends Activity{
 		        	
 		        	locationFilterdialog = new Dialog(v.getContext());
 		 		   	locationFilterdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		 		   	locationFilterdialog.setContentView(R.layout.citationfilterbylocation);
+		 		   	locationFilterdialog.setContentView(R.layout.citation_filter_location);
 		 		 
 		 		   	Button applyFilter = (Button)locationFilterdialog.findViewById(R.id.btApplyFilterByLocation);
 		 		   
@@ -977,7 +977,7 @@ public class CitationManager extends Activity{
 		        	
 		        	taxonFilterdialog = new Dialog(v.getContext());
 		        	taxonFilterdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		 		   	taxonFilterdialog.setContentView(R.layout.citationfiltertaxon);
+		 		   	taxonFilterdialog.setContentView(R.layout.citation_filter_taxon);
 		 		 
 		 		   	Button applyFilter = (Button)taxonFilterdialog.findViewById(R.id.btApplyTaxonFilter);
 		 		   
@@ -1661,7 +1661,7 @@ public class CitationManager extends Activity{
 		
 		        	final Dialog dialog = new Dialog(v.getContext());
 		 		    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		 		   	dialog.setContentView(R.layout.citationfilterfield);
+		 		   	dialog.setContentView(R.layout.citation_filter_field);
 
 		 		   Button applyFilter = (Button)dialog.findViewById(R.id.btApplyFilter);
 		 		   final LinearLayout llFieldSelection = (LinearLayout) dialog.findViewById(R.id.llFieldSelection);
@@ -1720,7 +1720,7 @@ public class CitationManager extends Activity{
 		
 		        	dateFilterDialog = new Dialog(v.getContext());
 		 		   	dateFilterDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		 		   	dateFilterDialog.setContentView(R.layout.citationfilterdate);
+		 		   	dateFilterDialog.setContentView(R.layout.citation_filter_date);
 		 		 
 		 		   //  dialog.setTitle(R.string.projCreationTitle);
 

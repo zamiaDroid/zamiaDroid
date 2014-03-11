@@ -69,7 +69,7 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 		super(baseContext,projId,field,llField);
 		
 		LayoutInflater inflater = (LayoutInflater) baseContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
-		llPhotoField=(View) inflater.inflate(R.layout.photo_field,null);		
+		llPhotoField=(View) inflater.inflate(R.layout.field_photo,null);		
 		
 		PHOTO_FIELD_MODE=mode;
 	

@@ -59,7 +59,7 @@ public class MarkerConfigurationDialog extends Dialog{
 	  
 	  mapConfig = new MapConfigControler(mContext);
 	  
-	  ll=(LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.mapchangemarker, null);
+	  ll=(LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.map_change_marker, null);
 	  setContentView(ll);
 	  
 	  bindOnClickEvents();

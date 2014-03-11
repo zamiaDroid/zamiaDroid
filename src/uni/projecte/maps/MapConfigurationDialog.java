@@ -24,7 +24,7 @@ public class MapConfigurationDialog {
 		    mapConfigDialog.setCancelable(true);
 		    mapConfigDialog.setTitle(R.string.mapConfigTitle);
 		 
-		    mapConfigDialog.setContentView(R.layout.citationmapconfig);
+		    mapConfigDialog.setContentView(R.layout.map_config);
 		    mapConfigDialog.show();
 		    
 		    		    
