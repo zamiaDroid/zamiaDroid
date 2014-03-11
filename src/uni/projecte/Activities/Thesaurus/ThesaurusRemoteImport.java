@@ -68,7 +68,7 @@ public class ThesaurusRemoteImport extends Activity {
 	        
 	        Utilities.setLocale(this);
 
-	        setContentView(R.layout.thesaurusimportremote);
+	        setContentView(R.layout.thesaurus_import_remote);
 	       
 	        spThGroups=(Spinner)findViewById(R.id.spThGroups);
 	        progBar=(ProgressBar)findViewById(R.id.progBarLoading);
@@ -134,7 +134,7 @@ public class ThesaurusRemoteImport extends Activity {
 	        
 		  	final Dialog dialog = new Dialog(this);
 	    	   	
-	        dialog.setContentView(R.layout.thesauruscreation);
+	        dialog.setContentView(R.layout.thesaurus_creation_dialog);
 	    	dialog.setTitle(R.string.thName);
 	    	   	
 	    	Button createProject = (Button)dialog.findViewById(R.id.bCreateTh);

@@ -121,7 +121,7 @@ public class ThesaurusInfo extends Activity{
 	     
 	        Utilities.setLocale(this);
 
-	        setContentView(R.layout.thlist);
+	        setContentView(R.layout.thesaurus_info);
 	        
 	        thCnt=new ThesaurusControler(this);
 	        projCnt=new ProjectControler(this);
@@ -174,7 +174,7 @@ public class ThesaurusInfo extends Activity{
 
 	     	addItemDialog= new Dialog(this);
         	addItemDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        	addItemDialog.setContentView(R.layout.thadditemdialog);
+        	addItemDialog.setContentView(R.layout.thesaurus_additem_dialog);
 
         	
 	        etGenusEt=(EditText)addItemDialog.findViewById(R.id.etAddItemGender);

@@ -102,7 +102,7 @@ public class ProjectList extends Activity {
 	        
 	        Utilities.setLocale(this);
 	        
-	        setContentView(R.layout.researchlist);
+	        setContentView(R.layout.project_list);
 
 	        projectList = (ListView)findViewById(R.id.listResearches);
 	 	          

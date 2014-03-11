@@ -93,7 +93,7 @@ public class CitationProjectImport extends Activity{
 	        
 	        Utilities.setLocale(this);
 
-	        setContentView(R.layout.citation_import);
+	        setContentView(R.layout.project_citation_import);
 	        
 	        prefCnt=new PreferencesControler(this);
 	        

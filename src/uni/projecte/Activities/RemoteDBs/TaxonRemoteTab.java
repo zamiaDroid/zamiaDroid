@@ -54,7 +54,7 @@ public class TaxonRemoteTab extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     
-        setContentView(R.layout.taxonremotetab);
+        setContentView(R.layout.remote_taxon_tab);
         
         webView = (WebView) findViewById(R.id.webview);
         spServices = (Spinner) findViewById(R.id.spServices);

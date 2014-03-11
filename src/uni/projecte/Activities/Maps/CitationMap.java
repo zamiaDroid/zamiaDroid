@@ -234,7 +234,7 @@ public class CitationMap extends MapActivity implements LocationListener {
 
         Utilities.setLocale(this);
 
-        setContentView(R.layout.samplesmap);
+        setContentView(R.layout.map_citations);
         
         gpsButton = (ImageButton)findViewById(R.id.myLocationButton);
         gpsButton.setOnClickListener(activateGPSListener);

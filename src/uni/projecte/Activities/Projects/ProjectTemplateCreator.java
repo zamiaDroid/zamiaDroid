@@ -44,7 +44,7 @@ public class ProjectTemplateCreator extends Activity{
 		    super.onCreate(savedInstanceState);
 	        
 	        Utilities.setLocale(this);
-		    setContentView(R.layout.projcreator);
+		    setContentView(R.layout.project_creator);
 	        
 	        rbRepository=(RadioButton)findViewById(R.id.rbRepository);
 	        rbCitations=(RadioButton)findViewById(R.id.rbCitationsFile);

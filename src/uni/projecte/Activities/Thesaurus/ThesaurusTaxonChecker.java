@@ -77,7 +77,7 @@ public class ThesaurusTaxonChecker extends Activity {
         super.onCreate(savedInstanceState);
      
         Utilities.setLocale(this);
-        setContentView(R.layout.thtaxonchecker);
+        setContentView(R.layout.thesaurus_taxon_checker);
         
         lvNoThTaxonList=(ListView) findViewById(R.id.lvLocalTaxonsNoTh);
         tvNoThTaxonInfo=(TextView) findViewById(R.id.tvNoThTaxons);
@@ -121,7 +121,7 @@ public class ThesaurusTaxonChecker extends Activity {
 
      	addItemDialog= new Dialog(this);
     	addItemDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-    	addItemDialog.setContentView(R.layout.thadditemdialog);
+    	addItemDialog.setContentView(R.layout.thesaurus_additem_dialog);
 
         etGenusEt=(EditText)addItemDialog.findViewById(R.id.etAddItemGender);
         etSpEpithet=(EditText)addItemDialog.findViewById(R.id.etAddItemSpecEp);

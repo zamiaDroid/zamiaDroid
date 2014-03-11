@@ -150,7 +150,7 @@ public class CitationManager extends Activity{
 		        
 		        Utilities.setLocale(this);
 
-		        setContentView(R.layout.citationmanager);
+		        setContentView(R.layout.citation_manager);
 
 		        /* Getting references to UI elements  */
 		        mainCitListView= (ExpandableListView)findViewById(R.id.citationLV);

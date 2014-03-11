@@ -173,7 +173,7 @@ public class SecondLevelSampling extends Activity {
         super.onCreate(savedInstanceState);
         
         Utilities.setLocale(this);
-        setContentView(R.layout.secondlevelsampling);
+        setContentView(R.layout.citation_capture_second);
         
         /*
          * 

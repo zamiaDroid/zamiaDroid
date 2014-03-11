@@ -85,7 +85,7 @@ public class RemoteThesaurusListAdapter extends BaseAdapter  {
     	 
     	 if (convertView == null) {
 	    	 
-    		 convertView = mInflater.inflate(R.layout.thremoterow, null);
+    		 convertView = mInflater.inflate(R.layout.thesaurus_remote_row, null);
     		 
 	    	 holder = new ViewHolder();
 

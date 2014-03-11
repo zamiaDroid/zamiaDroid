@@ -80,7 +80,7 @@ public class ProjectInfo extends Activity{
 	        super.onCreate(savedInstanceState);
 	        
 	        Utilities.setLocale(this);
-	        setContentView(R.layout.projectinfo);
+	        setContentView(R.layout.project_info);
 	        
 	        projectName=getIntent().getExtras().getString("projName");
 	        projectTh=getIntent().getExtras().getString("projDescription");

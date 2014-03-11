@@ -118,7 +118,7 @@ public  class ThesaurusAutoCompleteAdapter extends CursorAdapter{
   {
           final LayoutInflater inflater = LayoutInflater.from(context);
           
-          final LinearLayout view = (LinearLayout) inflater.inflate(R.layout.th_row, parent, false);
+          final LinearLayout view = (LinearLayout) inflater.inflate(R.layout.thesaurus_row, parent, false);
           
          View tv= view.getChildAt(1);
          ImageView imgSyn=(ImageView) view.getChildAt(0);

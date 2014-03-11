@@ -106,7 +106,7 @@ public class CitationImportZamia extends Activity {
     	
     	super.onCreate(savedInstanceState);
 
-    	setContentView(R.layout.zamiaimport);
+    	setContentView(R.layout.citation_zamia_import);
     	
     	ListView lvNewFields=(ListView)findViewById(R.id.lvNewFields);
     	TextView tvCitationsInfo=(TextView)findViewById(R.id.tvCitations);
