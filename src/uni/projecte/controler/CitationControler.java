@@ -168,6 +168,12 @@ public class CitationControler {
 	}
 	
 	
+	public void updateLastModDate(long citationId) {
+		
+		mDbAttributes.updateLastModDate(citationId);
+		
+	}
+	
 	public void updateCitationLocation(long citationId,double lat, double longitude){
 		
 		this.latitude=lat;
@@ -1720,6 +1726,8 @@ public class CitationControler {
 	public Context getBaseContext() {
 		return baseContext;
 	}
+
+	
 
 
 

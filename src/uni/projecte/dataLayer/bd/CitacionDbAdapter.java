@@ -43,7 +43,9 @@ public class CitacionDbAdapter {
     public static final String LONGITUDE = "longitude";
     public static final String COMMENT = "comment";
     public static final String SINCRONIZED="sincronized";
+    public static final String LAST_MOD="lastMod";
 
+    
     /* CitationMap fields */
     public static final String MARKER_ID="markerId";
     
@@ -56,7 +58,7 @@ public class CitacionDbAdapter {
     public static final String FIELD_NAME = "fieldName";
 
 
-    private static final String TAG = "SampleDbAdapter";
+    private static final String TAG = "CitationDbAdapter";
     
     
     protected DatabaseHelper mDbHelper;
@@ -76,7 +78,8 @@ public class CitacionDbAdapter {
             + COMMENT + " TEXT,"
             + DATE + " TEXT,"
             + SINCRONIZED + " BOOLEAN,"
-            + MARKER_ID + " TEXT"
+            + MARKER_ID + " TEXT,"
+            + LAST_MOD + " TEXT"
             + ");";
     
     
@@ -93,11 +96,12 @@ public class CitacionDbAdapter {
     protected static final String DATABASE_TABLE_CITATION = "CitationTable";
     
     private static final String DATABASE_NAME= "Citation";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     /*
      * Version 2: original version
-     * Version 3: added markerId, fillColor, alpha and lineColor   
+     * Version 3: added markerId  
+     * Version 4: added last_mod (synchro-timestamp) 
      * 
      */
     
@@ -124,6 +128,16 @@ public class CitacionDbAdapter {
                 final String ALTER_TBL = 
                         "ALTER TABLE " + DATABASE_TABLE_CITATION + 
                         " ADD COLUMN " + MARKER_ID + " TEXT "
+                        + ";";
+                
+                db.execSQL(ALTER_TBL);
+                
+            }
+        	if (oldVersion < 4) {
+
+                final String ALTER_TBL = 
+                        "ALTER TABLE " + DATABASE_TABLE_CITATION + 
+                        " ADD COLUMN " + LAST_MOD + " TEXT "
                         + ";";
                 
                 db.execSQL(ALTER_TBL);
@@ -193,6 +207,21 @@ public class CitacionDbAdapter {
 		return mDb.update(DATABASE_TABLE_CITATION, vals, KEY_ROWID + "=" + sampleId, null) > 0;
     	
     }
+    
+    public boolean updateLastModDate(long sampleId){
+    	
+       	ContentValues vals = new ContentValues();
+       	
+        Date date = new Date();
+        date.getDate();
+        
+        vals.put(LAST_MOD, (String) DateFormat.format("yyyy-MM-dd kk:mm:ss", date));
+        
+        Log.i(TAG,"LastMod: "+vals.get(LAST_MOD).toString());
+		
+		return mDb.update(DATABASE_TABLE_CITATION, vals, KEY_ROWID + "=" + sampleId, null) > 0;
+    	
+    }
 
     /**
      * Create a new Sample using the rsID, latitude, longitude and comment. If the Sample is
@@ -220,6 +249,8 @@ public class CitacionDbAdapter {
         initialValues.put(DATE , (String) DateFormat.format("yyyy-MM-dd kk:mm:ss", date));
         initialValues.put(SINCRONIZED , 0);
         
+        initialValues.put(LAST_MOD, (String) DateFormat.format("yyyy-MM-dd kk:mm:ss", date));
+
 
         return mDb.insert(DATABASE_TABLE_CITATION, null, initialValues);
     }

@@ -117,7 +117,6 @@ public class CitationEditor extends Activity {
 	   private long projId=-1;
 	   
 	   private String thName;
-	   private String projType;
 	   private String thType;
 	   private String projName;
 	   
@@ -644,12 +643,12 @@ public class CitationEditor extends Activity {
 	}
 
     
-    private void updateFieldValues(long idSample, CitationControler smplCntr){
+    private void updateFieldValues(long citationId, CitationControler citCnt){
     	
 		
 		n=elementsList.size();
 		
-		smplCntr.startTransaction();
+		citCnt.startTransaction();
 		
 		
 		for (int i=0;i<n;i++){
@@ -703,14 +702,15 @@ public class CitationEditor extends Activity {
 				
 				
 			}
-			else smplCntr.updateCitationField(idSample, id, value,fieldList.get(i).getName());
+			else citCnt.updateCitationField(citationId, id, value,fieldList.get(i).getName());
 			
 			
 
 		}
 		
-		smplCntr.EndTransaction();
+		citCnt.updateLastModDate(citationId);
 
+		citCnt.EndTransaction();
 
 
 	
@@ -935,7 +935,6 @@ public class CitationEditor extends Activity {
 		   sC.startTransaction();
 		   
 		   thName=rsC.getThName();
-		   projType=rsC.getProjType();
 		   
 		   thStatus=tC.initThReader(rsC.getThName());
 		   
