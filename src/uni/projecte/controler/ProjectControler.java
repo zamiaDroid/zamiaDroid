@@ -1306,6 +1306,22 @@ public String createSecondLevelIdentifier(String fieldName){
 		this.multiPhotoFieldId = multiPhotoFieldId;
 	}
 
+	public long getProjectByName(String projectTag) {
+
+		long projId=-1;
+		
+		projDbAdapter = new ProjectDbAdapter(baseContext);
+		projDbAdapter.open();
+		
+			projDbAdapter.fetchProjectByName(projectTag);
+
+		projDbAdapter.close();
+
+		
+		return projId;
+		
+	}
+
 	
 	
 	

@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llRESTest"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-<LinearLayout
-    android:id="@+id/llMultiPhoto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    <Spinner
+        android:id="@+id/spProjectList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/projectList" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btRestAPI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recarregar informació" />
 
-<ImageView
-    android:id="@+id/ivPhotoDownload"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/main_citation_photos_inv" />
-    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Citacions" />
+        
+        
+        <TextView
+            android:id="@+id/tvCitationCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lstClientes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
 </LinearLayout>

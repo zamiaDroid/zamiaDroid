@@ -231,4 +231,10 @@
         <item>var.</item>
         <item>subvar.</item>
     </string-array>   
+    
+  <string-array name="projectList">
+        <item>Projecte de prova</item>
+        <item>Flora Alpens</item>
+        <item>Flora FXC0</item>
+    </string-array>  
 </resources>

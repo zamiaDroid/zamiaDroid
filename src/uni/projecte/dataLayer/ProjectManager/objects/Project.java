@@ -6,7 +6,12 @@ public class Project {
 	private String projName;
 	private String projType;
 	private String thName;
+	private int server_unsyncro;
+	private String server_last_mod;
 	
+
+
+
 	public Project(long projId,String projName, String projType, String thName) {
 		super();
 		this.projId=projId;
@@ -20,6 +25,15 @@ public class Project {
 		if(projId==0) this.projId=-1;
 		else this.projId=projId;
 	
+	}
+	
+
+	public String getServer_last_mod() {
+		return server_last_mod;
+	}
+
+	public void setServer_last_mod(String server_last_mod) {
+		this.server_last_mod = server_last_mod;
 	}
 	
 	public boolean isCreated(){
@@ -53,6 +67,14 @@ public class Project {
 
 	public void setProjId(long projId) {
 		this.projId = projId;
+	}
+	
+	public int getServer_unsyncro() {
+		return server_unsyncro;
+	}
+
+	public void setServer_unsyncro(int server_unsyncro) {
+		this.server_unsyncro = server_unsyncro;
 	}
 	
 }

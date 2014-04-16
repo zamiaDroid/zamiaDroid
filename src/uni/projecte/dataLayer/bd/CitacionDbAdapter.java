@@ -485,6 +485,26 @@ public class CitacionDbAdapter {
         return mCursor;
 
     }
+    
+    
+    
+    public Cursor fetchOutdatedCitations(long projId, String lastUpdate) throws SQLException {
+
+        Cursor mCursor =
+
+               mDb.query(true, DATABASE_TABLE_CITATION, new String[] {KEY_ROWID,
+               		KEY_RS,
+                       LATITUDE,LONGITUDE,DATE,SINCRONIZED,LAST_MOD}, KEY_RS + "=" + projId +" and "+LAST_MOD + " > \""+lastUpdate+"\"", null,
+                       null, null, null, null);
+       
+       
+       if (mCursor != null) {
+       	
+           mCursor.moveToFirst();
+       }
+       return mCursor;
+
+   }
 
     /**
      * Update the Sample to sincronized using the details provided.
@@ -920,6 +940,33 @@ public class CitacionDbAdapter {
                 VALUE}, VALUE + " like '%"+photoName+"'", null, null, null, null);
  
  }
+    
+
+	public long citationExists(long projId, String date) {
+
+		long citationId=-1;
+		
+		System.out.println(projId+"--"+date);
+
+        Cursor mCursor =
+                mDb.query(true, DATABASE_TABLE_CITATION, new String[] {KEY_ROWID,KEY_RS,
+                LATITUDE,LONGITUDE,DATE,SINCRONIZED}, KEY_RS + "=" + projId + " and " + DATE + " = \"" + date + "\"" , null,
+                        null, null, null, null);
+            
+        mCursor.moveToFirst();
+		
+       if(mCursor.getCount()>0){
+    	   
+    	   citationId=mCursor.getLong(0);
+    	   
+       }    
+       
+	   mCursor.close();
+            
+	   return citationId;
+	   
+	}
+
 
 	public boolean checkRepeated(long projId,long citationId, double latitude, double longitude, String date) {
 

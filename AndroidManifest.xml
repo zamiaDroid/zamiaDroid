@@ -41,6 +41,12 @@
         
        <activity android:name=".Activities.Miscelaneous.ActivityProvadora" android:configChanges="locale"
                   android:label="zActivityProvadora">     
+                  
+           <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+           
         </activity>
 
        <activity android:name=".Activities.Citations.CitationEditor" android:configChanges="orientation|locale" 

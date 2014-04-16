@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+     >
+
+      <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/ActionBar">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="Projectes Remots"
+                android:textColor="@color/background1"
+                android:textSize="22dp" />
+
+        </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+		android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tvCitations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="10dp"
+            android:text="@string/tvThChooseTaxaGroup"
+            android:textColor="@color/secondaryGreen"
+            android:textSize="16dp" />
+
+
+           <!--   <TextView
+                android:id="@+id/tvFields"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="Has d\'escollir un grup taxonòmic"/>
+-->
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" 
+                android:layout_marginBottom="5dp">
+
+                <Spinner
+                    android:id="@+id/spProjectList"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:entries="@array/projectList"
+                    android:entryValues="@array/thesaurusFilumsEnglish" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="4dp"
+                    android:layout_weight="0"
+                    android:gravity="right"
+                    android:orientation="horizontal" >
+
+                    <ProgressBar
+                        android:id="@+id/progBarLoading"
+                        style="@android:style/Widget.ProgressBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:maxWidth="20dip"
+      					android:minWidth="20dip"
+					    android:maxHeight="20dip"
+					    android:minHeight="20dip" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lvRemoteThPool"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+            
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llBottomPanel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" 
+            android:padding="5dp"
+            android:layout_marginBottom="6dp">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remoteThDescription"
+            	android:textColor="@color/secondaryGreen"
+                android:textSize="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4px" >
+
+                <Button
+                    android:id="@+id/btUpdateLocal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Actualitzar Local" />
+
+                <Button
+                    android:id="@+id/btUpdateRemote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Actualitzar Remot" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+       <!-- <Button
+            android:id="@+id/btZamiaImport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@drawable/btn_new_button_normal"
+            android:text="Importar citacions"
+             /> --> 
+
+    </LinearLayout>
+
+</LinearLayout>

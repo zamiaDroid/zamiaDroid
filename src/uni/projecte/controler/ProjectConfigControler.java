@@ -9,6 +9,7 @@ public class ProjectConfigControler extends ProjectControler{
 	public static final int DEFAULT_TAB_PROVIDER=1;
 	public static final int SEC_STORAGE_ENABLED=2;
 	public static final int DEFAULT_MARKER=3;
+	public static final int LAST_SYNCRO=4;
 	
 	private String defaultTabProviderValue="bdbc";
 	private String defaultSecStorageEnabled="false";
@@ -99,7 +100,13 @@ public class ProjectConfigControler extends ProjectControler{
 				projConfKeyName="defaultMapMarker";
 				
 				break;
-	
+				
+			case LAST_SYNCRO:
+				
+				projConfKeyName="lastSyncro";
+				
+				break;
+				
 			default:
 				
 				break;
@@ -132,7 +139,12 @@ public class ProjectConfigControler extends ProjectControler{
 				projConfKeyValue=defaultMarker;
 				
 				break;
-	
+				
+			case LAST_SYNCRO:
+				
+				projConfKeyValue="";
+				
+				break;
 			default:
 				
 				break;
