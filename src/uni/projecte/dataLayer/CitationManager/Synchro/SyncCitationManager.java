@@ -80,6 +80,8 @@ public class SyncCitationManager {
 		return citationList.size();
 			
 	}
+	
+	
 
 	public ArrayList<Project> getRemoteProjectList() {
 		
@@ -106,6 +108,29 @@ public class SyncCitationManager {
 		
 		hashFieldList=projCnt.getProjectFieldsHash(projId);
 		lastUpdate=getProjLastMod(projId);
+		
+	}
+	
+	public void enableSyncroProject(long projId){
+		
+		remoteAPI= new SyncRestApi(baseContext);
+		
+		Date date = new Date();
+		date.getDate();
+		
+		String lastSyncro=(String) DateFormat.format("yyyy-MM-dd kk:mm:ss", date);
+		
+		ZamiaProject project=new ZamiaProject();
+	
+		projCnt.loadProjectInfoById(projId);
+		
+		project.setProject_name(projCnt.getName());
+		project.setSyncro_date(lastSyncro);
+		project.setUser("utoPiC");
+
+		remoteAPI.createRemoteProject(project);
+		
+		projCnf.setProjectConfig(projId,ProjectConfigControler.LAST_SYNCRO,lastSyncro);
 		
 	}
 	

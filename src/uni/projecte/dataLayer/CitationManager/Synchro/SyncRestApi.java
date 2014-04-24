@@ -38,21 +38,26 @@ import android.widget.TextView;
 
 public class SyncRestApi {
 
-	private static String ALL_PROJECTS_API="http://161.116.68.40:8080/orcanew/api/projects/";
-	private static String PROJECT_API="http://161.116.68.40:8080/orcanew/api/projects/%s/synchro/%s";
-	private static String SYNCRO_CITATIONS_API="http://161.116.68.40:8080/orcanew/api/citations/%s/synchro/%s";
-	private static String ALL_CITATIONS_API="http://161.116.68.40:8080/orcanew/api/citations/%s";
+	private static String BASE_URL="http://161.116.68.40:8080/orcanew/api";
+	
+	private static String ALL_PROJECTS_API="/projects/";
 
-	private static String SEND_CITATIONS_API="http://161.116.68.40:8080/orcanew/api/citations/%s";
+	/*POST*/
+	private static String CREATE_PROJECT_API="/projects/";
+	
+	private static String PROJECT_API="/projects/%s/synchro/%s";
+
+	private static String ALL_CITATIONS_API="/citations/%s";
+	
+	/*POST*/
+	private static String SEND_CITATIONS_API="/citations/%s";
+	
+	private static String SYNCRO_CITATIONS_API="/citations/%s/synchro/%s";
 	
 	private static String TAG="SynchroService";
 	private String lastUpdate="";
-
-	private ProjectControler projCnt;
 	
 	private Context baseContext;
-
-	
 	
 	
 	public SyncRestApi(Context baseContext){
@@ -71,7 +76,7 @@ public class SyncRestApi {
 		
 		HttpClient httpClient = new DefaultHttpClient();
 		 
-		HttpGet del = new HttpGet(ALL_PROJECTS_API);
+		HttpGet del = new HttpGet(BASE_URL+ALL_PROJECTS_API);
 		 
 		del.setHeader("content-type", "application/json");
 		 
@@ -82,24 +87,25 @@ public class SyncRestApi {
 		 
 		        JSONArray respJSON= new JSONArray(respStr);
 		 
-		        String[] clientes = new String[respJSON.length()];
-		 
-		        for(int i=0; i<respJSON.length(); i++)
-		        {
+		        for(int i=0; i<respJSON.length(); i++){
+		        	
+		        	
 		            JSONObject obj = respJSON.getJSONObject(i);
 		 
 		            String nombCli = obj.getString("project_name");
-		            String unsyncro= obj.getString("mod_date");
-		 
-		            clientes[i] = nombCli;
 		            
-		            Log.i(TAG,clientes[i]);
+		            String unsyncro= obj.getString("mod_date");
+		            int count=obj.getInt("count_all");
+		 
+		            Log.i(TAG,"#"+i+" "+nombCli);
 		            
 		            Project proj=new Project(0);
 		            proj.setProjName(nombCli);
 		            proj.setServer_last_mod(unsyncro);
+		            proj.setServer_unsyncro(count);
 		            
 		            projectList.add(proj);
+		            
 		        }
 		 
 			        	
@@ -119,7 +125,7 @@ public class SyncRestApi {
 		
 		HttpClient httpClient = new DefaultHttpClient();
 		 
-		HttpGet del = new HttpGet(String.format(PROJECT_API,getProject(projectId),lastUpdate));
+		HttpGet del = new HttpGet(String.format(BASE_URL+PROJECT_API,getProject(projectId),lastUpdate));
 		 
 		del.setHeader("content-type", "application/json");
 		 
@@ -151,16 +157,16 @@ public class SyncRestApi {
 		
 		if(lastUpdate.equals("")){
 			
-			System.out.println(String.format(ALL_CITATIONS_API,getProject(projectTag)));
+			System.out.println(String.format(BASE_URL+ALL_CITATIONS_API,getProject(projectTag)));
 			
-			del = new HttpGet(String.format(ALL_CITATIONS_API,getProject(projectTag)));
+			del = new HttpGet(String.format(BASE_URL+ALL_CITATIONS_API,getProject(projectTag)));
 
 		}
 		else{
 			
-			System.out.println(String.format(SYNCRO_CITATIONS_API,getProject(projectTag),lastUpdate.replace(" ","%20")));
+			System.out.println(String.format(BASE_URL+SYNCRO_CITATIONS_API,getProject(projectTag),lastUpdate.replace(" ","%20")));
 
-			del = new HttpGet(String.format(SYNCRO_CITATIONS_API,getProject(projectTag),lastUpdate.replace(" ","%20")));
+			del = new HttpGet(String.format(BASE_URL+SYNCRO_CITATIONS_API,getProject(projectTag),lastUpdate.replace(" ","%20")));
 
 		}
 		
@@ -215,6 +221,7 @@ public class SyncRestApi {
 			citationObj.setAltitude(citation.getString("altitude"));
 			citationObj.setObservationAuthor(citation.getString("observationAuthor"));
 			
+			citationObj.setState(citation.getString("state"));
 			
 			
 			//System.out.println(citationObj.getTaxon());
@@ -239,6 +246,51 @@ public class SyncRestApi {
 		
 	}
 
+	
+
+	public void createRemoteProject(ZamiaProject project) {
+
+
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		String result=gson.toJson(project);
+		
+		System.out.println(result);		
+				
+	    HttpClient httpclient = new DefaultHttpClient();
+	    
+		HttpPost httpPost = new HttpPost(BASE_URL+CREATE_PROJECT_API);
+
+		    try {
+		        // Add your data
+	
+		    	 httpPost.setEntity(new StringEntity(result));
+		         httpPost.setHeader("Accept", "application/json; charset=utf-8");
+		         httpPost.setHeader("Content-type", "application/json; charset=utf-8");
+	    	    
+		        // Execute HTTP Post Request
+		        HttpResponse response = httpclient.execute(httpPost);
+			    HttpEntity httpEntity = response.getEntity();
+
+			    if (httpEntity != null) {
+			    	
+			        InputStream is = httpEntity.getContent();
+			        result = StringUtils.convertStreamToString(is);
+			        Log.i(TAG, "Result: " + result);
+			        
+			    }
+			    
+		    } catch (ClientProtocolException e) {
+
+		    } catch (IOException e) {
+
+		    	
+		    	
+		 }
+		
+		
+	}
+	
+	
 	public void sendCitations(String projectTag,ZamiaCitation citation) {
 
 		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
@@ -247,11 +299,11 @@ public class SyncRestApi {
 				
 	    HttpClient httpclient = new DefaultHttpClient();
 	    
-		System.out.println(String.format(SEND_CITATIONS_API,getProject(projectTag)));
+		System.out.println(String.format(BASE_URL+SEND_CITATIONS_API,getProject(projectTag)));
 		System.out.println(result);
 
 	    
-		HttpPost httpPost = new HttpPost(String.format(SEND_CITATIONS_API,getProject(projectTag)));
+		HttpPost httpPost = new HttpPost(String.format(BASE_URL+SEND_CITATIONS_API,getProject(projectTag)));
 
 		    try {
 		        // Add your data
@@ -283,5 +335,6 @@ public class SyncRestApi {
 
 	        
 	}
+
 	
 }

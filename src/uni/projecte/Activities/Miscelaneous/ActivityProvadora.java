@@ -19,37 +19,33 @@ package uni.projecte.Activities.Miscelaneous;
 
 import java.util.ArrayList;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import uni.projecte.R;
+import uni.projecte.Activities.Projects.ProjectRepositoryList;
+import uni.projecte.controler.SyncProjectControler;
 import uni.projecte.dataLayer.CitationManager.Synchro.ProjectSyncListAdapter;
 import uni.projecte.dataLayer.CitationManager.Synchro.SyncCitationManager;
-import uni.projecte.dataLayer.CitationManager.Synchro.SyncRestApi;
-import uni.projecte.dataLayer.CitationManager.Synchro.ZamiaCitation;
 import uni.projecte.dataLayer.ProjectManager.objects.Project;
-import uni.projecte.dataLayer.ThesaurusManager.RemoteThesaurusListAdapter;
 import uni.projecte.dataTypes.Utilities;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 
 public class ActivityProvadora extends Activity {
 	
 	private Spinner sp;
 	private SyncCitationManager synchroManager;
+	private SyncProjectControler syncCnt;
+
 	
-	
-	private TextView tv;
 	private ListView lstClientes;
-	private Button btUpdateRemote;
-	private Button btUpdateLocal;
+	private Button btConfigSyncro;
+	private Button btCreateSyncroProj;
 
 	  @Override
 	  public void onCreate(Bundle savedInstanceState) {
@@ -61,34 +57,29 @@ public class ActivityProvadora extends Activity {
 	       setContentView(R.layout.project_sync);
 	       
 	       synchroManager = new SyncCitationManager(this);
+	       syncCnt=new SyncProjectControler(this);
 	       
 	       lstClientes = (ListView)findViewById(R.id.lvRemoteThPool);
-	       btUpdateRemote=(Button)findViewById(R.id.btUpdateRemote);
-	       btUpdateLocal=(Button)findViewById(R.id.btUpdateLocal);
-	       
-	       ArrayList<Project> projectList=synchroManager.getRemoteProjectList();
-	       
-	       ProjectSyncListAdapter adapter=new ProjectSyncListAdapter(this, projectList, listLocalClick);
 	      
-	       lstClientes.setAdapter(adapter);	
+	       btConfigSyncro=(Button)findViewById(R.id.btConfigSyncro);
+	       btCreateSyncroProj=(Button)findViewById(R.id.btCreateSyncroProj);
 	       
-	       
-	       btUpdateRemote.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
+	       btCreateSyncroProj.setOnClickListener(createSyncroProjectClick);
 
-				//synchro.get1ProjectInfo((String)sp.getSelectedItem(),tv);
-			    //synchro.getAllCitations((String)sp.getSelectedItem(),lstClientes);
-				
-				
-				
-			}
-		});
+	       loadSyncroProjectList();
 
-	
-	       
-		    
 	  }
+	  
+	  
+	  private void loadSyncroProjectList(){
+		  
+	       ArrayList<Project> remoteProjectList=synchroManager.getRemoteProjectList();
+	       
+	       ProjectSyncListAdapter adapter=new ProjectSyncListAdapter(this, remoteProjectList,syncCnt.getAllSyncroProjects(), listLocalClick);
+	       lstClientes.setAdapter(adapter);	
+
+	  }
+	  
 	  
 	  public OnClickListener listLocalClick = new OnClickListener() {
 
@@ -101,25 +92,48 @@ public class ActivityProvadora extends Activity {
 				updated=synchroManager.getOutdatedRemoteCitations((String) v.getTag());
 				
 				Utilities.showToast("Dades locals actualitzades "+updated, v.getContext());
-
 				
 			}
 		  
 		};
 
-	  public OnClickListener listClick = new OnClickListener() {
+	  public OnClickListener createSyncroProjectClick = new OnClickListener() {
 		
 		@Override
 		public void onClick(View v) {
 
-						
-			//TextView counter=(TextView) ((Activity) v.getParent().getParent()).findViewById(R.id.item_counter);
-			//counter.setText(""+updated);
-			
-		//	Utilities.showToast("Dades remotes noves "+updated, v.getContext());
-
+			Intent intent = new Intent(getBaseContext(), ProjectRepositoryList.class);
+			intent.putExtra("filter","Orca");
+            startActivityForResult(intent,1);
 			
 		}
 	};
+	
+	
+	   @Override
+		protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		   	
+		        switch(requestCode) {
+  
+		        case 1 :
+		        	
+		        	if(intent!=null){
+		        		
+		        	 	 Bundle ext = intent.getExtras();
+		        	 	 long projId=ext.getLong("projId");
+		        	 	 
+			        	 synchroManager.enableSyncroProject(projId);
+			        	 loadSyncroProjectList();
+		        				        	 
+		        	}
+		       
+		            break;
+		            
+		            default:
+		  
+		        }
+
+		    }
+	
 }
 

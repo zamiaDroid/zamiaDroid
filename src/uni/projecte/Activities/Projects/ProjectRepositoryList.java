@@ -21,13 +21,11 @@ import java.io.File;
 import java.util.ArrayList;
 
 import uni.projecte.R;
-import uni.projecte.R.id;
-import uni.projecte.R.layout;
-import uni.projecte.R.string;
 import uni.projecte.controler.PreferencesControler;
-import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.controler.ProjectZamiaControler;
+import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.dataLayer.ProjectManager.ListAdapters.RemoteProjectListAdapter;
+import uni.projecte.dataLayer.ProjectManager.xml.ZamiaProjectJSON;
 import uni.projecte.dataLayer.ThesaurusManager.RemoteThHandler;
 import uni.projecte.dataLayer.ThesaurusManager.ThesaurusDownloader.ThAsyncDownloader;
 import uni.projecte.dataTypes.ProjectRepositoryType;
@@ -74,6 +72,7 @@ public class ProjectRepositoryList extends Activity {
     private String thFilum;
     private String thSource;
     private String thName;
+    private String filter="";
 	
 	
 	@Override
@@ -89,8 +88,16 @@ public class ProjectRepositoryList extends Activity {
 	    
 		zpC= new ProjectZamiaControler(this);
 	
+		
+		if(getIntent().getExtras()!=null){
+		        
+	        filter=getIntent().getExtras().getString("filter");
+	        	
+	     }
+		
+		
 		loadRemoteProjects();
-		loadLocalProjects();
+		if(filter.equals("")) loadLocalProjects();
 		
 		lV.setOnItemClickListener(theListListener);
         localLV.setOnItemClickListener(theLocalListListener);
@@ -113,6 +120,19 @@ public class ProjectRepositoryList extends Activity {
 			
 			list=zpC.getZamiaProject();
 			
+			if(!filter.equals("")){
+				
+				ArrayList<ProjectRepositoryType> tmpList=new ArrayList<ProjectRepositoryType>();
+				
+				for(ProjectRepositoryType proj: list){
+					
+					if(proj.getProjType().equals(filter)) tmpList.add(proj);
+					
+				}
+				
+				list=tmpList;
+			}
+		
 			RemoteProjectListAdapter eA=new RemoteProjectListAdapter(this,list);		
 			lV.setAdapter(eA);
 					

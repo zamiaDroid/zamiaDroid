@@ -9,7 +9,7 @@
         android:id="@+id/spProjectList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/projectList" />
+     />
 
     <Button
         android:id="@+id/btRestAPI"

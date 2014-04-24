@@ -1,5 +1,8 @@
 package uni.projecte.controler;
 
+import java.util.ArrayList;
+
+import uni.projecte.dataLayer.ProjectManager.objects.Project;
 import uni.projecte.dataLayer.bd.ProjectDbAdapter;
 import android.content.Context;
 import android.database.Cursor;
@@ -153,6 +156,60 @@ public class ProjectConfigControler extends ProjectControler{
 		return projConfKeyValue;
 	}
 	
+	public void setProjectConfig(long projId,int id, String value){
+		
+		
+		String projConfKey=getConfigKey(id);
+	
+		if(!projConfKey.equals("")){
+		
+			projDbAdapter = new ProjectDbAdapter(baseContext);
+			projDbAdapter.open();
+			
+				projDbAdapter.insertProjectConfigValue(projId,projConfKey,value);
+	
+			projDbAdapter.close();
+		
+		}
+
+		
+	}
+	
+	
+	public ArrayList<Project> getAllProjConfig(int id){
+		
+		ArrayList<Project> projectList= new ArrayList<Project>();
+		
+		String projConfKey=getConfigKey(id);
+	
+		if(!projConfKey.equals("")){
+			
+			projDbAdapter = new ProjectDbAdapter(baseContext);
+			projDbAdapter.open();
+			
+			Cursor c=projDbAdapter.fetchAllConfigValues(projConfKey);
+			c.moveToFirst();
+			
+			while(!c.isAfterLast()){
+				
+				Project projTmp=new Project(c.getLong(1));
+				projTmp.setServer_last_mod(c.getString(3));
+
+				projectList.add(projTmp);
+				
+				c.moveToNext();
+			}
+		
+			c.close();	
+			
+			projDbAdapter.close();
+		
+		}
+		
+		return projectList;
+
+		
+	}
 	
 	
 	

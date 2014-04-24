@@ -232,9 +232,10 @@
         <item>subvar.</item>
     </string-array>   
     
-  <string-array name="projectList">
-        <item>Projecte de prova</item>
-        <item>Flora Alpens</item>
-        <item>Flora FXC0</item>
+  <string-array name="syncroSources">
+        <item>orca.cat</item>
+    </string-array>  
+   <string-array name="syncroSourcesEntries">
+        <item>remote_orca</item>
     </string-array>  
 </resources>

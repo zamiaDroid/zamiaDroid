@@ -59,19 +59,30 @@
             android:layout_weight="0"
             android:gravity="right" >
 
-
-         <TextView
+                     <ImageButton
+                android:id="@+id/ibSyncAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="8dp"
+                android:background="@null" />
+                     
+            
+               <TextView
             android:id="@+id/item_counter"
-            android:layout_width="26dp"
+            android:layout_width="wrap_content"
             android:layout_height="26dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
+            android:padding="3dp"
             android:background="@drawable/rectangle"
             android:gravity="center"
             android:textColor="@color/mainGreen"
             android:textSize="12sp"
             android:textStyle="bold" />
+            
+   
 
         </LinearLayout>
 

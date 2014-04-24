@@ -21,6 +21,9 @@ import android.database.Cursor;
 
 public class SyncControler extends CitationControler {
 
+	public static String REMOVED_CITATION="removed";
+	
+	
 	public SyncControler(Context baseContext) {
 	
 		super(baseContext);
@@ -41,17 +44,29 @@ public class SyncControler extends CitationControler {
 			
 			System.out.println("Found: "+citationId);
 
-			
-			if(citationId<0){
-
-				createSyncroCitation(citationAdapter, projId, citation,fieldList);
-
+			if(citation.getState().equals(REMOVED_CITATION)){
+				
+				if(citationId>=0){
+					
+					System.out.println("Esborrant: "+citationId);
+					deleteCitation(citationId);
+						
+				}
+				
 			}
 			else{
-				
-				System.out.println("Modfify: "+citationId);
-				modifySyncroCitation(citationAdapter, projId, citation,citationId,fieldList);
-				
+			
+				if(citationId<0){
+	
+					createSyncroCitation(citationAdapter, projId, citation,fieldList);
+	
+				}
+				else{
+					
+					System.out.println("Modfify: "+citationId);
+					modifySyncroCitation(citationAdapter, projId, citation,citationId,fieldList);
+					
+				}
 			}
 			
 		
@@ -63,7 +78,7 @@ public class SyncControler extends CitationControler {
 	
 	private void modifySyncroCitation(CitacionDbAdapter citationAdapter,long projId, ZamiaCitation citation, long citationId, HashMap<String, Long> fieldList) {
 
-		//1) Solució agressiva. overwritte petem tots els camps!
+		//1) FETA: Solució agressiva. overwritte petem tots els camps!
 		//2) Mirem els canvis de Citation i CitationValue
 
 		//startTransaction();

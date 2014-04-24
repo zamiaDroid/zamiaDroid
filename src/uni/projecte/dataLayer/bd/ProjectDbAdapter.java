@@ -773,6 +773,13 @@ public class ProjectDbAdapter {
 	    			  PROJ_CONFIG_VALUE}, PROJ_ID_FK + "=" + projId+" and "+ PROJ_CONFIG_KEY + "=\"" +projConfKeyName+"\"", null, null, null, null);
 	    
 	}
+	
+	public Cursor fetchAllConfigValues(String projConfKeyName) {
+
+		   return mDb.query(DATABASE_TABLE_PROJECT_CONFIG, new String[] {KEY_ROWID,PROJ_ID_FK,PROJ_CONFIG_KEY,
+	    			  PROJ_CONFIG_VALUE}, PROJ_CONFIG_KEY + "=\"" +projConfKeyName+"\"", null, null, null, null);
+	    
+	}
 
 	public long insertProjectConfigValue(long projId, String confKey,
 			String confValue) {

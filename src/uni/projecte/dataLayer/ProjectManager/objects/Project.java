@@ -1,5 +1,12 @@
 package uni.projecte.dataLayer.ProjectManager.objects;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import uni.projecte.controler.ProjectConfigControler;
+import android.text.format.DateFormat;
+
 public class Project {
 
 	private long projId;
@@ -75,6 +82,28 @@ public class Project {
 
 	public void setServer_unsyncro(int server_unsyncro) {
 		this.server_unsyncro = server_unsyncro;
+	}
+	
+	public boolean isUpdated(String remote){
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+
+		
+		Date date1 = null;
+		Date date2 = null;
+		
+		
+		try {
+			date1 = sdf.parse(server_last_mod);
+	    	date2 = sdf.parse(remote);
+
+		} catch (ParseException e) {
+
+			e.printStackTrace();
+		}
+
+		return date1.compareTo(date2)>0;	
+		
 	}
 	
 }

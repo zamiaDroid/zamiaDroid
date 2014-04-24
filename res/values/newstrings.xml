@@ -384,5 +384,6 @@
    <string name="mRemovePhotoCache">Esborrar memòria cau de fotografies</string>
    <string name="releveeCode">Codi inventari</string>
    
+   <string name="syncroDescription">En la següent llista es poden veure els projectes sincronitzats. Pots veure quins estan actualitzats o sense actualitzar. A més a més, pots crear un nou projecte que es sincronitzarà amb el servidor.</string>
    
 </resources>

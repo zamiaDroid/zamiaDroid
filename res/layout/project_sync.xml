@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginBottom="10dp"
-            android:text="@string/tvThChooseTaxaGroup"
+            android:text="Llistat de projectes remots"
             android:textColor="@color/secondaryGreen"
             android:textSize="16dp" />
 
@@ -63,12 +63,12 @@
                 android:layout_marginBottom="5dp">
 
                 <Spinner
-                    android:id="@+id/spProjectList"
+                    android:id="@+id/spThGroups"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:entries="@array/projectList"
-                    android:entryValues="@array/thesaurusFilumsEnglish" />
+                    android:entries="@array/syncroSources"
+                    android:entryValues="@array/syncroSourcesEntries" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout6"
@@ -125,7 +125,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/remoteThDescription"
+                android:text="@string/syncroDescription"
             	android:textColor="@color/secondaryGreen"
                 android:textSize="12dp" />
 
@@ -135,16 +135,17 @@
                 android:layout_margin="4px" >
 
                 <Button
-                    android:id="@+id/btUpdateLocal"
+                    android:id="@+id/btCreateSyncroProj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Actualitzar Local" />
+                    android:background="@drawable/btn_new_button_normal"
+                    android:text="Crear nou Projecte" />
 
                 <Button
-                    android:id="@+id/btUpdateRemote"
+                    android:id="@+id/btConfigSyncro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Actualitzar Remot" />
+                    android:text="Configuració" />
 
             </LinearLayout>
 
