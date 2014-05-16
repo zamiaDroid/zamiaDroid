@@ -19,11 +19,9 @@ package uni.projecte.dataLayer.CitationManager.Synchro;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 import uni.projecte.R;
 import uni.projecte.dataLayer.ProjectManager.objects.Project;
-import uni.projecte.dataTypes.Utilities;
 import android.content.Context;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -91,7 +89,6 @@ public class ProjectSyncListAdapter extends BaseAdapter  {
 	    	 holder.tvCounter=(TextView)convertView.findViewById(R.id.item_counter);
 	    	 holder.ibAction=(ImageButton)convertView.findViewById(R.id.ibSyncAction);
 
-
 	    	 convertView.setTag(holder);
 	    	 
     	 }
@@ -103,18 +100,14 @@ public class ProjectSyncListAdapter extends BaseAdapter  {
     	 
     	    Project remoteProj=remoteProjectList.get(position);
     	    Project localProj=localProjectMap.get(remoteProj.getProjName());
-    	    
-       	 	//holder.tvThSource.setText(thElem.getLastUpdate());
        
        	 	holder.tvThDesc.setText(Html.fromHtml(remoteProj.getProjName()));
-       	 	
-      	 	holder.tvThDesc.setTag(remoteProj.getProjName());
+      	 	holder.tvThDesc.setTag(remoteProj.getProjName());      	 	
+      	 	holder.tvThDesc.setOnClickListener(actionListener);
 
-       	 	//holder.ibAction.setBackgroundResource(android.R.drawable.ic_popup_sync);
-       	 	
+      	 	
       	 	if(localProj!=null) {
       	 		
-          	 	holder.tvThDesc.setOnClickListener(actionListener);
 
       	 		if(remoteProj.getServer_last_mod().equals("")){
       	 			
@@ -136,7 +129,7 @@ public class ProjectSyncListAdapter extends BaseAdapter  {
 
       	 		}
       	 		
-      	 		
+      	 		holder.tvThDesc.setId((int) localProj.getProjId());
       	 		
       	 	}
       	 	else {
@@ -144,53 +137,14 @@ public class ProjectSyncListAdapter extends BaseAdapter  {
       	 		holder.tvThUpdate.setText(remoteProj.getServer_last_mod());
       	 		holder.ibAction.setVisibility(View.VISIBLE);
       	 		holder.ibAction.setBackgroundResource(R.drawable.cross_green);
-     	 		
 
+      	 		holder.tvThDesc.setId(-1);
+
+      	 		
       	 	}
-      	 	
              	 	
        	 	holder.tvCounter.setText(remoteProj.getServer_unsyncro()+"");
        	 	
-       	 	//if(thElem.getThSource().equals("url")) holder.llThDesc.setBackgroundColor(context.getResources().getColor(R.color.secondaryGreen));
-       	 	//else holder.llThDesc.setBackgroundColor(context.getResources().getColor(R.color.background2));
-       	 	
-       	 /*	String updated=remoteLocalTh.get(thElem.getThId());
-       	 	if(updated!=null){
-       	 		
-   	 			holder.tvThUpdate.setVisibility(View.VISIBLE);
-       	 		
-       	 		if(DateTimeUtils.compareDate(updated,thElem.getLastUpdate())<0) {
-       	 			
-       	       	 	holder.tvThUpdate.setText(String.format(context.getString(R.string.thRemoteNotUpdated),thElem.getLastUpdate()));
-       	       	 	holder.ibAction.setBackgroundResource(android.R.drawable.ic_popup_sync);
-       	       	 	holder.ibAction.setOnClickListener(actionListener);
-       	       	 	holder.ibAction.setTag("update");
-
-       	 		}
-       	 		else {
-       	 			
-       	 			holder.ibAction.setBackgroundResource(R.drawable.tick);
-       	       	 	holder.tvThUpdate.setText(context.getString(R.string.thRemoteUpdated));
-       	 			
-       	 		}
-       	 	
-       	 	}
-       	 	else{
-       	 		
-       	 		holder.ibAction.setBackgroundResource(android.R.drawable.ic_menu_save);
-   	 			holder.tvThUpdate.setVisibility(View.GONE);
-   	 			holder.ibAction.setOnClickListener(actionListener);
-   	 			holder.ibAction.setTag("new");
-
-       	 		
-       	 	}*/
-       	 	
-       	 	//if(thElem.getThSource().equals("url")) holder.ibAction.setBackgroundResource(android.R.drawable.ic_popup_sync);
-       	 	//else holder.ibAction.setBackgroundResource(android.R.drawable.ic_menu_save);
-       	 	
- 	       //holder.ibAction.setId(position);
-                       
-		
 		return convertView;
 	}
 

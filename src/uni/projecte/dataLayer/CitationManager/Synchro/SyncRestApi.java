@@ -1,3 +1,21 @@
+/*    	This file is part of ZamiaDroid.
+*
+*	ZamiaDroid is free software: you can redistribute it and/or modify
+*	it under the terms of the GNU General Public License as published by
+*	the Free Software Foundation, either version 3 of the License, or
+*	(at your option) any later version.
+*
+*    	ZamiaDroid is distributed in the hope that it will be useful,
+*    	but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    	GNU General Public License for more details.
+*
+*    	You should have received a copy of the GNU General Public License
+*    	along with ZamiaDroid.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
+
 package uni.projecte.dataLayer.CitationManager.Synchro;
 
 import java.io.IOException;
@@ -29,6 +47,7 @@ import uni.projecte.dataLayer.ProjectManager.objects.Project;
 import uni.projecte.dataLayer.utils.StringUtils;
 
 import android.content.Context;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -41,6 +60,9 @@ public class SyncRestApi {
 	private static String BASE_URL="http://161.116.68.40:8080/orcanew/api";
 	
 	private static String ALL_PROJECTS_API="/projects/";
+	
+	private static String CHECK_USER="/users/";
+
 
 	/*POST*/
 	private static String CREATE_PROJECT_API="/projects/";
@@ -57,19 +79,29 @@ public class SyncRestApi {
 	private static String TAG="SynchroService";
 	private String lastUpdate="";
 	
-	private Context baseContext;
+	private Context baseContext;	
+	private User user;
 	
-	
-	public SyncRestApi(Context baseContext){
+	public SyncRestApi(Context baseContext, User user){
 
 		this.baseContext=baseContext;
 		this.lastUpdate="2014-04-07";
+		this.user=user;
 		
 		//projCnt= new ProjectControler(baseContext);
 		//projCnt.loadProjectInfoById(projId);
 		
 	}
-
+	
+	private String getAuthorization (String usermane, String password) {
+		   
+		String source=usermane+":"+password;
+		  
+		return "Basic "+Base64.encodeToString(source.getBytes(),Base64.URL_SAFE|Base64.NO_WRAP);
+		   
+	}
+	
+	
 	public ArrayList<Project> getProjectList(){
 		
 		ArrayList<Project> projectList= new ArrayList<Project>();
@@ -82,6 +114,10 @@ public class SyncRestApi {
 		 
 		try
 		{
+				System.out.println(getAuthorization(user.getUsername(),user.getPassword()));
+			
+				del.addHeader("Authorization", getAuthorization(user.getUsername(),user.getPassword()));
+				
 		        HttpResponse resp = httpClient.execute(del);
 		        String respStr = EntityUtils.toString(resp.getEntity());
 		 
@@ -121,12 +157,15 @@ public class SyncRestApi {
 	}
 
 	
+	
+	
 	public void getProjectInfo(String projectId, TextView tvCount){
 		
 		HttpClient httpClient = new DefaultHttpClient();
 		 
 		HttpGet del = new HttpGet(String.format(BASE_URL+PROJECT_API,getProject(projectId),lastUpdate));
-		 
+		del.addHeader("Authorization", getAuthorization(user.getUsername(),user.getPassword()));
+
 		del.setHeader("content-type", "application/json");
 		 
 		try
@@ -170,7 +209,7 @@ public class SyncRestApi {
 
 		}
 		
-		 
+		del.addHeader("Authorization", getAuthorization(user.getUsername(),user.getPassword()));
 		del.setHeader("content-type", "application/json");
 		 
 		try
@@ -179,8 +218,6 @@ public class SyncRestApi {
 		        String respStr = EntityUtils.toString(resp.getEntity());
 		 
 		        JSONArray respJSON= new JSONArray(respStr);
-		 
-		        String[] clientes = new String[respJSON.length()];
 		 
 		        for(int i=0; i<respJSON.length(); i++)
 		        {
@@ -220,6 +257,8 @@ public class SyncRestApi {
 			
 			citationObj.setAltitude(citation.getString("altitude"));
 			citationObj.setObservationAuthor(citation.getString("observationAuthor"));
+			
+			citationObj.setLocality(citation.getString("locality"));
 			
 			citationObj.setState(citation.getString("state"));
 			
@@ -264,7 +303,9 @@ public class SyncRestApi {
 		        // Add your data
 	
 		    	 httpPost.setEntity(new StringEntity(result));
-		         httpPost.setHeader("Accept", "application/json; charset=utf-8");
+		    	 httpPost.addHeader("Authorization", getAuthorization(user.getUsername(),user.getPassword()));
+
+		    	 httpPost.setHeader("Accept", "application/json; charset=utf-8");
 		         httpPost.setHeader("Content-type", "application/json; charset=utf-8");
 	    	    
 		        // Execute HTTP Post Request
@@ -309,7 +350,8 @@ public class SyncRestApi {
 		        // Add your data
 	
 		    	 httpPost.setEntity(new StringEntity(result));
-		         httpPost.setHeader("Accept", "application/json; charset=utf-8");
+		    	 httpPost.addHeader("Authorization", getAuthorization(user.getUsername(),user.getPassword()));
+		    	 httpPost.setHeader("Accept", "application/json; charset=utf-8");
 		         httpPost.setHeader("Content-type", "application/json; charset=utf-8");
 	    	    
 		        // Execute HTTP Post Request
@@ -322,6 +364,8 @@ public class SyncRestApi {
 			        result = StringUtils.convertStreamToString(is);
 			        Log.i(TAG, "Result: " + result);
 			        
+			      
+			        
 			    }
 			    
 		    } catch (ClientProtocolException e) {
@@ -329,11 +373,58 @@ public class SyncRestApi {
 		    } catch (IOException e) {
 
 		    	
-		    	
 		    }
-		
-
 	        
+	}
+
+	public boolean checkLogin(String username, String password) {
+
+		boolean success=false;
+
+		
+		HttpClient httpClient = new DefaultHttpClient();
+		 
+		HttpGet del= new HttpGet(BASE_URL+CHECK_USER);
+		
+		del.addHeader("Authorization", getAuthorization(username,password));
+		del.setHeader("content-type", "application/json");
+		 
+		try
+		{
+		        HttpResponse resp = httpClient.execute(del);
+		        HttpEntity httpEntity =resp.getEntity();
+		        
+		        if (httpEntity != null) {
+			    	
+			        InputStream is = httpEntity.getContent();
+			        String result = StringUtils.convertStreamToString(is);
+			        Log.i(TAG, "Result: " + result);
+			        
+			        try{
+			        	
+			        	 JSONObject object= new JSONObject(result);
+					     result=object.getString("user");
+					     
+					     if(result.equals(username)) success=true;
+			        	
+			        }
+			        catch (JSONException e){
+			        	
+			        	
+			        	
+			        }
+			        
+			        
+			    }
+		 		        	
+		        	
+		}
+		catch(Exception ex)
+		{
+		        Log.e(TAG,"Error!", ex);
+		}
+		
+		return success;
 	}
 
 	

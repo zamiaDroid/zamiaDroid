@@ -1,27 +1,9 @@
-/*    	This file is part of ZamiaDroid.
-*
-*	ZamiaDroid is free software: you can redistribute it and/or modify
-*	it under the terms of the GNU General Public License as published by
-*	the Free Software Foundation, either version 3 of the License, or
-*	(at your option) any later version.
-*
-*    	ZamiaDroid is distributed in the hope that it will be useful,
-*    	but WITHOUT ANY WARRANTY; without even the implied warranty of
-*    	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*    	GNU General Public License for more details.
-*
-*    	You should have received a copy of the GNU General Public License
-*    	along with ZamiaDroid.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-
-package uni.projecte.Activities.Miscelaneous;
+package uni.projecte.Activities.Syncro;
 
 import java.util.ArrayList;
 
 import uni.projecte.R;
 import uni.projecte.Activities.Projects.ProjectRepositoryList;
-import uni.projecte.Activities.Syncro.SyncroConfig;
 import uni.projecte.controler.SyncProjectControler;
 import uni.projecte.dataLayer.CitationManager.Synchro.ProjectSyncListAdapter;
 import uni.projecte.dataLayer.CitationManager.Synchro.SyncCitationManager;
@@ -36,8 +18,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-
-public class ActivityProvadora extends Activity {
+public class SyncroProjectList extends Activity {
 	
 	private Spinner sp;
 	private SyncCitationManager synchroManager;
@@ -138,7 +119,6 @@ public class ActivityProvadora extends Activity {
 		private void callConfigActivity(){
 			
 			Intent intent = new Intent(this, SyncroConfig.class);
-
             startActivity(intent);
 		}	
 			
@@ -185,6 +165,4 @@ public class ActivityProvadora extends Activity {
 		        }
 
 		    }
-	
 }
-

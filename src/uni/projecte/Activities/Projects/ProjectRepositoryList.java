@@ -73,7 +73,9 @@ public class ProjectRepositoryList extends Activity {
     private String thSource;
     private String thName;
     private String filter="";
-	
+
+    private String settedProjName="";
+    
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -93,6 +95,10 @@ public class ProjectRepositoryList extends Activity {
 		        
 	        filter=getIntent().getExtras().getString("filter");
 	        	
+	        String projName=getIntent().getExtras().getString("projName");
+	        
+	        if(projName!=null) settedProjName=projName;
+	        
 	     }
 		
 		
@@ -205,8 +211,12 @@ public class ProjectRepositoryList extends Activity {
  		   thList.setAdapter(dtAdapter);
  		   thList.setVisibility(View.GONE); 
 
-    	 
-    	   	name.setText(prName);
+ 		   if(settedProjName.equals("")) name.setText(prName);
+ 		   else{
+ 			   
+ 			   name.setText(settedProjName);
+ 			   name.setEnabled(false);
+ 		   }
     	   	
     	    final RadioButton rbRemoteTh = (RadioButton) dialog.findViewById(R.id.rbRemoteTh);
     	    final RadioButton rbLocalTh = (RadioButton) dialog.findViewById(R.id.rbLocalTh);
@@ -349,6 +359,12 @@ public class ProjectRepositoryList extends Activity {
 				Bundle b = new Bundle();
 				b.putLong("projId", projId);
 				intent.putExtras(b);
+				
+
+				b = new Bundle();
+				b.putBoolean("syncro", !settedProjName.equals(""));
+				intent.putExtras(b);
+					
 
 				setResult(1, intent);
 		        finish();

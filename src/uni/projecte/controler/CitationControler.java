@@ -63,7 +63,7 @@ public class CitationControler {
 	
 	protected Context baseContext;
 	protected CitacionDbAdapter mDbSample;
-	private CitacionDbAdapter mDbAttributes;
+	protected CitacionDbAdapter mDbAttributes;
 	protected CitationControler sC;
 	protected CitationExporter cExporter;
 	
@@ -142,7 +142,7 @@ public class CitationControler {
 		
 		projId=idRs;
 		
-		this.sampleId=  mDbAttributes.createEmptyCitation(idRs);
+		this.sampleId=mDbAttributes.createEmptyCitation(idRs);
 	
 		return sampleId;		
 		
@@ -158,6 +158,7 @@ public class CitationControler {
 		if(!citationExists) {
 			
 			mDbAttributes.updateDate(citationId, date);
+			mDbAttributes.updateLastModDate(citationId);
 		
 		}
 		

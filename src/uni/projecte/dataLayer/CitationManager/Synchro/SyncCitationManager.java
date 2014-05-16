@@ -1,3 +1,21 @@
+/*    	This file is part of ZamiaDroid.
+*
+*	ZamiaDroid is free software: you can redistribute it and/or modify
+*	it under the terms of the GNU General Public License as published by
+*	the Free Software Foundation, either version 3 of the License, or
+*	(at your option) any later version.
+*
+*    	ZamiaDroid is distributed in the hope that it will be useful,
+*    	but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    	GNU General Public License for more details.
+*
+*    	You should have received a copy of the GNU General Public License
+*    	along with ZamiaDroid.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
+
 package uni.projecte.dataLayer.CitationManager.Synchro;
 
 import java.util.ArrayList;
@@ -5,6 +23,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectConfigControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.SyncControler;
@@ -12,42 +31,54 @@ import uni.projecte.dataLayer.ProjectManager.objects.Project;
 import android.content.Context;
 import android.text.format.DateFormat;
 
+
+
 public class SyncCitationManager {
 
 	private Context baseContext;
 	private SyncControler syncCnt;
 	private ProjectControler projCnt;
 	private ProjectConfigControler projCnf;
+	private PreferencesControler prefCnt;
 
 	private SyncRestApi remoteAPI;
 	
-	//private ArrayList<ProjectField> fieldList;
 	private HashMap<String, Long> hashFieldList;
 	
 	private long projId;
 	private String lastUpdate;
+	private String service="";
 	
+	private User user;
 	
-	public SyncCitationManager(Context baseContext){
+
+	public SyncCitationManager(Context baseContext,String service){
 		
 		this.baseContext=baseContext;
+		this.service=service.replace("remote_","");
+		
 		syncCnt=new SyncControler(baseContext);
 		
 		projCnt= new ProjectControler(baseContext);
         projCnf=new ProjectConfigControler(baseContext);
+        prefCnt=new PreferencesControler(baseContext);
 		
-		remoteAPI= new SyncRestApi(baseContext);
-		
-		
-		//hashFieldList=projCnt.getProjectFieldsHash(projId);
-		//fieldList=projCnt.getAllProjectFields(projId);		   
+        user=prefCnt.getSyncroUser(this.service);
+        
+		remoteAPI= new SyncRestApi(baseContext,user);
 				
+	}
+	
+	public boolean isConfigured(){
+		
+		return user.isLogged();
+		
 	}
 	
 	
 	public int getOutdatedLocalCitations(String projTag) {
 
-		remoteAPI= new SyncRestApi(baseContext);
+		remoteAPI= new SyncRestApi(baseContext,user);
 		
 		loadProjectInfo(projTag);
 		
@@ -65,7 +96,7 @@ public class SyncCitationManager {
 	
 	public int getOutdatedRemoteCitations(String projectTag){
 		
-		remoteAPI= new SyncRestApi(baseContext);
+		remoteAPI= new SyncRestApi(baseContext,user);
 				
 		System.out.println("Remote Citations: Last update: "+lastUpdate);
 		
@@ -85,11 +116,28 @@ public class SyncCitationManager {
 
 	public ArrayList<Project> getRemoteProjectList() {
 		
-		remoteAPI= new SyncRestApi(baseContext);
+		remoteAPI= new SyncRestApi(baseContext,user);
 		
 		return remoteAPI.getProjectList();
 		
 	}
+	
+
+
+	public boolean checkLogin(String username, String password) {
+
+		remoteAPI= new SyncRestApi(baseContext,user);
+		
+		boolean success=remoteAPI.checkLogin(username,password);
+		
+		prefCnt.setSyncroUsername(service,username);
+		prefCnt.setSyncroPassword(service,password);
+		
+		
+		return success;
+		
+	}
+	
 
 	private void loadProjectInfo(String projectTag){
 		
@@ -111,9 +159,9 @@ public class SyncCitationManager {
 		
 	}
 	
-	public void enableSyncroProject(long projId){
+	public String enableSyncroProject(long projId, boolean remote){
 		
-		remoteAPI= new SyncRestApi(baseContext);
+		remoteAPI= new SyncRestApi(baseContext,user);
 		
 		Date date = new Date();
 		date.getDate();
@@ -124,13 +172,21 @@ public class SyncCitationManager {
 	
 		projCnt.loadProjectInfoById(projId);
 		
-		project.setProject_name(projCnt.getName());
+		String projTag=projCnt.getName();
+		
+		project.setProject_name(projTag);
 		project.setSyncro_date(lastSyncro);
 		project.setUser("utoPiC");
 
-		remoteAPI.createRemoteProject(project);
+		if(!remote) {
+			
+			remoteAPI.createRemoteProject(project);
+			projCnf.setProjectConfig(projId,ProjectConfigControler.LAST_SYNCRO,lastSyncro);
+			
+		}
+		else projCnf.setProjectConfig(projId,ProjectConfigControler.LAST_SYNCRO,"");
 		
-		projCnf.setProjectConfig(projId,ProjectConfigControler.LAST_SYNCRO,lastSyncro);
+		return projTag;
 		
 	}
 	
@@ -152,7 +208,16 @@ public class SyncCitationManager {
 		return lastUpdate;
 				
 	}
+
 	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	
 	
 

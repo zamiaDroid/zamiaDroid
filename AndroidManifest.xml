@@ -41,11 +41,6 @@
         
        <activity android:name=".Activities.Miscelaneous.ActivityProvadora" android:configChanges="locale"
                   android:label="zActivityProvadora">     
-                  
-           <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
            
         </activity>
 
@@ -129,6 +124,16 @@
        </activity>
        
        <activity android:name=".Activities.Miscelaneous.ImageView" android:configChanges="orientation|locale" 
+                  android:label="@string/app_name">   
+       </activity>
+       
+       
+       <!-- Syncro Activities -->
+       <activity android:name=".Activities.Syncro.SyncroConfig" android:configChanges="orientation|locale" 
+                  android:label="@string/app_name">   
+       </activity>
+       
+       <activity android:name=".Activities.Syncro.SyncroProjectList" android:configChanges="orientation|locale" 
                   android:label="@string/app_name">   
        </activity>
        
@@ -233,6 +238,8 @@
                   android:label="ZTabRemote">
        	</activity>
 
+     
+       
 </application>
      
 </manifest> 

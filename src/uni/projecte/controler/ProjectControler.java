@@ -549,7 +549,7 @@ public class ProjectControler {
 	    		
 	    		while (!rt.isAfterLast()) {
 				
-	    			projList.add(new Project(rt.getLong(0), rt.getString(1), "", rt.getString(2)));
+	    			projList.add(new Project(rt.getLong(0), rt.getString(1), rt.getString(3), rt.getString(2)));
 	    			rt.moveToNext();
 					
 				}

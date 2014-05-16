@@ -16,6 +16,7 @@
 
 package uni.projecte.controler;
 
+import uni.projecte.dataLayer.CitationManager.Synchro.User;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
@@ -327,6 +328,25 @@ public class PreferencesControler {
 	    editor.commit();
 	}
 	
+	public void setSyncroUsername(String service,String username) {
+
+	    SharedPreferences.Editor editor = settings.edit();
+	    editor.putString(service+"_username",username);
+	    		
+	    editor.commit();
+		
+	}
+	
+	
+	public void setSyncroPassword(String service, String password) {
+
+	    SharedPreferences.Editor editor = settings.edit();
+	    editor.putString(service+"_password",password);
+	    		
+	    editor.commit();		
+	}
+	
+	
 	public String getLastPhotoPath(){
 		
 		return settings.getString("lastPhotoPath", ""); 
@@ -371,6 +391,18 @@ public class PreferencesControler {
 		return settings.getString("secondaryExternalStoragePath", Environment.getExternalStorageDirectory().toString()); 
 		
 	}
+	
+	public User getSyncroUser(String service) {
+		
+		User user=new User();
+		
+		user.setUsername(settings.getString(service+"_username", ""));
+		user.setPassword(settings.getString(service+"_password", ""));
+		
+		return user;
+	}
+	
+	
 	public String getReportPath() {
 
 		return Environment.getExternalStorageDirectory()+"/"+getDefaultPath()+"/Reports/";
@@ -384,5 +416,8 @@ public class PreferencesControler {
 
 		return Environment.getExternalStorageDirectory()+"/"+getDefaultPath()+"/Citations/";
 	}
+	
+	
+	
 
 }

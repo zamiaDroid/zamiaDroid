@@ -89,6 +89,13 @@ public class ProjectRepositoryType {
 	public String getProjType() {
 		return projType;
 	}
+	
+	public String getLabelProjType() {
+		
+		if(projType.startsWith("remote_")) return projType.replace("remote_", "");
+		else return projType;
+	}
+	
 	public void setProjType(String projType) {
 		this.projType = projType;
 	}

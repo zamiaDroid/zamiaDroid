@@ -88,20 +88,25 @@ public class Project {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 
-		
 		Date date1 = null;
 		Date date2 = null;
 		
-		
-		try {
-			date1 = sdf.parse(server_last_mod);
-	    	date2 = sdf.parse(remote);
-
-		} catch (ParseException e) {
-
-			e.printStackTrace();
+		if(server_last_mod.equals("")){
+			
+			return true;
+			
 		}
-
+		else{
+		
+			try {
+				date1 = sdf.parse(server_last_mod);
+		    	date2 = sdf.parse(remote);
+	
+			} catch (ParseException e) {
+	
+				e.printStackTrace();
+			}
+		}
 		return date1.compareTo(date2)>0;	
 		
 	}

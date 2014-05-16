@@ -24,10 +24,12 @@ import java.util.Date;
 import uni.projecte.Main;
 import uni.projecte.R;
 import uni.projecte.Activities.Citations.Sampling;
+import uni.projecte.Activities.Syncro.SyncroProjectList;
 import uni.projecte.controler.BackupControler;
 import uni.projecte.controler.PhotoControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.ProjectSecondLevelControler;
+import uni.projecte.controler.SyncProjectControler;
 import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.dataLayer.CitationManager.FileExporter;
 import uni.projecte.dataLayer.ProjectManager.ListAdapters.ProjectBaseListAdapter;
@@ -79,6 +81,8 @@ public class ProjectList extends Activity {
 		private static final int LOAD_BACKUP_PROJ=Menu.FIRST+1;
 		private static final int REMOVE_PROJECT=Menu.FIRST+2;
 		private static final int EXPORT_PROJECT=Menu.FIRST+3;
+		private static final int SYNCRO_MANAGER=Menu.FIRST+4;
+
 
 		private String name;
 		private String desc;
@@ -171,7 +175,7 @@ public class ProjectList extends Activity {
 	    @Override
 		public boolean onCreateOptionsMenu(Menu menu) {
 	    	
-	    	
+	    	menu.add(0, SYNCRO_MANAGER, 0,R.string.mSyncroManager).setIcon(android.R.drawable.ic_popup_sync);
 	    	menu.add(0, BACKUP_PROJ, 0,R.string.mCreateBackup).setIcon(android.R.drawable.ic_menu_save);
 	    	menu.add(0, LOAD_BACKUP_PROJ, 0,R.string.mLoadBackup).setIcon(android.R.drawable.ic_menu_upload);
 	    	menu.add(0, EXPORT_PROJECT, 0,R.string.dialogProjectExport).setIcon(android.R.drawable.ic_menu_save);
@@ -262,7 +266,13 @@ public class ProjectList extends Activity {
 				removeProject();
 				
 				break;
+	
+			case SYNCRO_MANAGER:
 				
+				Intent intent = new Intent(getBaseContext(), SyncroProjectList.class);
+	            startActivity(intent);
+				
+				break;	
 				
 			}
 			

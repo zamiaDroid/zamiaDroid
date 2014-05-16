@@ -386,4 +386,6 @@
    
    <string name="syncroDescription">En la següent llista es poden veure els projectes sincronitzats. Pots veure quins estan actualitzats o sense actualitzar. A més a més, pots crear un nou projecte que es sincronitzarà amb el servidor.</string>
    
+   <string name="mSyncroManager">Gestió projectes sincronitzats</string>
+   
 </resources>

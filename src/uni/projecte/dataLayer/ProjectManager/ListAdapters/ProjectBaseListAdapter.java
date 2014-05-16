@@ -87,6 +87,7 @@ public class ProjectBaseListAdapter extends BaseAdapter{
 	    	 holder.tvProjName = (TextView)convertView.findViewById(R.id.tvProjectName);
 	    	 holder.cbDefaultProj = (RadioButton)convertView.findViewById(R.id.cBedit);
 	    	 holder.ibEditProj = (ImageButton)convertView.findViewById(R.id.ibEditProject);
+	    	 holder.ibSyncroProj=(ImageButton)convertView.findViewById(R.id.ibSyncroProject);
 
 	    	 convertView.setTag(holder);
 	    	 
@@ -101,6 +102,11 @@ public class ProjectBaseListAdapter extends BaseAdapter{
     	 
     	 String projName=projectList.get(position).getProjName();
     	 holder.tvProjName.setText(projName);
+    	 
+    	 String projType=projectList.get(position).getProjType();
+    	 
+    	 if(projType.startsWith("remote_")) holder.ibSyncroProj.setVisibility(View.VISIBLE);
+    	 
 
      	boolean isDefault=projName.equals(defaultProject);
      	
@@ -324,6 +330,7 @@ public class ProjectBaseListAdapter extends BaseAdapter{
 		   	TextView tvProjName;
 	        RadioButton cbDefaultProj;
 	        ImageButton ibEditProj;
+	        ImageButton ibSyncroProj;
 
 	 }
 

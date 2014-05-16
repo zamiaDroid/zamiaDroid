@@ -33,14 +33,14 @@ public class SyncControler extends CitationControler {
 	
 	public void syncroRemoteCitations(long projId, ArrayList<ZamiaCitation> citationList, HashMap<String, Long> fieldList) {
 
-		CitacionDbAdapter citationAdapter = new CitacionDbAdapter(baseContext);
-		citationAdapter.open();
+		mDbAttributes = new CitacionDbAdapter(baseContext);
+		mDbAttributes.open();
 		
 		
 		for(ZamiaCitation citation: citationList){
 			
 			//cerquem per zamiaId
-			long citationId=citationAdapter.citationExists(projId,citation.getObservationDate());
+			long citationId=mDbAttributes.citationExists(projId,citation.getObservationDate());
 			
 			System.out.println("Found: "+citationId);
 
@@ -58,13 +58,13 @@ public class SyncControler extends CitationControler {
 			
 				if(citationId<0){
 	
-					createSyncroCitation(citationAdapter, projId, citation,fieldList);
+					createSyncroCitation(mDbAttributes, projId, citation,fieldList);
 	
 				}
 				else{
 					
 					System.out.println("Modfify: "+citationId);
-					modifySyncroCitation(citationAdapter, projId, citation,citationId,fieldList);
+					modifySyncroCitation(mDbAttributes, projId, citation,citationId,fieldList);
 					
 				}
 			}
@@ -72,7 +72,7 @@ public class SyncControler extends CitationControler {
 		
 		}
 		
-		citationAdapter.close();
+		mDbAttributes.close();
 		
 	}
 	
@@ -83,23 +83,24 @@ public class SyncControler extends CitationControler {
 
 		//startTransaction();
 	
-		citationAdapter.updateLocation(citationId, citation.getLatitude(), citation.getLongitude());
+		mDbAttributes.updateLocation(citationId, citation.getLatitude(), citation.getLongitude());
 		
 		//EndTransaction();
 
 		//startTransaction();
 
-		citationAdapter.updateSampleFieldValue(citationId, fieldList.get("OriginalTaxonName"), citation.getOriginalTaxonName());
-		citationAdapter.updateSampleFieldValue(citationId, fieldList.get("Sureness"), citation.getSureness());
-		if(fieldList.get("Natureness")!=null) citationAdapter.updateSampleFieldValue(citationId, fieldList.get("Natureness"), citation.getNatureness());
-		if(fieldList.get("Phenology")!=null) citationAdapter.updateSampleFieldValue(citationId, fieldList.get("Phenology"), citation.getPhenology());
-		citationAdapter.updateSampleFieldValue(citationId, fieldList.get("CitationNotes"), citation.getCitationNotes());
-		if(fieldList.get("altitude")!=null) citationAdapter.updateSampleFieldValue(citationId, fieldList.get("altitude"), citation.getAltitude());
-		if(fieldList.get("ObservationAuthor")!=null) citationAdapter.updateSampleFieldValue(citationId, fieldList.get("ObservationAuthor"), citation.getObservationAuthor());
-		if(fieldList.get("Locality")!=null) citationAdapter.updateSampleFieldValue(citationId, fieldList.get("Locality"), citation.getLocality());
+		mDbAttributes.updateSampleFieldValue(citationId, fieldList.get("OriginalTaxonName"), citation.getOriginalTaxonName());
+		mDbAttributes.updateSampleFieldValue(citationId, fieldList.get("Sureness"), citation.getSureness());
+		if(fieldList.get("Natureness")!=null) mDbAttributes.updateSampleFieldValue(citationId, fieldList.get("Natureness"), citation.getNatureness());
+		if(fieldList.get("Phenology")!=null) mDbAttributes.updateSampleFieldValue(citationId, fieldList.get("Phenology"), citation.getPhenology());
+		if(fieldList.get("CitationNotes")!=null) updateCitationField(citationId, fieldList.get("CitationNotes"), citation.getCitationNotes(),"CitationNotes");
+		if(fieldList.get("altitude")!=null) mDbAttributes.updateSampleFieldValue(citationId, fieldList.get("altitude"), citation.getAltitude());
+		if(fieldList.get("ObservationAuthor")!=null) updateCitationField(citationId, fieldList.get("ObservationAuthor"), citation.getObservationAuthor(),"ObservationAuthor");
+		if(fieldList.get("Locality")!=null) updateCitationField(citationId, fieldList.get("Locality"), citation.getLocality(), "Locality");
 
 		
-		citationAdapter.updateLastModDate(citationId);
+		
+		mDbAttributes.updateLastModDate(citationId);
 
 		//EndTransaction();
 		
@@ -113,19 +114,19 @@ public class SyncControler extends CitationControler {
 
 		long citationId=citationAdapter.createCitationWithDate(projId, citation.getLatitude(), citation.getLongitude(), zamiaId,citation.getObservationDate());
 				
-		citationAdapter.startTransaction();
+		mDbAttributes.startTransaction();
 
-			citationAdapter.createCitationField(citationId, fieldList.get("OriginalTaxonName"), citation.getOriginalTaxonName(),"OriginalTaxonName");
-			citationAdapter.createCitationField(citationId, fieldList.get("Sureness"), citation.getSureness(), "Sureness");
-			if(fieldList.get("Natureness")!=null) citationAdapter.createCitationField(citationId, fieldList.get("Natureness"), citation.getNatureness(), "Natureness");
-			if(fieldList.get("Phenology")!=null) citationAdapter.createCitationField(citationId, fieldList.get("Phenology"), citation.getPhenology(), "Phenology");
-			citationAdapter.createCitationField(citationId, fieldList.get("CitationNotes"), citation.getCitationNotes(), "CitationNotes");
-			if(fieldList.get("altitude")!=null) citationAdapter.createCitationField(citationId, fieldList.get("altitude"), citation.getAltitude(), "altitude");
-			if(fieldList.get("ObservationAuthor")!=null) citationAdapter.createCitationField(citationId, fieldList.get("ObservationAuthor"), citation.getObservationAuthor(), "ObservationAuthor");
-			if(fieldList.get("Locality")!=null) citationAdapter.createCitationField(citationId, fieldList.get("Locality"), citation.getLocality(), "Locality");
+			mDbAttributes.createCitationField(citationId, fieldList.get("OriginalTaxonName"), citation.getOriginalTaxonName(),"OriginalTaxonName");
+			mDbAttributes.createCitationField(citationId, fieldList.get("Sureness"), citation.getSureness(), "Sureness");
+			if(fieldList.get("Natureness")!=null) mDbAttributes.createCitationField(citationId, fieldList.get("Natureness"), citation.getNatureness(), "Natureness");
+			if(fieldList.get("Phenology")!=null) mDbAttributes.createCitationField(citationId, fieldList.get("Phenology"), citation.getPhenology(), "Phenology");
+			mDbAttributes.createCitationField(citationId, fieldList.get("CitationNotes"), citation.getCitationNotes(), "CitationNotes");
+			if(fieldList.get("altitude")!=null) mDbAttributes.createCitationField(citationId, fieldList.get("altitude"), citation.getAltitude(), "altitude");
+			if(fieldList.get("ObservationAuthor")!=null) mDbAttributes.createCitationField(citationId, fieldList.get("ObservationAuthor"), citation.getObservationAuthor(), "ObservationAuthor");
+			if(fieldList.get("Locality")!=null) mDbAttributes.createCitationField(citationId, fieldList.get("Locality"), citation.getLocality(), "Locality");
 
 			
-		citationAdapter.endTransaction();
+			mDbAttributes.endTransaction();
 
 		return true;
 		

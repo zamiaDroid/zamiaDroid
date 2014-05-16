@@ -67,7 +67,8 @@ public class RemoteProjectListAdapter extends BaseAdapter {
 
 		holder.projRepName.setTag(elements.get(position).getProjId());
 
-		holder.projRepType.setText(elements.get(position).getProjType());
+	
+		holder.projRepType.setText(elements.get(position).getLabelProjType());
 		holder.projRepType.setTag(elements.get(position).getThName());
 		
 

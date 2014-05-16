@@ -24,6 +24,13 @@
 	<LinearLayout android:id="@+id/LinearLayout05" android:layout_height="wrap_content" 
     	android:layout_width="fill_parent" android:gravity="right" >
 
+	    		<ImageButton
+	    		    android:id="@+id/ibSyncroProject"
+	    		    android:layout_width="wrap_content"
+	    		    android:layout_height="wrap_content"
+	    		    android:background="@android:drawable/ic_popup_sync"
+	    		    android:visibility="gone" />
+	    
 		<ImageButton
 		    android:id="@+id/ibEditProject"
 		    android:layout_width="wrap_content" android:layout_height="wrap_content"

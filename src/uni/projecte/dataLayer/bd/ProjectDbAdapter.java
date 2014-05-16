@@ -247,7 +247,7 @@ public class ProjectDbAdapter {
      */
     public Cursor fetchAllProjects() {
 
-        return mDb.query(DATABASE_TABLE_PROJECT, new String[] {KEY_ROWID, PROJECTNAME,THESAURUS}, null, null, null, null, PROJECTNAME + " ASC");
+        return mDb.query(DATABASE_TABLE_PROJECT, new String[] {KEY_ROWID, PROJECTNAME,THESAURUS,PROJECT_TYPE}, null, null, null, null, PROJECTNAME + " ASC");
     }
 
     

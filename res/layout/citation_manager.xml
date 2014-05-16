@@ -2,158 +2,224 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:gravity="right"
     android:orientation="vertical" >
-  
-        <LinearLayout
+
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_marginRight="3dp"
         android:layout_weight="1"
         android:orientation="vertical" >
-    
-    
-  <LinearLayout
-android:id="@+id/widget32"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:padding="5dp"
-android:background="#ff222222"
-android:orientation="vertical"
 
->    
+        <LinearLayout
+            android:id="@+id/widget32"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ff222222"
+            android:orientation="horizontal"
+            android:padding="5dp" >
 
+            <LinearLayout
+                android:id="@+id/llProjectDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="2dp"
-    android:stretchColumns="0">
-    <TableRow>
-    
-	    <LinearLayout
-	  xmlns:android="http://schemas.android.com/apk/res/android"
-	  android:layout_width="wrap_content"
-	  android:layout_height="wrap_content"  
-	  android:orientation="vertical" android:padding="2dp">
-	
-			<TextView
-			android:id="@+id/tvRschName"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			
-			>
-			</TextView>
-							
-	</LinearLayout>
-	
-<!-- 	<ImageButton android:text="@string/bShowMap" android:id="@+id/bShowMap" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/maps"></ImageButton>
-	 -->
-	</TableRow>
-    <TableRow android:id="@+id/tableRow1" android:layout_width="wrap_content" android:layout_height="wrap_content">
-        <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/linearLayout1" android:padding="2dp">
-            <TextView android:id="@+id/tvRschDesc" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+                <TableLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:stretchColumns="1" >
+
+                    <TableRow android:layout_width="wrap_content" >
+
+                        <LinearLayout
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="2dp" >
+
+                            <TextView
+                                android:id="@+id/tvRschName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" >
+                            </TextView>
+                        </LinearLayout>
+
+<!--  	<ImageButton android:text="@string/bShowMap" android:id="@+id/bShowMap" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/maps"></ImageButton> -->
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp" >
+
+                            <TextView
+                                android:id="@+id/tvRschDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" >
+                            </TextView>
+                        </LinearLayout>
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/imageButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:background="@android:drawable/ic_popup_sync" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryGreen"
+                    android:text="12 | 20" />
+
+            </LinearLayout>
         </LinearLayout>
-    </TableRow>
-	
-</TableLayout>
 
-
-
-
-</LinearLayout>
-  
-  
-    <LinearLayout android:background="@color/gris" android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="fill_parent">
-        <CheckBox android:id="@+id/cbSelectAllCitations" android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="@string/filterBy"
-            android:textSize="12sp" >
-</TextView>
-        <Button android:textSize="12sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/btApplyFilter" android:text="@string/filterTypeField"></Button>
-        <Button android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/btFilterByLocation" android:text="@string/filterTypeLocation"></Button>
-        <Button android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/btFilterByDate" android:text="@string/filterTypeDate"></Button>
+            android:background="@color/gris" >
 
-        <Button
-            android:id="@+id/btFilterByTaxon"
-            android:layout_width="wrap_content"
+            <CheckBox
+                android:id="@+id/cbSelectAllCitations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </CheckBox>
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/filterBy"
+                android:textSize="12sp" >
+            </TextView>
+
+            <Button
+                android:id="@+id/btApplyFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filterTypeField"
+                android:textSize="12sp" >
+            </Button>
+
+            <Button
+                android:id="@+id/btFilterByLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filterTypeLocation"
+                android:textSize="12sp" >
+            </Button>
+
+            <Button
+                android:id="@+id/btFilterByDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filterTypeDate"
+                android:textSize="12sp" >
+            </Button>
+
+            <Button
+                android:id="@+id/btFilterByTaxon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btFilterTaxon" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llFilter"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btFilterTaxon" />
-        
+            android:background="@color/background2"
+            android:visibility="gone" >
+
+            <LinearLayout
+                android:id="@+id/linearLayout7"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/tvFilterMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text=""
+                    android:textColor="#ffffffff"
+                    android:textSize="11dp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tvFilterMessage2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text=""
+                    android:textColor="#ffffffff"
+                    android:textSize="11dp" />
+
+                <TextView
+                    android:id="@+id/tvFilterMessage3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text=""
+                    android:textColor="#ffffffff"
+                    android:textSize="11dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout8"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0" >
+
+                <ImageButton
+                    android:id="@+id/btRemoveFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                </ImageButton>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <ExpandableListView
+                android:id="@+id/citationLV"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:fastScrollEnabled="true" >
+            </ExpandableListView>
+        </LinearLayout>
     </LinearLayout>
-    
-        
-          <LinearLayout android:background="@color/background2" android:layout_height="wrap_content" android:id="@+id/llFilter" android:layout_width="fill_parent" android:visibility="gone">
-
-              <LinearLayout
-                  android:id="@+id/linearLayout7"
-                  android:layout_width="wrap_content"
-                  android:layout_height="fill_parent"
-                  android:layout_weight="1" >
-    
-                  
-	               <TextView android:text="" 
-	                  android:padding="4dp" 
-	                  android:textColor="#ffffffff" 
-	                  android:id="@+id/tvFilterMessage" 
-	                  android:layout_height="wrap_content" 
-	                  android:textSize="11dp" 
-	                  android:layout_width="wrap_content"></TextView>
-	
-	              <TextView
-	                  android:id="@+id/tvFilterMessage2"
-	                  android:layout_width="wrap_content"
-	                  android:layout_height="wrap_content"
-	                  android:text=""
-	                  android:textSize="11dp"
-	                  android:padding="4dp" 
-	                  android:textColor="#ffffffff"/>
-	
-	              <TextView
-	                  android:id="@+id/tvFilterMessage3"
-	                  android:layout_width="wrap_content"
-	                  android:layout_height="wrap_content"
-	                  android:text="" 
-	                  android:textSize="11dp"
-	                  android:padding="4dp" 
-	                  android:textColor="#ffffffff"/>
-              
-              </LinearLayout>
-              
-      
-
-              <LinearLayout
-                  android:id="@+id/linearLayout8"
-                  android:layout_width="wrap_content"
-                  android:layout_height="fill_parent"
-                  android:layout_weight="0">
-	              
-	              <ImageButton android:id="@+id/btRemoveFilter" android:layout_height="wrap_content" android:layout_width="wrap_content"></ImageButton>
-                  
-              </LinearLayout>
-
-          </LinearLayout>
-
-          <LinearLayout
-              android:id="@+id/linearLayout4"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical" >
-
-              <ExpandableListView
-                  android:id="@+id/citationLV"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:fastScrollEnabled="true" >
-              </ExpandableListView>
-
-          </LinearLayout>
-   
- </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout5"
@@ -239,32 +305,87 @@ android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_gravity="center" >
-            
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:gravity="bottom|center_horizontal"
-            android:orientation="vertical" >
 
-            <EditText android:visibility="gone" android:layout_height="wrap_content" android:id="@+id/etSearchCitation" android:layout_width="fill_parent"></EditText>
-            <LinearLayout android:gravity="center_vertical" android:layout_height="wrap_content" android:id="@+id/linearLayout3" android:padding="5dp" android:layout_width="wrap_content">
-                <ImageButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/ibExportCit"></ImageButton>
-                <TextView android:text="@string/actionExportCitation" android:layout_height="wrap_content" android:layout_marginRight="5dp" android:id="@+id/textView2" android:layout_width="wrap_content"></TextView>
-                <ImageButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/ibViewMapCit"></ImageButton>
-                <TextView android:text="@string/actionShowMap" android:layout_height="wrap_content" android:layout_marginRight="5dp" android:id="@+id/textView3" android:layout_width="wrap_content"></TextView>
-                <ImageButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/ibRemoveCit"></ImageButton>
-                <TextView android:text="@string/actionRemove" android:layout_height="wrap_content" android:layout_marginRight="5dp" android:id="@+id/textView4" android:layout_width="wrap_content"></TextView>
-                
-                <ImageButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/ibPhotoCit"></ImageButton>
-                <TextView android:text="@string/actionPhoto" android:layout_height="wrap_content" android:layout_marginRight="5dp" android:id="@+id/textView4" android:layout_width="wrap_content"></TextView>
-                
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:gravity="bottom|center_horizontal"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/etSearchCitation"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" >
+                </EditText>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="5dp" >
+
+                    <ImageButton
+                        android:id="@+id/ibExportCit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+                    </ImageButton>
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="@string/actionExportCitation" >
+                    </TextView>
+
+                    <ImageButton
+                        android:id="@+id/ibViewMapCit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+                    </ImageButton>
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="@string/actionShowMap" >
+                    </TextView>
+
+                    <ImageButton
+                        android:id="@+id/ibRemoveCit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+                    </ImageButton>
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="@string/actionRemove" >
+                    </TextView>
+
+                    <ImageButton
+                        android:id="@+id/ibPhotoCit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+                    </ImageButton>
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="@string/actionPhoto" >
+                    </TextView>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-        
         </HorizontalScrollView>
     </LinearLayout>
-    
-    
+
 </LinearLayout>
