@@ -1322,6 +1322,12 @@ public String createSecondLevelIdentifier(String fieldName){
 		
 	}
 
+	public boolean isRemote() {
+
+		return projType.contains("remote");
+		
+	}
+
 	
 	
 	

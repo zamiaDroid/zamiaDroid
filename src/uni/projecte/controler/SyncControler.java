@@ -10,12 +10,16 @@ import edu.ub.bio.biogeolib.CoordConverter;
 import edu.ub.bio.biogeolib.CoordinateLatLon;
 import edu.ub.bio.biogeolib.CoordinateUTM;
 
+import uni.projecte.dataLayer.CitationManager.Synchro.SyncroUpdater;
 import uni.projecte.dataLayer.CitationManager.Synchro.ZamiaCitation;
 import uni.projecte.dataLayer.ProjectManager.objects.Project;
 import uni.projecte.dataLayer.bd.CitacionDbAdapter;
 import uni.projecte.dataLayer.utils.UTMUtils;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
 
 
@@ -31,11 +35,26 @@ public class SyncControler extends CitationControler {
 	}
 	
 	
-	public void syncroRemoteCitations(long projId, ArrayList<ZamiaCitation> citationList, HashMap<String, Long> fieldList) {
+	private void updateProgress(Handler updateStateHandler, int progress){
+		
+		Message msg = updateStateHandler.obtainMessage();
+		Bundle bundle = new Bundle();
+		
+		bundle.putInt("state", SyncroUpdater.STATE_SET_PROGRESS);
+		bundle.putInt("progress", progress);
+		
+		msg.setData(bundle);
+		
+		updateStateHandler.sendMessage(msg);
+		
+	}
+	
+	public void syncroRemoteCitations(long projId, ArrayList<ZamiaCitation> citationList, HashMap<String, Long> fieldList, Handler updateStateHandler) {
 
 		mDbAttributes = new CitacionDbAdapter(baseContext);
 		mDbAttributes.open();
 		
+		int i=1;
 		
 		for(ZamiaCitation citation: citationList){
 			
@@ -69,7 +88,9 @@ public class SyncControler extends CitationControler {
 				}
 			}
 			
-		
+			updateProgress(updateStateHandler,i);
+			i++;
+						
 		}
 		
 		mDbAttributes.close();
@@ -132,7 +153,7 @@ public class SyncControler extends CitationControler {
 		
 	}
 	
-	public List<ZamiaCitation> syncroLocalCitations(long projId, String lastUpdate){
+	public List<ZamiaCitation> syncroLocalCitations(long projId, String lastUpdate, String userName){
 		
 		List<ZamiaCitation> citationList= new ArrayList<ZamiaCitation>();
 		
@@ -149,7 +170,7 @@ public class SyncControler extends CitationControler {
 			citation.setLatitude(cursor.getDouble(2));
 			citation.setLongitude(cursor.getDouble(3));
 			citation.setObservationDate(cursor.getString(4));
-			citation.setId(generateZamiaID("utoPiC", cursor.getString(4)));
+			citation.setId(generateZamiaID(userName, cursor.getString(4)));
 			
 			cursor.moveToNext();
 		

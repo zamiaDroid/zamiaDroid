@@ -128,10 +128,10 @@ public class ActivityProvadora extends Activity {
 		
 		private void syncroProject(String projectTag){
 			
-			int updated=synchroManager.getOutdatedLocalCitations(projectTag);
-			Utilities.showToast("Dades remotes actualitzades "+updated, this);
-			updated=synchroManager.getOutdatedRemoteCitations(projectTag);
-			Utilities.showToast("Dades locals actualitzades "+updated, this);		
+			//int updated=synchroManager.getOutdatedLocalCitations(projectTag);
+			//Utilities.showToast("Dades remotes actualitzades "+updated, this);
+			//updated=synchroManager.getOutdatedRemoteCitations(projectTag);
+			//Utilities.showToast("Dades locals actualitzades "+updated, this);		
 			
 		}
 		

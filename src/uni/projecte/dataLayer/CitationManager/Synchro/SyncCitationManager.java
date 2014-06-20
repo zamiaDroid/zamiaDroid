@@ -29,6 +29,9 @@ import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.SyncControler;
 import uni.projecte.dataLayer.ProjectManager.objects.Project;
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.format.DateFormat;
 
 
@@ -76,25 +79,73 @@ public class SyncCitationManager {
 	}
 	
 	
-	public int getOutdatedLocalCitations(String projTag) {
+	public int getOutdatedLocalCitations(String projTag, Handler updateStateHandler) {
 
 		remoteAPI= new SyncRestApi(baseContext,user);
 		
 		loadProjectInfo(projTag);
 		
-		List<ZamiaCitation> citationList = syncCnt.syncroLocalCitations(projId, lastUpdate);
+		List<ZamiaCitation> citationList = syncCnt.syncroLocalCitations(projId, lastUpdate,user.getUsername());
 		
+		updateMax(updateStateHandler,citationList.size());
+		
+		int i=1;
 		for(ZamiaCitation citation: citationList){
 			
 		    remoteAPI.sendCitations(projTag,citation);
-
+		    updateProgress(updateStateHandler, i);
+		    i++;
 		}
 	    
 		return citationList.size();
 		
 	}
 	
-	public int getOutdatedRemoteCitations(String projectTag){
+	private void updateMax(Handler updateStateHandler, int citations){
+		
+		
+		Message msg = updateStateHandler.obtainMessage();
+		Bundle bundle = new Bundle();
+		
+		bundle.putInt("state", SyncroUpdater.STATE_SET_PROGRESS_MAX);
+		bundle.putInt("max", citations);
+		
+		msg.setData(bundle);
+		
+		updateStateHandler.sendMessage(msg);
+		
+	}
+	
+	private void updateProgress(Handler updateStateHandler, int progress){
+		
+		Message msg = updateStateHandler.obtainMessage();
+		Bundle bundle = new Bundle();
+		
+		bundle.putInt("state", SyncroUpdater.STATE_SET_PROGRESS);
+		bundle.putInt("progress", progress);
+		
+		msg.setData(bundle);
+		
+		updateStateHandler.sendMessage(msg);
+		
+	}
+	
+	private void finishProcess(Handler updateStateHandler){
+		
+		
+		Message msg = updateStateHandler.obtainMessage();
+		Bundle bundle = new Bundle();
+		
+		bundle.putInt("state", SyncroUpdater.STATE_FINISH_PROGRESS);
+		
+		msg.setData(bundle);
+		
+		updateStateHandler.sendMessage(msg);
+		
+	}
+	
+	
+	public int getOutdatedRemoteCitations(String projectTag, Handler updateStateHandler){
 		
 		remoteAPI= new SyncRestApi(baseContext,user);
 				
@@ -104,9 +155,13 @@ public class SyncCitationManager {
 		
 		ArrayList<ZamiaCitation> citationList=remoteAPI.getAllCitations(projectTag,lastUpdate);
 		
-		syncCnt.syncroRemoteCitations(projId,citationList,hashFieldList);
+		updateMax(updateStateHandler,citationList.size());
+
+		syncCnt.syncroRemoteCitations(projId,citationList,hashFieldList,updateStateHandler);
 
 		updateLastMod(projId);
+		
+		finishProcess(updateStateHandler);
 		
 		return citationList.size();
 			
@@ -130,10 +185,13 @@ public class SyncCitationManager {
 		
 		boolean success=remoteAPI.checkLogin(username,password);
 		
-		prefCnt.setSyncroUsername(service,username);
-		prefCnt.setSyncroPassword(service,password);
-		
-		
+		if(success){
+
+			prefCnt.setSyncroUsername(service,username);
+			prefCnt.setSyncroPassword(service,password);
+			
+		}
+				
 		return success;
 		
 	}
@@ -176,7 +234,7 @@ public class SyncCitationManager {
 		
 		project.setProject_name(projTag);
 		project.setSyncro_date(lastSyncro);
-		project.setUser("utoPiC");
+		project.setUser(user.getUsername());
 
 		if(!remote) {
 			

@@ -35,4 +35,7 @@
 	<string name="confTitleResetGeoid">Reiniciar Geoide al valor per defecte</string>
     <string name="confTitleResetGeoidSummary">Tornar al valor per defecte del geoide a 49 (m)</string>
 	
+    <string name="autoFieldLocality">Camp localitat automàtic</string>
+	<string name="autoFieldLocalitySummary">El camp localitat es determinarà automàticament quan hi hagi GPS i Internet</string>	
+    
 </resources>

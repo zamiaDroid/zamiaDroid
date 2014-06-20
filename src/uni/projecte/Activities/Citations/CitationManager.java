@@ -22,6 +22,8 @@ import uni.projecte.controler.ReportControler;
 import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.dataLayer.CitationManager.FileExporter;
 import uni.projecte.dataLayer.CitationManager.ListAdapter.CitationListAdapter;
+import uni.projecte.dataLayer.CitationManager.Synchro.SyncroDialog;
+import uni.projecte.dataLayer.CitationManager.Synchro.SyncroUpdater;
 import uni.projecte.dataLayer.CitationManager.objects.CitationHandler;
 import uni.projecte.dataLayer.ThesaurusManager.ListAdapters.ThesaurusAutoCompleteAdapter;
 import uni.projecte.dataLayer.ThesaurusManager.ListAdapters.ThesaurusGenusAutoCompleteAdapter;
@@ -105,6 +107,7 @@ public class CitationManager extends Activity{
 	private CheckBox cbSelectAll;
 	
 	private LinearLayout llFilter;
+	private LinearLayout llSyncroInfo;
 	private ImageButton btOrderCron;
 	private ImageButton btOrderAlpha;
 	
@@ -205,6 +208,7 @@ public class CitationManager extends Activity{
 		        tvFilterMessage2=(TextView)findViewById(R.id.tvFilterMessage3);
 
 		        llFilter=(LinearLayout)findViewById(R.id.llFilter);
+		        llSyncroInfo=(LinearLayout)findViewById(R.id.llSyncro);
 		        
 		    	
 		        /* Getting intent params */
@@ -262,6 +266,13 @@ public class CitationManager extends Activity{
 		      }
 		      else projThNameTv.setText(Html.fromHtml("<b>"+getString(R.string.cLthName)+": </b>"+projCnt.getThName())); 
 		 
+		      if(!projCnt.isRemote()) llSyncroInfo.setVisibility(View.GONE);
+		      else {
+		    	  
+		    	  ImageButton btSyncro=(ImageButton) llSyncroInfo.findViewById(R.id.ibSyncro);
+		    	  btSyncro.setOnClickListener(syncroRemoteListener);
+		    	  
+		      }
 
 		    /* Setting citation list Indicator to right and adding onClickEvent */
 		      
@@ -942,6 +953,23 @@ public class CitationManager extends Activity{
 		    };
 		    
 		    
+			/*
+			 * 	Syncro remote project listener. 
+			 * 
+			 */
+			
+			private OnClickListener syncroRemoteListener = new OnClickListener()
+		    {
+		        public void onClick(View v){        
+		        	   	
+		        	SyncroUpdater syncroDialog= new SyncroUpdater(v.getContext(),projectType,llSyncroInfo);
+		        	syncroDialog.startUpdate(projectName,reloadListHandler);
+		        	
+		        }
+		    };
+		    
+		    
+		    
 		    
 			/*
 			 * 	Show photo citations listener. 
@@ -1535,6 +1563,8 @@ public class CitationManager extends Activity{
 		        	//only chosen citations
 		        	else if(citHand.getSelectionList().size()>0){
 		        		
+		        		citHand.setListPosition(mainCitListView.getFirstVisiblePosition());
+		        		
 		            	Intent myIntent = new Intent(v.getContext(), CitationMap.class);
 			        	myIntent.putExtra("id", projId);
 			        	myIntent.putExtra("idSelection",citHand.createIdString());
@@ -1976,9 +2006,18 @@ public class CitationManager extends Activity{
 		    		pdMain.dismiss();
 				    filterThesaurus(chosenFieldType, filterValue);
 		    		  	 
-      
-            }
+		    	}
 		    };
+		    
+			  private Handler reloadListHandler = new Handler() {
+
+			    	@Override
+					public void handleMessage(Message msg) {
+	             
+						 loadMainCitations(true);
+			    		  	 
+			    	}
+			    };
 		    
 		    
 		  private Handler setCitationAdapter = new Handler() {

@@ -111,19 +111,19 @@ public class ProjectSyncListAdapter extends BaseAdapter  {
 
       	 		if(remoteProj.getServer_last_mod().equals("")){
       	 			
-          	 		holder.tvThUpdate.setText("New project!");
+          	 		holder.tvThUpdate.setText(context.getText(R.string.syncroStatusNew));
           	 		holder.ibAction.setVisibility(View.GONE);
 
       	 		}
       	 		else if(localProj.isUpdated(remoteProj.getServer_last_mod())){
       	 			
-          	 		holder.tvThUpdate.setText("Updated");
+          	 		holder.tvThUpdate.setText(context.getText(R.string.syncroStatusUpdated));
           	 		holder.ibAction.setVisibility(View.GONE);
 
       	 		}
       	 		else{
       	 			
-          	 		holder.tvThUpdate.setText("Not updated");
+          	 		holder.tvThUpdate.setText(context.getText(R.string.syncroStatusOutdated));
           	 		holder.ibAction.setBackgroundResource(android.R.drawable.ic_popup_sync);
           	 		holder.ibAction.setVisibility(View.VISIBLE);
 
@@ -134,12 +134,11 @@ public class ProjectSyncListAdapter extends BaseAdapter  {
       	 	}
       	 	else {
       	 		
-      	 		holder.tvThUpdate.setText(remoteProj.getServer_last_mod());
+      	 		
+      	 		holder.tvThUpdate.setText(Html.fromHtml((String)context.getText(R.string.syncroStatusNew)+"  <small>["+remoteProj.getServer_last_mod().substring(0,10)+"]</small>"));
       	 		holder.ibAction.setVisibility(View.VISIBLE);
       	 		holder.ibAction.setBackgroundResource(R.drawable.cross_green);
-
       	 		holder.tvThDesc.setId(-1);
-
       	 		
       	 	}
              	 	

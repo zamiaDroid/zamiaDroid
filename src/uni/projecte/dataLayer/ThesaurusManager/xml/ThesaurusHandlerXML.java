@@ -177,6 +177,7 @@ public class ThesaurusHandlerXML extends DefaultHandler{
         	 
 	          if (level.equals("Species")){
 	        	  
+	        	  
 	          	thCont.addElement(genus, specie,"",iCodeSpec, nameCodeSpec, author,"","");
 	          	level="Genus";
 	          	subAuthor="";

@@ -22,7 +22,9 @@ import uni.projecte.R;
 import uni.projecte.dataLayer.CitationManager.Synchro.SyncCitationManager;
 import uni.projecte.dataTypes.Utilities;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -71,6 +73,21 @@ public class SyncroConfig extends Activity {
 
 	  }
 
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+        	
+			setResult(0);
+			finish();
+        
+	        return false;
+	        
+        }
+        
+        return true;
+
+    }
+        
 	
 	 public OnClickListener doLogin = new OnClickListener() {
 
@@ -82,6 +99,7 @@ public class SyncroConfig extends Activity {
 				else {
 					
 					Utilities.showToast("Usuari correcte: "+etUsername.getText().toString(), v.getContext());
+					setResult(1);
 					finish();
 				
 				}

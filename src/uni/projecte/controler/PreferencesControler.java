@@ -287,7 +287,7 @@ public class PreferencesControler {
 	
 	}
 	
-	public String getAutoFieldEnabled(String fieldName){
+	public String getAutoFieldValue(String fieldName){
 		
 		if(fieldName.equals("locality")){
 			
@@ -320,6 +320,26 @@ public class PreferencesControler {
 		return false;
 		
 	}
+	
+	public void setAutoFieldEnabled(String fieldName, String active){
+
+	    SharedPreferences.Editor editor = settings.edit();
+		
+	    if(fieldName.equals("locality")){
+			
+	    	editor.putString("prefAutoFieldLocality",active);
+			
+		}
+		else if(fieldName.equals("altitude")){
+		    
+			editor.putString("prefAutoFieldAltitude",active);
+
+		}
+			
+	    editor.commit();
+	
+	}
+	
 	public void setLastPhotoPath(String _path) {
 
 	    SharedPreferences.Editor editor = settings.edit();

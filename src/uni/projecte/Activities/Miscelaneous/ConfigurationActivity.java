@@ -255,6 +255,22 @@ public class ConfigurationActivity extends PreferenceActivity {
 				
                 });
                 
+                final CheckBoxPreference prefLocalityAuto = (CheckBoxPreference) findPreference("prefLocalityAuto");  
+                prefLocalityAuto.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+                    public boolean onPreferenceClick(Preference preference) {
+                    	
+                       	SharedPreferences.Editor editor = prefs.edit();
+                    	editor.putBoolean("prefAutoFieldLocality",prefLocalityAuto.isChecked());
+                    	editor.commit();
+                    	
+                        return true; 
+                        
+                    }
+
+				
+                });
+                
                 
                 final Preference secPathPref = findPreference("secondaryExternalStoragePath");
                 secPathPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {

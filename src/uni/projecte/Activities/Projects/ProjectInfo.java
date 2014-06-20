@@ -90,6 +90,8 @@ public class ProjectInfo extends Activity{
 	        projCnt=new ProjectControler(this);
 	        photoCnt=new PhotoControler(this);
 	        
+	        projCnt.loadProjectInfoById(projId);
+
 		    fc=new FieldCreator(this, projId);
 
 
@@ -109,6 +111,13 @@ public class ProjectInfo extends Activity{
 	        }
 	        
 	        else thName.setText(Html.fromHtml("<b>"+getString(R.string.tvDefaultTh)+"</b> "+projectTh)); 
+	        
+	        if(projCnt.isRemote()){
+	        	
+	        	TextView tvAlert=(TextView)findViewById(R.id.tvProjAlert);
+	        	tvAlert.setVisibility(View.VISIBLE);
+	        	
+	        }
 	        
     
 	        llista = (ListView)findViewById(R.id.lFields);
@@ -186,7 +195,7 @@ public class ProjectInfo extends Activity{
 		@Override
 		public boolean onCreateOptionsMenu(Menu menu) {
 
-	    	menu.add(0, ADD_FIELD, 0,R.string.mAddField).setIcon(android.R.drawable.ic_menu_add);
+	    	if(!projCnt.isRemote()) menu.add(0, ADD_FIELD, 0,R.string.mAddField).setIcon(android.R.drawable.ic_menu_add);
 	    	menu.add(0, CHANGE_TH, 0,R.string.mChangeTh).setIcon(android.R.drawable.ic_menu_agenda);
 	    	menu.add(0, CHANGE_MARKER, 0,R.string.changeMapMarker).setIcon(android.R.drawable.ic_menu_myplaces);
 

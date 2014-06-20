@@ -49,6 +49,7 @@ public class FagusWriter {
 	
 	private String lastCategory="";
 	private String natureness="";
+	private String latLngCode="";
 	
 
 	
@@ -383,49 +384,33 @@ public class FagusWriter {
 	
 	public void writeCitationCoordinate(String code){
 
-    	
-		try {
-		            	
-		//	serializer.attribute("", "origin", origin);
-			            
-	        serializer.startTag("", "CitationCoordinate");
-				serializer.attribute("", "code",code);
-				serializer.attribute("", "precision","1.0");
-				serializer.attribute("", "type","UTM alphanum");
-				serializer.attribute("", "units","1m");
-			serializer.endTag("", "CitationCoordinate");
-	        
-		} catch (IllegalArgumentException e) {
-						
-			e.printStackTrace();
-			
-		} catch (IllegalStateException e) {
-						
-			e.printStackTrace();
-			
-		} catch (IOException e) {
-						
-			e.printStackTrace();
-		}
-		            
+		this.latLngCode=code;
+               
 		      
 		    
 	}
 	
 	public void writeSecondaryCitationCoordinate(String code){
 
-    	
 		try {
-		            	
-		//	serializer.attribute("", "origin", origin);
-			            
-	        serializer.startTag("", "SecondaryCitationCoordinate");
-				serializer.attribute("", "code",code);
-				serializer.attribute("", "precision","1.0");
-				serializer.attribute("", "type","UTM num");
-				serializer.attribute("", "units","1m");
+
+			// serializer.attribute("", "origin", origin);
+
+			serializer.startTag("", "CitationCoordinate");
+			serializer.attribute("", "code", code);
+			serializer.attribute("", "precision", "1.0");
+			serializer.attribute("", "type", "UTM alphanum");
+			serializer.attribute("", "units", "1m");
+			serializer.endTag("", "CitationCoordinate");
+
+			serializer.startTag("", "SecondaryCitationCoordinate");
+			serializer.attribute("", "code", latLngCode);
+			serializer.attribute("", "precision", "1.0");
+			serializer.attribute("", "type", "UTM num");
+			serializer.attribute("", "units", "1m");
 			serializer.endTag("", "SecondaryCitationCoordinate");
-	        
+
+			
 		} catch (IllegalArgumentException e) {
 						
 			e.printStackTrace();

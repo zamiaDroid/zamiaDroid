@@ -7,11 +7,14 @@ import uni.projecte.Activities.Projects.ProjectRepositoryList;
 import uni.projecte.controler.SyncProjectControler;
 import uni.projecte.dataLayer.CitationManager.Synchro.ProjectSyncListAdapter;
 import uni.projecte.dataLayer.CitationManager.Synchro.SyncCitationManager;
+import uni.projecte.dataLayer.CitationManager.Synchro.SyncroUpdater;
 import uni.projecte.dataLayer.ProjectManager.objects.Project;
 import uni.projecte.dataTypes.Utilities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -107,21 +110,31 @@ public class SyncroProjectList extends Activity {
 			  
 			};
 		
-		private void syncroProject(String projectTag){
+		private void syncroProject(String projTag){
 			
-			int updated=synchroManager.getOutdatedLocalCitations(projectTag);
-			Utilities.showToast("Dades remotes actualitzades "+updated, this);
-			updated=synchroManager.getOutdatedRemoteCitations(projectTag);
-			Utilities.showToast("Dades locals actualitzades "+updated, this);		
+			SyncroUpdater syncUpdater= new SyncroUpdater(this, synchroManager);
+			syncUpdater.startUpdate(projTag, updateListHandler);
 			
 		}
 		
 		private void callConfigActivity(){
 			
 			Intent intent = new Intent(this, SyncroConfig.class);
-            startActivity(intent);
+            startActivityForResult(intent,0);
 		}	
 			
+		
+		private Handler updateListHandler = new Handler() {
+	        
+			public void handleMessage(Message msg) {
+				
+				loadSyncroProjectList();
+				
+			}
+	           
+	    };
+
+		
 		
 	  public OnClickListener createSyncroProjectClick = new OnClickListener() {
 		
@@ -139,6 +152,7 @@ public class SyncroProjectList extends Activity {
 	   @Override
 		protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		   	
+		   	
 		        switch(requestCode) {
   
 		        case 1 :
@@ -154,13 +168,23 @@ public class SyncroProjectList extends Activity {
 			        	 
 			        	 if(remoteProj) syncroProject(projTag);
 			        	 
-			        	 loadSyncroProjectList();
+			        	 
 		        				        	 
 		        	}
 		       
 		            break;
+		        
+		        case 0 :
+		        	
+		        	if(resultCode==0) {
+		        		
+		        		 if(!synchroManager.isConfigured()) finish();
+		        		
+		        	}
+		        
+		        	break;
 		            
-		            default:
+		         default:
 		  
 		        }
 

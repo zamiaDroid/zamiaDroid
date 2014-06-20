@@ -37,6 +37,7 @@ public class ProjectFieldListAdapter extends BaseAdapter  {
 	private ProjectControler projCnt;
 	private int n;
 	private FieldTypeTranslator fieldTrans;
+	private boolean remoteProject=false;
 
 	
 	public ProjectFieldListAdapter(Context context,ArrayList<ProjectField> projFields, ProjectControler rsC){
@@ -46,6 +47,8 @@ public class ProjectFieldListAdapter extends BaseAdapter  {
 		
 		this.projId=rsC.getProjectId();
 		this.projCnt=rsC;
+		
+		remoteProject=rsC.isRemote();
 		
 		n=projFields.size();
 		
@@ -277,22 +280,28 @@ public class ProjectFieldListAdapter extends BaseAdapter  {
             );
             
             
-           holder.imgButton.setOnClickListener(new OnClickListener() {  
+            if(remoteProject) {
             	
-            	public void onClick(View v) { 
-            		
-            		View e=(View) v.getParent().getParent();
-            		
-            		 TextView tv= (TextView) e.findViewById(R.id.tvFieldName);
-            		
-            		 
-    	        	   String attName=tv.getText().toString();
-            	   	   removeField(projFields.get(position).getName(),position);
-
+            	holder.imgButton.setVisibility(View.GONE);
             	
-             } }
+            }
+            else{
             
-            );
+	           holder.imgButton.setOnClickListener(new OnClickListener() {  
+	            	
+	            	public void onClick(View v) { 
+	            		
+	            		View e=(View) v.getParent().getParent();
+	            		TextView tv= (TextView) e.findViewById(R.id.tvFieldName);
+	            		 
+	    	        	String attName=tv.getText().toString();
+	            	   	removeField(projFields.get(position).getName(),position);
+	            	
+	             } }
+	            
+	            );
+           
+            }
     	 
 		
 		return convertView;

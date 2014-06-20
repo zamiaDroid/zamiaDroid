@@ -89,8 +89,8 @@ public class ProjectXMLparser {
        	  	 
        	  	 if(projCnt.getCitationType().equals("Botanical")){
        	  		 
-	       	   	 InputStream fise = c.getAssets().open("botanical.xml");
-	    	  	 xr.parse(new InputSource(fise));
+	       	   	InputStream fise = c.getAssets().open("botanical.xml");
+	    	  	xr.parse(new InputSource(fise));
  
        	  	 }
        	  	 else if(projCnt.getCitationType().equals("Ornithological")){
@@ -104,18 +104,6 @@ public class ProjectXMLparser {
        		  
        	  }
          
-         
-         
-         /* Parse the xml-data from our URL. */
-
-         /* Parsing has finished. */
-         /* Our ExampleHandler now provides the parsed data to us. */
-         ParsedDataSet parsedExampleDataSet = myExampleHandler.getParsedData();
-         
-         System.out.println(parsedExampleDataSet.toString());
-         
-         /* Set the result to be displayed in our GUI. */
-         //tv.setText(parsedExampleDataSet.toString());
          
     } catch (Exception e) {
          /* Display any Error to the GUI. */

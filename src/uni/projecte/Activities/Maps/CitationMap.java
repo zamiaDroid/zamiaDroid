@@ -518,7 +518,10 @@ public class CitationMap extends MapActivity implements LocationListener {
 	    		   	
 	          		if(mapState.elevationEnabled) tableRowAltitude.setVisibility(View.VISIBLE);
 	        		else tableRowAltitude.setVisibility(View.GONE);
+	          		
+
 	    		   	
+	          		
 	    		}
 	    		else{
 	    			
@@ -573,7 +576,7 @@ public class CitationMap extends MapActivity implements LocationListener {
 	    		
 	    	}
 	    	
-	    	
+
 	    	//Track bar Info
 	    	if(mapState.myTrackLoaded && !tracksService.getLoadedTrackName(trackId).equals("")){
 	    		
@@ -1268,6 +1271,9 @@ public class CitationMap extends MapActivity implements LocationListener {
         		mapState.viewMode=false;
         		v.setBackgroundResource(drawable.info_icon_off);
         		v.invalidate();
+        		
+          		showLabelsButton.setVisibility(View.GONE);
+
 
         	}
         	else { 
@@ -1276,6 +1282,9 @@ public class CitationMap extends MapActivity implements LocationListener {
         		
         		v.setBackgroundResource(drawable.info_icon);
         		v.invalidate();
+        		
+          		if(mapState.viewMode) showLabelsButton.setVisibility(View.VISIBLE);
+
         	}
         	
             handleInfoDialog();
@@ -1523,7 +1532,7 @@ public class CitationMap extends MapActivity implements LocationListener {
      * 
      * This method get's all citations from the provided project with its location
      * 
-     * @return string list with pairs of latitude and longitude
+     * @return string list with pairs of latitude and longitudehttp://www.eldiario.es/
      * 
      */
 

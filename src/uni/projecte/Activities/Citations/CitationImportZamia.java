@@ -91,6 +91,8 @@ public class CitationImportZamia extends Activity {
 	private ArrayList<String> newFields;
 	private NewFieldsListAdapter newFieldListAdapter;
 	private long projId;
+	private boolean remoteProj=false;
+	
 	private ProjectControler projCnt;
 	private static String fileName;
 	
@@ -140,8 +142,19 @@ public class CitationImportZamia extends Activity {
 		    	
 	    		//creating list of new Fields (fields that not exists in the project)
 		    	checkNewFields();
-		    	tvFieldsInfo.setText(Html.fromHtml(String.format(getString(R.string.zamiaImportAddFields),newFields.size(),projObj.getProjName())));
+		    	remoteProj=projCnt.isRemote();
 
+		    	if(remoteProj){
+		    		
+		    		tvFieldsInfo.setText(Html.fromHtml(String.format(getString(R.string.zamiaImportAddFieldsSyncro),newFields.size(),projObj.getProjName())));
+		    	}
+		    	else{
+		    		
+			    	tvFieldsInfo.setText(Html.fromHtml(String.format(getString(R.string.zamiaImportAddFields),newFields.size(),projObj.getProjName())));
+
+		    	}
+
+		    	
 	    	}
 	    	else{
 	    		
@@ -153,7 +166,7 @@ public class CitationImportZamia extends Activity {
 	    	}
 	    	
 	
-	    	newFieldListAdapter=new NewFieldsListAdapter(this, newFields);
+	    	newFieldListAdapter=new NewFieldsListAdapter(this, newFields,remoteProj);
 	    	lvNewFields.setAdapter(newFieldListAdapter);
 	    	
 	    	btImport.setOnClickListener(btZamiaImportListener);

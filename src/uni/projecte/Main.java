@@ -29,12 +29,14 @@ import uni.projecte.Activities.Projects.ProjectManagement;
 import uni.projecte.controler.BackupControler;
 import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
-import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.dataLayer.ThesaurusManager.ThesaurusDownloader.ThUpdater;
 import uni.projecte.dataTypes.Utilities;
+import uni.projecte.hardware.gps.MainLocationListener;
+import uni.projecte.maps.geocoding.Geocoder;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,8 +44,9 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -57,6 +60,7 @@ import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,9 +84,19 @@ public class Main extends Activity {
 	private PreferencesControler prefCnt;
 	
 	private String projName;
+	private String locality_auto="";
+	
+	private LocationManager mLocationManager;
+	private MainLocationListener mLocationListener;
+	
+	private LinearLayout llLocality;
+	private TextView tvLocality;
 	
 	private ThUpdater thUpdater;
 	private Dialog updateFlora;
+	
+	
+	
 	 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -116,7 +130,9 @@ public class Main extends Activity {
         
         Button btShowConfig = (Button)findViewById(R.id.btConfigMain);
         btShowConfig.setOnClickListener(showConfigListener);
-              
+        
+        tvLocality=(TextView)findViewById(R.id.tvLocality);
+        llLocality=(LinearLayout)findViewById(R.id.llLocality);    
         
 		configPrefs=PreferenceManager.getDefaultSharedPreferences(this);
    
@@ -124,30 +140,31 @@ public class Main extends Activity {
         
         if(prefCnt.isFirstRun()) createFistExecutionDialog();
         
-    	PreferencesControler pC= new PreferencesControler(getApplicationContext());
-		pC.setAutoField("locality", "");
-		
-		if(pC.isFirstUpdate()){
+        prefCnt= new PreferencesControler(getApplicationContext());
+		prefCnt.setAutoField("locality", "");
+
+		if(prefCnt.isFirstUpdate()){
 		
 			BackupControler bc= new BackupControler(this);
 			bc.copyProjects();
 			
 			
-			pC.setFirstUpdate(false);
+			prefCnt.setFirstUpdate(false);
 		
 		}
 		
-		if(pC.isSecondUpdate()){
+		if(prefCnt.isSecondUpdate()){
 			
 			BackupControler bc= new BackupControler(this);
 			
 			bc.clearTH();
 			
-			pC.setSecondUpdate(false);
+			prefCnt.setSecondUpdate(false);
 		
 		}
 		
 		updateFloraThDialog();
+		
 
     }
     
@@ -176,11 +193,9 @@ public class Main extends Activity {
     	preferences = getSharedPreferences(PREF_FILE_NAME, MODE_PRIVATE);
         predPrefId = preferences.getLong("predProjectId", -1);
     	
-        TextView tvProjName= (TextView) findViewById(R.id.projectNameM);
-        
+        TextView tvProjName= (TextView) findViewById(R.id.projectNameM);       
         tvProjName.setOnClickListener(changeProjListener);
-
-
+        
         if(predPrefId==-1) {	
         	
         	tvProjName.setText(getString(R.string.noProjectChosen));
@@ -211,8 +226,9 @@ public class Main extends Activity {
         		
         	}
         	
-        	
         }
+        
+		determineLocality();
     	
     	
     }
@@ -387,7 +403,7 @@ public class Main extends Activity {
 	 			b = new Bundle();
 	 			b.putLong("id", predPrefId);
 	 			intent.putExtras(b);
-
+	 			
 	            startActivity(intent);
 
         	}
@@ -457,7 +473,49 @@ public class Main extends Activity {
     }
     
         
+    private void determineLocality(){
+    	
+    	mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE); 
+
+    	if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && Utilities.isNetworkConnected(this)) {
+    		
+			mLocationListener = new MainLocationListener(mLocationManager,handler,prefCnt.getGeoidCorrection());
+				
+			mLocationManager.requestLocationUpdates(
+		                LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) mLocationListener);
+			
+    	}
+    	else{
+    		
+    		llLocality.setVisibility(View.GONE);
+    		
+    	}
+    	
+    }
     
+    
+	private Handler handler = new Handler() {
+
+	@Override
+		public void handleMessage(Message msg) {
+		
+			double latitude = mLocationListener.getLatitude();
+	   	    double longitude = mLocationListener.getLongitude();
+	   	
+			mLocationManager.removeUpdates(mLocationListener);
+			
+			String locality=Geocoder.reverseGeocode(latitude, longitude);
+			
+			locality_auto=locality.split(":")[0];
+			tvLocality.setText(locality_auto);
+
+			prefCnt.setAutoField("locality", locality_auto);
+
+	    	
+		}
+	
+	};
+
     
     private void createAboutUsDialog() {
 
@@ -541,130 +599,111 @@ public class Main extends Activity {
 		 
 	 };
     
-    private void createFistExecutionDialog() {
-        
-	  	final Dialog dialog;
-	  	dialog = new Dialog(this);
-    	   	
-    	dialog.setContentView(R.layout.main_welcome_dialog);
-    	dialog.setTitle("ZamiaDroid");
-    	
-    	final SharedPreferences.Editor editor = configPrefs.edit();
-    	   	
-    	Button bStart = (Button)dialog.findViewById(R.id.bStart);
-    	Button languageList=(Button)dialog.findViewById(R.id.bChlanguage);
-           
-    	final EditText etUserName=(EditText)dialog.findViewById(R.id.userName);
-    	etUserName.setImeOptions(EditorInfo.IME_ACTION_DONE);
-   	
-    	  
-    	languageList.setOnClickListener(new Button.OnClickListener(){
-	             
-  	    	
-  	    	public void onClick(View v)
-  	    	              {
-						
-						
-						AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-						
-				    	builder.setTitle("Idiomes | Languages");
-				    	
-				    	 final String[] languages=getResources().getStringArray(R.array.languages);
-				    	
-				    	builder.setSingleChoiceItems(languages, -1, new DialogInterface.OnClickListener() {
-				    	    public void onClick(DialogInterface dialog, int item) {
-				    	      
-				    	        String language=languages[item];
+	private void createFistExecutionDialog() {
 
+		final Dialog dialog;
+		dialog = new Dialog(this);
 
-								if(language.equals("Castellano")){
-			    	                	
-			    	                	   editor.putString("listPref","es");
-			    	                	   
-			    	                   }
-			    	                   else if (language.equals("English")) {
-			    	                	   
-			  	    	                	editor.putString("listPref","en");
-			    	                	   
-			    	                   }
-			    	                   
-			    	                   else{
-			    	                	   
-			  	    	                	editor.putString("listPref","ca");
+		dialog.setContentView(R.layout.main_welcome_dialog);
+		dialog.setTitle("ZamiaDroid");
 
-			    	                   }
-			    	                   
-			    	                	editor.commit();
-			    
-			    	                	
-			    	                	loadLocalLocale();
-			    	                	
-			    	                	refreshWelcomeScreen();
-		                      
-				    	        
-				    	        dialog.dismiss();
-				    	    }
-				    	});
-				    	
-				    	AlertDialog alert = builder.create();
-				    	
-				    	alert.show();
-						
-						
-						
-					}
-                  });
+		final SharedPreferences.Editor editor = configPrefs.edit();
 
-    	  
-    	   //	Spinner thList=(Spinner)dialog.findViewById(R.id.thList);
-    	   	
-    	  bStart.setOnClickListener(new Button.OnClickListener(){
-	             
-  	    	
-  	    	public void onClick(View v)
-  	    	              {
+		Button bStart = (Button) dialog.findViewById(R.id.bStart);
+		Button languageList = (Button) dialog.findViewById(R.id.bChlanguage);
 
-  	    	                 String userName=etUserName.getText().toString();
-  	    	  			   		
-  	    	                 if(userName.equals("")){
-	  	    	                 
-  	    	                	 Toast.makeText(getBaseContext(), 
-	  	    	        	                v.getResources().getString(R.string.noUserName), 
-	  	    	        	                 Toast.LENGTH_SHORT).show();
-  	    	                 
-  	    	                 }
-  	    	                 
-  	    	                 else{
-  	    	                	 
-  	    	                   editor.putString("usernamePref",userName);
-  	    	                   editor.commit();
-  	    	                   dialog.dismiss();
-  	    	                   prefCnt.setFirstRun(false);
-  	    	                   
-  	    	                 }
-  	    	                 
-  	    	            	 
-  	    	              }
-  	    	             
-  	    });
-    	   	
-    	   	//name.setText(prName);
-    	
-    	    
-    	    dialog.show();
+		final EditText etUserName = (EditText) dialog
+				.findViewById(R.id.userName);
+		etUserName.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
+		languageList.setOnClickListener(new Button.OnClickListener() {
 
-    	 
-    }
-    
-	  private void refreshWelcomeScreen() {
-			
-	        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-	        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-		  
-		}
-    
-    
+			public void onClick(View v) {
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(v
+						.getContext());
+
+				builder.setTitle("Idiomes | Languages");
+
+				final String[] languages = getResources().getStringArray(
+						R.array.languages);
+
+				builder.setSingleChoiceItems(languages, -1,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int item) {
+
+								String language = languages[item];
+
+								if (language.equals("Castellano")) {
+
+									editor.putString("listPref", "es");
+
+								} else if (language.equals("English")) {
+
+									editor.putString("listPref", "en");
+
+								}
+
+								else {
+
+									editor.putString("listPref", "ca");
+
+								}
+
+								editor.commit();
+
+								loadLocalLocale();
+
+								refreshWelcomeScreen();
+
+								dialog.dismiss();
+							}
+						});
+
+				AlertDialog alert = builder.create();
+
+				alert.show();
+
+			}
+		});
+
+		bStart.setOnClickListener(new Button.OnClickListener() {
+
+			public void onClick(View v) {
+
+				String userName = etUserName.getText().toString();
+
+				if (userName.equals("")) {
+
+					Toast.makeText(getBaseContext(),
+							v.getResources().getString(R.string.noUserName),
+							Toast.LENGTH_SHORT).show();
+
+				}
+
+				else {
+
+					editor.putString("usernamePref", userName);
+					editor.commit();
+					dialog.dismiss();
+					prefCnt.setFirstRun(false);
+
+				}
+
+			}
+
+		});
+
+		dialog.show();
+
+	}
+
+	private void refreshWelcomeScreen() {
+
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
+	}
   
     private void createFolderStructure(){
     	

@@ -33,5 +33,7 @@
 	
 	<string name="confTitleResetGeoid">Reset Geoid to default value</string>
     <string name="confTitleResetGeoidSummary">Back to default geoid value to 49 (m)</string>
-	
+    
+    <string name="autoFieldLocality">Self-determined locality field</string>
+	<string name="autoFieldLocalitySummary">When Internet and GPS are active locality field will be filled automatically</string>	
 </resources>

@@ -57,7 +57,7 @@ import android.widget.TextView;
 
 public class SyncRestApi {
 
-	private static String BASE_URL="http://161.116.68.40:8080/orcanew/api";
+	private static String BASE_URL="http://biodiver.bio.ub.es/orcanew/api";
 	
 	private static String ALL_PROJECTS_API="/projects/";
 	

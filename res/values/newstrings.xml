@@ -387,5 +387,20 @@
    <string name="syncroDescription">En la següent llista es poden veure els projectes sincronitzats. Pots veure quins estan actualitzats o sense actualitzar. A més a més, pots crear un nou projecte que es sincronitzarà amb el servidor.</string>
    
    <string name="mSyncroManager">Gestió projectes sincronitzats</string>
-   
+     
+   <string name="tvSyncroProjAlert">En els projectes remots no es pot modificar l\'estructura (afegir camps o esborrar-ne).</string>
+   	<string formatted="false" name="zamiaImportAddFieldsSyncro">Hi ha &lt;b> %1d camps &lt;/b> que &lt;b> no presents al projecte &lt;/b>. En els &lt;b> projectes sincronitzats &lt;/b> no es poden afegir nou camps. Les dades s\'importan però la informació d\'aquests camps no.</string>
+      
+    <string name="syncroUserPassword">Has d\'introduïr usuari i mot de pas</string>
+       
+    <string name="syncroProjectProcess">Sincronitzant projecte</string>
+      
+    <string name="syncroTitle">Projectes remots</string>
+    <string name="syncroSubTitle">Llistat de projectes remots</string>
+    
+    <string name="syncroStatusUpdated">Actualitzat</string>
+    <string name="syncroStatusNew">Projecte nou al servidor</string>
+    <string name="syncroStatusOutdated">Hi ha noves dades o dades modificades</string>
+    <string name="btSyncroConfig">Configuració</string>
+    
 </resources>

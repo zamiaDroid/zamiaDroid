@@ -33,4 +33,7 @@
 		
 	<string name="confTitleResetGeoid">Reiniciar Geoide al valor por defecto</string>
     <string name="confTitleResetGeoidSummary">Volver al valor del geoide por defecto de 49 (m)</string>
+    
+    <string name="autoFieldLocality">Campo localidad automático</string>
+	<string name="autoFieldLocalitySummary">El campo localidad se determinará automáticamente cuando se encuentre activo GPS y Internet</string>	
 </resources>

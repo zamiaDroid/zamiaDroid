@@ -27,12 +27,15 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
         
         // array of items selection
         private boolean[] itemSelection;
+        private boolean remoteProj;
 
     	
-    	public NewFieldsListAdapter(Context context,ArrayList<String> newFields){
+    	public NewFieldsListAdapter(Context context,ArrayList<String> newFields, boolean remoteProj){
     		
             mContext = context;
             this.newFields=newFields;
+            this.remoteProj=remoteProj;
+            
             inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             
             itemSelection=new boolean[getCount()];
@@ -74,7 +77,19 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
         		}
         	});
         	 
-        	holder.chkItem.setChecked(itemSelection[position]);
+        	if(remoteProj) {
+        		
+        		holder.chkItem.setChecked(false);
+        		holder.chkItem.setEnabled(false);
+        		
+        	}
+        	else{
+        		
+            	holder.chkItem.setChecked(itemSelection[position]);
+
+        		
+        	}
+        	
         	convertView.setTag(holder);
         	
         	holder.chkItem.setText(getItem(position));

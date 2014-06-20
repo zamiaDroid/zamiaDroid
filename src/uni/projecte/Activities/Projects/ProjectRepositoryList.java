@@ -138,6 +138,18 @@ public class ProjectRepositoryList extends Activity {
 				
 				list=tmpList;
 			}
+			else{
+				
+				ArrayList<ProjectRepositoryType> tmpList=new ArrayList<ProjectRepositoryType>();
+				
+				for(ProjectRepositoryType proj: list){
+					
+					if(!proj.getProjType().contains("remote")) tmpList.add(proj);
+					
+				}
+				
+				list=tmpList;
+			}
 		
 			RemoteProjectListAdapter eA=new RemoteProjectListAdapter(this,list);		
 			lV.setAdapter(eA);

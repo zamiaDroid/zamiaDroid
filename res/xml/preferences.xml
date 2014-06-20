@@ -59,7 +59,10 @@
    <CheckBoxPreference android:title="@string/checkSynomymsTitle"
             android:key="checkSynonymsPref" android:summary="@string/checkSynomyms" />
                 
+          <CheckBoxPreference android:title="@string/autoFieldLocality"
+            android:key="prefLocalityAuto" android:summary="@string/autoFieldLocalitySummary" />
                 
+          
         <PreferenceScreen
                 android:key="SecondPrefScreen"
                 android:title="@string/confTitleGPS"

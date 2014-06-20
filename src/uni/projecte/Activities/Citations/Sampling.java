@@ -240,7 +240,7 @@ public class Sampling extends Activity {
         presettedDate=getIntent().getExtras().getString("timestamp");
         citationIdCopy=getIntent().getExtras().getLong("citationId");
         uniqueCitationEntry=getIntent().getExtras().getBoolean("uniqueCitation");
-        
+       
 
         if(lat==0.0 && longitude==0.0){
         	
@@ -1367,7 +1367,7 @@ public class Sampling extends Activity {
 	        }
         	
         	// update gps status
-        	if(prefCnt.gpsNeeded() && prefCnt.isTaxonUpdate()){
+        	if(prefCnt.gpsNeeded() && prefCnt.isTaxonUpdate() && !predefinedLocation){
                 
             	callGPS();
             
@@ -1474,6 +1474,9 @@ public class Sampling extends Activity {
 				   int idD= (int) att.getId();
 				   String tag=att.getName();
 				   
+				   repetedValuesList.put(att.getLabel(), false);
+				   repetedValuesLabelList.put(att.getName(), att.getLabel());
+				   
 				   checkAutoField(att);
 				   
 				   if(att.getValue()!=null && att.getValue().length()>0) {
@@ -1513,8 +1516,7 @@ public class Sampling extends Activity {
 				   llField.addView(etFieldValue);
 				   elementsList.add(etFieldValue);
 				   
-				   repetedValuesList.put(att.getLabel(), false);
-				   repetedValuesLabelList.put(att.getName(), att.getLabel());
+				
 				   
 			   }
 			   
@@ -1963,7 +1965,9 @@ public class Sampling extends Activity {
     	
     	if(prefCnt.isAutoFieldEnabled(att.getName().toLowerCase())){
     		
-    		att.setValue(prefCnt.getAutoFieldEnabled(att.getName().toLowerCase()));
+    		att.setValue(prefCnt.getAutoFieldValue(att.getName().toLowerCase()));
+    		repetedValuesList.put(att.getLabel(),true);
+			repetedValuesLabelList.put(att.getName(), att.getLabel());
     		
     	}	
     	
@@ -2030,6 +2034,7 @@ public class Sampling extends Activity {
 	    		//back from GPS Activity
 	
 	    		if(intent!=null){
+	    			
 	
 	    			Bundle ext = intent.getExtras();
 	
