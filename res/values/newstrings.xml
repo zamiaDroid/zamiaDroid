@@ -402,5 +402,8 @@
     <string name="syncroStatusNew">Projecte nou al servidor</string>
     <string name="syncroStatusOutdated">Hi ha noves dades o dades modificades</string>
     <string name="btSyncroConfig">Configuració</string>
-    
+          
+     <string name="tvLocality">Localitat: </string>
+   <string name="tvLocalityUpdating">Determinant localitat...</string>
+     
 </resources>

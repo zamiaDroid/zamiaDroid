@@ -379,4 +379,29 @@
    <string name="dialogUpdatePhotoFieldTitle">Updating citations with photo</string>
    <string name="hasPhoto">Contains photo</string>
    <string name="mRemovePhotoCache">Clear photos\' cache</string>
+   
+       
+   <string name="releveeCode">Relevé code</string>
+   
+   <string name="syncroDescription">Current list shows syncronized projects (updated or not). Moreover, you can create a new project that will be sincronized with the server.</string>
+   
+   <string name="mSyncroManager">Synchronized projects manager</string>
+     
+   <string name="tvSyncroProjAlert">Remote projects don\'t allow you to modify its structure (adding or removing fields).</string>
+   <string formatted="false" name="zamiaImportAddFieldsSyncro">There is/are &lt;b> %1d field &lt;/b> not &lt;b> belonging to the project &lt;/b>. With &lt;b> syncronized projects &lt;/b> is not possible to add new fields. Data will be imported but not the concrete data form this new fields.</string>
+      
+    <string name="syncroUserPassword">Username and password must be provided</string>
+       
+    <string name="syncroProjectProcess">Synchronizing project</string>
+      
+    <string name="syncroTitle">Remote projects</string>
+    <string name="syncroSubTitle">Remote projects list</string>
+    
+    <string name="syncroStatusUpdated">Updating</string>
+    <string name="syncroStatusNew">New project at the server</string>
+    <string name="syncroStatusOutdated">New or modified data</string>
+    <string name="btSyncroConfig">Configuration</string>
+    <string name="tvLocality">Locality</string>
+       <string name="tvLocalityUpdating">Getting locality...</string>
+    
 </resources>

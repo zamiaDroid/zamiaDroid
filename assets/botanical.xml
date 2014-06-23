@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project_profile>
+
+	<SideData type="ECO">
+	
+		<Datum label="Taxon" name="OriginalTaxonName" tip="Nom de l\'espècie de la cita.">
+			<value/>
+		</Datum>
+		
+		<Datum label="Comentari" name="CitationNotes" tip="Comentari sobre la cita">
+			<value/>
+		</Datum>
+		
+		<Datum label="Autor" name="ObservationAuthor" tip="Autor de la citació">
+			<value/>
+		</Datum>
+		
+		<Datum label="Certesa" name="Sureness" tip="Certesa de la cita">
+				<value>OK</value>
+			<predefined_values>
+				<value>OK</value>
+        		<value>Gen. confer</value>
+        		<value>Sp. confer</value>
+        		<value>Sensulato</value>
+        		<value>Group</value>
+			</predefined_values>
+			
+		</Datum>
+
+		
+	</SideData>
+
+</project_profile>

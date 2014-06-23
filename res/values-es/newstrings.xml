@@ -379,4 +379,30 @@
    <string name="dialogUpdatePhotoFieldTitle">Actualizando citas con fotografía</string>
    <string name="hasPhoto">Contiene fotografía</string>
    <string name="mRemovePhotoCache">Borrar memoria caché de fotografías</string> 
+   
+   
+   <string name="releveeCode">Código inventario</string>
+   
+   <string name="syncroDescription">En la siguiente lista se pueden ver los proyectos sincronizados. Puedes ver los actualizados o sin actualizar. Además, puedes crear un proyecto que se sincronizará con el servidor.</string>
+   
+   <string name="mSyncroManager">Gestión de proyectos sincronizados</string>
+     
+   <string name="tvSyncroProjAlert">En los proyectos remotos no se puede modificar la estructura (añadir campos o borrarlos).</string>
+   <string formatted="false" name="zamiaImportAddFieldsSyncro">Hay &lt;b> %1d campos &lt;/b> que &lt;b> no están en el proyecto &lt;/b>. En los &lt;b> proyectos sincronizados &lt;/b> no se puede añadir nuevos campos. Leos datos se importarán pero la información de estos campos no.</string>
+      
+    <string name="syncroUserPassword">Es necesario usuario y password</string>
+       
+    <string name="syncroProjectProcess">Sincronizando proyecto</string>
+      
+    <string name="syncroTitle">Proyectos remotos</string>
+    <string name="syncroSubTitle">Lista de proyectos remotos</string>
+    
+    <string name="syncroStatusUpdated">Actualizando</string>
+    <string name="syncroStatusNew">Proyecto nuevo en el servidor</string>
+    <string name="syncroStatusOutdated">Hay nuevos datos o modificaciones</string>
+    <string name="btSyncroConfig">Configuración</string>
+          
+     <string name="tvLocality">Localidad: </string>
+    <string name="tvLocalityUpdating">Determinando localidad...</string>
+     
 </resources>
