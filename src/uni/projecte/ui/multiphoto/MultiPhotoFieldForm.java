@@ -39,7 +39,8 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 	
 	private int PHOTO_FIELD_MODE;
 	
-	
+	public static int RESULT_LOAD_IMAGE = 8;
+	 
 	/* Main container */
 	private LinearLayout llPhotosList;
 
@@ -48,6 +49,7 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 	private ImageButton editOkButton;
 	private ImageButton viewPhotoButton;
 	private ImageButton showPathButton;
+	private ImageButton showGallery;
 	
 	private View llPhotoField;
 	private TextView etPhotoPath;
@@ -103,6 +105,7 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 		editOkButton=(ImageButton) llPhotoField.findViewById(R.id.btEditOk);
 		showPathButton=(ImageButton) llPhotoField.findViewById(R.id.btShowPath);
 		etPhotoPath=(TextView)llPhotoField.findViewById(R.id.etPhotoPath);
+		showGallery=(ImageButton) llPhotoField.findViewById(R.id.btAddFromGallery);
 		
 		//by default rmButton is gone
 		rmPhotoButton.setVisibility(View.GONE);
@@ -112,6 +115,7 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 		etPhotoPath.setVisibility(View.GONE);
 		
 		photoButton.setTag(field.getName());
+		showGallery.setTag(field.getName());
 		
 		viewPhotoButton.setOnClickListener(viewPhoto);
 		editOkButton.setOnClickListener(removePhotoActions);
@@ -403,6 +407,12 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
         }
    };
    
+   
+   public void setPickImageGallery(OnClickListener pickGallery) {
+		
+		showGallery.setOnClickListener(pickGallery);
+		
+	}
 	
 	private OnClickListener removePhotoActions= new OnClickListener() {
 
@@ -474,6 +484,8 @@ public class MultiPhotoFieldForm extends PhotoFieldForm {
 		return citationId;
 		
 	}
+
+	
 
 
 

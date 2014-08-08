@@ -21,43 +21,36 @@ package uni.projecte.dataLayer.CitationManager.Synchro;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import uni.projecte.controler.ProjectControler;
 import uni.projecte.dataLayer.ProjectManager.objects.Project;
 import uni.projecte.dataLayer.utils.StringUtils;
-
 import android.content.Context;
 import android.util.Base64;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 
 public class SyncRestApi {
 
 	private static String BASE_URL="http://biodiver.bio.ub.es/orcanew/api";
+	//private static String BASE_URL="http://biodiver.bio.ub.es/orcanew/api";
 	
 	private static String ALL_PROJECTS_API="/projects/";
 	

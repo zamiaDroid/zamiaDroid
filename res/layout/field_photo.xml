@@ -20,6 +20,12 @@
             android:layout_marginTop="4dp"/>
 
         <ImageButton
+            android:id="@+id/btAddFromGallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/ic_menu_gallery" />
+
+        <ImageButton
             android:id="@+id/btRmPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

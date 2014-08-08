@@ -21,7 +21,7 @@ import android.util.Log;
 
 public class RemoteTaxonTabHandler {
 	
-	private String url="http://biodiver.bio.ub.es//biocat/servlet/biocat.ProveidorFitxesBiologiques?{filum}{action}%25nomestab=1%25mobile=1%25stringfied_taxon=";
+	private String url="http://biodiver.bio.ub.es/biocat/servlet/biocat.ProveidorFitxesBiologiques?{filum}{action}%25nomestab=1%25mobile=1%25stringfied_taxon=";
 	private HashMap<String, String> tabProviderList;
 	private RemoteProviderPair[] providers;
 	private DataBasesInfo dbInfo;

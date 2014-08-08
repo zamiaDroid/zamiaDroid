@@ -504,16 +504,43 @@ public class Main extends Activity {
 	   	
 			mLocationManager.removeUpdates(mLocationListener);
 			
-			String locality=Geocoder.reverseGeocode(latitude, longitude);
-			
-			locality_auto=locality.split(":")[0];
-			tvLocality.setText(locality_auto);
-
-			prefCnt.setAutoField("locality", locality_auto);
-
+			findLocation(latitude, longitude);
 	    	
 		}
 	
+	};
+	
+	private void findLocation(final double latitude, final double longitude){
+		
+
+	 Thread thrd = new Thread(){
+		 
+	   public void run(){
+	
+	    	String locality=Geocoder.reverseGeocode(latitude, longitude);
+			
+	    	if(locality!=null) locality_auto=locality.split(":")[0];
+	    	
+	    	updateLocality.sendEmptyMessage(0);
+	    
+	   }
+	   
+	 };
+	 
+	 thrd.start();
+	 
+	}
+	// ui thread callback handler
+	private Handler updateLocality = new Handler()
+	{
+		 @Override
+		 public void handleMessage(Message msg)
+		 {
+		   
+				tvLocality.setText(locality_auto);
+				prefCnt.setAutoField("locality", locality_auto);
+			 
+		 }
 	};
 
     
@@ -561,7 +588,7 @@ public class Main extends Activity {
 		    	
 		    	updateFlora.show();
 		    	
-	    	}
+	    }
     	else{
     		
     		

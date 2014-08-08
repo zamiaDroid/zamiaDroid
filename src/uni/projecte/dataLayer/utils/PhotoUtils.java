@@ -93,7 +93,7 @@ public class PhotoUtils {
 
 	    // Calculate inSampleSize
 	    options.inSampleSize = calculateInSampleSize(options, reqWidth);
-    
+	        
 	    // Decode bitmap with inSampleSize set
 	    options.inJustDecodeBounds = false;
 	    

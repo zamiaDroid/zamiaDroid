@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 public class ImageView extends Activity {
 
-	
     private ProjectControler projCnt;	
     private MultiPhotoControler photoCnt;
         
@@ -27,8 +26,6 @@ public class ImageView extends Activity {
 	private String photoLabel;
 
 	private HashMap<String, String> fieldsLabelNames;
-
-	private static int inSampleSize=4;
 	
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +50,9 @@ public class ImageView extends Activity {
         projCnt.loadProjectInfoById(projId);
         fieldsLabelNames=projCnt.getProjectFieldsPair(projId);
   	   	
-		Bitmap bm = PhotoUtils.decodeAndResizeBitmap(photoPath, inSampleSize, true);
+        int height=getResources().getDisplayMetrics().heightPixels;
+        
+		Bitmap bm = PhotoUtils.decodeBitmap(photoPath,height, true);
 		
 		if(photoPath!=null && bm!=null){
 			
@@ -80,5 +79,6 @@ public class ImageView extends Activity {
 		}
 		
 	}
+
 	
 }

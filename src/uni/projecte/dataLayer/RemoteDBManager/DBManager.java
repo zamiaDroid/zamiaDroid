@@ -36,7 +36,8 @@ public class DBManager {
 	/* UTM territory lists  */
 	private static String catalunyaUTM="utm_catalunya.tab";
 	private static String ppccUTM="utm_ppcc.tab";
-	private static String balearsUTM="utm_balears.tab";
+	private static String balearsUTM="utm_balears.tab";	
+	private static String pyreneesUTM="utm_pyrenees.tab";	
 
 	
 	/* DataBase Id's */
@@ -58,9 +59,10 @@ public class DBManager {
 	public static String locIberia="iberia";
 	public static String locEspaña="españa";
 	public static String locGlobal="global";
-	public static String locPPCC="ppcc";
+	public static String locPyrenees="pyrenees";
 	public static String locIllesBalears="illesBalears";
-	
+	public static String locPPCC="ppcc";
+
 	
 	private String locality;
 	
@@ -116,7 +118,7 @@ public class DBManager {
 	/* Countries belonging to the Iberian Peninsula */
 	private boolean iberianPeninsula(String contrycode){
 		
-		String contryCodesList="ES:PT:FR:MA";
+		String contryCodesList="ES:PT:FR:MA:AD";
 		
 		return contryCodesList.contains(contrycode);
 				
@@ -251,6 +253,11 @@ public class DBManager {
 			absDBConnection=new GBIFDBConnection(baseContext, filum, language);
 
 		}
+		else if(dbTag.equals("pyrenees")){
+			
+			absDBConnection=new FloraPyrenaeaDBConnection(baseContext, filum, language);
+
+		}
 
 		return absDBConnection;
 	
@@ -312,6 +319,14 @@ public class DBManager {
 			
 			/* UTM zone 31 */
 			if(utm.startsWith("31") || utm.startsWith("30")){
+				
+				/* Pyrenees */
+				
+				if(checkUTMList(utm.replace("_", ""),pyreneesUTM)){
+					
+					remoteDBCnt.filterDbByTerritory(locPyrenees,allowedDB);
+				
+				}
 				
 				
 				/* Països Catalans */

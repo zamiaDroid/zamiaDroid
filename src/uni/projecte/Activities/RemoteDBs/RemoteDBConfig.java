@@ -32,8 +32,16 @@ public class RemoteDBConfig extends Activity{
   
     	   DataBaseHandler dbH= new DataBaseHandler(this,filum);
     	    
-    	   list.setIndicatorBounds(width-50, width-10);
-       
+    	   if(android.os.Build.VERSION.SDK_INT < 17) {
+   	    	
+   	    	list.setIndicatorBounds(width-50, width-10);
+   	    	
+   	     	} else {
+   	    	 
+   	    	list.setIndicatorBoundsRelative(width-70, width-10);
+   	    	 
+   	     	}       
+    	   
 	       list.setAdapter(new DatabaseListAdapter(this, dbH));
 	       
 	       if(dbH.getFilumCount()==1) list.expandGroup(0);

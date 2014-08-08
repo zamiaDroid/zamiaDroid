@@ -20,10 +20,6 @@ package uni.projecte.Activities.Projects;
 import java.util.ArrayList;
 
 import uni.projecte.R;
-import uni.projecte.R.array;
-import uni.projecte.R.id;
-import uni.projecte.R.layout;
-import uni.projecte.R.string;
 import uni.projecte.controler.PhotoControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.ThesaurusControler;
@@ -39,7 +35,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.renderscript.ProgramFragmentFixedFunction.Builder.Format;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;

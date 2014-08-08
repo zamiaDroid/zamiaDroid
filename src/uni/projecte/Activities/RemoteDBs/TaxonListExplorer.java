@@ -330,6 +330,8 @@ public class TaxonListExplorer extends TabActivity {
 	        		
 	                tvLocality.setTextColor(Color.WHITE);
 	                tvLocality.setText(dbM.getLocality());
+	                
+	                System.out.println(dbM.getLocality());
 
 	                tvUTM.setTextColor(Color.GREEN);
 

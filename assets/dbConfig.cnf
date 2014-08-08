@@ -7,6 +7,7 @@
 							"Arthropods","Invertebrate"]},
 	{"dbTag":"sifib","territory":"illesBalears","type":["Flora"]},
 	{"dbTag":"orca","territory":"ppcc","type":["Flora"]},
+	{"dbTag":"pyrenees","territory":"pyrenees", "type":["Flora"]},
 	{"dbTag":"sivim","territory":"iberia", "type":["Flora"]},
 	{"dbTag":"siare","territory":"iberia", "type":["Amphibia","Reptilia"]},
 	{"dbTag":"gbif","territory":"global", "type":["Flora","Bryophytes","Algae","Fungi","Lichens",

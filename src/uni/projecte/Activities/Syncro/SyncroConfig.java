@@ -38,6 +38,7 @@ public class SyncroConfig extends Activity {
 	private TextView tvInfo;
 	
 	private Button btnLogin;
+	private Button btnLogout;
 
 	private SyncCitationManager synchroManager;
 
@@ -54,6 +55,9 @@ public class SyncroConfig extends Activity {
 	       
 	       btnLogin=(Button)findViewById(R.id.btnLogin);
 	       btnLogin.setOnClickListener(doLogin);
+	   
+	       btnLogout=(Button)findViewById(R.id.btnLogout);
+	       btnLogout.setOnClickListener(doLogout);
 	       
 	       etUsername=(EditText)findViewById(R.id.etUsername);
 	       etPassword=(EditText)findViewById(R.id.etPassword);
@@ -63,6 +67,8 @@ public class SyncroConfig extends Activity {
 	    	   
 	    	   etUsername.setText(synchroManager.getUser().getUsername());
 	    	   etPassword.setText(synchroManager.getUser().getPassword());
+	    	   
+	    	   btnLogout.setVisibility(View.VISIBLE);
 	    	   
 	    	   btnLogin.setVisibility(View.GONE);
 	    	   tvInfo.setVisibility(View.GONE);
@@ -108,4 +114,18 @@ public class SyncroConfig extends Activity {
 		  
 		};
 	
+		 public OnClickListener doLogout = new OnClickListener() {
+
+				public void onClick(View v) {
+
+					synchroManager.doLogout();
+					etUsername.setText("");
+			    	etPassword.setText("");
+			    	btnLogin.setVisibility(View.VISIBLE);
+			    	btnLogout.setVisibility(View.GONE);
+					
+				}
+			  
+			};
+		
 }

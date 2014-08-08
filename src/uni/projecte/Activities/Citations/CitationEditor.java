@@ -40,8 +40,10 @@ import uni.projecte.controler.ProjectSecondLevelControler;
 import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.dataLayer.ThesaurusManager.ListAdapters.ThesaurusAutoCompleteAdapter;
 import uni.projecte.dataLayer.bd.ProjectDbAdapter;
+import uni.projecte.dataLayer.utils.FileUtils;
 import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.AttributeValue;
+import uni.projecte.dataTypes.CitationPhoto;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.Utilities;
 import uni.projecte.maps.utils.LatLonParcel;
@@ -98,6 +100,7 @@ public class CitationEditor extends Activity {
 	   public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
 	   public static final int CAPTURE_IMAGE_MULTI_PHOTO = 3;
 	   public static final int POLYGON_EDIT = 4;
+	   public static final int PICK_IMAGE_GALLERY = 5;
 
 	   private static final int REMOVE_CITATION = Menu.FIRST;
 	   private static final int SHOW_MAP =Menu.FIRST+1;
@@ -1226,6 +1229,7 @@ public class CitationEditor extends Activity {
 				  // else multiPhotoFieldForm.setCitationData(new ArrayList<String>(),pred);
 				   
 				   multiPhotoFieldForm.setAddPhotoEvent(takePicture);
+				   multiPhotoFieldForm.setPickImageGallery(pickGallery);
 
 				   photoFieldsList.put(att.getName(), multiPhotoFieldForm);
 
@@ -1639,6 +1643,32 @@ public class CitationEditor extends Activity {
         }
         
     };
+    
+    
+    private OnClickListener pickGallery = new OnClickListener() {
+
+        public void onClick(View v) {
+          
+         	SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_hhmmss");
+ 	       	String currentTime = formatter.format(new Date());
+
+ 	       	projName=projName.replace(" ", "_");
+ 	       	fileName = projName + currentTime + ".jpg";
+
+ 	       	prefCnt.setLastPhotoPath(fileName);
+
+ 	       	
+ 	       	lastPhotoField=(String) v.getTag();		
+        	
+        	  Intent i = new Intent(
+                      Intent.ACTION_PICK,
+                      android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+               
+              startActivityForResult(i, PICK_IMAGE_GALLERY); 	
+
+        }
+        
+    };
     	
     protected void updateFieldValue(long citationId, int idField, String value, int i) {
 
@@ -1736,7 +1766,43 @@ public class CitationEditor extends Activity {
             }
            
             break;
-        
+            
+            
+        case PICK_IMAGE_GALLERY :	
+
+        	if (resultCode == RESULT_OK && null != intent) {
+                
+        		Uri selectedImage = intent.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+     
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
+     
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String originPicturePath = cursor.getString(columnIndex);
+                cursor.close();
+                
+            	if(photoPath==null){
+
+    				photoPath=Environment.getExternalStorageDirectory().toString();
+    				photoPath=photoPath + "/zamiaDroid/Photos/";
+
+    			}
+
+            	String fileName=prefCnt.getLastPhotoPath();
+            	
+            	File originFile=new File(originPicturePath);
+    			FileUtils.copyFileToDir(originFile, new File(photoPath+fileName));
+                                 
+            	PhotoFieldForm photoFieldForm=photoFieldsList.get(lastPhotoField);
+    			((MultiPhotoFieldForm) photoFieldForm).addNewPhoto(photoPath+fileName);
+             
+            }
+
+        	
+        	break;
+            
         case CAPTURE_IMAGE_MULTI_PHOTO :	
 
         	if (resultCode == RESULT_OK) {

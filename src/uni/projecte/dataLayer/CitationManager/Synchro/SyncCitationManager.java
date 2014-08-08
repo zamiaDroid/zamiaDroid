@@ -196,6 +196,16 @@ public class SyncCitationManager {
 		
 	}
 	
+	public boolean doLogout() {
+
+		prefCnt.removeUsername(service);
+			
+		//que fem amb els projectes? 
+		
+		return true;
+		
+	}
+	
 
 	private void loadProjectInfo(String projectTag){
 		

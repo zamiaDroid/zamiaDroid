@@ -135,7 +135,7 @@ public class ProjectSyncListAdapter extends BaseAdapter  {
       	 	else {
       	 		
       	 		
-      	 		holder.tvThUpdate.setText(Html.fromHtml((String)context.getText(R.string.syncroStatusNew)+"  <small>["+remoteProj.getServer_last_mod().substring(0,10)+"]</small>"));
+      	 		holder.tvThUpdate.setText(Html.fromHtml((String)context.getText(R.string.syncroStatusNew)+"  <small>["+remoteProj.getServer_last_mod()+"]</small>"));
       	 		holder.ibAction.setVisibility(View.VISIBLE);
       	 		holder.ibAction.setBackgroundResource(R.drawable.cross_green);
       	 		holder.tvThDesc.setId(-1);

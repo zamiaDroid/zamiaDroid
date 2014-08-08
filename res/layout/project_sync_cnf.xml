@@ -71,13 +71,20 @@
                 android:layout_marginTop="10dip"
                 android:background="@drawable/btn_new_button_normal"
                 android:text="Login"/>
+                    <Button android:id="@+id/btnLogout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:visibility="gone"
+                android:background="@drawable/btn_new_button_normal"
+                android:text="Logout"/>
           <!-- Link to Registration Screen -->
           <TextView android:id="@+id/link_to_register"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dip"
                 android:layout_marginBottom="40dip"
-                android:text="Vols començar a usar orca.cat? Demana un usuari de prova"
+                android:text="Vols començar a usar bdbc? Demana un usuari de prova"
                 android:gravity="center"
                 android:textSize="20dip"
                 android:textColor="@color/secondaryGreen"/>

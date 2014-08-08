@@ -13,6 +13,7 @@ public class DataBasesInfo {
 	private String sivimName;
 	private String gbifName;
 	private String siocName;
+	private String floraPyrenaeaName;
 	private String floraCatalanaName;
 	private String herbariName;
 	private String naturaDigitalName;
@@ -25,6 +26,7 @@ public class DataBasesInfo {
 	private String ppcc;
 	private String penIberica;
 	private String global;
+	private String pyrenees;
 		
 	
 	
@@ -36,6 +38,8 @@ public class DataBasesInfo {
 		orcaName=baseContext.getString(R.string.dBNameOrca);
 		bdbcName=baseContext.getString(R.string.dbNameBiocat);
 		gbifName=baseContext.getString(R.string.dbNameGbif);
+		floraPyrenaeaName=baseContext.getString(R.string.dbNameFloraPyrenaea);
+
 		
 		siocName=baseContext.getString(R.string.dbNameSioc);
 		floraCatalanaName=baseContext.getString(R.string.dbNameFloraCat);
@@ -51,6 +55,8 @@ public class DataBasesInfo {
 		ppcc=baseContext.getString(R.string.dbPPCC);
 		penIberica=baseContext.getString(R.string.dbIberia);
 		global=baseContext.getString(R.string.dbGlobal);
+		pyrenees=baseContext.getString(R.string.dbPyrenees);
+		
 
 		
 	}
@@ -67,6 +73,7 @@ public class DataBasesInfo {
 			else if(dbId.equals("sivim")) dbName=sivimName;
 			else if(dbId.equals("gbif")) dbName=gbifName;
 			else if(dbId.equals("sioc")) dbName=siocName;
+			else if(dbId.equals("pyrenees")) dbName=floraPyrenaeaName;
 			else if(dbId.equals("floraCatalana")) dbName=floraCatalanaName;
 			else if(dbId.equals("herbari")) dbName=herbariName;
 			else if(dbId.equals("naturdigit")) dbName=naturaDigitalName;
@@ -86,7 +93,8 @@ public class DataBasesInfo {
 			else if(dbId.equals("orca")) dbTerritory=ppcc;
 			else if(dbId.equals("sivim")) dbTerritory=penIberica;
 			else if(dbId.equals("gbif")) dbTerritory=global;
-		
+			else if(dbId.equals("pyrenees")) dbTerritory=pyrenees;
+			
 		return dbTerritory;
 			
 	}

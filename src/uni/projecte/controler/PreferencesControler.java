@@ -348,6 +348,17 @@ public class PreferencesControler {
 	    editor.commit();
 	}
 	
+	
+	public void removeUsername(String service){
+		
+	    SharedPreferences.Editor editor = settings.edit();
+	    editor.remove(service+"_username");
+	    editor.remove(service+"_password");
+	    
+	    editor.commit();
+	    
+	}
+	
 	public void setSyncroUsername(String service,String username) {
 
 	    SharedPreferences.Editor editor = settings.edit();

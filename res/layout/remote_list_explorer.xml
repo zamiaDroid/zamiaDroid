@@ -5,7 +5,13 @@
   android:layout_height="fill_parent" android:orientation="vertical">
     <LinearLayout android:orientation="vertical" android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/remoteDBTab">
         <LinearLayout android:background="#ff333333" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_weight="0" android:id="@+id/widget36">
-            <LinearLayout android:layout_height="wrap_content" android:orientation="vertical" android:layout_width="wrap_content" android:id="@+id/linearLayout2">
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
                 <TextView android:text="@string/dbNameBiocat" android:layout_height="wrap_content" android:id="@+id/tvDBServer" android:textSize="12sp" android:layout_width="wrap_content"></TextView>
                 <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:padding="4dp" android:id="@+id/linearLayout3">
                     <TextView android:layout_height="wrap_content" android:id="@+id/tvDBUTM" android:layout_margin="4dp" android:layout_width="wrap_content"></TextView>

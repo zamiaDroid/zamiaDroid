@@ -68,6 +68,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Build.VERSION_CODES;
 
 
 public class CitationManager extends Activity{
@@ -279,7 +280,16 @@ public class CitationManager extends Activity{
 		    Display newDisplay = getWindowManager().getDefaultDisplay(); 
 			int width = newDisplay.getWidth();
 		    
-    	    mainCitListView.setIndicatorBounds(width-50, width-10);
+    	    
+    	    if(android.os.Build.VERSION.SDK_INT < 18) {
+    	    	
+    	    	mainCitListView.setIndicatorBounds(width-50, width-10);
+    	    	
+    	     } else {
+    	    	 
+    	    	 mainCitListView.setIndicatorBoundsRelative(width-70, width-10);
+    	    	 
+    	     }
     	    
     	    //if(android.os.Build.VERSION.SDK_INT < 11 || android.os.Build.VERSION.SDK_INT >= 16  ) mainCitListView.setFastScrollEnabled(true);
     	    

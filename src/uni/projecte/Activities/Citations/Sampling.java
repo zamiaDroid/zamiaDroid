@@ -39,6 +39,7 @@ import uni.projecte.controler.PreferencesControler;
 import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.dataLayer.ThesaurusManager.ListAdapters.ThesaurusAutoCompleteAdapter;
+import uni.projecte.dataLayer.utils.FileUtils;
 import uni.projecte.dataLayer.utils.PhotoUtils;
 import uni.projecte.dataTypes.ProjectField;
 import uni.projecte.dataTypes.SecondLevelFieldHandler;
@@ -46,6 +47,7 @@ import uni.projecte.dataTypes.Utilities;
 import uni.projecte.hardware.gps.MainLocationListener;
 import uni.projecte.maps.GoogleMapsAPI;
 import uni.projecte.maps.UTMDisplay;
+import uni.projecte.maps.geocoding.Geocoder;
 import uni.projecte.maps.utils.LatLon;
 import uni.projecte.maps.utils.LatLonParcel;
 import uni.projecte.ui.multiphoto.MultiPhotoFieldForm;
@@ -115,6 +117,7 @@ public class Sampling extends Activity {
 	   public static final int LOAD_REMOTE_TAB = 6;
 	   public static final int POLYGON_EDIT = 7;
 	   public static final int NEW_PROJECT = 8;
+	   public static final int PICK_IMAGE_GALLERY = 9;
 
 
 	   public static final int ENABLE_GPS=Menu.FIRST;
@@ -140,6 +143,7 @@ public class Sampling extends Activity {
 	   private String thName;
 	   private String projType;
 	   private String thType;
+	   private String projName;
 	   
 	   private boolean hasThesaurusField=false;
 	   
@@ -231,6 +235,9 @@ public class Sampling extends Activity {
         
         projCnt.loadProjectInfoById(projId);
         	
+	    projName=projCnt.getName();
+
+        
         tvProjectName.setText(projCnt.getName());
         tvProjectName.setOnClickListener(changeProject);
 
@@ -258,8 +265,7 @@ public class Sampling extends Activity {
         	
         	if(elevation==null || elevation==0.0){
     
-	        	GoogleMapsAPI googleAP= new GoogleMapsAPI();
- 	        	elevation=googleAP.getElevationFromGoogleMaps(longitude, lat);
+        		if(Utilities.isNetworkConnected(this)) findAltitude(lat, longitude);	 
 	        	
         	}
         	if(presettedDate!=null){
@@ -953,7 +959,37 @@ public class Sampling extends Activity {
         }
     }; 
     
-      
+    private void findAltitude(final double latitude, final double longitude){
+		
+
+   	 Thread thrd = new Thread(){
+   		 
+   	   public void run(){
+   	
+   	 	GoogleMapsAPI googleAP= new GoogleMapsAPI();
+   	 	elevation=googleAP.getElevationFromGoogleMaps(longitude, lat);
+   	 	updateAltitude.sendEmptyMessage(0);
+   	    
+   	   }
+   	   
+   	 };
+   	 
+   	 thrd.start();
+   	 
+   	}
+   	// ui thread callback handler
+   	private Handler updateAltitude = new Handler()
+   	{
+   		 @Override
+   		 public void handleMessage(Message msg)
+   		 {
+   		   
+   				updateDisplay();
+   			 
+   		 }
+   	};  
+    
+    
     private OnClickListener bUpdateLocationListener = new OnClickListener()
     {
         public void onClick(View v)
@@ -1556,6 +1592,7 @@ public class Sampling extends Activity {
 				   llField=photoFieldForm.getLlField();
 				   
 				   photoFieldForm.setAddPhotoEvent(takePicture);
+
 				   photoFieldForm.setRemoveEvent(removePicture);
 				   
 				   photoFieldsList.put(att.getName(), photoFieldForm);
@@ -1577,7 +1614,8 @@ public class Sampling extends Activity {
 					  MultiPhotoFieldForm multiPhotoFieldForm = new MultiPhotoFieldForm(this, projId, att, llField,MultiPhotoFieldForm.CREATE_MODE);
 					   
 					   multiPhotoFieldForm.setAddPhotoEvent(takePicture);
-					   
+					   multiPhotoFieldForm.setPickImageGallery(pickGallery);
+
 					   
 					   photoFieldsList.put(att.getName(), multiPhotoFieldForm);
 
@@ -1926,7 +1964,6 @@ public class Sampling extends Activity {
 
         public void onClick(View v) {
           
- 	       	String projName=tvProjectName.getText().toString();
  	       	String currentTime = formatter.format(new Date());
  	       	projName=projName.replace(" ", "_");
  	       	
@@ -1955,6 +1992,31 @@ public class Sampling extends Activity {
  	   	    intent.putExtra( MediaStore.EXTRA_OUTPUT, imageUri );		                	
  	       	intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
  	       	startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+
+        }
+        
+    };
+    
+    private OnClickListener pickGallery = new OnClickListener() {
+
+        public void onClick(View v) {
+          
+         	SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_hhmmss");
+ 	       	String currentTime = formatter.format(new Date());
+
+ 	       	projName=projName.replace(" ", "_");
+ 	       	fileName = projName + currentTime + ".jpg";
+
+ 	       	prefCnt.setLastPhotoPath(fileName);
+
+ 	       	
+ 	       	lastPhotoField=(String) v.getTag();		
+        	
+        	  Intent i = new Intent(
+                      Intent.ACTION_PICK,
+                      android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+               
+              startActivityForResult(i, PICK_IMAGE_GALLERY); 	
 
         }
         
@@ -2113,6 +2175,41 @@ public class Sampling extends Activity {
 	
 	    		break;
 	
+	    	case PICK_IMAGE_GALLERY :	
+
+	        	if (resultCode == RESULT_OK && null != intent) {
+	                
+	        		Uri selectedImage = intent.getData();
+	                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+	     
+	                Cursor cursor = getContentResolver().query(selectedImage,
+	                        filePathColumn, null, null, null);
+	                cursor.moveToFirst();
+	     
+	                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+	                String originPicturePath = cursor.getString(columnIndex);
+	                cursor.close();
+	                
+	            	if(photoPath==null){
+
+	    				photoPath=Environment.getExternalStorageDirectory().toString();
+	    				photoPath=photoPath + "/zamiaDroid/Photos/";
+
+	    			}
+
+	            	String fileName=prefCnt.getLastPhotoPath();
+	            	
+	            	File originFile=new File(originPicturePath);
+	    			FileUtils.copyFileToDir(originFile, new File(photoPath+fileName));
+	                                 
+	            	PhotoFieldForm photoFieldForm=photoFieldsList.get(lastPhotoField);
+	    			((MultiPhotoFieldForm) photoFieldForm).addNewPhoto(photoPath+fileName);
+	             
+	            }
+
+	        	
+	        	break;	
+	    		
 	    	case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE :
 	
 	    		if (resultCode == RESULT_OK) {

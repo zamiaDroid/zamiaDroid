@@ -11,6 +11,7 @@
         <string name="dbNameHerbari">Herbari Virtual del Mediterrani Occidental</string>
         <string name="dbNameNaturaDigital">Natura Digital</string>
         <string name="dbNameEncVertebrados">Enciclopedia virtual de los invertebrados españoles</string>
+        <string name="dbNameFloraPyrenaea">Atles de la Flora dels Pirineus</string>
         
 	<!--  Database's territories -->
         
@@ -19,6 +20,7 @@
         <string name="dbAndorra">Andorra</string>
         <string name="dbPPCC">Països Catalans</string>
         <string name="dbIberia">Península Ibèrica</string>
+        <string name="dbPyrenees">Pirineus</string>
         <string name="dbGlobal">Global</string>
         
     <!-- Strings  -->    
