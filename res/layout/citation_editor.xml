@@ -1,254 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
-    
-    
-    	
-<LinearLayout
-android:id="@+id/widget32"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:padding="5dp"
-android:background="#ff333333"
->    
+    android:orientation="vertical" >
 
-   
-    <TextView  android:id="@+id/projectName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp"></TextView>
-    
-    
- <!--  <AutoCompleteTextView 
+    <LinearLayout
+        android:id="@+id/widget32"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff333333"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/projectName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp" >
+        </TextView>
+
+        <!--
+    <AutoCompleteTextView 
     android:id="@+id/txtName"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content" />
-        
-      
-         -->
+        -->
 
-    <LinearLayout
-        android:id="@+id/llNavigationBar"
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:gravity="center_vertical|right"
-        android:padding="2dp" >
-        
-                    <ImageButton
-                        android:id="@+id/ibCitEditLeft"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="3dp"
-                        android:background="@drawable/left_arrow" />
+        <LinearLayout
+            android:id="@+id/llNavigationBar"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:padding="2dp" >
 
-                    <TextView
-                        android:id="@+id/tvNavigationCounter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/secondaryGreen"
-                        android:textSize="12dp"
-                        />
-        
-		          <ImageButton
-		              android:id="@+id/ibCitEditRight"
-		              android:layout_width="wrap_content"
-		              android:layout_height="wrap_content"
-		              android:layout_marginLeft="3dp"
-		              android:layout_marginRight="5dp"
-		              android:background="@drawable/right_arrow" />
+            <ImageButton
+                android:id="@+id/ibCitEditLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/left_arrow" />
 
+            <TextView
+                android:id="@+id/tvNavigationCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondaryGreen"
+                android:textSize="12dp" />
+
+            <ImageButton
+                android:id="@+id/ibCitEditRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/right_arrow" />
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+    <ScrollView
+        android:id="@+id/ScrollView01"
+        android:layout_width="fill_parent"
+        android:layout_height="280dp"
+        android:layout_weight="1"
+        android:fillViewport="true" >
 
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
 
-    
- <ScrollView android:id="@+id/ScrollView01"
+            <LinearLayout
+                android:id="@+id/LinearLayout01"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp" >
 
-	android:layout_width="fill_parent"
-	android:layout_height="280dp"
-	android:fillViewport="true"
-	android:layout_weight="1"	
-	
-	
-	>
-
-<LinearLayout 
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
- 
- 
-
-	
-
-      
-      
-        <LinearLayout android:id="@+id/LinearLayout01" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="5dp">
-  
-<!-- <TextView android:text="@string/tvComment" android:id="@+id/tvComment" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+                <!--
+  <TextView android:text="@string/tvComment" android:id="@+id/tvComment" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
   <EditText android:id="@+id/etComment" android:layout_width="fill_parent" android:layout_height="wrap_content"></EditText>
-   -->
-  
-</LinearLayout>
-    
-  
-  <LinearLayout android:id="@+id/atributsS" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" ></LinearLayout>
-  
-<!--   <Button android:text="@string/bCarac" android:id="@+id/bCarac" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button> -->
-  
+                -->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/atributsS"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <!-- <Button android:text="@string/bCarac" android:id="@+id/bCarac" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button> -->
 
 
- <!--   <Button android:text="@string/bAddAtributes" android:id="@+id/addAttributes" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button> -->
-<!-- <Button android:text="@string/clearRs" android:id="@+id/clearRs" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>-->
+            <!-- <Button android:text="@string/bAddAtributes" android:id="@+id/addAttributes" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button> -->
+            <!-- <Button android:text="@string/clearRs" android:id="@+id/clearRs" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button> -->
 
-   <!--   <Button android:text="@string/bFoto" android:id="@+id/bFoto"
+
+            <!--
+          <Button android:text="@string/bFoto" android:id="@+id/bFoto"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
-        />-->
-
-  
-
- 
+        />
+            -->
 
 
-
-
-<!-- <Button android:text="@string/bCarregaBD" android:id="@+id/bCarregaBD" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+            <!--
+<Button android:text="@string/bCarregaBD" android:id="@+id/bCarregaBD" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
 
 <ListView android:id="@+id/llistaBD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+            -->
 
 
- -->  
- 
- 
-<!--  <TextView 
+            <!--
+      <TextView 
     android:text="@string/atrib" 
     android:id="@+id/TextView01" 
     android:layout_width="wrap_content" 
     android:layout_height="wrap_content"
     >
             
-    </TextView>  -->
-          
-    
-  <!-- <ListView android:id="@+id/llistaAtributs" android:layout_width="wrap_content" android:layout_height="wrap_content"></ListView> -->
- 
-
-
-</LinearLayout>
-
-</ScrollView>
-
-<LinearLayout
-android:id="@+id/widget36"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:orientation="vertical"
-android:background="#ff333333"
-android:layout_weight="0"
-
->    
-
-
-
-  <LinearLayout
-android:id="@+id/widget32"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:padding="3dp"
->    
-
- <LinearLayout 
-      android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-        android:padding="5dp"
-    
-    >
-      
-<TextView 
-    android:text="@string/citationDate" 
-    android:id="@+id/TextView01" 
-    android:layout_width="wrap_content" 
-    android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:textSize="12sp"
-    
-    >
-            
     </TextView>
-
- <TextView android:text="@+id/dateDisplay" android:id="@+id/citationDate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp"
-
- ></TextView>
- </LinearLayout>
- 
- <LinearLayout
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-        android:padding="5dp"
-    
-    >
-    
- 
- <TextView 
-    android:text="@string/location" 
-    android:id="@+id/TextView01" 
-    android:layout_width="wrap_content" 
-    android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:textSize="12sp"
-    
-    >
-            
-    </TextView>
-
- <TextView android:text="" android:id="@+id/tvLocation" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp"
-
- ></TextView>
- 
- 
- 
- 
- </LinearLayout>
- 
-   <LinearLayout
-       android:id="@+id/widget32"
-       android:layout_width="fill_parent"
-       android:layout_height="wrap_content"
-       android:layout_gravity="right" >
+            -->
 
 
-           <Button
-               android:id="@+id/bModifySample"
-               android:layout_width="fill_parent"
-               android:layout_height="wrap_content"
-               android:background="@drawable/btn_default_normal"
-               android:src="@drawable/icon"
-               android:text="@string/bModifyCitation" />
+            <!-- <ListView android:id="@+id/llistaAtributs" android:layout_width="wrap_content" android:layout_height="wrap_content"></ListView> -->
 
+        </LinearLayout>
+    </ScrollView>
 
-        
-     <!--    <Button android:text="@string/bFinish" android:id="@+id/bFinish" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-      -->	   
-        
-        <!-- <CheckBox android:text="@string/cBtextNoGeo" android:id="@+id/cbNoGeo" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp"></CheckBox> -->
+    <LinearLayout
+        android:id="@+id/widget36"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:background="#ff333333"
+        android:orientation="vertical" >
 
-</LinearLayout>
- 
-  </LinearLayout>
-  
-  
+        <LinearLayout
+            android:id="@+id/widget32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp" >
 
+       
 
-</LinearLayout>
+                <Button
+                    android:id="@+id/bModifySample"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_new_button_normal"
+                    android:src="@drawable/icon"
+                    android:text="@string/bModifyCitation" />
+
+            <LinearLayout
+                android:id="@+id/llFields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="2dp" >
+
+                    <TextView
+                        android:id="@+id/TextView01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/citationDate"
+                        android:textSize="12sp" >
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/citationDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@+id/dateDisplay"
+                        android:textSize="12sp" >
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="2dp" >
+
+                    <TextView
+                        android:id="@+id/TextView01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/location"
+                        android:textSize="12sp" >
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="12sp" >
+                    </TextView>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

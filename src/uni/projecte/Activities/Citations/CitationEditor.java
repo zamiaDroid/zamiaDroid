@@ -184,9 +184,7 @@ public class CitationEditor extends Activity {
         tC= new ThesaurusControler(this);
         prefCnt=new PreferencesControler(this);
 
-        
         mDbAttributeType= new ProjectDbAdapter(this);
-        
         
         bModifyCitation = (Button)findViewById(R.id.bModifySample);
         bModifyCitation.setOnClickListener(bModifyCitationListener);
@@ -210,8 +208,6 @@ public class CitationEditor extends Activity {
 
         numTotal=getIntent().getExtras().getInt("count");
         position=getIntent().getExtras().getInt("position");
-        
-
         
         if (projId!=-1){
         	

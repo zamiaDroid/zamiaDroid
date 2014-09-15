@@ -2,7 +2,7 @@
 <resources>
 
 	<string name="hasCitations">Il est impossible d\'éliminer le projet car il contient des citations</string>
-	<string name="citationDate"><b>Date de la citation: </b></string>
+	<string name="citationDate"><b>Date: </b></string>
 	<string name="location"><b>Localisation: </b></string>
 	<string name="tModifiedCitation">La citation a été correctement modifiée.</string>
 	<string name="numCitationsImported">Les citations ont été importées correctement</string>

@@ -402,6 +402,16 @@
     <string name="syncroStatusOutdated">New or modified data</string>
     <string name="btSyncroConfig">Configuration</string>
     <string name="tvLocality">Locality</string>
-       <string name="tvLocalityUpdating">Getting locality...</string>
+    <string name="tvLocalityUpdating">Getting locality...</string>
+    
+    <string name="btSyncroProject">Synchronize project</string>
+    <string name="btDisableSyncroProject">Unlink syncro project</string>
+    
+    <string name="tvSyncroLocalProjectAchtung">Next fields can\'t be syncronized because they aren\'t supported by the server. Do you want to syncronize your project anyway? <br/>Caution! Data from those fields won\'t be syncronized.</string>
+ 
+	<string formatted="false" name="syncroLocalAddFields">There are &lt;b> %1d fields &lt;/b> &lt;b> not belonging to the project &lt;/b>. They will be added automatically to the project to keep consistency between the server and the mobile phone.</string>
+   	
+   <string name="syncroCannot">Project can\'t be syncronized. Project structure is not suitable to work with the server %1s </string>
+	
     
 </resources>

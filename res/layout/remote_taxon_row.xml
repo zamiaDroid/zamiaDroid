@@ -5,6 +5,14 @@
               android:layout_height="wrap_content"
               android:orientation="horizontal" 
               >
+<ImageButton
+                android:id="@+id/btEditCitation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_icon_small"
+                android:visibility="gone"
+                android:layout_marginRight="4dp"
+                android:padding="2dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -13,6 +21,9 @@
         android:layout_weight="1"
         android:padding="2dp" 
         android:layout_marginRight="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        
         >
 
         <TextView android:id="@+id/tvTaxonList" android:layout_height="wrap_content" android:layout_width="wrap_content" android:textSize="16sp"></TextView>

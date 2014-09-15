@@ -75,8 +75,21 @@ public class ZamiaCitationXMLparser {
 	         	ZamiaCitationFastHandlerXML zcFastXMLHandler = new ZamiaCitationFastHandlerXML(projObj,fieldsList);
 	         	xr.setContentHandler(zcFastXMLHandler);
 	     		  
-	      	  BufferedReader fis = new BufferedReader(new InputStreamReader(new FileInputStream(url), "UTF-8"));
-       		  xr.parse(new InputSource(fis));
+	         	 if (url.startsWith("http://")){
+	        		  
+	            		URL urlR = new URL(url); 
+	         		 xr.parse(new InputSource(urlR.openStream())); 
+	            		  
+	            	  }
+	            	  
+	            	  else{
+	             	  
+	            		  BufferedReader fis = new BufferedReader(new InputStreamReader(new FileInputStream(url), "UTF-8"));
+	            		  xr.parse(new InputSource(fis));
+	            		  
+	            	  }
+	         	
+	         
 	 
 	         return zcFastXMLHandler.getCitationCount();
 	         

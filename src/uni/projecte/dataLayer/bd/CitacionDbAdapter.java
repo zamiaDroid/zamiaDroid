@@ -584,6 +584,13 @@ public class CitacionDbAdapter {
     
     }
     
+    public Cursor fetchCitationValuesByCitationIdOrdered(long citationId) throws SQLException {
+
+ 	   return mDb.query(DATABASE_TABLE_FIELD, new String[] {KEY_ROWID,KEY_SAMPLE_ID, KEY_TIPUS_ATRIB,
+                VALUE,FIELD_NAME}, KEY_SAMPLE_ID + "=" + citationId, null, null, null, null);
+ 
+ }
+    
     /// select * from CitationFieldTable,CitationTable where idRs=1 and CitationTable._id=idSample
     
     public Cursor fetchSamples(long projId) throws SQLException {

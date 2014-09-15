@@ -26,10 +26,12 @@ public class ProjectDbAdapter {
     public static final String DESC = "desc";
     public static final String CAT = "category";
     public static final String DEF = "def";
-    public static final String VISIBLE = "visible";
     public static final String PREVALUE = "preValue";
+    public static final String VISIBLE = "visible";
     public static final String ORDER = "ordre";
-
+    public static final String VISIBLE_VIEWER = "visible_viewer";
+    public static final String ORDER_VIEWER = "ordre_viewer";
+    
     /*Project Table Config*/
     public static final String PROJ_ID_FK = "projId";
     public static final String PROJ_CONFIG_KEY="configKey";
@@ -57,12 +59,13 @@ public class ProjectDbAdapter {
     
     private static final String DATABASE_TABLE_SECOND_LEVEL_FIELD = "SecondLevelFieldTable";
    
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     
     /*
      * Version 2: main version
      * Version 3: field Order added
      * Version 4: added Project config table
+     * Version 5: CitationManager viewer order and visible
      * 
      */
     
@@ -96,7 +99,9 @@ public class ProjectDbAdapter {
         + TYPE + " TEXT,"
         + DEF + " BOOLEAN,"
         + VISIBLE + " BOOLEAN,"
-        + ORDER + " INTEGER"
+        + ORDER + " INTEGER,"
+        + VISIBLE_VIEWER + " BOOLEAN NOT NULL DEFAULT 1,"
+        + ORDER_VIEWER + " INTEGER"
         + ");";
     
     private static final String DATABASE_CREATE_SECOND_LEVEL_FIELD =
@@ -152,6 +157,23 @@ public class ProjectDbAdapter {
 
                 db.execSQL(DATABASE_CREATE_TABLE_PROJECT_CONFIG);
             	
+            }
+            
+            if (oldVersion <5) {
+
+                final String VIEWER_ORDER = 
+                        "ALTER TABLE " + DATABASE_TABLE_FIELD +
+                    " ADD COLUMN " + ORDER_VIEWER + " INTEGER"
+                    + ";";
+                    
+                    final String VIEWER_VISIBLE = 
+                        "ALTER TABLE " + DATABASE_TABLE_FIELD +
+                        " ADD COLUMN " + VISIBLE_VIEWER + " BOOLEAN NOT NULL DEFAULT 1"
+                        + ";";
+                  
+                    db.execSQL(VIEWER_ORDER);
+                    db.execSQL(VIEWER_VISIBLE);
+                    
             }
             
         }
@@ -496,6 +518,14 @@ public class ProjectDbAdapter {
  
  }
  
+    public Cursor fetchViewerFieldsFromProject(long projId) throws SQLException {
+
+    	
+  	   return mDb.query(DATABASE_TABLE_FIELD, new String[] {KEY_ROWID, PROJ_ID,
+  			   PROJ_NAME,TYPE,LABEL,PREVALUE,CAT,ORDER,VISIBLE,ORDER_VIEWER,VISIBLE_VIEWER}, PROJ_ID + "=" + projId+" and "+VISIBLE+ "= '1'", null, null, null, DEF+" DESC , "+ORDER_VIEWER+" ASC");
+  
+  }
+  
     
     public Cursor fetchProjectsFromProjectOrdered(long rsId) throws SQLException {
 
@@ -566,6 +596,17 @@ public class ProjectDbAdapter {
 		
 	}
 	
+	public boolean setViewerFieldVisibilty(long idRs, String attName, boolean visible) {
+
+	 	ContentValues vals = new ContentValues();
+		if (visible) vals.put(VISIBLE_VIEWER,1);
+		else vals.put(VISIBLE_VIEWER, 0);
+		
+		
+      return mDb.update(DATABASE_TABLE_FIELD, vals, PROJ_ID + "=" + idRs +" and "+ PROJ_NAME +"=\""+attName+"\"", null) > 0;
+			
+		
+	}
 	
 	public boolean setFieldOrder(long idRs, long fieldId, int order) {
 		
@@ -576,6 +617,16 @@ public class ProjectDbAdapter {
 		return mDb.update(DATABASE_TABLE_FIELD, vals, PROJ_ID + "=" + idRs +" and "+ KEY_ROWID +"="+fieldId, null) > 0;
 		
 	}
+	
+	public boolean setViewerFieldOrder(long idRs, long fieldId, int order) {
+		
+		ContentValues vals = new ContentValues();
+		vals.put(ORDER_VIEWER,order);
+		
+		return mDb.update(DATABASE_TABLE_FIELD, vals, PROJ_ID + "=" + idRs +" and "+ KEY_ROWID +"="+fieldId, null) > 0;
+		
+	}
+	
 	
 	public boolean setFieldLabel(long projId, long fieldId, String fieldLabel) {
 		
@@ -781,6 +832,13 @@ public class ProjectDbAdapter {
 	    
 	}
 
+	public long removeProjectConfigValue(long projId, String confKey) {
+
+	     return mDb.delete(DATABASE_TABLE_PROJECT_CONFIG, PROJ_ID_FK + "=" + projId+" and "+PROJ_CONFIG_KEY + "=\""+confKey+"\"", null);
+     
+		
+	}
+	
 	public long insertProjectConfigValue(long projId, String confKey,
 			String confValue) {
 

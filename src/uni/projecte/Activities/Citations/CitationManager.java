@@ -20,6 +20,7 @@ import uni.projecte.controler.ProjectControler;
 import uni.projecte.controler.ProjectSecondLevelControler;
 import uni.projecte.controler.ReportControler;
 import uni.projecte.controler.ThesaurusControler;
+import uni.projecte.dataLayer.CitationManager.FieldOrderDialog;
 import uni.projecte.dataLayer.CitationManager.FileExporter;
 import uni.projecte.dataLayer.CitationManager.ListAdapter.CitationListAdapter;
 import uni.projecte.dataLayer.CitationManager.Synchro.SyncroDialog;
@@ -81,6 +82,7 @@ public class CitationManager extends Activity{
 	private static final int SHOW_GALLERY = Menu.FIRST+2;
 	private static final int REPORT_CREATOR = Menu.FIRST+3;
 	private static final int TAXON_CHECKER = Menu.FIRST+4;
+	private static final int CHANGE_FIELD_ORDER = Menu.FIRST+5;
 
 	
 	private long projId;
@@ -89,6 +91,7 @@ public class CitationManager extends Activity{
 	private CitationHandler citHand;
 	private HashMap<String, String> projFieldsPairs;
 	private HashMap<String, String> fieldsLabelNames;
+	private ArrayList<ProjectField> fieldList;
 	
 	
 	private ProjectControler projCnt;
@@ -232,7 +235,8 @@ public class CitationManager extends Activity{
 				llFilter.setVisibility(View.GONE);
 	            setRemoveFilterButton();
 	            
-
+	            fieldList=projCnt.getProjectViewerFieldsMap(projId);
+	            
 		}
 		 
 		 
@@ -300,7 +304,7 @@ public class CitationManager extends Activity{
     	    		TextView tvCitation=(TextView) v.findViewById(R.id.citationTag);
 
     	    		CitationControler sC=new CitationControler(v.getContext());
-    	    		String atributes=sC.getCitationHTMLValues((Long) tvCitation.getTag(),fieldsLabelNames);
+    	    		String atributes=sC.getCitationHTMLValues(projId,(Long) tvCitation.getTag(),fieldList);
     	    		citListAdap.setChildrenText(atributes,groupPosition);
 
     	    		
@@ -338,7 +342,9 @@ public class CitationManager extends Activity{
 			 super.onResume();
 		     
 			 loadMainCitations(refreshList);
-		    	
+	
+			 
+			 
 		 }
 		    
 		 
@@ -357,6 +363,9 @@ public class CitationManager extends Activity{
 		 
 		 private void loadMainCitations(final boolean forceReload) {
 
+			 if(forceReload) fieldList=projCnt.getProjectViewerFieldsMap(projId);
+
+			 
 			 refreshList=false;
 			 pdMain = ProgressDialog.show(this, "",getString(R.string.citationListLoading), false);
 			 pdMain.show();
@@ -449,7 +458,8 @@ public class CitationManager extends Activity{
 		    	menu.add(0, TAXON_CHECKER, 0,getBaseContext().getString(R.string.mCheckTaxonTh)).setIcon(android.R.drawable.ic_menu_set_as);
 		    	menu.add(0, SHOW_FIELDS, 0,getBaseContext().getString(R.string.mShowProjectProperties)).setIcon(android.R.drawable.ic_menu_info_details);
 		    	menu.add(0, REPORT_CREATOR, 0,getBaseContext().getString(R.string.mCreateReport)).setIcon(android.R.drawable.ic_menu_agenda);
-		        
+		    	menu.add(0, CHANGE_FIELD_ORDER, 0,getBaseContext().getString(R.string.mChangeFields)).setIcon(android.R.drawable.ic_menu_agenda);
+   
 		        return super.onCreateOptionsMenu(menu);
 		    }
 
@@ -491,7 +501,12 @@ public class CitationManager extends Activity{
 					
 					reportCreator();
 					
-
+				case CHANGE_FIELD_ORDER:
+					
+					showFieldOrderChooser();
+					
+					
+					
 		        break;
 			
 				
@@ -501,6 +516,14 @@ public class CitationManager extends Activity{
 			}
 		    
 			   
+		    private void showFieldOrderChooser(){
+		    	
+		    	//projCnt.get
+		    	ArrayList<ProjectField> fieldList=projCnt.getProjectViewerFieldsMap(projId);
+		    	FieldOrderDialog.initDialog(this, fieldList,projCnt,projId,reloadListHandler);
+		    	
+		    }
+		    
 		    
 		    private void reportCreator() {
 		    	

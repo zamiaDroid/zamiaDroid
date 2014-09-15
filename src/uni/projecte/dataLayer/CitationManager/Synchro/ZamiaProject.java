@@ -7,7 +7,6 @@ public class ZamiaProject {
 	@Expose
     private String project_name;
 
-	@Expose
 	private String user;
 
 	@Expose	   

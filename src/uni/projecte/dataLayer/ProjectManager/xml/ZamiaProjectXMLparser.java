@@ -71,7 +71,8 @@ public class ZamiaProjectXMLparser {
          if (internet){
      		  
        		URL urlR = new URL(url); 
-       		  
+       		System.out.println(url.toString());
+
        		 xr.parse(new InputSource(urlR.openStream())); 
        		  
        	  }

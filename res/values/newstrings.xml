@@ -246,7 +246,6 @@
     <string name="mCenterLocation">Centrar localització</string>
     <string name="mCleanTrackLoaded">Netejar Mapa</string>
     <string name="mapConfShowMyTracks">Veure diàleg tracks</string>
-    
     <string name="filterTaxonGenus">Taxon per gènere</string>
     <string name="filterNotInThesaurus">no present al tesaure</string>
     <string name="filterTaxonGenusMessage">Buscant taxons amb gènere</string>
@@ -403,7 +402,17 @@
     <string name="syncroStatusOutdated">Hi ha noves dades o dades modificades</string>
     <string name="btSyncroConfig">Configuració</string>
           
-     <string name="tvLocality">Localitat: </string>
-   <string name="tvLocalityUpdating">Determinant localitat...</string>
-     
+    <string name="tvLocality">Localitat: </string>
+   	<string name="tvLocalityUpdating">Determinant localitat...</string>
+    
+    <string name="btSyncroProject">Sincronitzar projecte</string>
+    <string name="btDisableSyncroProject">Desvincular projecte</string>
+    
+    <string name="tvSyncroLocalProjectAchtung">Els següents camps no es podran sincronitzar ja que no estan suportats al servidor. Vols sincronitzar igualment el projecte? <br/>Atenció!Les dades d\'aquests camps no es mantindran sincronitzades.</string>
+ 
+	<string formatted="false" name="syncroLocalAddFields">Hi ha &lt;b> %1d camps &lt;/b>que &lt;b> no presents al projecte &lt;/b>. S\'afegiran automàticament al projecte per a mantenir la coherència amb el procés de sincronització.</string>
+   	
+   <string name="syncroCannot">No es pot sincronitzar el projecte. No té l\'estructura correcta per a treballar amb el servidor %1s </string>
+	
+    
 </resources>

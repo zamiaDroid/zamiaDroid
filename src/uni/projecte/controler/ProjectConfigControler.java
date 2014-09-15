@@ -174,7 +174,25 @@ public class ProjectConfigControler extends ProjectControler{
 
 		
 	}
+
+	public void removeProjectConfig(long projId,int id){
+		
+		
+		String projConfKey=getConfigKey(id);
 	
+		if(!projConfKey.equals("")){
+		
+			projDbAdapter = new ProjectDbAdapter(baseContext);
+			projDbAdapter.open();
+			
+				projDbAdapter.removeProjectConfigValue(projId, projConfKey);
+	
+			projDbAdapter.close();
+		
+		}
+
+		
+	}
 	
 	public ArrayList<Project> getAllProjConfig(int id){
 		

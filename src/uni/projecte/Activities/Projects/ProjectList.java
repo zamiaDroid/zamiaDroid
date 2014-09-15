@@ -24,6 +24,7 @@ import java.util.Date;
 import uni.projecte.Main;
 import uni.projecte.R;
 import uni.projecte.Activities.Citations.Sampling;
+import uni.projecte.Activities.Syncro.SyncroLocalProject;
 import uni.projecte.Activities.Syncro.SyncroProjectList;
 import uni.projecte.controler.BackupControler;
 import uni.projecte.controler.PhotoControler;
@@ -32,6 +33,7 @@ import uni.projecte.controler.ProjectSecondLevelControler;
 import uni.projecte.controler.SyncProjectControler;
 import uni.projecte.controler.ThesaurusControler;
 import uni.projecte.dataLayer.CitationManager.FileExporter;
+import uni.projecte.dataLayer.CitationManager.Synchro.SyncCitationManager;
 import uni.projecte.dataLayer.ProjectManager.ListAdapters.ProjectBaseListAdapter;
 import uni.projecte.dataLayer.ProjectManager.objects.Project;
 import uni.projecte.dataLayer.bd.ProjectDbAdapter;
@@ -82,7 +84,8 @@ public class ProjectList extends Activity {
 		private static final int REMOVE_PROJECT=Menu.FIRST+2;
 		private static final int EXPORT_PROJECT=Menu.FIRST+3;
 		private static final int SYNCRO_MANAGER=Menu.FIRST+4;
-
+		private static final int SYNCRO_PROJECT=Menu.FIRST+5;
+		private static final int DISABLE_SYNCRO_PROJECT=Menu.FIRST+6;
 
 		private String name;
 		private String desc;
@@ -175,6 +178,8 @@ public class ProjectList extends Activity {
 	    @Override
 		public boolean onCreateOptionsMenu(Menu menu) {
 	    	
+	    	menu.add(0, DISABLE_SYNCRO_PROJECT, 0,R.string.btDisableSyncroProject).setIcon(android.R.drawable.ic_popup_sync);
+	    	menu.add(0, SYNCRO_PROJECT, 0,R.string.btSyncroProject).setIcon(android.R.drawable.ic_popup_sync);
 	    	menu.add(0, SYNCRO_MANAGER, 0,R.string.mSyncroManager).setIcon(android.R.drawable.ic_popup_sync);
 	    	menu.add(0, BACKUP_PROJ, 0,R.string.mCreateBackup).setIcon(android.R.drawable.ic_menu_save);
 	    	menu.add(0, LOAD_BACKUP_PROJ, 0,R.string.mLoadBackup).setIcon(android.R.drawable.ic_menu_upload);
@@ -193,6 +198,8 @@ public class ProjectList extends Activity {
 			   menu.findItem(BACKUP_PROJ).setVisible(false);
 			   menu.findItem(REMOVE_PROJECT).setVisible(false);
 			   menu.findItem(EXPORT_PROJECT).setVisible(false);
+			   menu.findItem(SYNCRO_PROJECT).setVisible(false);
+			   menu.findItem(DISABLE_SYNCRO_PROJECT).setVisible(false);
 
 		   }
 		   else{
@@ -208,8 +215,24 @@ public class ProjectList extends Activity {
 			   
 			 menu.findItem(REMOVE_PROJECT).setVisible(true);
 			 menu.findItem(REMOVE_PROJECT).setTitle(removeProject+": "+defaultProject);
+				
+
+			   if(projectsAdapter.isDefaultIsRemote()){
 				   
+				   System.out.println("Is remote");
+				   
+				   menu.findItem(SYNCRO_PROJECT).setVisible(false);
+				   menu.findItem(DISABLE_SYNCRO_PROJECT).setVisible(true);
+			   }
+			   else{
+				   
+				   menu.findItem(SYNCRO_PROJECT).setVisible(true);
+				   menu.findItem(DISABLE_SYNCRO_PROJECT).setVisible(false);
+
+			   }
+			 
 		   }
+		   
 		   
 		   
 		   return super.onPrepareOptionsMenu(menu);
@@ -241,8 +264,6 @@ public class ProjectList extends Activity {
 			                    Toast.LENGTH_SHORT).show();
 			        	
 			        }
-				
-				
 		 
 				break;
 				
@@ -273,6 +294,23 @@ public class ProjectList extends Activity {
 	            startActivity(intent);
 				
 				break;	
+				
+			case SYNCRO_PROJECT:
+				
+				Intent intent2 = new Intent(getBaseContext(), SyncroLocalProject.class);
+				intent2.putExtra("id",projectsAdapter.getDefaultProjId());
+	            startActivityForResult(intent2,1);
+				
+				break;		
+				
+			case DISABLE_SYNCRO_PROJECT:
+				
+				SyncCitationManager syncroManager= new SyncCitationManager(getBaseContext(), "remote_orca");
+				syncroManager.disableSyncroProj(projectsAdapter.getDefaultProjId());
+				
+				loadProjects();
+				
+				break;		
 				
 			}
 			

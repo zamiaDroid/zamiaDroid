@@ -44,6 +44,9 @@ public class SyncProjectControler  {
 		
 	}
 	
+	
+	
+	
 	public boolean isSyncroProj(){
 		
 		return true;
@@ -53,6 +56,8 @@ public class SyncProjectControler  {
 		
 		
 	}
+
+	
 
 
 }

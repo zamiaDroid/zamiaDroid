@@ -2,7 +2,7 @@
 <resources>
 
 	<string name="hasCitations">Deleting the project is not allowed as it contains observations</string>
-	<string name="citationDate"><b> Date of the quote: </b></string>
+	<string name="citationDate"><b> Date: </b></string>
 	<string name="location"><b>Location: </b></string>
 	<string name="tModifiedCitation">The observation modification was unsuccessful.</string>
 	<string name="numCitationsImported">observations successfully imported</string>

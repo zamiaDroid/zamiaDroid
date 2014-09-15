@@ -275,7 +275,7 @@
 	
 	<string name="myTracksThirdPartyAccessDisabled">Allow MyTracks third party access</string>
 	<string name="myTracksInternalError">Mytracks internal error</string>	
-	
+	 
 	<string name="photoGallery">Photo gallery</string>
 	<string formatted="false" name="citationsAtDir">&lt;b>Citations files at: &lt;b></string>
    	<string name="photoCantBeFound">Photo linked to location doesn\'t exist.</string>
@@ -353,7 +353,7 @@
     <string name="thChangeInfo">The loaded Thesaurus has been updated. The new thesaurus will be donwloaded and it will overwrite the old one.</string>
     <string formatted="false" name="thChangeTitle">It is necessary to update the %1s thesaurus! Last update was done: %2s.</string>
         
-   <string name="changeMapMarker">Change marker</string>
+   <string name="changeMapMarker">Change marke r</string>
    
    <string name="uniqueField">Can\'t exist more than one field %1s</string>
    <string name="polAddPoint">Add point</string>
@@ -402,4 +402,14 @@
     <string name="tvLocality">Locality: </string>
    <string name="tvLocalityUpdating">Getting locality...</string>
     
+   <string name="btSyncroProject">Synchronize project</string>
+    <string name="btDisableSyncroProject">Unlink syncro project</string>
+    
+    <string name="tvSyncroLocalProjectAchtung">Next fields can\'t be syncronized because they aren\'t supported by the server. Do you want to syncronize your project anyway? <br/>Caution! Data from those fields won\'t be syncronized.</string>
+ 
+	<string formatted="false" name="syncroLocalAddFields">There are &lt;b> %1d fields &lt;/b> &lt;b> not belonging to the project &lt;/b>. They will be added automatically to the project to keep consistency between the server and the mobile phone.</string>
+   	
+   <string name="syncroCannot">Project can\'t be syncronized. Project structure is not suitable to work with the server %1s </string>
+	
+   
 </resources>

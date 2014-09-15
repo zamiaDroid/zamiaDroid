@@ -405,4 +405,14 @@
      <string name="tvLocality">Localidad: </string>
     <string name="tvLocalityUpdating">Determinando localidad...</string>
      
+    <string name="btSyncroProject">Sincronizar proyecto</string>
+    <string name="btDisableSyncroProject">Desvincular proyecto</string>
+    
+    <string name="tvSyncroLocalProjectAchtung">Los siguietes campos no se pueden sincronizar ya que el servidor no los tiene implementados. ¿Quieres sincronizar igualmente el proyecto? <br/>Atención! Los datos de estos campos no se mantendrán sincronizados.</string>
+ 
+	<string formatted="false" name="syncroLocalAddFields">Hay &lt;b> %1d campos &lt;/b>que &lt;b> no presentes en el proyecto &lt;/b>. Se añadirán automáticamente al proyecto para mantener la coherencia con el proceso de sincronización.</string>
+   	
+   <string name="syncroCannot">No se puede sincronizar el proyecto. No tiene la estructura correcta para trabajar con el servidor %1s </string>
+	
+    
 </resources>

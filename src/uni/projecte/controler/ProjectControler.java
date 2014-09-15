@@ -300,6 +300,38 @@ public class ProjectControler {
 	}
 	
 	
+	/*  */
+	public ArrayList<ProjectField> getProjectViewerFieldsMap(long projId){
+		
+	ArrayList<ProjectField> attList=new ArrayList<ProjectField>();
+		
+		projDbAdapter = new ProjectDbAdapter(baseContext);
+		
+		projDbAdapter.open();
+		
+		Cursor c=projDbAdapter.fetchViewerFieldsFromProject(projId);
+		c.moveToFirst();
+		
+		int n=c.getCount();
+		  
+		  for (int i=0;i<n;i++){
+			  
+			  ProjectField atV=new ProjectField(c.getLong(0),c.getString(2), c.getString(3),c.getString(4),c.getString(5),c.getInt(9),c.getInt(10));
+			  
+			  attList.add(atV);
+			  
+			  c.moveToNext();
+			  
+		  }
+		  
+		c.close();
+		
+		projDbAdapter.close();
+		
+		return attList;
+	}
+	
+	
 	public HashMap<String, String> getProjectFieldsPair(long projId){
 		
 		HashMap<String, String> fields=new HashMap<String, String>();
@@ -1013,9 +1045,35 @@ public class ProjectControler {
 		
 	}
 	
+	public void changeViewerFieldVisibility(long projectId, String attName, boolean visible) {
+
+		ProjectDbAdapter projDbAdapter = new ProjectDbAdapter(baseContext);
+		
+		projDbAdapter.open();
+		
+		projDbAdapter.setViewerFieldVisibilty(projectId,attName,visible);
+
+		projDbAdapter.close();
+		
+		
+	}
+	
+	
+	public void setViewerFieldOrder(long fieldId, int order) {
+		
+		ProjectDbAdapter projDbAdapter = new ProjectDbAdapter(baseContext);
+		
+		projDbAdapter.open();
+		
+			projDbAdapter.setViewerFieldOrder(idRs,fieldId,order);
+
+		projDbAdapter.close();
+
+	}	
+		
+	
 	
 	public void setFieldOrder(long fieldId, int order) {
-		
 		
 		ProjectDbAdapter projDbAdapter = new ProjectDbAdapter(baseContext);
 		
@@ -1025,7 +1083,6 @@ public class ProjectControler {
 
 		projDbAdapter.close();
 
-		
 		
 	}
 	
@@ -1328,6 +1385,15 @@ public String createSecondLevelIdentifier(String fieldName){
 		
 	}
 
+
+	public boolean isBotanical() {
+
+		System.out.println("-----> "+projType);
+		return projType.equals("") || projType.equals("Fagus") || projType.equals("Botanical");
+		
+	}
+
+	
 	
 	
 	

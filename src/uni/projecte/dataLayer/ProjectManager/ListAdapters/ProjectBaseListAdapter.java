@@ -35,8 +35,13 @@ public class ProjectBaseListAdapter extends BaseAdapter{
 	private Context parentContext;
 	private ArrayList<Project> projectList;
 	private String defaultProject;
+	private boolean defaultIsRemote=false;
+	
+	
 	public String getDefaultProject() {
+		
 		return defaultProject;
+		
 	}
 
 
@@ -106,11 +111,16 @@ public class ProjectBaseListAdapter extends BaseAdapter{
     	 String projType=projectList.get(position).getProjType();
     	 
     	 if(projType.startsWith("remote_")) holder.ibSyncroProj.setVisibility(View.VISIBLE);
-    	 
-
+    		 
+    	
      	boolean isDefault=projName.equals(defaultProject);
      	
-     	if(isDefault) rbLastChosenProj=holder.cbDefaultProj;
+     	if(isDefault){ 
+     		
+     		rbLastChosenProj=holder.cbDefaultProj;
+     		if(projType.startsWith("remote_")) defaultIsRemote=true;
+
+     	}
      	
      	holder.cbDefaultProj.setChecked(isDefault);
          
@@ -127,7 +137,8 @@ public class ProjectBaseListAdapter extends BaseAdapter{
          		rc.loadResearchInfoByName(tv.getText().toString());
          			
          		projId=rc.getProjectId();
-         		 	
+         		setDefaultIsRemote(rc.isRemote());
+	
          		Bundle b=new Bundle();
          		b.putLong("projId",projId);
          		Message msg=new Message();
@@ -163,6 +174,7 @@ public class ProjectBaseListAdapter extends BaseAdapter{
          		rc.loadResearchInfoByName(defaultProject);
          			
          		projId=rc.getProjectId();
+         		setDefaultIsRemote(rc.isRemote());
          		 	
          		//insert into Bundle?
          		Bundle b=new Bundle();
@@ -341,6 +353,22 @@ public class ProjectBaseListAdapter extends BaseAdapter{
 
 		rbLastChosenProj=rb;
 		
+	}
+
+
+	public boolean isDefaultIsRemote() {
+		return defaultIsRemote;
+	}
+	
+	public long getDefaultProjId(){
+		
+		return projId;
+		
+	}
+
+
+	public void setDefaultIsRemote(boolean defaultIsRemote) {
+		this.defaultIsRemote = defaultIsRemote;
 	}
 	
 	

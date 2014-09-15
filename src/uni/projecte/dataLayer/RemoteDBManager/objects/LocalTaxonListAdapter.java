@@ -100,9 +100,11 @@ public class LocalTaxonListAdapter extends BaseAdapter implements SectionIndexer
 			 
 	    	 holder = new ViewHolder();
 	    	 holder.text = (TextView) convertView.findViewById(R.id.tvTaxonList);
-	    	 holder.image= (ImageView) convertView.findViewById(R.id.existsLocalTaxon);
-	    	 holder.image.setImageResource(R.drawable.edit_icon_small);
-	
+	    	 ImageView image= (ImageView) convertView.findViewById(R.id.existsLocalTaxon);
+	    	 image.setVisibility(View.GONE);
+	    	 holder.image=(ImageView) convertView.findViewById(R.id.btEditCitation);
+	    	 holder.image.setVisibility(View.VISIBLE);
+	    	 	
 	    	 convertView.setTag(holder);
 	    	 
 	    	 
@@ -115,7 +117,7 @@ public class LocalTaxonListAdapter extends BaseAdapter implements SectionIndexer
 	
 		 
 	    	 holder.text.setText(Html.fromHtml(elements.get(position).getTaxon()));
-	    	 holder.text .setOnClickListener(showTaxonInfo);
+	    	 holder.text.setOnClickListener(showTaxonInfo);
 
 	    	 
 	    	 if(!remoteTaxonList.existsTaxon(elements.get(position).getCleanTaxon())){ 
@@ -178,6 +180,7 @@ public class LocalTaxonListAdapter extends BaseAdapter implements SectionIndexer
 		 static class ViewHolder {
 	    	 TextView text;
 	    	 ImageView image;
+	    	 
 	    	 
 	
 		 }

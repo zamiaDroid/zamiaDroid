@@ -736,6 +736,7 @@ public class CitationHandler {
 	
 	
 	
+	
 	private void createAlphaOrderedList(ArrayList<String> citationTags,ArrayList<Citation> filteredCitationsOrdered) {
 		
 		int i=0;

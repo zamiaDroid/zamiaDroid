@@ -240,6 +240,8 @@ public class SyncCitationManager {
 	
 		projCnt.loadProjectInfoById(projId);
 		
+		if(projCnt.getProjType().equals("Fagus")) projCnt.setProjectType(projId, "remote_"+service);
+		
 		String projTag=projCnt.getName();
 		
 		project.setProject_name(projTag);
@@ -258,6 +260,12 @@ public class SyncCitationManager {
 		
 	}
 	
+	public void disableSyncroProj(long defaultProjId) {
+
+		projCnt.setProjectType(defaultProjId, "Fagus");
+		projCnf.removeProjectConfig(defaultProjId, ProjectConfigControler.LAST_SYNCRO);
+		
+	}
 	
 	private void updateLastMod(long projId){
 		

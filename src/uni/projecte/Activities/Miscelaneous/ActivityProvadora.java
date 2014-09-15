@@ -22,10 +22,13 @@ import java.util.ArrayList;
 import uni.projecte.R;
 import uni.projecte.Activities.Projects.ProjectRepositoryList;
 import uni.projecte.Activities.Syncro.SyncroConfig;
+import uni.projecte.Activities.Syncro.SyncroLocalProject;
 import uni.projecte.controler.SyncProjectControler;
 import uni.projecte.dataLayer.CitationManager.Synchro.ProjectSyncListAdapter;
 import uni.projecte.dataLayer.CitationManager.Synchro.SyncCitationManager;
+import uni.projecte.dataLayer.CitationManager.Zamia.ZamiaCitationXMLparser;
 import uni.projecte.dataLayer.ProjectManager.objects.Project;
+import uni.projecte.dataTypes.FieldsList;
 import uni.projecte.dataTypes.Utilities;
 import android.app.Activity;
 import android.content.Intent;
@@ -99,7 +102,7 @@ public class ActivityProvadora extends Activity {
 	  
 	  public OnClickListener listLocalClick = new OnClickListener() {
 
-			public void onClick(View v) {
+		  public void onClick(View v) {
 
 				if(v.getId()==-1){
 
@@ -119,13 +122,30 @@ public class ActivityProvadora extends Activity {
 		public OnClickListener btSyncroConfig = new OnClickListener() {
 
 				public void onClick(View v) {
-
-					callConfigActivity();
-		
+					
+					Intent intent = new Intent(getBaseContext(), SyncroLocalProject.class);
+					intent.putExtra("id",Long.valueOf(8));
+		            startActivityForResult(intent,1);
+		            
+					//checkRemoteProject();
+					
 				}
 			  
 			};
 		
+			private void checkRemoteProject(){
+				
+				
+				ZamiaCitationXMLparser zCP= new ZamiaCitationXMLparser();
+		    	
+				FieldsList fieldsList = new FieldsList();
+				Project projObj= new Project(0);
+  	  
+		    	// pre-reading file Structure
+				int newCitations=zCP.preReadXML(this, "http://biodiver.bio.ub.es/ZamiaProjectProvider/GetZamiaProject?&remote_th=true&lang=ca&proj_id=proj_botanic_orca", projObj,fieldsList); 
+		       	
+			}
+			
 		private void syncroProject(String projectTag){
 			
 			//int updated=synchroManager.getOutdatedLocalCitations(projectTag);

@@ -404,5 +404,17 @@
         
     <string name="tvLocality">Localitat: </string>
     <string name="tvLocalityUpdating">Determinant localitat...</string>
-      
+      	
+     <string name="mChangeFields">Canvia ordre camps a mostrar</string>
+
+    <string name="btSyncroProject">Sincronitzar projecte</string>
+    <string name="btDisableSyncroProject">Desvincular projecte</string>
+    
+    <string name="tvSyncroLocalProjectAchtung">Els següents camps no es podran sincronitzar ja que no estan suportats al servidor. Vols sincronitzar igualment el projecte? <br/>Atenció!Les dades d\'aquests camps no es mantindran sincronitzades.</string>
+ 
+	<string formatted="false" name="syncroLocalAddFields">Hi ha &lt;b> %1d camps &lt;/b>que &lt;b> no presents al projecte &lt;/b>. S\'afegiran automàticament al projecte per a mantenir la coherència amb el procés de sincronització.</string>
+   	
+   <string name="syncroCannot">No es pot sincronitzar el projecte. No té l\'estructura correcta per a treballar amb el servidor %1s </string>
+	
+     
 </resources>

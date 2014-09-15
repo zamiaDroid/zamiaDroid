@@ -1154,15 +1154,16 @@ public class CitationControler {
 	 * 
 	 */
 	
-	public String getCitationHTMLValues(long citationId, HashMap<String, String> fieldsLabelNames) {
+	public String getCitationHTMLValues(long projId,long citationId, ArrayList<ProjectField> fieldList) {
 	
+		ProjectControler projCnt = new ProjectControler(baseContext);
+		
 		
 		CitacionDbAdapter citations = new CitacionDbAdapter(baseContext);
 		citations.open();
 		
 		
 		Cursor citInfo=citations.fetchSampleBySampleId(citationId);
-		Cursor citList=citations.fetchSampleAttributesBySampleId(citationId);
 		
 		
 		citInfo.moveToFirst();
@@ -1190,12 +1191,39 @@ public class CitationControler {
 		
 		citInfo.close();
 		
-		citList.moveToFirst();
 		
-		int n=citList.getCount();
+		for(ProjectField projField: fieldList){
+			
+			if(projField.getVisible()>0){
+			
+				String fieldName=projField.getName();
+				String fieldValue="";
+				
+				System.out.println(fieldName);
+	
+				
+				Cursor valueCursor=citations.fetchSamplesByFieldIdAndCitationId(citationId,projField.getId());
+				valueCursor.moveToFirst();
+				
+				//KEY_ROWID,KEY_SAMPLE_ID, KEY_TIPUS_ATRIB,VALUE}
+				if(valueCursor.getCount()>0 && valueCursor!=null){
+					
+					fieldValue=valueCursor.getString(3);
+					
+					if(fieldName.equals("Sheet")) fieldValue=StringUtils.getBooleanValue(baseContext,fieldValue);
+					
+					result=result+"<br/><b>"+projField.getLabel()+"</b> : "+fieldValue;
+					
+					valueCursor.close();
+				}
+			
+			}
+			
+			
+		}
 		
-
-
+		
+		/*int n=citList.getCount();
 		
 		for(int i=0;i<n;i++){
 			
@@ -1211,11 +1239,11 @@ public class CitationControler {
 			citList.moveToNext();
 	
 			
-		}
+		} */
 		
 		result=result+"<br/>";
 		
-		citList.close();
+		//citList.close();
 
 		citations.close();
 		

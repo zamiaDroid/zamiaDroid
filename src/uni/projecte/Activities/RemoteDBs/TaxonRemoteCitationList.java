@@ -55,10 +55,8 @@ public class TaxonRemoteCitationList extends Activity {
 	
 	private ListView lvRemotetaxonList;
 	private TextView tvUTM;
-	private TextView tvListType;
 	private TextView dataBaseType;
 	private TextView tvChoosenTaxon;
-	private ImageButton imgSearch;
 	private EditText filterList;
 	
 	private RemoteCitationSet remoteList;
@@ -138,7 +136,6 @@ public class TaxonRemoteCitationList extends Activity {
         tvUTM.setText(dbConn.getPrettyLocation());
         tvUTM.setTextColor(Color.GREEN);
         
-
         
         loadDataThread();
 
@@ -148,8 +145,6 @@ public class TaxonRemoteCitationList extends Activity {
        
     }
 	
-
-    
 
 	private void loadDataThread() {
 
@@ -168,14 +163,9 @@ public class TaxonRemoteCitationList extends Activity {
 			        handlerEnd.sendEmptyMessage(0);
 				}
 
-			
-	            	
 	    	}).start();
 
-	        
-	    	
 		}
-	
 	    
 	    
 		  private void loadRemoteTaxons(){
