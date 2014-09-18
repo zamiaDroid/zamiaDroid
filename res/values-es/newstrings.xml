@@ -244,8 +244,8 @@
     
      <string name="filterTaxonGenus">Taxon por género</string>
     <string name="filterNotInThesaurus">no existente en el tesauro</string>
-    <string name="filterTaxonGenusMessage">Buscando táxones con género</string>
-    <string name="filterNotInThesaurusMessage">Descartando táxones correctos respeto al tesauro</string>
+    <string name="filterTaxonGenusMessage">Buscando taxones con género</string>
+    <string name="filterNotInThesaurusMessage">Descartando taxones correctos respeto al tesauro</string>
 
     <string name="utm10km">10x10</string>    
       
@@ -327,7 +327,7 @@
     <string name="tvImportCitationsAchtung">Atención! No se importaran los datos referentes a los campos que no estan en el proyecto y que tampoco se añaden al proyecto.</string>
     <string name="tvTrackList">"Listado de tracks: "</string>	
 	
-    <string name="tvNoThTaxonsInfo">Listado de táxones del proyecto &lt;b> %1$s &lt;/b> no presentes en el tesauro</string>   
+    <string name="tvNoThTaxonsInfo">Listado de taxones del proyecto &lt;b> %1$s &lt;/b> no presentes en el tesauro</string>   
     <string name="cbSendByMail">Enviar por e-mail</string>
     
     <string name="fieldTypeText">textual</string>
