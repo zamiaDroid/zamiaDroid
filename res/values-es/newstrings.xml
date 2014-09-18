@@ -68,25 +68,25 @@
      <string name="downloadingTh">Descargando tesauro&#8230;</string>
     <string name="remoteThDescription">Puedes descargar de Internet un tesauro taxonómico. Si tienes tarifa de datos con límites de descarga
     es recomendable usar una conexión Wi-fi y no 3G. El tamaño de algunos tesauros puede ser importante.</string>
-    <string name="noThConnection">No se puede acceder al servidor. Tiene conexión a Internet?</string>
+    <string name="noThConnection">No se puede acceder al servidor. ¿Tienes conexión a Internet?</string>
     
      <string name="cbThModeRemote">Descargar tesauro on-line</string>
      <string name="cbThModeLocal">Escojer tesauro local</string>
      
-    <string name="synonymQuestion">El taxon <b>%1$s</b> es un sinónimo. Quiere sobrescribirlo con el nombre aceptado?</string>
+    <string name="synonymQuestion">El taxón <b>%1$s</b> es un sinónimo. Quieres sobrescribirlo con el nombre aceptado?</string>
     <string name="checkSynomymsTitle">Comprobación de sinónimos</string>
-    <string name="checkSynomyms">Comprobación de sinónimos de los taxons</string>
+    <string name="checkSynomyms">Comprobación de sinónimos de los taxones</string>
   
   
-   <string name="backupProjectExists">El proyecto a importar ya existe.Qué quieres hacer con el backup?</string>
+   <string name="backupProjectExists">El proyecto a importar ya existe. ¿Qué quieres hacer con la copia de seguridad?</string>
     <string name="rBbackupImportCitOnly">Importar las citas</string>
     <string name="rbCreateNewProject">Crear un nuevo Proyecto</string>
-    <string name="btBackupImport">Cargar backup</string>
+    <string name="btBackupImport">Cargar copia de seguridad</string>
     
     <string name="tvProjType"><b>Tipo de proyecto: </b></string>
     
-    <string name="backupLoading">Cargando backup</string>
-    <string name="backupLoadingTxt">Por favor, no cierre la ventana. Según el tamaño del conjunto de campos, la importación puede tardar algunos minutos.</string>
+    <string name="backupLoading">Cargando copia de seguridad</string>
+    <string name="backupLoadingTxt">Por favor, no cierres la ventana. Según el tamaño del conjunto de campos, la importación puede tardar algunos minutos.</string>
     <string name="titleBdbc">Banco de datos de biodiversidad de Cataluña</string>
     
     
@@ -99,17 +99,17 @@
     <string name="repeatedFieldTitle">Escoge los campos para repetir el valor</string>
     <string name="mRepeatedField">Campos para repetir el valor</string>
     
-        <string name="waitingForGPS">No hi ha localitzación. Qué quieres hacer?</string>
+        <string name="waitingForGPS">No hay localización. ¿Qué quieres hacer?</string>
     <string name="lastKnownLocation">Usar última localización conocida</string>
-    <string name="waitForLocation">Esperar localitzación</string>
+    <string name="waitForLocation">Esperar localización</string>
     
     <string name="photoWithoutInfo">Esta foto no está vinculada a ninguna cita</string>
     
-        <string name="mShowTaxonInfo">Ver ficha del taxon</string>
+        <string name="mShowTaxonInfo">Ver ficha del taxón</string>
     
  	<string name="tvThType">Tipo de tesauro: </string>
    
-     <string name="toastTaxonNotExists">El taxon no existe en el tesauro</string>
+     <string name="toastTaxonNotExists">El taxón no existe en el tesauro</string>
      <string name="toastNotThesarus">No hay tesauro relacionado</string>
      <string name="toastGPSWorking">El GPS está buscando la posición</string>
      
@@ -153,7 +153,7 @@
          
          
   <string name="rbRemoteTh">Tesauro On-line</string>
-  <string name="rbLocalTh">Thesauro Pla</string>
+  <string name="rbLocalTh">Tesauro plano</string>
   <string name="thTitleImportPlain">Importar tesauro taxonómico plano</string>
   <string name="thFieldsSeparator">Separador de campos:</string>
     
@@ -200,8 +200,8 @@
   
    <string name="btThAddLocal">Añadir Local</string>
   <string name="btThAddRemote">Añadir tesauro remoto</string>   
-    <string name="btFilterTaxon">taxon</string>
-  <string name="rbFilterCompleteTaxon">Per taxon completo</string>
+    <string name="btFilterTaxon">taxón</string>
+  <string name="rbFilterCompleteTaxon">Per taxón completo</string>
   <string name="rbFilterTaxonGenus">Por género</string>    
   <string name="rbFilterWrongTaxon">No existentes en el tesauro</string>    
   <string name="rbFilterNoOk">Taxones no confirmados</string>    
@@ -231,20 +231,20 @@
     <string name="trackSaveQuestion">Quiéres guardar el Track?</string>
     <string name="trackWithoutLocations">El Track no tiene puntos y no se guardará</string>
     <string name="trackProjectDescription">Track creado por ZamiaDroid en el proyecto</string>
-    <string name="trackProjectNameDialog">nombre por defecto:</string>
-    <string name="trackRemoveDialog">Quiéres borrar el track</string>
+    <string name="trackProjectNameDialog">nombre predeterminado:</string>
+    <string name="trackRemoveDialog">¿Quiéres borrar el track?</string>
     <string name="waitingGPS">Esperando GPS</string>
-    <string name="mMapsOptions">Opciones de el mapa</string>
+    <string name="mMapsOptions">Opciones del mapa</string>
     <string name="mLoadTrack">Cargar track</string>
    	<string name="trackRegistering">Registrando track</string>
     
     <string name="mCenterLocation">Centrar localización</string>
     <string name="mCleanTrackLoaded">Limpiar Mapa</string> 
-    <string name="mapConfShowMyTracks">MyTracks dialogo</string>
+    <string name="mapConfShowMyTracks">Diálogo de MyTracks</string>
     
-     <string name="filterTaxonGenus">Taxon por género</string>
+     <string name="filterTaxonGenus">Taxón por género</string>
     <string name="filterNotInThesaurus">no existente en el tesauro</string>
-    <string name="filterTaxonGenusMessage">Buscando táxones con género</string>
+    <string name="filterTaxonGenusMessage">Buscando taxones con género</string>
     <string name="filterNotInThesaurusMessage">Descartando táxones correctos respeto al tesauro</string>
 
     <string name="utm10km">10x10</string>    
@@ -253,17 +253,17 @@
       
     <string name="utm1m">1x1</string>    
     
-    <string name="removeCitationPhoto">Quieres borrar la fotografía con el campo de la cita vinculada?</string>
+    <string name="removeCitationPhoto">¿Quieres borrar la fotografía con el campo de la cita vinculada?</string>
 	<string name="mRemovePhoto">Borrar fotografía</string>
 	<string name="mConfigDB">Configurar Base de Datos</string>
-	<string name="projWithoutTh">No hi ha tesaure correcte vinculat</string>
+	<string name="projWithoutTh">No hay tesauro correcto vinculado</string>
 		
 	<string name="mapConfShowConfig">Ver altura</string>
 	
 
 	<!-- ZamiaImport -->
 	<string name="zamiaImportTitle">Importar archivo de citas en formato</string>
-   	<string name="zamiaImportWrongFormat">El archivo no tiene format Zamia correcto o no hay citas.</string>
+   	<string name="zamiaImportWrongFormat">El archivo no tiene formato Zamia correcto o no hay citas.</string>
     <string name="zamiaImportCitationsCount">Hay %1d citas en el archivo</string>
 	<string formatted="false" name="zamiaImportAddFields">Hay &lt;b> %1d campos &lt;/b> &lt;b> que no están en el proyecto &lt;/b>. Los quieres añadir al proyecto &lt;b> %2$s &lt;/b> ?</string>
    	<string name="zamiaImportError">Archivo incorrecto</string>
@@ -281,7 +281,7 @@
 	<string formatted="false" name="citationsAtDir">&lt;b>Archivos de citas en: &lt;b></string>
 	<string name="photoCantBeFound">La fotografía vinculada a la localización no existe.</string>
 		
-	<string name="citationListLoading">Cargando  lista de citas</string>
+	<string name="citationListLoading">Cargando lista de citas</string>
 	<string name="actionPhoto">Fotografías</string>
 	<string name="photoNotLinked">La foto vinculada no existe</string>
 	<string name="exportRemoteToTab">Exportar presencias al formato TAB</string>
@@ -291,10 +291,10 @@
 	<string name="presenceRemoteDB">remoto</string>
 	<string name="presenceLocalDB">local</string>
 	<string name="presenceTotalDB">total</string>
-	<string name="presenceFileExists">Ya existe el archivo de presencias. Lo quieres sustituir?</string>
+	<string name="presenceFileExists">Ya existe el archivo de presencias. ¿Lo quieres sustituir?</string>
 	
-	<string name="mUseExternalStorage">Usar almacenamiento secundario (extern) por defecto</string>
-	<string name="mUseExternalStorageDisabled">Usar almacenamiento primario (extern) por defecto</string>
+	<string name="mUseExternalStorage">Usar almacenamiento secundario (externo) por omisión</string>
+	<string name="mUseExternalStorageDisabled">Usar almacenamiento primario (externo) por omisión</string>
 	
 	<string name="mChangeExternalStoragePrim">Ver fotos almacenamiento externo (primario)</string>
 	<string name="mChangeExternalStorageSec">Ver fotos almacenamiento externo (secundario)</string>	
@@ -306,8 +306,8 @@
 	<string name="tvCreateReportLabel">Campo que se usará como etiqueta: </string>
 	<string name="pdCreateReportTitle">Creando informe</string>
 	<string name="mGalleryMovePhotos">Mover fotos</string>
-	<string name="mGalleryShowPrimaryStorage">Ver almacenamiento primario (extern)</string>
-	<string name="mGalleryShowSecondaryStorage">Ver almacenamiento secundario (extern)</string>
+	<string name="mGalleryShowPrimaryStorage">Ver almacenamiento primario (externo)</string>
+	<string name="mGalleryShowSecondaryStorage">Ver almacenamiento secundario (externo)</string>
 	<string name="dialogGalleryMovingPhotos">Moviendo fotografiás</string>
 	<string name="btCitationImport">Importar citas</string>
 	<string name="tvAboutUsVersion">versión</string>
@@ -316,18 +316,18 @@
     <string name="rbFilterByDate">Por fecha</string>
     <string name="rbFilterByUTM">por UTM</string>
     <string name="rbFilterByLatLong">por lat/long</string>
-    <string name="etBackupProjectName">Nombre del backup</string>
+    <string name="etBackupProjectName">Nombre de la copia de seguridad</string>
     <string name="cbBackupAddPhotos">Añadir fotografías</string>
-    <string name="btBackupCreate">Crear Backup</string>
+    <string name="btBackupCreate">Crear copia de seguridad</string>
     <string name="tvGalleryCitationWithoutInfo">Sin información</string>
     <string name="cbGalleryCopyPhotos">Dejar copia en el directorio de origen</string>
     <string name="rbMovePhotoInternalToExternal">De la tarjeta interna a la externa</string>
     <string name="rbMovePhotoExternalToInternal">De la tarjeta externa a la interna</string>
     <string name="tvImportCitationsTitle">Importación de citas</string>
-    <string name="tvImportCitationsAchtung">Atención! No se importaran los datos referentes a los campos que no estan en el proyecto y que tampoco se añaden al proyecto.</string>
+    <string name="tvImportCitationsAchtung">¡Atención! No se importarán los datos referentes a los campos que no están en el proyecto y que tampoco se añaden al proyecto.</string>
     <string name="tvTrackList">"Listado de tracks: "</string>	
 	
-    <string name="tvNoThTaxonsInfo">Listado de táxones del proyecto &lt;b> %1$s &lt;/b> no presentes en el tesauro</string>   
+    <string name="tvNoThTaxonsInfo">Listado de taxones del proyecto &lt;b> %1$s &lt;/b> no presentes en el tesauro</string>   
     <string name="cbSendByMail">Enviar por e-mail</string>
     
     <string name="fieldTypeText">textual</string>
@@ -340,8 +340,8 @@
     <string name="fieldTypePolygon">polígono</string>
            
     <string name="mCheckTaxonTh">Excluidos del tesauro</string>
-        <string name="btStoragePrim">Emm. Primari</string>
-    <string name="btStorageSec">Emm. Secundari</string>
+        <string name="btStoragePrim">Emm. Primario</string>
+    <string name="btStorageSec">Emm. Secundario</string>
 
     <string name="mAddCitation">Añadir cita</string>
       
@@ -351,7 +351,7 @@
     <string name="pdCheckingCitFile">Comprobando archivo de citas&#8230;</string>
     
     <string name="thChangeInfo">El tesauro cargado en el sistema se ha actualizado. Se descargará el nuevo tesauro y será sustituido por el actual.</string>
-    <string formatted="false" name="thChangeTitle">Es necesario actualizar el tesauro %1s ! La última acutalización se realizó en %2s.</string>
+    <string formatted="false" name="thChangeTitle">¡Es necesario actualizar el tesauro %1s! La última acutalización se realizó en %2s.</string>
   
         
    <string name="changeMapMarker">Cambia marcador</string>
@@ -359,7 +359,7 @@
    <string name="uniqueField">No puede existir más de un campo %1s</string>
    <string name="polAddPoint">Añadir punto</string>
    <string name="polIsClosed">El polígono ya está cerrado</string>
-  <string name="polClose">Cirra polígono</string>
+  <string name="polClose">Cerrar polígono</string>
    
    <string name="polCantClose">Se necesitan más de 2 puntos para cerrar el polígono</string>
    <string name="polPoints">Puntos</string>
@@ -369,8 +369,8 @@
    <string name="polExit">Salir edición polígono</string>
    <string name="tracksInfo">Información - Tracks</string>
     
-   <string name="alertItemRemoved">Alerta! El valor %1s de este campo se ha sido borrado de la lista!</string>
-   <string name="wrongProjectFile">El archivos seleccionado no define un proyecto %1s correcto</string>
+   <string name="alertItemRemoved">¡Alerta! ¡El valor %1s de este campo ha sido borrado de la lista!</string>
+   <string name="wrongProjectFile">El archivo seleccionado no define un proyecto %1s correcto</string>
    
     <string name="thImportPlainRemoveCommas">Eliminar \"\"</string>
        
