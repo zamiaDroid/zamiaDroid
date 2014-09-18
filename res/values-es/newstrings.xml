@@ -7,7 +7,7 @@
 	<string name="projLoading">Cargando proyecto&#8230;</string>
     <string name="projLoadingTxt">Por favor, no cierre la ventana. Según el tamaño del conjunto de campos, la importación puede tardar algunos minutos.</string>
     
-   	<string name="projSuccesCreated">Se ha creado el pryecto %1$s correctamente.</string>
+   	<string name="projSuccesCreated">Se ha creado el proyecto %1$s correctamente.</string>
    	
    	<string name="citFileExists">Ya existe el archivo de citas. Lo quieres remplazar?</string>
     <string name="newCreatedField">Se ha creado el campo </string>
